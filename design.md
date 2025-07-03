@@ -1,4 +1,4 @@
-Tools used - Python FastAPI, Google Sheets API, LaTeX to PDF module, Gmail API
+Tools used - Python FastAPI, Google Sheets API, pandoc for LaTeX to PDF, Amazon SES to send emails
 
 Step 1 - Define a function named readSheetData which
     a. includes OAuth Client ID which grants access to the data of a specified Google Sheet
