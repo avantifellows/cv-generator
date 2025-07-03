@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{{full-name}}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #4C5196;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .name {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4C5196;
+        }
+        
+        .contact-info {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #4C5196;
+            border-bottom: 1px solid #4C5196;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .education-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .education-table th,
+        .education-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .education-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .experience-item {
+            margin-bottom: 20px;
+        }
+        
+        .experience-header {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .experience-duration {
+            float: right;
+            font-style: italic;
+        }
+        
+        .experience-points {
+            margin-left: 20px;
+        }
+        
+        .experience-points li {
+            margin-bottom: 5px;
+        }
+        
+        .skills {
+            font-size: 1.1em;
+        }
+        
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="name">{{{full-name}}}</div>
+        <div class="contact-info">
+            {{{highest-education}}}, {{{edu-1-institute}}}
+        </div>
+        <div class="contact-info">
+            {{{city}}} | Phone: {{{phone}}} | Email: {{{email}}}
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Educational Qualifications</div>
+        <table class="education-table">
+            <thead>
+                <tr>
+                    <th>Qualification</th>
+                    <th>Stream</th>
+                    <th>Institute</th>
+                    <th>Year</th>
+                    <th>CGPA/%</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{{edu-1-qual}}}</td>
+                    <td>{{{edu-1-stream}}}</td>
+                    <td>{{{edu-1-institute}}}</td>
+                    <td>{{{edu-1-year}}}</td>
+                    <td>{{{edu-1-cgpa}}}</td>
+                </tr>
+                <tr>
+                    <td>{{{edu-2-qual}}}</td>
+                    <td>{{{edu-2-stream}}}</td>
+                    <td>{{{edu-2-institute}}}</td>
+                    <td>{{{edu-2-year}}}</td>
+                    <td>{{{edu-2-cgpa}}}</td>
+                </tr>
+                <tr>
+                    <td>{{{edu-3-qual}}}</td>
+                    <td>{{{edu-3-stream}}}</td>
+                    <td>{{{edu-3-institute}}}</td>
+                    <td>{{{edu-3-year}}}</td>
+                    <td>{{{edu-3-cgpa}}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Scholastic Achievements</div>
+        <ul>
+            <li>{{{ach-1-desc}}} <span class="experience-duration">({{{ach-1-year}}})</span></li>
+            <li>{{{ach-2-desc}}} <span class="experience-duration">({{{ach-2-year}}})</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Internships</div>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{intern-1-company}}} | {{{intern-1-role}}}
+                <span class="experience-duration">({{{intern-1-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{intern-1-point-1}}}</li>
+                <li>{{{intern-1-point-2}}}</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{intern-2-company}}} | {{{intern-2-role}}}
+                <span class="experience-duration">({{{intern-2-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{intern-2-point-1}}}</li>
+                <li>{{{intern-2-point-2}}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Key Projects</div>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{proj-1-title}}} | {{{proj-1-type}}}
+                <span class="experience-duration">({{{proj-1-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{proj-1-point-1}}}</li>
+                <li>{{{proj-1-point-2}}}</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{proj-2-title}}} | {{{proj-2-type}}}
+                <span class="experience-duration">({{{proj-2-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{proj-2-point-1}}}</li>
+                <li>{{{proj-2-point-2}}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Positions of Responsibility</div>
+        
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{por-1-club}}} | {{{por-1-role}}}
+                <span class="experience-duration">({{{por-1-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{por-1-point-1}}}</li>
+                <li>{{{por-1-point-2}}}</li>
+            </ul>
+        </div>
+
+        <div class="experience-item">
+            <div class="experience-header">
+                {{{por-2-club}}} | {{{por-2-role}}}
+                <span class="experience-duration">({{{por-2-duration}}})</span>
+            </div>
+            <div class="clear"></div>
+            <ul class="experience-points">
+                <li>{{{por-2-point-1}}}</li>
+                <li>{{{por-2-point-2}}}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Extra Curricular Activities</div>
+        <ul>
+            <li>{{{extracur-1-desc}}}</li>
+            <li>{{{extracur-2-desc}}}</li>
+            <li>{{{extracur-3-desc}}}</li>
+            <li>{{{extracur-4-desc}}}</li>
+            <li>{{{extracur-5-desc}}}</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Technical Skills</div>
+        <div class="skills">
+            {{{techskill-1}}}, {{{techskill-2}}}, {{{techskill-3}}}, {{{techskill-4}}}, {{{techskill-5}}}
+        </div>
+    </div>
+</body>
+</html>
