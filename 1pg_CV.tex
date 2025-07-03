@@ -13,11 +13,9 @@
 \usepackage{textcomp}
 \usepackage[colorlinks=false]{hyperref}
 \usepackage{verbatim}
-\usepackage[usenames, dvipsnames]{color}
+\usepackage{color}
 \definecolor{myblue}{RGB}{76,81,150}
-\newcommand{\xfilll}[2][1ex]{
-\dimen0=#2\advance\dimen0 by #1
-\leaders\hrule height \dimen0 depth -#1\hfill}
+\newcommand{\xfilll}[2][1ex]{\hfill}
 \titleformat{\section}{\scshape\raggedright}{}{0em}{}
 \renewcommand\labelitemi{\raisebox{0.4ex}{\tiny$\bullet$}}
 \renewcommand{\labelitemii}{$\cdot$}
@@ -27,15 +25,15 @@
 % ================Header=======================
 
 \begin{minipage}{0.2\linewidth}
-\includegraphics[width= 1in]{insert_image.png}
+% \includegraphics[width= 1in]{insert-image.png}
 \end{minipage}
 \setlength{\tabcolsep}{2pt}
 \begin{tabular}{l l l l}
 \vspace{5pt}
-\LARGE\textbf{{{full_name}}}\\
+\LARGE\textbf{ {{{full-name}}} }\\
 \vspace{10pt}
-\Large {{{highest_education}}}, {{{edu_1_institute}}} \\
-\textbf{{{city}}} $\vert$ \textbf{Phone} - {{{phone}}} $\vert$ \textbf{Email} - {{{email}}}\\
+\Large {{{highest-education}}}, {{{edu-1-institute}}} \\
+\textbf{ {{{city}}} } | \textbf{Phone} - {{{phone}}} | \textbf{Email} - {{{email}}}\\
 \end{tabular}
 \vspace{3pt}
 
@@ -46,9 +44,9 @@
 \hline
 \rule{0pt}{2.5ex}\textbf{Qualification} & \textbf{Stream} & \textbf{Institute} & \textbf{Year} & \textbf{CGPA/\%} \\[0.5ex]
 \hline
-\rule{0pt}{2.5ex}{{{edu_1_qual}}} & {{{edu_1_stream}}} & {{{edu_1_institute}}} & {{{edu_1_year}}} & {{{edu_1_cgpa}}} \\
-{{{edu_2_qual}}} & {{{edu_2_stream}}} & {{{edu_2_institute}}} & {{{edu_2_year}}} & {{{edu_2_cgpa}}} \\
-{{{edu_3_qual}}} & {{{edu_3_stream}}} & {{{edu_3_institute}}} & {{{edu_3_year}}} & {{{edu_3_cgpa}}} \\
+\rule{0pt}{2.5ex}{{{edu-1-qual}}} & {{{edu-1-stream}}} & {{{edu-1-institute}}} & {{{edu-1-year}}} & {{{edu-1-cgpa}}} \\
+{{{edu-2-qual}}} & {{{edu-2-stream}}} & {{{edu-2-institute}}} & {{{edu-2-year}}} & {{{edu-2-cgpa}}} \\
+{{{edu-3-qual}}} & {{{edu-3-stream}}} & {{{edu-3-institute}}} & {{{edu-3-year}}} & {{{edu-3-cgpa}}} \\
 \hline
 \end{tabularx}
 \end{table}
@@ -60,12 +58,12 @@
 
 % ================Academic Achievements=======================
 
-\section*{{\large \textrm{\textbf{\color{myblue}SCHOLASTIC ACHIEVEMENTS\xfilll[0pt]{0.1pt}}}}}
+\section*{{{\large \textrm{\textbf{\color{myblue}SCHOLASTIC ACHIEVEMENTS\xfilll[0pt]{0.1pt}}}}}}
 
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{ach_1_desc}}} \hfill {\em({{{ach_1_year}}})}
-\item {{{ach_2_desc}}} \hfill {\em({{{ach_2_year}}})}
+\item {{{ach-1-desc}}} \hfill {\em({{{ach-1-year}}})}
+\item {{{ach-2-desc}}} \hfill {\em({{{ach-2-year}}})}
 
 
 \end{itemize}
@@ -76,18 +74,18 @@
 \section*{\large \textrm{\textbf{\color{myblue}INTERNSHIPS\xfilll[0pt]{0.1pt}}}}
 \vspace{-3pt}
 
-\flushleft{\textbf{{{intern_1_company}}} $\vert$ {{{intern_1_role}}} \hfill \em({{{intern_1_duration}}})}\\
+\flushleft{\textbf{ {{{intern-1-company}}} } | {{{intern-1-role}}} \hfill \em({{{intern-1-duration}}})}\\
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{intern_1_point_1})}
-\item {{{intern_1_point_2})}
+\item {{{intern-1-point-1}}}
+\item {{{intern-1-point-2}}}
 \end{itemize}
 
-\textbf{{{intern_2_company}}} $\vert$ {{{intern_2_role}}} \hfill{\em({{{intern_2_duration}}})}\\
+\textbf{ {{{intern-2-company}}} } | {{{intern-2-role}}} \hfill{\em({{{intern-2-duration}}})}\\
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{intern_2_point_1})}
-\item {{{intern_2_point_2})}
+\item {{{intern-2-point-1}}}
+\item {{{intern-2-point-2}}}
 \end{itemize}
 
 \vspace{-10pt}
@@ -97,18 +95,18 @@
 \section*{\large \textrm{\textbf{\color{myblue}KEY PROJECTS\xfilll[0pt]{0.1pt}}}}
 \vspace{-3pt}
 
-{\flushleft{\textbf{{{proj_1_title}}} $\vert$ {{{proj_1_type}}} \hfill \em({{{proj_1_duration}}})}\\
+{\flushleft{\textbf{ {{{proj-1-title}}} } | {{{proj-1-type}}} \hfill \em({{{proj-1-duration}}})}\\
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{proj_1_point_1})}
-\item {{{proj_1_point_2})}
+\item {{{proj-1-point-1}}}
+\item {{{proj-1-point-2}}}
 \end{itemize}
 
-\textbf{{{proj_2_title}}} $\vert$ {{{proj_2_type}}} \hfill{\em({{{proj_2_duration}}})}\\
+\textbf{ {{{proj-2-title}}} } | {{{proj-2-type}}} \hfill{\em({{{proj-2-duration}}})}\\
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{proj_2_point_1})}
-\item {{{proj_2_point_2})}
+\item {{{proj-2-point-1}}}
+\item {{{proj-2-point-2}}}
 \end{itemize}
 
 \vspace{-3pt}
@@ -117,21 +115,21 @@
  
 \section*{\large \textrm{\textbf{\color{myblue}POSITIONS OF RESPONSIBILITY\xfilll[0pt]{0.5pt}}}}
 \vspace{-3pt}
-{\flushleft \bf \large{{{por_1_club}}} $\vert$ {{{por_1_role}}} \hfill{{\em({{{por_1_duration}}})}}\\
+{\flushleft \bf \large {{{por-1-club}}} | {{{por-1-role}}} \hfill{{{\em({{{por-1-duration}}})}}}\\
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{por_1_point_1})}
-\item {{{por_1_point_2})}
+\item {{{por-1-point-1}}}
+\item {{{por-1-point-2}}}
 
 \end{itemize}
 \vspace{-3pt}
 
-{\flushleft\bf\large\textbf{{{por_2_club}}} $\vert$ {{{por_2_role}}} \hfill{\em({{{por_2_duration}}})}}\\
+{\flushleft\bf\large\textbf{ {{{por-2-club}}} } | {{{por-2-role}}} \hfill{\em({{{por-2-duration}}})}}}\\
 
 \vspace{-3pt}
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
-\item {{{por_2_point_1})}
-\item {{{por_2_point_2})}
+\item {{{por-2-point-1}}}
+\item {{{por-2-point-2}}}
 \end{itemize}
 
 
@@ -144,16 +142,16 @@
 
 \begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1 mm, leftmargin=6mm]
 
-\item {{{extracur_1_desc})}
-\item {{{extracur_2_desc})}
-\item {{{extracur_3_desc})}
-\item {{{extracur_4_desc})}
-\item {{{extracur_5_desc})}
+\item {{{extracur-1-desc}}}
+\item {{{extracur-2-desc}}}
+\item {{{extracur-3-desc}}}
+\item {{{extracur-4-desc}}}
+\item {{{extracur-5-desc}}}
 \end{itemize}
 \vspace{5pt}
 
 % ================Technical skills=======================
 
-\large \textrm{\textbf{\color{myblue}TECHNICAL SKILLS}} : {{{techskill_1}}}, {{{techskill_2}}}, {{{techskill_3}}}, {{{techskill_4}}}, {{{techskill_5}}}
+\large \textrm{\textbf{\color{myblue}TECHNICAL SKILLS}}} : {{{techskill-1}}}, {{{techskill-2}}}, {{{techskill-3}}}, {{{techskill-4}}}, {{{techskill-5}}}
 
 \end{document}

@@ -1,28 +1,15 @@
-Tools used - Python FastAPI, Google Sheets API, pandoc for LaTeX to PDF, Amazon SES to send emails
+The goal of this project is to present the student with a PDF version of their resume. The app should be based on FastAPI with a simple form frontend to take input from the user.
 
-Step 1 - Define a function named readSheetData which
-    a. includes OAuth Client ID which grants access to the data of a specified Google Sheet
-    b. reads the last row from the Google Sheet and returns the data as a JSON object with key names as column headers. 
+The output should be a HTML resume with a unique link that can be downloaded as PDF as well. The tool shoudl also take email as input and use Amazon SES to send an email to the user with the PDF link and the link to the HTML resume
 
-Step 2 - Define a function named data_to_tex which 
-    a. creates a copy of the 1pg_CV.tex file 
-    b. calls the readSheetData function
-    c. passes the data from the readSheetData function to the corresponding variables in the .tex copy
-    d. returns the modified template as a temporary .tex file
+# Step 1
+1. Create a webform that takes inputs that can fill up the individual sections as defined in 1pg_CV.tex. The form shoudl allow the user to input additional bullet points in the subsections.
 
-Step 3 - Define a function named tex_to_pdf which converts modified temp .tex file to .pdf and returns the .pdf file
+# Step 2 
+1. When user clicks the Submit button, fill the LaTeX template with these variables, save it as a new file.
+2. Use pandoc to generate HTML and PDF versions. 
 
-Step 4 - Define a function named email_cv which
-    a. gets email data from the readSheetData function
-    b. includes OAuth Client ID which grants access to compose and send emails from the admin's email ID
-    b. uses GMail API to compose a standard email body, attaches the pdf file from the tex_to_pdf function and sends the email to the address collected from the readSheetData function
+Let us do this first and later we can add the following features:
 
-Step 5 - Define a function to handle errors and edge cases
-
-Step 6 - Create a console logger to track errors in each function
-
-Step 7 - Define a function called cv_generator which 
-    a. creates a trigger which is activated when a new row is added to a specified Google Sheet
-    b. calls the functions defined above sequentially
-    c. deletes any temp files created in the process
-
+1. Emailing the user a PDF copy of their resume
+2. Real time preview of the resume
