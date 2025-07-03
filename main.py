@@ -2,11 +2,16 @@ from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from jinja2 import Environment, FileSystemLoader
 import os
 import uuid
 import subprocess
 from pathlib import Path
 from typing import Optional
+import json
+import html
+import re
+from datetime import datetime
 
 app = FastAPI(title="CV Generator", description="Generate PDF resumes from LaTeX templates")
 
@@ -17,6 +22,168 @@ Path("generated").mkdir(exist_ok=True)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+# Create Jinja2 environment for LaTeX templates
+latex_env = Environment(loader=FileSystemLoader('templates'))
+
+def create_structured_data(form_variables: dict) -> dict:
+    """Convert form variables to structured data for templates"""
+    return {
+        "personal_info": {
+            "full_name": form_variables.get("full_name", ""),
+            "highest_education": form_variables.get("highest_education", ""),
+            "city": form_variables.get("city", ""),
+            "phone": form_variables.get("phone", ""),
+            "email": form_variables.get("email", "")
+        },
+        "education": [
+            {
+                "qualification": form_variables.get("edu_1_qual", ""),
+                "stream": form_variables.get("edu_1_stream", ""),
+                "institute": form_variables.get("edu_1_institute", ""),
+                "year": form_variables.get("edu_1_year", ""),
+                "cgpa": form_variables.get("edu_1_cgpa", "")
+            },
+            {
+                "qualification": form_variables.get("edu_2_qual", ""),
+                "stream": form_variables.get("edu_2_stream", ""),
+                "institute": form_variables.get("edu_2_institute", ""),
+                "year": form_variables.get("edu_2_year", ""),
+                "cgpa": form_variables.get("edu_2_cgpa", "")
+            },
+            {
+                "qualification": form_variables.get("edu_3_qual", ""),
+                "stream": form_variables.get("edu_3_stream", ""),
+                "institute": form_variables.get("edu_3_institute", ""),
+                "year": form_variables.get("edu_3_year", ""),
+                "cgpa": form_variables.get("edu_3_cgpa", "")
+            }
+        ],
+        "achievements": [
+            {
+                "description": form_variables.get("ach_1_desc", ""),
+                "year": form_variables.get("ach_1_year", "")
+            },
+            {
+                "description": form_variables.get("ach_2_desc", ""),
+                "year": form_variables.get("ach_2_year", "")
+            }
+        ],
+        "internships": [
+            {
+                "company": form_variables.get("intern_1_company", ""),
+                "role": form_variables.get("intern_1_role", ""),
+                "duration": form_variables.get("intern_1_duration", ""),
+                "points": [
+                    form_variables.get("intern_1_point_1", ""),
+                    form_variables.get("intern_1_point_2", "")
+                ]
+            },
+            {
+                "company": form_variables.get("intern_2_company", ""),
+                "role": form_variables.get("intern_2_role", ""),
+                "duration": form_variables.get("intern_2_duration", ""),
+                "points": [
+                    form_variables.get("intern_2_point_1", ""),
+                    form_variables.get("intern_2_point_2", "")
+                ]
+            }
+        ],
+        "projects": [
+            {
+                "title": form_variables.get("proj_1_title", ""),
+                "type": form_variables.get("proj_1_type", ""),
+                "duration": form_variables.get("proj_1_duration", ""),
+                "points": [
+                    form_variables.get("proj_1_point_1", ""),
+                    form_variables.get("proj_1_point_2", "")
+                ]
+            },
+            {
+                "title": form_variables.get("proj_2_title", ""),
+                "type": form_variables.get("proj_2_type", ""),
+                "duration": form_variables.get("proj_2_duration", ""),
+                "points": [
+                    form_variables.get("proj_2_point_1", ""),
+                    form_variables.get("proj_2_point_2", "")
+                ]
+            }
+        ],
+        "positions_of_responsibility": [
+            {
+                "club": form_variables.get("por_1_club", ""),
+                "role": form_variables.get("por_1_role", ""),
+                "duration": form_variables.get("por_1_duration", ""),
+                "points": [
+                    form_variables.get("por_1_point_1", ""),
+                    form_variables.get("por_1_point_2", "")
+                ]
+            },
+            {
+                "club": form_variables.get("por_2_club", ""),
+                "role": form_variables.get("por_2_role", ""),
+                "duration": form_variables.get("por_2_duration", ""),
+                "points": [
+                    form_variables.get("por_2_point_1", ""),
+                    form_variables.get("por_2_point_2", "")
+                ]
+            }
+        ],
+        "extracurricular": [
+            form_variables.get("extracur_1_desc", ""),
+            form_variables.get("extracur_2_desc", ""),
+            form_variables.get("extracur_3_desc", ""),
+            form_variables.get("extracur_4_desc", ""),
+            form_variables.get("extracur_5_desc", "")
+        ],
+        "technical_skills": [
+            form_variables.get("techskill_1", ""),
+            form_variables.get("techskill_2", ""),
+            form_variables.get("techskill_3", ""),
+            form_variables.get("techskill_4", ""),
+            form_variables.get("techskill_5", "")
+        ]
+    }
+
+def filter_empty_sections(data: dict) -> dict:
+    """Remove empty optional sections from data"""
+    filtered_data = data.copy()
+    
+    # Filter education entries (keep only non-empty qualifications)
+    filtered_data['education'] = [edu for edu in data['education'] if edu.get('qualification', '').strip()]
+    
+    # Filter achievements (keep only non-empty descriptions)
+    filtered_data['achievements'] = [ach for ach in data['achievements'] if ach.get('description', '').strip()]
+    
+    # Filter internships (keep only non-empty companies)
+    filtered_data['internships'] = [intern for intern in data['internships'] if intern.get('company', '').strip()]
+    
+    # Filter projects (keep only non-empty titles)
+    filtered_data['projects'] = [proj for proj in data['projects'] if proj.get('title', '').strip()]
+    
+    # Filter positions (keep only non-empty clubs)
+    filtered_data['positions_of_responsibility'] = [pos for pos in data['positions_of_responsibility'] if pos.get('club', '').strip()]
+    
+    # Filter extracurricular (remove empty strings)
+    filtered_data['extracurricular'] = [activity for activity in data['extracurricular'] if activity and activity.strip()]
+    
+    # Filter technical skills (remove empty strings)
+    filtered_data['technical_skills'] = [skill for skill in data['technical_skills'] if skill and skill.strip()]
+    
+    return filtered_data
+
+def render_template(template_name: str, data: dict) -> str:
+    """Render Jinja2 template with data"""
+    if template_name.endswith('.tex'):
+        template = latex_env.get_template(template_name)
+    else:
+        template = templates.env.get_template(template_name)
+    return template.render(**data)
+
+def create_filename(name: str) -> str:
+    """Create a clean filename from the user's name"""
+    clean_name = re.sub(r'[^a-zA-Z0-9\s]', '', name)
+    return clean_name.replace(' ', '_').lower()
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
@@ -116,110 +283,106 @@ async def generate_cv(
         # Generate unique ID for this CV
         cv_id = str(uuid.uuid4())
         
-        # Read the LaTeX template
-        with open("1pg_CV.tex", "r") as f:
-            template_content = f.read()
-        
-        # Create variables dictionary
-        variables = {
-            "full-name": full_name,
-            "highest-education": highest_education,
+        # Create form variables dictionary
+        form_variables = {
+            "full_name": full_name,
+            "highest_education": highest_education,
             "city": city,
             "phone": phone,
             "email": email,
-            "edu-1-qual": edu_1_qual,
-            "edu-1-stream": edu_1_stream,
-            "edu-1-institute": edu_1_institute,
-            "edu-1-year": edu_1_year,
-            "edu-1-cgpa": edu_1_cgpa,
-            "edu-2-qual": edu_2_qual,
-            "edu-2-stream": edu_2_stream,
-            "edu-2-institute": edu_2_institute,
-            "edu-2-year": edu_2_year,
-            "edu-2-cgpa": edu_2_cgpa,
-            "edu-3-qual": edu_3_qual,
-            "edu-3-stream": edu_3_stream,
-            "edu-3-institute": edu_3_institute,
-            "edu-3-year": edu_3_year,
-            "edu-3-cgpa": edu_3_cgpa,
-            "ach-1-desc": ach_1_desc,
-            "ach-1-year": ach_1_year,
-            "ach-2-desc": ach_2_desc,
-            "ach-2-year": ach_2_year,
-            "intern-1-company": intern_1_company,
-            "intern-1-role": intern_1_role,
-            "intern-1-duration": intern_1_duration,
-            "intern-1-point-1": intern_1_point_1,
-            "intern-1-point-2": intern_1_point_2,
-            "intern-2-company": intern_2_company,
-            "intern-2-role": intern_2_role,
-            "intern-2-duration": intern_2_duration,
-            "intern-2-point-1": intern_2_point_1,
-            "intern-2-point-2": intern_2_point_2,
-            "proj-1-title": proj_1_title,
-            "proj-1-type": proj_1_type,
-            "proj-1-duration": proj_1_duration,
-            "proj-1-point-1": proj_1_point_1,
-            "proj-1-point-2": proj_1_point_2,
-            "proj-2-title": proj_2_title,
-            "proj-2-type": proj_2_type,
-            "proj-2-duration": proj_2_duration,
-            "proj-2-point-1": proj_2_point_1,
-            "proj-2-point-2": proj_2_point_2,
-            "por-1-club": por_1_club,
-            "por-1-role": por_1_role,
-            "por-1-duration": por_1_duration,
-            "por-1-point-1": por_1_point_1,
-            "por-1-point-2": por_1_point_2,
-            "por-2-club": por_2_club,
-            "por-2-role": por_2_role,
-            "por-2-duration": por_2_duration,
-            "por-2-point-1": por_2_point_1,
-            "por-2-point-2": por_2_point_2,
-            "extracur-1-desc": extracur_1_desc,
-            "extracur-2-desc": extracur_2_desc,
-            "extracur-3-desc": extracur_3_desc,
-            "extracur-4-desc": extracur_4_desc,
-            "extracur-5-desc": extracur_5_desc,
-            "techskill-1": techskill_1,
-            "techskill-2": techskill_2,
-            "techskill-3": techskill_3,
-            "techskill-4": techskill_4,
-            "techskill-5": techskill_5,
+            "edu_1_qual": edu_1_qual,
+            "edu_1_stream": edu_1_stream,
+            "edu_1_institute": edu_1_institute,
+            "edu_1_year": edu_1_year,
+            "edu_1_cgpa": edu_1_cgpa,
+            "edu_2_qual": edu_2_qual,
+            "edu_2_stream": edu_2_stream,
+            "edu_2_institute": edu_2_institute,
+            "edu_2_year": edu_2_year,
+            "edu_2_cgpa": edu_2_cgpa,
+            "edu_3_qual": edu_3_qual,
+            "edu_3_stream": edu_3_stream,
+            "edu_3_institute": edu_3_institute,
+            "edu_3_year": edu_3_year,
+            "edu_3_cgpa": edu_3_cgpa,
+            "ach_1_desc": ach_1_desc,
+            "ach_1_year": ach_1_year,
+            "ach_2_desc": ach_2_desc,
+            "ach_2_year": ach_2_year,
+            "intern_1_company": intern_1_company,
+            "intern_1_role": intern_1_role,
+            "intern_1_duration": intern_1_duration,
+            "intern_1_point_1": intern_1_point_1,
+            "intern_1_point_2": intern_1_point_2,
+            "intern_2_company": intern_2_company,
+            "intern_2_role": intern_2_role,
+            "intern_2_duration": intern_2_duration,
+            "intern_2_point_1": intern_2_point_1,
+            "intern_2_point_2": intern_2_point_2,
+            "proj_1_title": proj_1_title,
+            "proj_1_type": proj_1_type,
+            "proj_1_duration": proj_1_duration,
+            "proj_1_point_1": proj_1_point_1,
+            "proj_1_point_2": proj_1_point_2,
+            "proj_2_title": proj_2_title,
+            "proj_2_type": proj_2_type,
+            "proj_2_duration": proj_2_duration,
+            "proj_2_point_1": proj_2_point_1,
+            "proj_2_point_2": proj_2_point_2,
+            "por_1_club": por_1_club,
+            "por_1_role": por_1_role,
+            "por_1_duration": por_1_duration,
+            "por_1_point_1": por_1_point_1,
+            "por_1_point_2": por_1_point_2,
+            "por_2_club": por_2_club,
+            "por_2_role": por_2_role,
+            "por_2_duration": por_2_duration,
+            "por_2_point_1": por_2_point_1,
+            "por_2_point_2": por_2_point_2,
+            "extracur_1_desc": extracur_1_desc,
+            "extracur_2_desc": extracur_2_desc,
+            "extracur_3_desc": extracur_3_desc,
+            "extracur_4_desc": extracur_4_desc,
+            "extracur_5_desc": extracur_5_desc,
+            "techskill_1": techskill_1,
+            "techskill_2": techskill_2,
+            "techskill_3": techskill_3,
+            "techskill_4": techskill_4,
+            "techskill_5": techskill_5,
         }
         
-        # Fill template with variables
-        filled_template = template_content
-        for key, value in variables.items():
-            filled_template = filled_template.replace(f"{{{{{{{key}}}}}}}", str(value) if value else "")
+        # Convert form data to structured format
+        user_data = create_structured_data(form_variables)
+        
+        # Filter out empty optional sections
+        filtered_data = filter_empty_sections(user_data)
+        
+        # Render LaTeX template
+        filled_latex_template = render_template('cv_template.tex', filtered_data)
         
         # Save filled LaTeX file for later PDF generation
         latex_file = f"generated/{cv_id}.tex"
         with open(latex_file, "w") as f:
-            f.write(filled_template)
+            f.write(filled_latex_template)
         
-        # Save user's name for PDF filename
-        import json
-        user_data = {"full_name": full_name}
+        # Save complete user data for PDF filename and future editing
+        complete_user_data = {
+            "metadata": {
+                "cv_id": cv_id,
+                "created_at": datetime.utcnow().isoformat(),
+                "last_modified": datetime.utcnow().isoformat(),
+                "version": "1.0"
+            },
+            **filtered_data
+        }
+        
         data_file_path = f"generated/{cv_id}_data.json"
         with open(data_file_path, "w") as f:
-            json.dump(user_data, f)
+            json.dump(complete_user_data, f, indent=2)
         print(f"Saved user data to: {data_file_path}")  # Debug line
         
-        # Read HTML template and fill with variables
-        html_template_path = "html_template.html"
-        if not os.path.exists(html_template_path):
-            raise HTTPException(status_code=500, detail=f"HTML template not found: {html_template_path}")
-        
-        with open(html_template_path, "r") as f:
-            html_template_content = f.read()
-        
-        # Fill HTML template with variables (escape HTML for safety)
-        import html
-        filled_html_template = html_template_content
-        for key, value in variables.items():
-            escaped_html_value = html.escape(str(value)) if value else ""
-            filled_html_template = filled_html_template.replace(f"{{{{{{{key}}}}}}}", escaped_html_value)
+        # Render HTML template
+        filled_html_template = render_template('cv_template.html', filtered_data)
         
         # Generate HTML file
         html_file = f"generated/{cv_id}.html"
@@ -227,11 +390,6 @@ async def generate_cv(
             f.write(filled_html_template)
         
         # Create a clean filename from the user's name
-        def create_filename(name):
-            # Remove special characters and replace spaces with underscores
-            import re
-            clean_name = re.sub(r'[^a-zA-Z0-9\s]', '', name)
-            return clean_name.replace(' ', '_').lower()
         
         pdf_filename = f"{create_filename(full_name)}.pdf"
         
@@ -305,22 +463,19 @@ async def get_cv_pdf(cv_id: str):
         raise HTTPException(status_code=500, detail="Error generating PDF")
     
     # Get the user's name for filename
-    def create_filename(name):
-        import re
-        clean_name = re.sub(r'[^a-zA-Z0-9\s]', '', name)
-        return clean_name.replace(' ', '_').lower()
-    
     pdf_filename = f"cv_{cv_id}.pdf"  # Default filename
     print(f"Looking for data file: {data_file}")  # Debug
     print(f"Data file exists: {os.path.exists(data_file)}")  # Debug
     
     if os.path.exists(data_file):
         try:
-            import json
             with open(data_file, "r") as f:
                 user_data = json.load(f)
             print(f"Loaded user data: {user_data}")  # Debug
-            pdf_filename = f"{create_filename(user_data['full_name'])}.pdf"
+            if 'personal_info' in user_data and 'full_name' in user_data['personal_info']:
+                pdf_filename = f"{create_filename(user_data['personal_info']['full_name'])}.pdf"
+            elif 'full_name' in user_data:  # Fallback for old format
+                pdf_filename = f"{create_filename(user_data['full_name'])}.pdf"
             print(f"Generated filename: {pdf_filename}")  # Debug
         except Exception as e:
             print(f"Error reading user data: {e}")  # Debug

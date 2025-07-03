@@ -1,0 +1,169 @@
+\documentclass[11pt,usenames,dvipsnames]{article}
+\usepackage[a4paper,bottom=0.75in,left = 0.75in,right = 0.75in,top=0.25in]{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{enumitem,xcolor}
+\usepackage{wrapfig}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{textcomp}
+\usepackage[colorlinks=false]{hyperref}
+\usepackage{verbatim}
+\usepackage{color}
+\definecolor{myblue}{RGB}{76,81,150}
+\newcommand{\xfilll}[2][1ex]{\hfill}
+\titleformat{\section}{\scshape\raggedright}{}{0em}{}
+\renewcommand\labelitemi{\raisebox{0.4ex}{\tiny$\bullet$}}
+\renewcommand{\labelitemii}{$\cdot$}
+\pagenumbering{gobble}
+\begin{document}
+
+% ================Header=======================
+
+\begin{minipage}{0.2\linewidth}
+% \includegraphics[width= 1in]{insert-image.png}
+\end{minipage}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{l l l l}
+\vspace{5pt}
+\LARGE\textbf{ {{personal_info.full_name}} }\\
+\vspace{10pt}
+\Large {{personal_info.highest_education}}, {{education[0].institute}} \\
+\textbf{ {{personal_info.city}} } | \textbf{Phone} - {{personal_info.phone}} | \textbf{Email} - {{personal_info.email}}\\
+\end{tabular}
+\vspace{3pt}
+
+% ================Educational Qualifications=======================
+
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{l@{\hspace{7mm}}l@{\hspace{7mm}}X@{\hspace{7mm}}l@{\hspace{5mm}}l}
+\hline
+\rule{0pt}{2.5ex}\textbf{Qualification} & \textbf{Stream} & \textbf{Institute} & \textbf{Year} & \textbf{CGPA/\%} \\[0.5ex]
+\hline
+{% for edu in education %}
+{% if edu.qualification %}
+\rule{0pt}{2.5ex}{{edu.qualification}} & {{edu.stream}} & {{edu.institute}} & {{edu.year}} & {{edu.cgpa}} \\
+{% endif %}
+{% endfor %}
+\hline
+\end{tabularx}
+\end{table}
+\vspace{-15pt}
+\fontfamily{cmss}\selectfont
+\hspace{-14pt}
+\vspace{-3pt}
+
+% ================Academic Achievements=======================
+
+{% set valid_achievements = achievements|selectattr('description')|list %}
+{% if valid_achievements %}
+\section*{\large \textrm{\textbf{\color{myblue}SCHOLASTIC ACHIEVEMENTS\xfilll[0pt]{0.1pt}}}}
+
+\vspace{-3pt}
+\begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
+{% for ach in valid_achievements %}
+\item {{ach.description}} \hfill \em({{ach.year}})
+{% endfor %}
+\end{itemize}
+\vspace{-10pt}
+{% endif %}
+
+% ================Internships=======================
+
+{% set valid_internships = internships|selectattr('company')|list %}
+{% if valid_internships %}
+\section*{\large \textrm{\textbf{\color{myblue}INTERNSHIPS\xfilll[0pt]{0.1pt}}}}
+\vspace{-3pt}
+
+{% for intern in valid_internships %}
+\flushleft\textbf{ {{intern.company}} } | {{intern.role}} \hfill \em({{intern.duration}})\\
+\vspace{-3pt}
+{% set valid_points = intern.points|select|list %}
+{% if valid_points %}
+\begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
+{% for point in valid_points %}
+\item {{point}}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% if not loop.last %}\vspace{5pt}{% endif %}
+{% endfor %}
+
+\vspace{-10pt}
+{% endif %}
+
+% ================Projects=======================
+
+{% set valid_projects = projects|selectattr('title')|list %}
+{% if valid_projects %}
+\section*{\large \textrm{\textbf{\color{myblue}KEY PROJECTS\xfilll[0pt]{0.1pt}}}}
+\vspace{-3pt}
+
+{% for proj in valid_projects %}
+{\flushleft\textbf{ {{proj.title}} } | {{proj.type}} \hfill \em({{proj.duration}})\\
+\vspace{-3pt}
+{% set valid_points = proj.points|select|list %}
+{% if valid_points %}
+\begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
+{% for point in valid_points %}
+\item {{point}}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% if not loop.last %}\vspace{5pt}{% endif %}
+{% endfor %}
+
+\vspace{-3pt}
+{% endif %}
+
+% ================PORs=======================
+
+{% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
+{% if valid_positions %}
+\section*{\large \textrm{\textbf{\color{myblue}POSITIONS OF RESPONSIBILITY\xfilll[0pt]{0.5pt}}}}
+\vspace{-3pt}
+
+{% for pos in valid_positions %}
+{\flushleft \bf \large {{pos.club}} | {{pos.role}} \hfill \em({{pos.duration}})\\
+\vspace{-3pt}
+{% set valid_points = pos.points|select|list %}
+{% if valid_points %}
+\begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1.15 mm, leftmargin=6mm]
+{% for point in valid_points %}
+\item {{point}}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% if not loop.last %}\vspace{5pt}{% endif %}
+{% endfor %}
+
+\vspace{-10pt}
+{% endif %}
+
+% ================Extra curriculars=======================
+
+{% set valid_extracurricular = extracurricular|select|list %}
+{% if valid_extracurricular %}
+\section*{\large \textrm{\textbf{\color{myblue}EXTRA CURRICULAR ACTIVITIES\xfilll[0pt]{0.5pt}}}}
+\vspace{-3pt}
+
+\begin{itemize}[label=\textcolor{myblue}{\textbullet},itemsep = -1 mm, leftmargin=6mm]
+{% for activity in valid_extracurricular %}
+\item {{activity}}
+{% endfor %}
+\end{itemize}
+\vspace{5pt}
+{% endif %}
+
+% ================Technical skills=======================
+
+{% set valid_skills = technical_skills|select|list %}
+{% if valid_skills %}
+\large \textrm{\textbf{\color{myblue}TECHNICAL SKILLS}} : {% for skill in valid_skills %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+
+\end{document}

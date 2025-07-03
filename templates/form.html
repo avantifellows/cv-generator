@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .section h2 {
+            color: #4a5568;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+        .col {
+            flex: 1;
+        }
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #3182ce;
+        }
+        .required {
+            color: red;
+        }
+        .multi-entry {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            background-color: white;
+        }
+        .entry-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CV Generator</h1>
+        <form method="post" action="/generate">
+            
+            <!-- Personal Information -->
+            <div class="section">
+                <h2>Personal Information</h2>
+                <div class="form-group">
+                    <label for="full_name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="full_name" name="full_name" required>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="highest_education">Highest Education <span class="required">*</span></label>
+                        <input type="text" id="highest_education" name="highest_education" required>
+                    </div>
+                    <div class="col">
+                        <label for="city">City <span class="required">*</span></label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="phone">Phone <span class="required">*</span></label>
+                        <input type="text" id="phone" name="phone" required>
+                    </div>
+                    <div class="col">
+                        <label for="email">Email <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2>Educational Qualifications</h2>
+                
+                <div class="multi-entry">
+                    <div class="entry-title">Education 1 <span class="required">*</span></div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_1_qual">Qualification</label>
+                            <input type="text" id="edu_1_qual" name="edu_1_qual" required>
+                        </div>
+                        <div class="col">
+                            <label for="edu_1_stream">Stream</label>
+                            <input type="text" id="edu_1_stream" name="edu_1_stream" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_1_institute">Institute</label>
+                            <input type="text" id="edu_1_institute" name="edu_1_institute" required>
+                        </div>
+                        <div class="col">
+                            <label for="edu_1_year">Year</label>
+                            <input type="text" id="edu_1_year" name="edu_1_year" required>
+                        </div>
+                        <div class="col">
+                            <label for="edu_1_cgpa">CGPA/%</label>
+                            <input type="text" id="edu_1_cgpa" name="edu_1_cgpa" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="multi-entry">
+                    <div class="entry-title">Education 2 (Optional)</div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_2_qual">Qualification</label>
+                            <input type="text" id="edu_2_qual" name="edu_2_qual">
+                        </div>
+                        <div class="col">
+                            <label for="edu_2_stream">Stream</label>
+                            <input type="text" id="edu_2_stream" name="edu_2_stream">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_2_institute">Institute</label>
+                            <input type="text" id="edu_2_institute" name="edu_2_institute">
+                        </div>
+                        <div class="col">
+                            <label for="edu_2_year">Year</label>
+                            <input type="text" id="edu_2_year" name="edu_2_year">
+                        </div>
+                        <div class="col">
+                            <label for="edu_2_cgpa">CGPA/%</label>
+                            <input type="text" id="edu_2_cgpa" name="edu_2_cgpa">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="multi-entry">
+                    <div class="entry-title">Education 3 (Optional)</div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_3_qual">Qualification</label>
+                            <input type="text" id="edu_3_qual" name="edu_3_qual">
+                        </div>
+                        <div class="col">
+                            <label for="edu_3_stream">Stream</label>
+                            <input type="text" id="edu_3_stream" name="edu_3_stream">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="edu_3_institute">Institute</label>
+                            <input type="text" id="edu_3_institute" name="edu_3_institute">
+                        </div>
+                        <div class="col">
+                            <label for="edu_3_year">Year</label>
+                            <input type="text" id="edu_3_year" name="edu_3_year">
+                        </div>
+                        <div class="col">
+                            <label for="edu_3_cgpa">CGPA/%</label>
+                            <input type="text" id="edu_3_cgpa" name="edu_3_cgpa">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="section">
+                <h2>Scholastic Achievements</h2>
+                <div class="multi-entry">
+                    <div class="entry-title">Achievement 1 <span class="required">*</span></div>
+                    <div class="form-group">
+                        <label for="ach_1_desc">Description</label>
+                        <textarea id="ach_1_desc" name="ach_1_desc" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ach_1_year">Year</label>
+                        <input type="text" id="ach_1_year" name="ach_1_year" required>
+                    </div>
+                </div>
+                <div class="multi-entry">
+                    <div class="entry-title">Achievement 2 (Optional)</div>
+                    <div class="form-group">
+                        <label for="ach_2_desc">Description</label>
+                        <textarea id="ach_2_desc" name="ach_2_desc"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="ach_2_year">Year</label>
+                        <input type="text" id="ach_2_year" name="ach_2_year">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internships -->
+            <div class="section">
+                <h2>Internships</h2>
+                <div class="multi-entry">
+                    <div class="entry-title">Internship 1 <span class="required">*</span></div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="intern_1_company">Company</label>
+                            <input type="text" id="intern_1_company" name="intern_1_company" required>
+                        </div>
+                        <div class="col">
+                            <label for="intern_1_role">Role</label>
+                            <input type="text" id="intern_1_role" name="intern_1_role" required>
+                        </div>
+                        <div class="col">
+                            <label for="intern_1_duration">Duration</label>
+                            <input type="text" id="intern_1_duration" name="intern_1_duration" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="intern_1_point_1">Key Point 1</label>
+                        <textarea id="intern_1_point_1" name="intern_1_point_1" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="intern_1_point_2">Key Point 2</label>
+                        <textarea id="intern_1_point_2" name="intern_1_point_2" required></textarea>
+                    </div>
+                </div>
+
+                <div class="multi-entry">
+                    <div class="entry-title">Internship 2 (Optional)</div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="intern_2_company">Company</label>
+                            <input type="text" id="intern_2_company" name="intern_2_company">
+                        </div>
+                        <div class="col">
+                            <label for="intern_2_role">Role</label>
+                            <input type="text" id="intern_2_role" name="intern_2_role">
+                        </div>
+                        <div class="col">
+                            <label for="intern_2_duration">Duration</label>
+                            <input type="text" id="intern_2_duration" name="intern_2_duration">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="intern_2_point_1">Key Point 1</label>
+                        <textarea id="intern_2_point_1" name="intern_2_point_1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="intern_2_point_2">Key Point 2</label>
+                        <textarea id="intern_2_point_2" name="intern_2_point_2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="section">
+                <h2>Key Projects</h2>
+                <div class="multi-entry">
+                    <div class="entry-title">Project 1 <span class="required">*</span></div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="proj_1_title">Title</label>
+                            <input type="text" id="proj_1_title" name="proj_1_title" required>
+                        </div>
+                        <div class="col">
+                            <label for="proj_1_type">Type</label>
+                            <input type="text" id="proj_1_type" name="proj_1_type" required>
+                        </div>
+                        <div class="col">
+                            <label for="proj_1_duration">Duration</label>
+                            <input type="text" id="proj_1_duration" name="proj_1_duration" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="proj_1_point_1">Key Point 1</label>
+                        <textarea id="proj_1_point_1" name="proj_1_point_1" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="proj_1_point_2">Key Point 2</label>
+                        <textarea id="proj_1_point_2" name="proj_1_point_2" required></textarea>
+                    </div>
+                </div>
+
+                <div class="multi-entry">
+                    <div class="entry-title">Project 2 (Optional)</div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="proj_2_title">Title</label>
+                            <input type="text" id="proj_2_title" name="proj_2_title">
+                        </div>
+                        <div class="col">
+                            <label for="proj_2_type">Type</label>
+                            <input type="text" id="proj_2_type" name="proj_2_type">
+                        </div>
+                        <div class="col">
+                            <label for="proj_2_duration">Duration</label>
+                            <input type="text" id="proj_2_duration" name="proj_2_duration">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="proj_2_point_1">Key Point 1</label>
+                        <textarea id="proj_2_point_1" name="proj_2_point_1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="proj_2_point_2">Key Point 2</label>
+                        <textarea id="proj_2_point_2" name="proj_2_point_2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Positions of Responsibility -->
+            <div class="section">
+                <h2>Positions of Responsibility</h2>
+                <div class="multi-entry">
+                    <div class="entry-title">Position 1 <span class="required">*</span></div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="por_1_club">Club/Organization</label>
+                            <input type="text" id="por_1_club" name="por_1_club" required>
+                        </div>
+                        <div class="col">
+                            <label for="por_1_role">Role</label>
+                            <input type="text" id="por_1_role" name="por_1_role" required>
+                        </div>
+                        <div class="col">
+                            <label for="por_1_duration">Duration</label>
+                            <input type="text" id="por_1_duration" name="por_1_duration" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="por_1_point_1">Key Point 1</label>
+                        <textarea id="por_1_point_1" name="por_1_point_1" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="por_1_point_2">Key Point 2</label>
+                        <textarea id="por_1_point_2" name="por_1_point_2" required></textarea>
+                    </div>
+                </div>
+
+                <div class="multi-entry">
+                    <div class="entry-title">Position 2 (Optional)</div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="por_2_club">Club/Organization</label>
+                            <input type="text" id="por_2_club" name="por_2_club">
+                        </div>
+                        <div class="col">
+                            <label for="por_2_role">Role</label>
+                            <input type="text" id="por_2_role" name="por_2_role">
+                        </div>
+                        <div class="col">
+                            <label for="por_2_duration">Duration</label>
+                            <input type="text" id="por_2_duration" name="por_2_duration">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="por_2_point_1">Key Point 1</label>
+                        <textarea id="por_2_point_1" name="por_2_point_1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="por_2_point_2">Key Point 2</label>
+                        <textarea id="por_2_point_2" name="por_2_point_2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extra Curricular Activities -->
+            <div class="section">
+                <h2>Extra Curricular Activities</h2>
+                <div class="form-group">
+                    <label for="extracur_1_desc">Activity 1 <span class="required">*</span></label>
+                    <textarea id="extracur_1_desc" name="extracur_1_desc" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="extracur_2_desc">Activity 2 (Optional)</label>
+                    <textarea id="extracur_2_desc" name="extracur_2_desc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="extracur_3_desc">Activity 3 (Optional)</label>
+                    <textarea id="extracur_3_desc" name="extracur_3_desc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="extracur_4_desc">Activity 4 (Optional)</label>
+                    <textarea id="extracur_4_desc" name="extracur_4_desc"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="extracur_5_desc">Activity 5 (Optional)</label>
+                    <textarea id="extracur_5_desc" name="extracur_5_desc"></textarea>
+                </div>
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="section">
+                <h2>Technical Skills</h2>
+                <div class="row">
+                    <div class="col">
+                        <label for="techskill_1">Skill 1 <span class="required">*</span></label>
+                        <input type="text" id="techskill_1" name="techskill_1" required>
+                    </div>
+                    <div class="col">
+                        <label for="techskill_2">Skill 2 (Optional)</label>
+                        <input type="text" id="techskill_2" name="techskill_2">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="techskill_3">Skill 3 (Optional)</label>
+                        <input type="text" id="techskill_3" name="techskill_3">
+                    </div>
+                    <div class="col">
+                        <label for="techskill_4">Skill 4 (Optional)</label>
+                        <input type="text" id="techskill_4" name="techskill_4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="techskill_5">Skill 5 (Optional)</label>
+                    <input type="text" id="techskill_5" name="techskill_5">
+                </div>
+            </div>
+
+            <button type="submit">Generate CV</button>
+        </form>
+    </div>
+</body>
+</html>
