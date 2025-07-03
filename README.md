@@ -12,6 +12,22 @@ A modern FastAPI web application that generates professional PDF and HTML resume
 - **Professional Formatting**: Clean, academic-style LaTeX output
 - **Built with FastAPI**: Modern, fast Python web framework
 
+## Quick Start
+
+```bash
+# Clone and setup
+git clone <repository-url>
+cd cv-generator
+python3 -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+
+# Run in development mode (with auto-reload)
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+# Open http://localhost:8000 and start generating CVs!
+```
+
 ## Prerequisites
 
 - Python 3.7+
@@ -62,25 +78,48 @@ pip install -r requirements.txt
 
 ## Running the Application
 
-1. Activate the virtual environment (if not already activated):
+### Development Mode (Recommended)
+
+For development with automatic restart on file changes:
+
 ```bash
+# Activate virtual environment
 source env/bin/activate
+
+# Run with auto-reload (watches Python files and templates)
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-2. Start the server:
+This will automatically restart the server when you modify:
+- Python files (`main.py`, etc.)
+- Template files (`templates/*.tex`, `templates/*.html`)
+- Any other project files
+
+### Production Mode
+
+For production deployment:
+
 ```bash
+# Activate virtual environment
+source env/bin/activate
+
+# Run without auto-reload
 python main.py
 ```
 
-Alternatively, you can use uvicorn directly:
+Or use uvicorn directly:
 ```bash
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-3. Open your browser and navigate to:
+### Accessing the Application
+
+Open your browser and navigate to:
 ```
 http://localhost:8000
 ```
+
+**Development Tip**: When using `--reload`, template changes are picked up immediately, so you don't need to manually restart the server after fixing LaTeX syntax or updating templates.
 
 ## Usage
 
@@ -216,11 +255,20 @@ sudo apt-get install texlive-latex-recommended
 ```
 
 #### PDF Generation Stops with Questions
-If pdflatex asks questions during compilation, restart the server to load template fixes:
+If pdflatex asks questions during compilation, the template likely has syntax errors. 
+
+**If using development mode (recommended):**
+Template fixes are automatically picked up - just fix the template and try generating again.
+
+**If using production mode:**
+Restart the server to load template fixes:
 ```bash
 # Stop server (Ctrl+C), then restart:
 source env/bin/activate
 python main.py
+
+# Or better yet, switch to development mode:
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 #### Template Syntax Errors
@@ -238,10 +286,12 @@ uvicorn main:app --host 0.0.0.0 --port 8001
 
 ### Getting Help
 
+- **Use development mode**: Run with `--reload` flag for automatic restarts
 - Check the `generated/` folder for LaTeX error files (`.log`)
 - Run `python test_template.py` to validate the system
 - Ensure all dependencies are installed
-- Restart the server after making template changes
+- In development mode, template changes are picked up automatically
+- For production mode, restart the server after making template changes
 
 ## Contributing
 
