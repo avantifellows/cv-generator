@@ -104,26 +104,26 @@
                 <h2>Personal Information</h2>
                 <div class="form-group">
                     <label for="full_name">Full Name <span class="required">*</span></label>
-                    <input type="text" id="full_name" name="full_name" required>
+                    <input type="text" id="full_name" name="full_name" value="{{ form_data.full_name if form_data else '' }}" required>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="highest_education">Highest Education <span class="required">*</span></label>
-                        <input type="text" id="highest_education" name="highest_education" required>
+                        <input type="text" id="highest_education" name="highest_education" value="{{ form_data.highest_education if form_data else '' }}" required>
                     </div>
                     <div class="col">
                         <label for="city">City <span class="required">*</span></label>
-                        <input type="text" id="city" name="city" required>
+                        <input type="text" id="city" name="city" value="{{ form_data.city if form_data else '' }}" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="phone">Phone <span class="required">*</span></label>
-                        <input type="text" id="phone" name="phone" required>
+                        <input type="text" id="phone" name="phone" value="{{ form_data.phone if form_data else '' }}" required>
                     </div>
                     <div class="col">
                         <label for="email">Email <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}" required>
                     </div>
                 </div>
             </div>
@@ -137,25 +137,25 @@
                     <div class="row">
                         <div class="col">
                             <label for="edu_1_qual">Qualification</label>
-                            <input type="text" id="edu_1_qual" name="edu_1_qual" required>
+                            <input type="text" id="edu_1_qual" name="edu_1_qual" value="{{ form_data.edu_1_qual if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="edu_1_stream">Stream</label>
-                            <input type="text" id="edu_1_stream" name="edu_1_stream" required>
+                            <input type="text" id="edu_1_stream" name="edu_1_stream" value="{{ form_data.edu_1_stream if form_data else '' }}" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="edu_1_institute">Institute</label>
-                            <input type="text" id="edu_1_institute" name="edu_1_institute" required>
+                            <input type="text" id="edu_1_institute" name="edu_1_institute" value="{{ form_data.edu_1_institute if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="edu_1_year">Year</label>
-                            <input type="text" id="edu_1_year" name="edu_1_year" required>
+                            <input type="text" id="edu_1_year" name="edu_1_year" value="{{ form_data.edu_1_year if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="edu_1_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_1_cgpa" name="edu_1_cgpa" required>
+                            <input type="text" id="edu_1_cgpa" name="edu_1_cgpa" value="{{ form_data.edu_1_cgpa if form_data else '' }}" required>
                         </div>
                     </div>
                 </div>
@@ -165,25 +165,25 @@
                     <div class="row">
                         <div class="col">
                             <label for="edu_2_qual">Qualification</label>
-                            <input type="text" id="edu_2_qual" name="edu_2_qual">
+                            <input type="text" id="edu_2_qual" name="edu_2_qual" value="{{ form_data.edu_2_qual if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_2_stream">Stream</label>
-                            <input type="text" id="edu_2_stream" name="edu_2_stream">
+                            <input type="text" id="edu_2_stream" name="edu_2_stream" value="{{ form_data.edu_2_stream if form_data else '' }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="edu_2_institute">Institute</label>
-                            <input type="text" id="edu_2_institute" name="edu_2_institute">
+                            <input type="text" id="edu_2_institute" name="edu_2_institute" value="{{ form_data.edu_2_institute if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_2_year">Year</label>
-                            <input type="text" id="edu_2_year" name="edu_2_year">
+                            <input type="text" id="edu_2_year" name="edu_2_year" value="{{ form_data.edu_2_year if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_2_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_2_cgpa" name="edu_2_cgpa">
+                            <input type="text" id="edu_2_cgpa" name="edu_2_cgpa" value="{{ form_data.edu_2_cgpa if form_data else '' }}">
                         </div>
                     </div>
                 </div>
@@ -193,25 +193,25 @@
                     <div class="row">
                         <div class="col">
                             <label for="edu_3_qual">Qualification</label>
-                            <input type="text" id="edu_3_qual" name="edu_3_qual">
+                            <input type="text" id="edu_3_qual" name="edu_3_qual" value="{{ form_data.edu_3_qual if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_3_stream">Stream</label>
-                            <input type="text" id="edu_3_stream" name="edu_3_stream">
+                            <input type="text" id="edu_3_stream" name="edu_3_stream" value="{{ form_data.edu_3_stream if form_data else '' }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="edu_3_institute">Institute</label>
-                            <input type="text" id="edu_3_institute" name="edu_3_institute">
+                            <input type="text" id="edu_3_institute" name="edu_3_institute" value="{{ form_data.edu_3_institute if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_3_year">Year</label>
-                            <input type="text" id="edu_3_year" name="edu_3_year">
+                            <input type="text" id="edu_3_year" name="edu_3_year" value="{{ form_data.edu_3_year if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="edu_3_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_3_cgpa" name="edu_3_cgpa">
+                            <input type="text" id="edu_3_cgpa" name="edu_3_cgpa" value="{{ form_data.edu_3_cgpa if form_data else '' }}">
                         </div>
                     </div>
                 </div>
@@ -224,22 +224,22 @@
                     <div class="entry-title">Achievement 1 <span class="required">*</span></div>
                     <div class="form-group">
                         <label for="ach_1_desc">Description</label>
-                        <textarea id="ach_1_desc" name="ach_1_desc" required></textarea>
+                        <textarea id="ach_1_desc" name="ach_1_desc" required>{{ form_data.ach_1_desc if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="ach_1_year">Year</label>
-                        <input type="text" id="ach_1_year" name="ach_1_year" required>
+                        <input type="text" id="ach_1_year" name="ach_1_year" value="{{ form_data.ach_1_year if form_data else '' }}" required>
                     </div>
                 </div>
                 <div class="multi-entry">
                     <div class="entry-title">Achievement 2 (Optional)</div>
                     <div class="form-group">
                         <label for="ach_2_desc">Description</label>
-                        <textarea id="ach_2_desc" name="ach_2_desc"></textarea>
+                        <textarea id="ach_2_desc" name="ach_2_desc">{{ form_data.ach_2_desc if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="ach_2_year">Year</label>
-                        <input type="text" id="ach_2_year" name="ach_2_year">
+                        <input type="text" id="ach_2_year" name="ach_2_year" value="{{ form_data.ach_2_year if form_data else '' }}">
                     </div>
                 </div>
             </div>
@@ -252,24 +252,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="intern_1_company">Company</label>
-                            <input type="text" id="intern_1_company" name="intern_1_company" required>
+                            <input type="text" id="intern_1_company" name="intern_1_company" value="{{ form_data.intern_1_company if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="intern_1_role">Role</label>
-                            <input type="text" id="intern_1_role" name="intern_1_role" required>
+                            <input type="text" id="intern_1_role" name="intern_1_role" value="{{ form_data.intern_1_role if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="intern_1_duration">Duration</label>
-                            <input type="text" id="intern_1_duration" name="intern_1_duration" required>
+                            <input type="text" id="intern_1_duration" name="intern_1_duration" value="{{ form_data.intern_1_duration if form_data else '' }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="intern_1_point_1">Key Point 1</label>
-                        <textarea id="intern_1_point_1" name="intern_1_point_1" required></textarea>
+                        <textarea id="intern_1_point_1" name="intern_1_point_1" required>{{ form_data.intern_1_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="intern_1_point_2">Key Point 2</label>
-                        <textarea id="intern_1_point_2" name="intern_1_point_2" required></textarea>
+                        <textarea id="intern_1_point_2" name="intern_1_point_2" required>{{ form_data.intern_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
 
@@ -278,24 +278,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="intern_2_company">Company</label>
-                            <input type="text" id="intern_2_company" name="intern_2_company">
+                            <input type="text" id="intern_2_company" name="intern_2_company" value="{{ form_data.intern_2_company if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="intern_2_role">Role</label>
-                            <input type="text" id="intern_2_role" name="intern_2_role">
+                            <input type="text" id="intern_2_role" name="intern_2_role" value="{{ form_data.intern_2_role if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="intern_2_duration">Duration</label>
-                            <input type="text" id="intern_2_duration" name="intern_2_duration">
+                            <input type="text" id="intern_2_duration" name="intern_2_duration" value="{{ form_data.intern_2_duration if form_data else '' }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="intern_2_point_1">Key Point 1</label>
-                        <textarea id="intern_2_point_1" name="intern_2_point_1"></textarea>
+                        <textarea id="intern_2_point_1" name="intern_2_point_1">{{ form_data.intern_2_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="intern_2_point_2">Key Point 2</label>
-                        <textarea id="intern_2_point_2" name="intern_2_point_2"></textarea>
+                        <textarea id="intern_2_point_2" name="intern_2_point_2">{{ form_data.intern_2_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
             </div>
@@ -308,24 +308,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="proj_1_title">Title</label>
-                            <input type="text" id="proj_1_title" name="proj_1_title" required>
+                            <input type="text" id="proj_1_title" name="proj_1_title" value="{{ form_data.proj_1_title if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="proj_1_type">Type</label>
-                            <input type="text" id="proj_1_type" name="proj_1_type" required>
+                            <input type="text" id="proj_1_type" name="proj_1_type" value="{{ form_data.proj_1_type if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="proj_1_duration">Duration</label>
-                            <input type="text" id="proj_1_duration" name="proj_1_duration" required>
+                            <input type="text" id="proj_1_duration" name="proj_1_duration" value="{{ form_data.proj_1_duration if form_data else '' }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="proj_1_point_1">Key Point 1</label>
-                        <textarea id="proj_1_point_1" name="proj_1_point_1" required></textarea>
+                        <textarea id="proj_1_point_1" name="proj_1_point_1" required>{{ form_data.proj_1_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="proj_1_point_2">Key Point 2</label>
-                        <textarea id="proj_1_point_2" name="proj_1_point_2" required></textarea>
+                        <textarea id="proj_1_point_2" name="proj_1_point_2" required>{{ form_data.proj_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
 
@@ -334,24 +334,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="proj_2_title">Title</label>
-                            <input type="text" id="proj_2_title" name="proj_2_title">
+                            <input type="text" id="proj_2_title" name="proj_2_title" value="{{ form_data.proj_2_title if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="proj_2_type">Type</label>
-                            <input type="text" id="proj_2_type" name="proj_2_type">
+                            <input type="text" id="proj_2_type" name="proj_2_type" value="{{ form_data.proj_2_type if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="proj_2_duration">Duration</label>
-                            <input type="text" id="proj_2_duration" name="proj_2_duration">
+                            <input type="text" id="proj_2_duration" name="proj_2_duration" value="{{ form_data.proj_2_duration if form_data else '' }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="proj_2_point_1">Key Point 1</label>
-                        <textarea id="proj_2_point_1" name="proj_2_point_1"></textarea>
+                        <textarea id="proj_2_point_1" name="proj_2_point_1">{{ form_data.proj_2_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="proj_2_point_2">Key Point 2</label>
-                        <textarea id="proj_2_point_2" name="proj_2_point_2"></textarea>
+                        <textarea id="proj_2_point_2" name="proj_2_point_2">{{ form_data.proj_2_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
             </div>
@@ -364,24 +364,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="por_1_club">Club/Organization</label>
-                            <input type="text" id="por_1_club" name="por_1_club" required>
+                            <input type="text" id="por_1_club" name="por_1_club" value="{{ form_data.por_1_club if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="por_1_role">Role</label>
-                            <input type="text" id="por_1_role" name="por_1_role" required>
+                            <input type="text" id="por_1_role" name="por_1_role" value="{{ form_data.por_1_role if form_data else '' }}" required>
                         </div>
                         <div class="col">
                             <label for="por_1_duration">Duration</label>
-                            <input type="text" id="por_1_duration" name="por_1_duration" required>
+                            <input type="text" id="por_1_duration" name="por_1_duration" value="{{ form_data.por_1_duration if form_data else '' }}" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="por_1_point_1">Key Point 1</label>
-                        <textarea id="por_1_point_1" name="por_1_point_1" required></textarea>
+                        <textarea id="por_1_point_1" name="por_1_point_1" required>{{ form_data.por_1_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="por_1_point_2">Key Point 2</label>
-                        <textarea id="por_1_point_2" name="por_1_point_2" required></textarea>
+                        <textarea id="por_1_point_2" name="por_1_point_2" required>{{ form_data.por_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
 
@@ -390,24 +390,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="por_2_club">Club/Organization</label>
-                            <input type="text" id="por_2_club" name="por_2_club">
+                            <input type="text" id="por_2_club" name="por_2_club" value="{{ form_data.por_2_club if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="por_2_role">Role</label>
-                            <input type="text" id="por_2_role" name="por_2_role">
+                            <input type="text" id="por_2_role" name="por_2_role" value="{{ form_data.por_2_role if form_data else '' }}">
                         </div>
                         <div class="col">
                             <label for="por_2_duration">Duration</label>
-                            <input type="text" id="por_2_duration" name="por_2_duration">
+                            <input type="text" id="por_2_duration" name="por_2_duration" value="{{ form_data.por_2_duration if form_data else '' }}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="por_2_point_1">Key Point 1</label>
-                        <textarea id="por_2_point_1" name="por_2_point_1"></textarea>
+                        <textarea id="por_2_point_1" name="por_2_point_1">{{ form_data.por_2_point_1 if form_data else '' }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="por_2_point_2">Key Point 2</label>
-                        <textarea id="por_2_point_2" name="por_2_point_2"></textarea>
+                        <textarea id="por_2_point_2" name="por_2_point_2">{{ form_data.por_2_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
             </div>
@@ -417,23 +417,23 @@
                 <h2>Extra Curricular Activities</h2>
                 <div class="form-group">
                     <label for="extracur_1_desc">Activity 1 <span class="required">*</span></label>
-                    <textarea id="extracur_1_desc" name="extracur_1_desc" required></textarea>
+                    <textarea id="extracur_1_desc" name="extracur_1_desc" required>{{ form_data.extracur_1_desc if form_data else '' }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="extracur_2_desc">Activity 2 (Optional)</label>
-                    <textarea id="extracur_2_desc" name="extracur_2_desc"></textarea>
+                    <textarea id="extracur_2_desc" name="extracur_2_desc">{{ form_data.extracur_2_desc if form_data else '' }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="extracur_3_desc">Activity 3 (Optional)</label>
-                    <textarea id="extracur_3_desc" name="extracur_3_desc"></textarea>
+                    <textarea id="extracur_3_desc" name="extracur_3_desc">{{ form_data.extracur_3_desc if form_data else '' }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="extracur_4_desc">Activity 4 (Optional)</label>
-                    <textarea id="extracur_4_desc" name="extracur_4_desc"></textarea>
+                    <textarea id="extracur_4_desc" name="extracur_4_desc">{{ form_data.extracur_4_desc if form_data else '' }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="extracur_5_desc">Activity 5 (Optional)</label>
-                    <textarea id="extracur_5_desc" name="extracur_5_desc"></textarea>
+                    <textarea id="extracur_5_desc" name="extracur_5_desc">{{ form_data.extracur_5_desc if form_data else '' }}</textarea>
                 </div>
             </div>
 
@@ -443,26 +443,26 @@
                 <div class="row">
                     <div class="col">
                         <label for="techskill_1">Skill 1 <span class="required">*</span></label>
-                        <input type="text" id="techskill_1" name="techskill_1" required>
+                        <input type="text" id="techskill_1" name="techskill_1" value="{{ form_data.techskill_1 if form_data else '' }}" required>
                     </div>
                     <div class="col">
                         <label for="techskill_2">Skill 2 (Optional)</label>
-                        <input type="text" id="techskill_2" name="techskill_2">
+                        <input type="text" id="techskill_2" name="techskill_2" value="{{ form_data.techskill_2 if form_data else '' }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="techskill_3">Skill 3 (Optional)</label>
-                        <input type="text" id="techskill_3" name="techskill_3">
+                        <input type="text" id="techskill_3" name="techskill_3" value="{{ form_data.techskill_3 if form_data else '' }}">
                     </div>
                     <div class="col">
                         <label for="techskill_4">Skill 4 (Optional)</label>
-                        <input type="text" id="techskill_4" name="techskill_4">
+                        <input type="text" id="techskill_4" name="techskill_4" value="{{ form_data.techskill_4 if form_data else '' }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="techskill_5">Skill 5 (Optional)</label>
-                    <input type="text" id="techskill_5" name="techskill_5">
+                    <input type="text" id="techskill_5" name="techskill_5" value="{{ form_data.techskill_5 if form_data else '' }}">
                 </div>
             </div>
 

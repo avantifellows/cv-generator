@@ -1,117 +1,66 @@
 {
-  "metadata": {
-    "cv_id": "test-cv-123",
-    "created_at": "2025-07-03T12:00:00.000000",
-    "last_modified": "2025-07-03T12:00:00.000000",
-    "version": "1.0"
-  },
-  "personal_info": {
-    "full_name": "Jane Smith",
-    "highest_education": "M.Tech",
-    "city": "San Francisco",
-    "phone": "+1-555-0123",
-    "email": "jane.smith@example.com"
-  },
-  "education": [
-    {
-      "qualification": "M.Tech",
-      "stream": "Computer Science",
-      "institute": "Stanford University",
-      "year": "2023",
-      "cgpa": "9.2"
-    },
-    {
-      "qualification": "B.Tech",
-      "stream": "Computer Engineering",
-      "institute": "UC Berkeley",
-      "year": "2021",
-      "cgpa": "8.8"
-    }
-  ],
-  "achievements": [
-    {
-      "description": "Dean's List for Academic Excellence - Consistent performance in top 5% of class",
-      "year": "2023"
-    },
-    {
-      "description": "Winner, International Coding Competition - Secured 1st place among 500+ participants",
-      "year": "2022"
-    }
-  ],
-  "internships": [
-    {
-      "company": "Google",
-      "role": "Software Engineering Intern",
-      "duration": "Summer 2022",
-      "points": [
-        "Developed a machine learning pipeline that improved search result relevance by 15%",
-        "Collaborated with cross-functional teams to design and implement new API endpoints"
-      ]
-    },
-    {
-      "company": "Microsoft",
-      "role": "Research Intern",
-      "duration": "Summer 2021",
-      "points": [
-        "Built a distributed system for real-time data processing using Azure services",
-        "Published research paper on optimization algorithms in top-tier conference"
-      ]
-    }
-  ],
-  "projects": [
-    {
-      "title": "AI-Powered Code Review Tool",
-      "type": "Open Source Project",
-      "duration": "6 months",
-      "points": [
-        "Created an intelligent code review system using natural language processing",
-        "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities"
-      ]
-    },
-    {
-      "title": "Blockchain-based Voting System",
-      "type": "Academic Project",
-      "duration": "4 months",
-      "points": [
-        "Designed and implemented a secure, transparent voting platform using Ethereum",
-        "Ensured voter privacy while maintaining election integrity through cryptographic techniques"
-      ]
-    }
-  ],
-  "positions_of_responsibility": [
-    {
-      "club": "Computer Science Society",
-      "role": "Technical Lead",
-      "duration": "2022-2023",
-      "points": [
-        "Led a team of 20+ members in organizing technical workshops and hackathons",
-        "Mentored junior students in competitive programming and open source contributions"
-      ]
-    },
-    {
-      "club": "Women in Tech",
-      "role": "Vice President",
-      "duration": "2021-2022",
-      "points": [
-        "Organized diversity and inclusion initiatives that increased female participation by 40%",
-        "Established partnerships with 10+ tech companies for internship and job opportunities"
-      ]
-    }
-  ],
-  "extracurricular": [
-    "Marathon running - Completed 3 full marathons with personal best of 3:45",
-    "Photography - Featured in university magazine and local art exhibitions",
-    "Volunteer teaching - Taught programming to underprivileged children on weekends",
-    "Chess - Ranked in top 100 players in state-level tournaments"
-  ],
-  "technical_skills": [
-    "Python",
-    "JavaScript",
-    "React",
-    "Node.js",
-    "Machine Learning",
-    "Docker",
-    "Kubernetes",
-    "AWS"
-  ]
+  "full_name": "Jane Smith",
+  "highest_education": "M.Tech",
+  "city": "San Francisco",
+  "phone": "+1-555-0123",
+  "email": "jane.smith@example.com",
+  "edu_1_qual": "M.Tech",
+  "edu_1_stream": "Computer Science",
+  "edu_1_institute": "Stanford University",
+  "edu_1_year": "2023",
+  "edu_1_cgpa": "9.2",
+  "edu_2_qual": "B.Tech",
+  "edu_2_stream": "Computer Engineering",
+  "edu_2_institute": "UC Berkeley",
+  "edu_2_year": "2021",
+  "edu_2_cgpa": "8.8",
+  "edu_3_qual": "",
+  "edu_3_stream": "",
+  "edu_3_institute": "",
+  "edu_3_year": "",
+  "edu_3_cgpa": "",
+  "ach_1_desc": "Dean's List for Academic Excellence - Consistent performance in top 5% of class",
+  "ach_1_year": "2023",
+  "ach_2_desc": "Winner, International Coding Competition - Secured 1st place among 500+ participants",
+  "ach_2_year": "2022",
+  "intern_1_company": "Google",
+  "intern_1_role": "Software Engineering Intern",
+  "intern_1_duration": "Summer 2022",
+  "intern_1_point_1": "Developed a machine learning pipeline that improved search result relevance by 15%",
+  "intern_1_point_2": "Collaborated with cross-functional teams to design and implement new API endpoints",
+  "intern_2_company": "Microsoft",
+  "intern_2_role": "Research Intern",
+  "intern_2_duration": "Summer 2021",
+  "intern_2_point_1": "Built a distributed system for real-time data processing using Azure services",
+  "intern_2_point_2": "Published research paper on optimization algorithms in top-tier conference",
+  "proj_1_title": "AI-Powered Code Review Tool",
+  "proj_1_type": "Open Source Project",
+  "proj_1_duration": "6 months",
+  "proj_1_point_1": "Created an intelligent code review system using natural language processing",
+  "proj_1_point_2": "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities",
+  "proj_2_title": "Blockchain-based Voting System",
+  "proj_2_type": "Academic Project",
+  "proj_2_duration": "4 months",
+  "proj_2_point_1": "Designed and implemented a secure, transparent voting platform using Ethereum",
+  "proj_2_point_2": "Ensured voter privacy while maintaining election integrity through cryptographic techniques",
+  "por_1_club": "Computer Science Society",
+  "por_1_role": "Technical Lead",
+  "por_1_duration": "2022-2023",
+  "por_1_point_1": "Led a team of 20+ members in organizing technical workshops and hackathons",
+  "por_1_point_2": "Mentored junior students in competitive programming and open source contributions",
+  "por_2_club": "Women in Tech",
+  "por_2_role": "Vice President",
+  "por_2_duration": "2021-2022",
+  "por_2_point_1": "Organized diversity and inclusion initiatives that increased female participation by 40%",
+  "por_2_point_2": "Established partnerships with 10+ tech companies for internship and job opportunities",
+  "extracur_1_desc": "Marathon running - Completed 3 full marathons with personal best of 3:45",
+  "extracur_2_desc": "Photography - Featured in university magazine and local art exhibitions",
+  "extracur_3_desc": "Volunteer teaching - Taught programming to underprivileged children on weekends",
+  "extracur_4_desc": "Chess - Ranked in top 100 players in state-level tournaments",
+  "extracur_5_desc": "",
+  "techskill_1": "Python",
+  "techskill_2": "JavaScript",
+  "techskill_3": "React",
+  "techskill_4": "Node.js",
+  "techskill_5": "Machine Learning"
 }
