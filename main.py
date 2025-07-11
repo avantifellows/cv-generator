@@ -107,6 +107,39 @@ async def test_form(request: Request):
         return templates.TemplateResponse("form.html", {"request": request})
 
 
+@app.get("/test/pdf")
+async def download_test_cv_pdf():
+    """Generate and download PDF of the test CV data"""
+    try:
+        # Load structured test data
+        with open("test_data_structured.json", "r") as f:
+            structured_data = json.load(f)
+        
+        # Create CV data object
+        cv_data = CVData(**structured_data)
+        
+        # Render PDF-specific HTML template
+        html_content = render_template('cv_template_pdf.html', cv_data.dict())
+        
+        # Generate PDF using WeasyPrint
+        pdf_bytes = weasyprint.HTML(string=html_content).write_pdf()
+        
+        # Create filename from user's name
+        pdf_filename = f"{create_filename(cv_data.personal_info.full_name)}_test.pdf"
+        
+        logger.info(f"Test PDF generated successfully: {pdf_filename}")
+        
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f"attachment; filename={pdf_filename}"}
+        )
+        
+    except Exception as e:
+        logger.error(f"Error generating test PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate test PDF: {str(e)}")
+
+
 
 
 def convert_structured_to_form_data(structured_data: dict) -> dict:
