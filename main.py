@@ -5,15 +5,16 @@ from fastapi.templating import Jinja2Templates
 from jinja2 import Environment, FileSystemLoader
 import os
 import uuid
-import subprocess
 from pathlib import Path
 from typing import Optional
 import json
 import html
 import re
 from datetime import datetime
+import weasyprint
+from io import BytesIO
 
-app = FastAPI(title="CV Generator", description="Generate PDF resumes from LaTeX templates")
+app = FastAPI(title="CV Generator", description="Generate PDF resumes from HTML templates")
 
 # Create directories
 Path("static").mkdir(exist_ok=True)
@@ -23,8 +24,6 @@ Path("generated").mkdir(exist_ok=True)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
-# Create Jinja2 environment for LaTeX templates
-latex_env = Environment(loader=FileSystemLoader('templates'))
 
 def create_structured_data(form_variables: dict) -> dict:
     """Convert form variables to structured data for templates"""
@@ -174,10 +173,7 @@ def filter_empty_sections(data: dict) -> dict:
 
 def render_template(template_name: str, data: dict) -> str:
     """Render Jinja2 template with data"""
-    if template_name.endswith('.tex'):
-        template = latex_env.get_template(template_name)
-    else:
-        template = templates.env.get_template(template_name)
+    template = templates.env.get_template(template_name)
     return template.render(**data)
 
 def create_filename(name: str) -> str:
@@ -189,6 +185,23 @@ def create_filename(name: str) -> str:
 async def home(request: Request):
     """Serve the CV form"""
     return templates.TemplateResponse("form.html", {"request": request})
+
+@app.get("/test", response_class=HTMLResponse)
+async def test_form(request: Request):
+    """Serve the CV form pre-filled with test data"""
+    try:
+        # Load test data (now in form field format)
+        with open("test_data.json", "r") as f:
+            form_data = json.load(f)
+        
+        return templates.TemplateResponse("form.html", {"request": request, "form_data": form_data})
+        
+    except Exception as e:
+        import traceback
+        error_details = f"Error loading test data: {str(e)}\n\nTraceback:\n{traceback.format_exc()}"
+        print(error_details)
+        # Fall back to empty form
+        return templates.TemplateResponse("form.html", {"request": request})
 
 @app.post("/generate")
 async def generate_cv(
@@ -357,13 +370,6 @@ async def generate_cv(
         # Filter out empty optional sections
         filtered_data = filter_empty_sections(user_data)
         
-        # Render LaTeX template
-        filled_latex_template = render_template('cv_template.tex', filtered_data)
-        
-        # Save filled LaTeX file for later PDF generation
-        latex_file = f"generated/{cv_id}.tex"
-        with open(latex_file, "w") as f:
-            f.write(filled_latex_template)
         
         # Save complete user data for PDF filename and future editing
         complete_user_data = {
@@ -445,47 +451,50 @@ async def get_cv_html(cv_id: str):
 
 @app.get("/cv/{cv_id}/pdf")
 async def get_cv_pdf(cv_id: str):
-    """Generate and serve PDF CV on-demand"""
-    latex_file = f"generated/{cv_id}.tex"
-    pdf_file = f"generated/{cv_id}.pdf"
+    """Generate and serve PDF CV on-demand from HTML"""
     data_file = f"generated/{cv_id}_data.json"
     
-    # Check if LaTeX file exists
-    if not os.path.exists(latex_file):
+    # Check if data file exists
+    if not os.path.exists(data_file):
         raise HTTPException(status_code=404, detail="CV not found")
     
-    # Generate PDF using pdflatex
+    # Read the user data
     try:
-        subprocess.run([
-            "pdflatex", "-output-directory=generated", latex_file
-        ], check=True, cwd=".")
-    except subprocess.CalledProcessError as e:
-        raise HTTPException(status_code=500, detail="Error generating PDF")
+        with open(data_file, "r") as f:
+            user_data = json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Error reading CV data")
+    
+    # Render the PDF-specific HTML template
+    try:
+        html_content = render_template('cv_template_pdf.html', user_data)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error rendering template: {str(e)}")
+    
+    # Generate PDF using weasyprint
+    try:
+        pdf_bytes = weasyprint.HTML(string=html_content).write_pdf()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating PDF: {str(e)}")
     
     # Get the user's name for filename
     pdf_filename = f"cv_{cv_id}.pdf"  # Default filename
-    print(f"Looking for data file: {data_file}")  # Debug
-    print(f"Data file exists: {os.path.exists(data_file)}")  # Debug
     
-    if os.path.exists(data_file):
-        try:
-            with open(data_file, "r") as f:
-                user_data = json.load(f)
-            print(f"Loaded user data: {user_data}")  # Debug
-            if 'personal_info' in user_data and 'full_name' in user_data['personal_info']:
-                pdf_filename = f"{create_filename(user_data['personal_info']['full_name'])}.pdf"
-            elif 'full_name' in user_data:  # Fallback for old format
-                pdf_filename = f"{create_filename(user_data['full_name'])}.pdf"
-            print(f"Generated filename: {pdf_filename}")  # Debug
-        except Exception as e:
-            print(f"Error reading user data: {e}")  # Debug
-            pass  # Use default filename if there's an error
+    try:
+        if 'personal_info' in user_data and 'full_name' in user_data['personal_info']:
+            pdf_filename = f"{create_filename(user_data['personal_info']['full_name'])}.pdf"
+        elif 'full_name' in user_data:  # Fallback for old format
+            pdf_filename = f"{create_filename(user_data['full_name'])}.pdf"
+    except Exception as e:
+        pass  # Use default filename if there's an error
     
-    # Serve the generated PDF
-    if os.path.exists(pdf_file):
-        return FileResponse(pdf_file, media_type="application/pdf", filename=pdf_filename)
-    else:
-        raise HTTPException(status_code=500, detail="PDF generation failed")
+    # Return the PDF as a response
+    from fastapi.responses import Response
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={pdf_filename}"}
+    )
 
 if __name__ == "__main__":
     import uvicorn
