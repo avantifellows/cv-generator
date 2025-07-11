@@ -80,24 +80,118 @@
         .required {
             color: red;
         }
-        .multi-entry {
+        .dynamic-entry {
             border: 1px solid #e2e8f0;
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 4px;
             background-color: white;
+            position: relative;
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
         .entry-title {
             font-weight: bold;
             color: #2d3748;
+        }
+        .btn-secondary {
+            background-color: #48bb78;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .btn-secondary:hover {
+            background-color: #38a169;
+        }
+        .btn-danger {
+            background-color: #e53e3e;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            white-space: nowrap;
+            min-width: 80px;
+            max-width: 120px;
+        }
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+        .add-button-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .point-input {
             margin-bottom: 10px;
+        }
+        .points-container {
+            margin-top: 10px;
+        }
+        .point-entry {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .point-entry textarea {
+            flex: 1;
+            height: 60px;
+            width: 100%;
+        }
+        .point-entry .btn-danger {
+            flex-shrink: 0;
+            width: auto;
+            min-width: 80px;
+            padding: 8px 12px;
+        }
+        .skill-entry {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .skill-entry input {
+            flex: 1;
+            width: 100%;
+        }
+        .skill-entry .btn-danger {
+            flex-shrink: 0;
+            width: auto;
+            min-width: 80px;
+            padding: 8px 12px;
+        }
+        .activity-entry {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .activity-entry textarea {
+            flex: 1;
+            height: 60px;
+            width: 100%;
+        }
+        .activity-entry .btn-danger {
+            flex-shrink: 0;
+            width: auto;
+            min-width: 80px;
+            padding: 8px 12px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>CV Generator</h1>
-        <form method="post" action="/generate">
+        <form id="cvForm" method="post" action="/generate">
             
             <!-- Personal Information -->
             <div class="section">
@@ -131,343 +225,742 @@
             <!-- Education -->
             <div class="section">
                 <h2>Educational Qualifications</h2>
-                
-                <div class="multi-entry">
-                    <div class="entry-title">Education 1 <span class="required">*</span></div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_1_qual">Qualification</label>
-                            <input type="text" id="edu_1_qual" name="edu_1_qual" value="{{ form_data.edu_1_qual if form_data else '' }}" required>
+                <div id="education-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Education Entry 1 <span class="required">*</span></div>
                         </div>
-                        <div class="col">
-                            <label for="edu_1_stream">Stream</label>
-                            <input type="text" id="edu_1_stream" name="edu_1_stream" value="{{ form_data.edu_1_stream if form_data else '' }}" required>
+                        <div class="row">
+                            <div class="col">
+                                <label>Qualification</label>
+                                <input type="text" name="education[0][qualification]" required>
+                            </div>
+                            <div class="col">
+                                <label>Stream</label>
+                                <input type="text" name="education[0][stream]" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_1_institute">Institute</label>
-                            <input type="text" id="edu_1_institute" name="edu_1_institute" value="{{ form_data.edu_1_institute if form_data else '' }}" required>
-                        </div>
-                        <div class="col">
-                            <label for="edu_1_year">Year</label>
-                            <input type="text" id="edu_1_year" name="edu_1_year" value="{{ form_data.edu_1_year if form_data else '' }}" required>
-                        </div>
-                        <div class="col">
-                            <label for="edu_1_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_1_cgpa" name="edu_1_cgpa" value="{{ form_data.edu_1_cgpa if form_data else '' }}" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="multi-entry">
-                    <div class="entry-title">Education 2 (Optional)</div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_2_qual">Qualification</label>
-                            <input type="text" id="edu_2_qual" name="edu_2_qual" value="{{ form_data.edu_2_qual if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_2_stream">Stream</label>
-                            <input type="text" id="edu_2_stream" name="edu_2_stream" value="{{ form_data.edu_2_stream if form_data else '' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_2_institute">Institute</label>
-                            <input type="text" id="edu_2_institute" name="edu_2_institute" value="{{ form_data.edu_2_institute if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_2_year">Year</label>
-                            <input type="text" id="edu_2_year" name="edu_2_year" value="{{ form_data.edu_2_year if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_2_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_2_cgpa" name="edu_2_cgpa" value="{{ form_data.edu_2_cgpa if form_data else '' }}">
+                        <div class="row">
+                            <div class="col">
+                                <label>Institute</label>
+                                <input type="text" name="education[0][institute]" required>
+                            </div>
+                            <div class="col">
+                                <label>Year</label>
+                                <input type="text" name="education[0][year]" required>
+                            </div>
+                            <div class="col">
+                                <label>CGPA/%</label>
+                                <input type="text" name="education[0][cgpa]" required>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="multi-entry">
-                    <div class="entry-title">Education 3 (Optional)</div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_3_qual">Qualification</label>
-                            <input type="text" id="edu_3_qual" name="edu_3_qual" value="{{ form_data.edu_3_qual if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_3_stream">Stream</label>
-                            <input type="text" id="edu_3_stream" name="edu_3_stream" value="{{ form_data.edu_3_stream if form_data else '' }}">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="edu_3_institute">Institute</label>
-                            <input type="text" id="edu_3_institute" name="edu_3_institute" value="{{ form_data.edu_3_institute if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_3_year">Year</label>
-                            <input type="text" id="edu_3_year" name="edu_3_year" value="{{ form_data.edu_3_year if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="edu_3_cgpa">CGPA/%</label>
-                            <input type="text" id="edu_3_cgpa" name="edu_3_cgpa" value="{{ form_data.edu_3_cgpa if form_data else '' }}">
-                        </div>
-                    </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addEducationEntry()">+ Add Another Education</button>
                 </div>
             </div>
 
             <!-- Achievements -->
             <div class="section">
                 <h2>Scholastic Achievements</h2>
-                <div class="multi-entry">
-                    <div class="entry-title">Achievement 1 <span class="required">*</span></div>
-                    <div class="form-group">
-                        <label for="ach_1_desc">Description</label>
-                        <textarea id="ach_1_desc" name="ach_1_desc" required>{{ form_data.ach_1_desc if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="ach_1_year">Year</label>
-                        <input type="text" id="ach_1_year" name="ach_1_year" value="{{ form_data.ach_1_year if form_data else '' }}" required>
+                <div id="achievements-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Achievement 1 <span class="required">*</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="achievements[0][description]" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="achievements[0][year]" required>
+                        </div>
                     </div>
                 </div>
-                <div class="multi-entry">
-                    <div class="entry-title">Achievement 2 (Optional)</div>
-                    <div class="form-group">
-                        <label for="ach_2_desc">Description</label>
-                        <textarea id="ach_2_desc" name="ach_2_desc">{{ form_data.ach_2_desc if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="ach_2_year">Year</label>
-                        <input type="text" id="ach_2_year" name="ach_2_year" value="{{ form_data.ach_2_year if form_data else '' }}">
-                    </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addAchievementEntry()">+ Add Another Achievement</button>
                 </div>
             </div>
 
             <!-- Internships -->
             <div class="section">
                 <h2>Internships</h2>
-                <div class="multi-entry">
-                    <div class="entry-title">Internship 1 <span class="required">*</span></div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="intern_1_company">Company</label>
-                            <input type="text" id="intern_1_company" name="intern_1_company" value="{{ form_data.intern_1_company if form_data else '' }}" required>
+                <div id="internships-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Internship 1 <span class="required">*</span></div>
                         </div>
-                        <div class="col">
-                            <label for="intern_1_role">Role</label>
-                            <input type="text" id="intern_1_role" name="intern_1_role" value="{{ form_data.intern_1_role if form_data else '' }}" required>
+                        <div class="row">
+                            <div class="col">
+                                <label>Company</label>
+                                <input type="text" name="internships[0][company]" required>
+                            </div>
+                            <div class="col">
+                                <label>Role</label>
+                                <input type="text" name="internships[0][role]" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="internships[0][duration]" required>
+                            </div>
                         </div>
-                        <div class="col">
-                            <label for="intern_1_duration">Duration</label>
-                            <input type="text" id="intern_1_duration" name="intern_1_duration" value="{{ form_data.intern_1_duration if form_data else '' }}" required>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="internship-points" data-index="0">
+                                <div class="point-entry">
+                                    <textarea name="internships[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addInternshipPoint(0)">+ Add Point</button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="intern_1_point_1">Key Point 1</label>
-                        <textarea id="intern_1_point_1" name="intern_1_point_1" required>{{ form_data.intern_1_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="intern_1_point_2">Key Point 2</label>
-                        <textarea id="intern_1_point_2" name="intern_1_point_2" required>{{ form_data.intern_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
-
-                <div class="multi-entry">
-                    <div class="entry-title">Internship 2 (Optional)</div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="intern_2_company">Company</label>
-                            <input type="text" id="intern_2_company" name="intern_2_company" value="{{ form_data.intern_2_company if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="intern_2_role">Role</label>
-                            <input type="text" id="intern_2_role" name="intern_2_role" value="{{ form_data.intern_2_role if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="intern_2_duration">Duration</label>
-                            <input type="text" id="intern_2_duration" name="intern_2_duration" value="{{ form_data.intern_2_duration if form_data else '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="intern_2_point_1">Key Point 1</label>
-                        <textarea id="intern_2_point_1" name="intern_2_point_1">{{ form_data.intern_2_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="intern_2_point_2">Key Point 2</label>
-                        <textarea id="intern_2_point_2" name="intern_2_point_2">{{ form_data.intern_2_point_2 if form_data else '' }}</textarea>
-                    </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addInternshipEntry()">+ Add Another Internship</button>
                 </div>
             </div>
 
             <!-- Projects -->
             <div class="section">
                 <h2>Key Projects</h2>
-                <div class="multi-entry">
-                    <div class="entry-title">Project 1 <span class="required">*</span></div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="proj_1_title">Title</label>
-                            <input type="text" id="proj_1_title" name="proj_1_title" value="{{ form_data.proj_1_title if form_data else '' }}" required>
+                <div id="projects-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Project 1 <span class="required">*</span></div>
                         </div>
-                        <div class="col">
-                            <label for="proj_1_type">Type</label>
-                            <input type="text" id="proj_1_type" name="proj_1_type" value="{{ form_data.proj_1_type if form_data else '' }}" required>
+                        <div class="row">
+                            <div class="col">
+                                <label>Title</label>
+                                <input type="text" name="projects[0][title]" required>
+                            </div>
+                            <div class="col">
+                                <label>Type</label>
+                                <input type="text" name="projects[0][type]" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="projects[0][duration]" required>
+                            </div>
                         </div>
-                        <div class="col">
-                            <label for="proj_1_duration">Duration</label>
-                            <input type="text" id="proj_1_duration" name="proj_1_duration" value="{{ form_data.proj_1_duration if form_data else '' }}" required>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="project-points" data-index="0">
+                                <div class="point-entry">
+                                    <textarea name="projects[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addProjectPoint(0)">+ Add Point</button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="proj_1_point_1">Key Point 1</label>
-                        <textarea id="proj_1_point_1" name="proj_1_point_1" required>{{ form_data.proj_1_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="proj_1_point_2">Key Point 2</label>
-                        <textarea id="proj_1_point_2" name="proj_1_point_2" required>{{ form_data.proj_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
-
-                <div class="multi-entry">
-                    <div class="entry-title">Project 2 (Optional)</div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="proj_2_title">Title</label>
-                            <input type="text" id="proj_2_title" name="proj_2_title" value="{{ form_data.proj_2_title if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="proj_2_type">Type</label>
-                            <input type="text" id="proj_2_type" name="proj_2_type" value="{{ form_data.proj_2_type if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="proj_2_duration">Duration</label>
-                            <input type="text" id="proj_2_duration" name="proj_2_duration" value="{{ form_data.proj_2_duration if form_data else '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="proj_2_point_1">Key Point 1</label>
-                        <textarea id="proj_2_point_1" name="proj_2_point_1">{{ form_data.proj_2_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="proj_2_point_2">Key Point 2</label>
-                        <textarea id="proj_2_point_2" name="proj_2_point_2">{{ form_data.proj_2_point_2 if form_data else '' }}</textarea>
-                    </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addProjectEntry()">+ Add Another Project</button>
                 </div>
             </div>
 
             <!-- Positions of Responsibility -->
             <div class="section">
                 <h2>Positions of Responsibility</h2>
-                <div class="multi-entry">
-                    <div class="entry-title">Position 1 <span class="required">*</span></div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="por_1_club">Club/Organization</label>
-                            <input type="text" id="por_1_club" name="por_1_club" value="{{ form_data.por_1_club if form_data else '' }}" required>
+                <div id="positions-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Position 1 <span class="required">*</span></div>
                         </div>
-                        <div class="col">
-                            <label for="por_1_role">Role</label>
-                            <input type="text" id="por_1_role" name="por_1_role" value="{{ form_data.por_1_role if form_data else '' }}" required>
+                        <div class="row">
+                            <div class="col">
+                                <label>Club/Organization</label>
+                                <input type="text" name="positions[0][club]" required>
+                            </div>
+                            <div class="col">
+                                <label>Role</label>
+                                <input type="text" name="positions[0][role]" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="positions[0][duration]" required>
+                            </div>
                         </div>
-                        <div class="col">
-                            <label for="por_1_duration">Duration</label>
-                            <input type="text" id="por_1_duration" name="por_1_duration" value="{{ form_data.por_1_duration if form_data else '' }}" required>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="position-points" data-index="0">
+                                <div class="point-entry">
+                                    <textarea name="positions[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addPositionPoint(0)">+ Add Point</button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="por_1_point_1">Key Point 1</label>
-                        <textarea id="por_1_point_1" name="por_1_point_1" required>{{ form_data.por_1_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="por_1_point_2">Key Point 2</label>
-                        <textarea id="por_1_point_2" name="por_1_point_2" required>{{ form_data.por_1_point_2 if form_data else '' }}</textarea>
                     </div>
                 </div>
-
-                <div class="multi-entry">
-                    <div class="entry-title">Position 2 (Optional)</div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="por_2_club">Club/Organization</label>
-                            <input type="text" id="por_2_club" name="por_2_club" value="{{ form_data.por_2_club if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="por_2_role">Role</label>
-                            <input type="text" id="por_2_role" name="por_2_role" value="{{ form_data.por_2_role if form_data else '' }}">
-                        </div>
-                        <div class="col">
-                            <label for="por_2_duration">Duration</label>
-                            <input type="text" id="por_2_duration" name="por_2_duration" value="{{ form_data.por_2_duration if form_data else '' }}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="por_2_point_1">Key Point 1</label>
-                        <textarea id="por_2_point_1" name="por_2_point_1">{{ form_data.por_2_point_1 if form_data else '' }}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="por_2_point_2">Key Point 2</label>
-                        <textarea id="por_2_point_2" name="por_2_point_2">{{ form_data.por_2_point_2 if form_data else '' }}</textarea>
-                    </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addPositionEntry()">+ Add Another Position</button>
                 </div>
             </div>
 
             <!-- Extra Curricular Activities -->
             <div class="section">
                 <h2>Extra Curricular Activities</h2>
-                <div class="form-group">
-                    <label for="extracur_1_desc">Activity 1 <span class="required">*</span></label>
-                    <textarea id="extracur_1_desc" name="extracur_1_desc" required>{{ form_data.extracur_1_desc if form_data else '' }}</textarea>
+                <div id="activities-container">
+                    <div class="activity-entry">
+                        <textarea name="extracurricular[]" placeholder="Activity 1" required></textarea>
+                        <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="extracur_2_desc">Activity 2 (Optional)</label>
-                    <textarea id="extracur_2_desc" name="extracur_2_desc">{{ form_data.extracur_2_desc if form_data else '' }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="extracur_3_desc">Activity 3 (Optional)</label>
-                    <textarea id="extracur_3_desc" name="extracur_3_desc">{{ form_data.extracur_3_desc if form_data else '' }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="extracur_4_desc">Activity 4 (Optional)</label>
-                    <textarea id="extracur_4_desc" name="extracur_4_desc">{{ form_data.extracur_4_desc if form_data else '' }}</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="extracur_5_desc">Activity 5 (Optional)</label>
-                    <textarea id="extracur_5_desc" name="extracur_5_desc">{{ form_data.extracur_5_desc if form_data else '' }}</textarea>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addActivityEntry()">+ Add Another Activity</button>
                 </div>
             </div>
 
             <!-- Technical Skills -->
             <div class="section">
                 <h2>Technical Skills</h2>
-                <div class="row">
-                    <div class="col">
-                        <label for="techskill_1">Skill 1 <span class="required">*</span></label>
-                        <input type="text" id="techskill_1" name="techskill_1" value="{{ form_data.techskill_1 if form_data else '' }}" required>
-                    </div>
-                    <div class="col">
-                        <label for="techskill_2">Skill 2 (Optional)</label>
-                        <input type="text" id="techskill_2" name="techskill_2" value="{{ form_data.techskill_2 if form_data else '' }}">
+                <div id="skills-container">
+                    <div class="skill-entry">
+                        <input type="text" name="technical_skills[]" placeholder="Skill 1" required>
+                        <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="techskill_3">Skill 3 (Optional)</label>
-                        <input type="text" id="techskill_3" name="techskill_3" value="{{ form_data.techskill_3 if form_data else '' }}">
-                    </div>
-                    <div class="col">
-                        <label for="techskill_4">Skill 4 (Optional)</label>
-                        <input type="text" id="techskill_4" name="techskill_4" value="{{ form_data.techskill_4 if form_data else '' }}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="techskill_5">Skill 5 (Optional)</label>
-                    <input type="text" id="techskill_5" name="techskill_5" value="{{ form_data.techskill_5 if form_data else '' }}">
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addSkillEntry()">+ Add Another Skill</button>
                 </div>
             </div>
 
             <button type="submit">Generate CV</button>
         </form>
     </div>
+
+    <script>
+        // Counter for dynamic entries
+        let educationCount = 1;
+        let achievementCount = 1;
+        let internshipCount = 1;
+        let projectCount = 1;
+        let positionCount = 1;
+
+        // Education functions
+        function addEducationEntry() {
+            const container = document.getElementById('education-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Education Entry ${educationCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Qualification</label>
+                        <input type="text" name="education[${educationCount}][qualification]" required>
+                    </div>
+                    <div class="col">
+                        <label>Stream</label>
+                        <input type="text" name="education[${educationCount}][stream]" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Institute</label>
+                        <input type="text" name="education[${educationCount}][institute]" required>
+                    </div>
+                    <div class="col">
+                        <label>Year</label>
+                        <input type="text" name="education[${educationCount}][year]" required>
+                    </div>
+                    <div class="col">
+                        <label>CGPA/%</label>
+                        <input type="text" name="education[${educationCount}][cgpa]" required>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            educationCount++;
+        }
+
+        // Achievement functions
+        function addAchievementEntry() {
+            const container = document.getElementById('achievements-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Achievement ${achievementCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="achievements[${achievementCount}][description]" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" name="achievements[${achievementCount}][year]" required>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            achievementCount++;
+        }
+
+        // Internship functions
+        function addInternshipEntry() {
+            const container = document.getElementById('internships-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Internship ${internshipCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Company</label>
+                        <input type="text" name="internships[${internshipCount}][company]" required>
+                    </div>
+                    <div class="col">
+                        <label>Role</label>
+                        <input type="text" name="internships[${internshipCount}][role]" required>
+                    </div>
+                    <div class="col">
+                        <label>Duration</label>
+                        <input type="text" name="internships[${internshipCount}][duration]" required>
+                    </div>
+                </div>
+                <div class="points-container">
+                    <label>Key Points</label>
+                    <div class="internship-points" data-index="${internshipCount}">
+                        <div class="point-entry">
+                            <textarea name="internships[${internshipCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="addInternshipPoint(${internshipCount})">+ Add Point</button>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            internshipCount++;
+        }
+
+        function addInternshipPoint(index) {
+            const container = document.querySelector(`.internship-points[data-index="${index}"]`);
+            const newPoint = document.createElement('div');
+            newPoint.className = 'point-entry';
+            newPoint.innerHTML = `
+                <textarea name="internships[${index}][points][]" placeholder="Key point" required></textarea>
+                <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+            `;
+            container.appendChild(newPoint);
+        }
+
+        // Project functions
+        function addProjectEntry() {
+            const container = document.getElementById('projects-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Project ${projectCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Title</label>
+                        <input type="text" name="projects[${projectCount}][title]" required>
+                    </div>
+                    <div class="col">
+                        <label>Type</label>
+                        <input type="text" name="projects[${projectCount}][type]" required>
+                    </div>
+                    <div class="col">
+                        <label>Duration</label>
+                        <input type="text" name="projects[${projectCount}][duration]" required>
+                    </div>
+                </div>
+                <div class="points-container">
+                    <label>Key Points</label>
+                    <div class="project-points" data-index="${projectCount}">
+                        <div class="point-entry">
+                            <textarea name="projects[${projectCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="addProjectPoint(${projectCount})">+ Add Point</button>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            projectCount++;
+        }
+
+        function addProjectPoint(index) {
+            const container = document.querySelector(`.project-points[data-index="${index}"]`);
+            const newPoint = document.createElement('div');
+            newPoint.className = 'point-entry';
+            newPoint.innerHTML = `
+                <textarea name="projects[${index}][points][]" placeholder="Key point" required></textarea>
+                <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+            `;
+            container.appendChild(newPoint);
+        }
+
+        // Position functions
+        function addPositionEntry() {
+            const container = document.getElementById('positions-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Position ${positionCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Club/Organization</label>
+                        <input type="text" name="positions[${positionCount}][club]" required>
+                    </div>
+                    <div class="col">
+                        <label>Role</label>
+                        <input type="text" name="positions[${positionCount}][role]" required>
+                    </div>
+                    <div class="col">
+                        <label>Duration</label>
+                        <input type="text" name="positions[${positionCount}][duration]" required>
+                    </div>
+                </div>
+                <div class="points-container">
+                    <label>Key Points</label>
+                    <div class="position-points" data-index="${positionCount}">
+                        <div class="point-entry">
+                            <textarea name="positions[${positionCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="addPositionPoint(${positionCount})">+ Add Point</button>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            positionCount++;
+        }
+
+        function addPositionPoint(index) {
+            const container = document.querySelector(`.position-points[data-index="${index}"]`);
+            const newPoint = document.createElement('div');
+            newPoint.className = 'point-entry';
+            newPoint.innerHTML = `
+                <textarea name="positions[${index}][points][]" placeholder="Key point" required></textarea>
+                <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+            `;
+            container.appendChild(newPoint);
+        }
+
+        // Activity functions
+        function addActivityEntry() {
+            const container = document.getElementById('activities-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'activity-entry';
+            newEntry.innerHTML = `
+                <textarea name="extracurricular[]" placeholder="Activity" required></textarea>
+                <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        function removeActivity(button) {
+            button.parentElement.remove();
+        }
+
+        // Skill functions
+        function addSkillEntry() {
+            const container = document.getElementById('skills-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'skill-entry';
+            newEntry.innerHTML = `
+                <input type="text" name="technical_skills[]" placeholder="Skill" required>
+                <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
+            `;
+            container.appendChild(newEntry);
+        }
+
+        function removeSkill(button) {
+            button.parentElement.remove();
+        }
+
+        // Generic remove functions
+        function removeEntry(button) {
+            button.closest('.dynamic-entry').remove();
+        }
+
+        function removePoint(button) {
+            button.parentElement.remove();
+        }
+
+        // Pre-populate form with test data if available
+        {% if form_data %}
+        window.addEventListener('DOMContentLoaded', function() {
+            populateFormWithTestData();
+        });
+
+        function populateFormWithTestData() {
+            const formData = {{ form_data | tojson }};
+            
+            // Personal info
+            if (formData.personal_info) {
+                document.getElementById('full_name').value = formData.personal_info.full_name || '';
+                document.getElementById('highest_education').value = formData.personal_info.highest_education || '';
+                document.getElementById('city').value = formData.personal_info.city || '';
+                document.getElementById('phone').value = formData.personal_info.phone || '';
+                document.getElementById('email').value = formData.personal_info.email || '';
+            }
+            
+            // Education
+            if (formData.education && formData.education.length > 0) {
+                const eduContainer = document.getElementById('education-container');
+                eduContainer.innerHTML = '';
+                educationCount = 0;
+                
+                formData.education.forEach((edu, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Education Entry ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Qualification</label>
+                                <input type="text" name="education[${index}][qualification]" value="${edu.qualification || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Stream</label>
+                                <input type="text" name="education[${index}][stream]" value="${edu.stream || ''}" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Institute</label>
+                                <input type="text" name="education[${index}][institute]" value="${edu.institute || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Year</label>
+                                <input type="text" name="education[${index}][year]" value="${edu.year || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>CGPA/%</label>
+                                <input type="text" name="education[${index}][cgpa]" value="${edu.cgpa || ''}" required>
+                            </div>
+                        </div>
+                    `;
+                    eduContainer.appendChild(entry);
+                    educationCount++;
+                });
+            }
+            
+            // Achievements
+            if (formData.achievements && formData.achievements.length > 0) {
+                const achContainer = document.getElementById('achievements-container');
+                achContainer.innerHTML = '';
+                achievementCount = 0;
+                
+                formData.achievements.forEach((ach, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Achievement ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="achievements[${index}][description]" required>${ach.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="achievements[${index}][year]" value="${ach.year || ''}" required>
+                        </div>
+                    `;
+                    achContainer.appendChild(entry);
+                    achievementCount++;
+                });
+            }
+            
+            // Internships
+            if (formData.internships && formData.internships.length > 0) {
+                const internContainer = document.getElementById('internships-container');
+                internContainer.innerHTML = '';
+                internshipCount = 0;
+                
+                formData.internships.forEach((intern, index) => {
+                    const pointsHtml = intern.points ? intern.points.map(point => `
+                        <div class="point-entry">
+                            <textarea name="internships[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    `).join('') : '';
+                    
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Internship ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Company</label>
+                                <input type="text" name="internships[${index}][company]" value="${intern.company || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Role</label>
+                                <input type="text" name="internships[${index}][role]" value="${intern.role || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="internships[${index}][duration]" value="${intern.duration || ''}" required>
+                            </div>
+                        </div>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="internship-points" data-index="${index}">
+                                ${pointsHtml}
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addInternshipPoint(${index})">+ Add Point</button>
+                        </div>
+                    `;
+                    internContainer.appendChild(entry);
+                    internshipCount++;
+                });
+            }
+            
+            // Projects
+            if (formData.projects && formData.projects.length > 0) {
+                const projContainer = document.getElementById('projects-container');
+                projContainer.innerHTML = '';
+                projectCount = 0;
+                
+                formData.projects.forEach((proj, index) => {
+                    const pointsHtml = proj.points ? proj.points.map(point => `
+                        <div class="point-entry">
+                            <textarea name="projects[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    `).join('') : '';
+                    
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Project ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Title</label>
+                                <input type="text" name="projects[${index}][title]" value="${proj.title || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Type</label>
+                                <input type="text" name="projects[${index}][type]" value="${proj.type || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="projects[${index}][duration]" value="${proj.duration || ''}" required>
+                            </div>
+                        </div>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="project-points" data-index="${index}">
+                                ${pointsHtml}
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addProjectPoint(${index})">+ Add Point</button>
+                        </div>
+                    `;
+                    projContainer.appendChild(entry);
+                    projectCount++;
+                });
+            }
+            
+            // Positions of Responsibility
+            if (formData.positions_of_responsibility && formData.positions_of_responsibility.length > 0) {
+                const posContainer = document.getElementById('positions-container');
+                posContainer.innerHTML = '';
+                positionCount = 0;
+                
+                formData.positions_of_responsibility.forEach((pos, index) => {
+                    const pointsHtml = pos.points ? pos.points.map(point => `
+                        <div class="point-entry">
+                            <textarea name="positions[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    `).join('') : '';
+                    
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Position ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label>Club/Organization</label>
+                                <input type="text" name="positions[${index}][club]" value="${pos.club || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Role</label>
+                                <input type="text" name="positions[${index}][role]" value="${pos.role || ''}" required>
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="positions[${index}][duration]" value="${pos.duration || ''}" required>
+                            </div>
+                        </div>
+                        <div class="points-container">
+                            <label>Key Points</label>
+                            <div class="position-points" data-index="${index}">
+                                ${pointsHtml}
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addPositionPoint(${index})">+ Add Point</button>
+                        </div>
+                    `;
+                    posContainer.appendChild(entry);
+                    positionCount++;
+                });
+            }
+            
+            // Extracurricular Activities
+            if (formData.extracurricular && formData.extracurricular.length > 0) {
+                const actContainer = document.getElementById('activities-container');
+                actContainer.innerHTML = '';
+                
+                formData.extracurricular.forEach((activity, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'activity-entry';
+                    entry.innerHTML = `
+                        <textarea name="extracurricular[]" placeholder="Activity" required>${activity}</textarea>
+                        <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
+                    `;
+                    actContainer.appendChild(entry);
+                });
+            }
+            
+            // Technical Skills
+            if (formData.technical_skills && formData.technical_skills.length > 0) {
+                const skillContainer = document.getElementById('skills-container');
+                skillContainer.innerHTML = '';
+                
+                formData.technical_skills.forEach((skill, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'skill-entry';
+                    entry.innerHTML = `
+                        <input type="text" name="technical_skills[]" placeholder="Skill" value="${skill}" required>
+                        <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
+                    `;
+                    skillContainer.appendChild(entry);
+                });
+            }
+        }
+        {% endif %}
+    </script>
 </body>
 </html>

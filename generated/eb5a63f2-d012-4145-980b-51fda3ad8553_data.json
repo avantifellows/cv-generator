@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "cv_id": "eb5a63f2-d012-4145-980b-51fda3ad8553",
+    "created_at": "2025-07-03T12:48:38.748327",
+    "last_modified": "2025-07-03T12:48:38.748353",
+    "version": "1.0"
+  },
+  "personal_info": {
+    "full_name": "Pritam Sukumar",
+    "highest_education": "MTex",
+    "city": "Bangalor",
+    "phone": "9193326929",
+    "email": "pritramps@gmail.com"
+  },
+  "education": [
+    {
+      "qualification": "IT",
+      "stream": "CS",
+      "institute": "akjsfa",
+      "year": "2022",
+      "cgpa": "7.8"
+    }
+  ],
+  "achievements": [
+    {
+      "description": "Wow I am so great. Wow I am so greatWow I am so great. Wow I am so great. Wow I am so greatWow I am so great.Wow I am so great. Wow I am so greatWow I am so great.Wow I am so great. Wow I am so greatWow I am so great.Wow I am so great. Wow I am so greatWow I am so great.Wow I am so great. Wow I am so greatWow I am so great.",
+      "year": "2-022"
+    }
+  ],
+  "internships": [
+    {
+      "company": "Google",
+      "role": "SDE",
+      "duration": "1 month",
+      "points": [
+        "Did this",
+        "and that"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "CV generator",
+      "type": "AWesom",
+      "duration": "2 months",
+      "points": [
+        "das adklja",
+        "dslkfjadlgjasldkf"
+      ]
+    }
+  ],
+  "positions_of_responsibility": [
+    {
+      "club": "Cool",
+      "role": "Tn",
+      "duration": "324",
+      "points": [
+        "Yeah I did",
+        "Somethiung"
+      ]
+    }
+  ],
+  "extracurricular": [
+    "RUnning"
+  ],
+  "technical_skills": [
+    "JS",
+    "Python"
+  ]
+}

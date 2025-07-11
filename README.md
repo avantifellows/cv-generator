@@ -1,305 +1,369 @@
-# CV Generator
+# CV Generator v2.0 - Clean Architecture
 
-A modern FastAPI web application that generates professional PDF and HTML resumes from dynamic LaTeX templates with conditional rendering.
+## Overview
 
-## Features
+This is the refactored version of the CV Generator with clean architecture, Pydantic models, and proper service layer separation.
 
-- **Dynamic Content Rendering**: Only shows sections with actual content (no empty bullet points or sections)
-- **Web-based Form**: Easy-to-use interface for entering CV information
-- **Dual Output**: Generates both PDF and HTML versions of your CV
-- **Conditional Templates**: Smart Jinja2 templates that adapt based on your data
-- **Structured Data Storage**: Saves complete CV data in JSON format for future editing
-- **Professional Formatting**: Clean, academic-style LaTeX output
-- **Built with FastAPI**: Modern, fast Python web framework
+## Architecture
 
-## Quick Start
-
-```bash
-# Clone and setup
-git clone <repository-url>
-cd cv-generator
-python3 -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-
-# Run in development mode (with auto-reload)
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-
-# Open http://localhost:8000 and start generating CVs!
+### Project Structure
+```
+cv-generator/
+├── app/
+│   ├── models/
+│   │   └── cv_data.py          # Pydantic models for data validation
+│   ├── services/
+│   │   └── cv_service.py       # Business logic layer
+│   ├── core/
+│   │   ├── exceptions.py       # Custom exceptions
+│   │   └── logging.py          # Logging configuration
+│   └── utils/
+├── templates/                   # Jinja2 templates
+├── static/                      # Static assets
+├── generated/                   # Generated CV files
+├── main_v2.py                   # New FastAPI application
+├── main.py                      # Legacy application (for comparison)
+└── requirements.txt
 ```
 
-## Prerequisites
+### Key Improvements
 
-- Python 3.7+
-- LaTeX distribution with pdflatex
-- Virtual environment (recommended)
+#### 1. **Pydantic Models** 🔥
+- **Before**: Manual field validation with 50+ individual parameters
+- **After**: Structured data models with automatic validation
 
-### Installing LaTeX
-
-**macOS:**
-```bash
-brew install --cask mactex
+```python
+class CVData(BaseModel):
+    personal_info: PersonalInfo
+    education: List[EducationEntry]
+    internships: List[InternshipEntry]
+    # ... etc
 ```
 
-**Ubuntu/Debian:**
-```bash
-sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+#### 2. **Service Layer** 🔥
+- **Before**: Business logic mixed with API endpoints
+- **After**: Clean separation with dedicated service classes
+
+```python
+class CVService:
+    def generate_cv(self, cv_data: CVData) -> str:
+        # Clean business logic
+    
+    def get_cv_data(self, cv_id: str) -> CVDocument:
+        # Data retrieval logic
 ```
 
-**Windows:**
-Download MikTeX from https://miktex.org/download
+#### 3. **Proper Error Handling** 🔥
+- **Before**: Generic HTTP exceptions
+- **After**: Custom exceptions with proper logging
 
-## Installation
-
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd cv-generator
+```python
+@app.exception_handler(CVNotFoundError)
+async def cv_not_found_handler(request: Request, exc: CVNotFoundError):
+    logger.warning(f"CV not found: {str(exc)}")
+    return HTTPException(status_code=404, detail=str(exc))
 ```
 
-2. Create a virtual environment:
-```bash
-python3 -m venv env
+#### 4. **Structured Logging** 🔥
+- **Before**: Print statements
+- **After**: Proper structured logging with levels
+
+```python
+logger.info(f"CV generated successfully: {cv_id}")
+logger.error(f"Error generating PDF: {str(e)}")
 ```
 
-3. Activate the virtual environment:
-```bash
-# On macOS/Linux:
-source env/bin/activate
+#### 5. **API Versioning** 🔥
+- **Before**: No API structure
+- **After**: Versioned API endpoints
 
-# On Windows:
-env\Scripts\activate
+```python
+@app.get("/api/v1/cvs")
+@app.get("/api/v1/cv/{cv_id}")
+@app.delete("/api/v1/cv/{cv_id}")
 ```
-
-4. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-## Running the Application
-
-### Development Mode (Recommended)
-
-For development with automatic restart on file changes:
-
-```bash
-# Activate virtual environment
-source env/bin/activate
-
-# Run with auto-reload (watches Python files and templates)
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-This will automatically restart the server when you modify:
-- Python files (`main.py`, etc.)
-- Template files (`templates/*.tex`, `templates/*.html`)
-- Any other project files
-
-### Production Mode
-
-For production deployment:
-
-```bash
-# Activate virtual environment
-source env/bin/activate
-
-# Run without auto-reload
-python main.py
-```
-
-Or use uvicorn directly:
-```bash
-uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
-### Accessing the Application
-
-Open your browser and navigate to:
-```
-http://localhost:8000
-```
-
-**Development Tip**: When using `--reload`, template changes are picked up immediately, so you don't need to manually restart the server after fixing LaTeX syntax or updating templates.
 
 ## Usage
 
-1. **Fill out the CV form** with your information at `http://localhost:8000`
-2. **Submit the form** to generate your CV with a unique ID
-3. **View the HTML version** or **download the PDF** directly from the results page
-4. **Only filled sections appear** - empty optional fields are automatically hidden
+### Running the Application
 
-### Smart Content Rendering
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-The application intelligently renders your CV:
-- ✅ **Education entries**: Only shows rows with actual qualifications
-- ✅ **Achievements**: Hidden if no achievements are entered
-- ✅ **Internships**: Only appears if you have internship experience
-- ✅ **Projects**: Hidden if no projects are entered
-- ✅ **Positions of Responsibility**: Only shows if you have leadership roles
-- ✅ **Extracurricular Activities**: Hidden if no activities are listed
-- ✅ **Technical Skills**: Only shows filled skill entries
+# Run the new application
+uvicorn main_v2:app --host 0.0.0.0 --port 8000 --reload
+
+# Or run the legacy application for comparison
+uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+```
+
+### API Endpoints
+
+#### Web Interface
+- `GET /` - CV form
+- `GET /test` - Pre-filled test form
+- `POST /generate` - Generate CV from form data
+- `GET /cv/{cv_id}` - View CV with download button
+- `GET /cv/{cv_id}/pdf` - Download PDF
+
+#### API Endpoints
+- `GET /api/v1/cvs` - List all CVs
+- `GET /api/v1/cv/{cv_id}` - Get CV data
+- `DELETE /api/v1/cv/{cv_id}` - Delete CV
+- `GET /health` - Health check
+
+### Testing
+
+```bash
+# Test the models and services
+python -c "
+from app.models.cv_data import CVData
+from app.services.cv_service import CVService
+import json
+
+# Load test data
+with open('test_data_structured.json', 'r') as f:
+    data = json.load(f)
+
+# Validate data
+cv_data = CVData(**data)
+print(f'✓ Validation passed: {cv_data.personal_info.full_name}')
+
+# Test service
+service = CVService()
+cv_id = service.generate_cv(cv_data)
+print(f'✓ CV generated: {cv_id}')
+"
+```
+
+## Data Structure
+
+### New Structured Format
+The new version uses proper data structures instead of flat field names:
+
+```json
+{
+  "personal_info": {
+    "full_name": "Jane Smith",
+    "email": "jane@example.com"
+  },
+  "education": [
+    {
+      "qualification": "M.Tech",
+      "institute": "Stanford University",
+      "year": "2023"
+    }
+  ],
+  "internships": [
+    {
+      "company": "Google",
+      "role": "Software Engineer",
+      "points": ["Achievement 1", "Achievement 2"]
+    }
+  ]
+}
+```
+
+### Legacy Format (for backward compatibility)
+The system still supports the old flat format during the transition:
+
+```json
+{
+  "full_name": "Jane Smith",
+  "edu_1_qual": "M.Tech",
+  "edu_1_institute": "Stanford University",
+  "intern_1_company": "Google"
+}
+```
+
+## Features
+
+### Data Validation
+- **Email validation** with regex patterns
+- **Required field validation** with meaningful error messages
+- **Data type validation** (strings, lists, etc.)
+- **Length constraints** (min/max characters)
+- **Array size limits** (max entries per section)
+
+### Error Handling
+- **Custom exceptions** for different error types
+- **Structured logging** with different levels
+- **Graceful error recovery** with fallback options
+- **Detailed error messages** for debugging
+
+### Performance
+- **Efficient data processing** with Pydantic models
+- **Proper file handling** with context managers
+- **Memory-efficient** PDF generation
+- **Caching-ready** template rendering
+
+### Security
+- **Input validation** prevents injection attacks
+- **Proper error messages** don't expose internals
+- **File path validation** prevents directory traversal
+- **Content-type validation** for uploads
+
+## Migration Guide
+
+### From v1.0 to v2.0
+
+1. **Install new dependencies**:
+   ```bash
+   pip install pydantic>=2.11.0
+   ```
+
+2. **Update imports**:
+   ```python
+   # Old
+   from main import generate_cv
+   
+   # New
+   from app.services.cv_service import CVService
+   from app.models.cv_data import CVData
+   ```
+
+3. **Update data structure**:
+   ```python
+   # Old
+   form_data = {"edu_1_qual": "M.Tech", "edu_2_qual": "B.Tech"}
+   
+   # New
+   cv_data = CVData(
+       education=[
+           EducationEntry(qualification="M.Tech"),
+           EducationEntry(qualification="B.Tech")
+       ]
+   )
+   ```
+
+4. **Update API calls**:
+   ```python
+   # Old
+   response = requests.post("/generate", data=form_data)
+   
+   # New
+   response = requests.post("/generate", json=cv_data.dict())
+   ```
+
+## Development
+
+### Adding New Fields
+
+1. **Update the models** in `app/models/cv_data.py`:
+   ```python
+   class PersonalInfo(BaseModel):
+       full_name: str
+       new_field: str = Field(..., min_length=1)
+   ```
+
+2. **Update the service** in `app/services/cv_service.py`:
+   ```python
+   def convert_legacy_data(self, legacy_data: dict) -> CVData:
+       # Add conversion logic for new field
+   ```
+
+3. **Update templates** to display the new field
+
+### Adding New Endpoints
+
+1. **Add to main_v2.py**:
+   ```python
+   @app.get("/api/v1/new-endpoint")
+   async def new_endpoint():
+       return {"message": "New endpoint"}
+   ```
+
+2. **Add proper error handling**:
+   ```python
+   try:
+       result = service.new_operation()
+       return result
+   except CustomException as e:
+       logger.error(f"Error in new endpoint: {str(e)}")
+       raise HTTPException(status_code=500, detail=str(e))
+   ```
 
 ## Testing
 
-### Quick Test with Sample Data
-
-Run the comprehensive test script to validate the template system:
-
+### Unit Tests
 ```bash
-# Activate virtual environment
-source env/bin/activate
+# Test models
+python -m pytest tests/test_models.py
 
-# Run the test script
-python test_template.py
+# Test services
+python -m pytest tests/test_services.py
+
+# Test API endpoints
+python -m pytest tests/test_api.py
 ```
 
-This will:
-- Load realistic sample data from `test_data.json`
-- Generate LaTeX, HTML, and PDF files
-- Validate all sections render correctly
-- Check for template syntax errors
-- Output files: `generated/test_cv_jane_smith.*`
-
-### Manual Testing
-
-1. **Start the server**:
-   ```bash
-   source env/bin/activate
-   python main.py
-   ```
-
-2. **Test different scenarios**:
-   - Fill all fields to test complete CV generation
-   - Leave some sections empty to test conditional rendering
-   - Try various combinations of filled/empty fields
-
-3. **Verify outputs**:
-   - Check HTML version displays correctly
-   - Ensure PDF downloads with proper filename
-   - Confirm empty sections don't appear
-
-### Test Files Generated
-
-- `generated/test_cv_jane_smith.tex` - LaTeX source
-- `generated/test_cv_jane_smith.html` - HTML version
-- `generated/test_cv_jane_smith.pdf` - PDF output
-- `test_data.json` - Sample CV data for testing
-
-## Project Structure
-
-```
-cv-generator/
-├── main.py                 # FastAPI application with conditional rendering
-├── requirements.txt        # Python dependencies
-├── test_template.py        # Comprehensive test script
-├── test_data.json         # Sample CV data for testing
-├── templates/
-│   ├── form.html          # Web form for CV input
-│   ├── cv_template.tex    # Jinja2 LaTeX template with conditionals
-│   └── cv_template.html   # Jinja2 HTML template with conditionals
-├── generated/             # Generated CV files (LaTeX, HTML, PDF, JSON)
-├── static/               # Static web assets
-└── env/                  # Virtual environment
-```
-
-## API Endpoints
-
-- `GET /` - CV form page
-- `POST /generate` - Generate CV from form data (returns redirect to CV page)
-- `GET /cv/{cv_id}` - View generated CV with download button
-- `GET /cv/{cv_id}/html` - Download raw HTML CV
-- `GET /cv/{cv_id}/pdf` - Download PDF CV with custom filename
-
-## Technical Details
-
-### Template System
-
-The application uses **Jinja2 templates** for both LaTeX and HTML generation:
-
-- **Conditional Rendering**: Sections only appear if they contain data
-- **Smart Filtering**: Empty entries are automatically removed
-- **Professional Formatting**: Clean LaTeX output without syntax errors
-- **Responsive Design**: HTML version works on all devices
-
-### Data Storage
-
-Each generated CV includes:
-- **LaTeX source** (`{cv_id}.tex`)
-- **HTML version** (`{cv_id}.html`)  
-- **PDF output** (`{cv_id}.pdf`)
-- **Structured JSON data** (`{cv_id}_data.json`) for future editing
-- **Display HTML** (`{cv_id}_display.html`) with download button
-
-### File Naming
-
-PDFs are automatically named using the person's name:
-- Input: "Jane Smith" → Output: `jane_smith.pdf`
-- Handles special characters and spaces automatically
-
-## Troubleshooting
-
-### Common Issues
-
-#### LaTeX Installation
-If you get `pdflatex not found` errors:
+### Integration Tests
 ```bash
-# Check if pdflatex is installed
-which pdflatex
-
-# If not found, install LaTeX:
-# macOS:
-brew install --cask mactex
-
-# Ubuntu/Debian:
-sudo apt-get install texlive-latex-recommended
+# Test full workflow
+python -m pytest tests/test_integration.py
 ```
 
-#### PDF Generation Stops with Questions
-If pdflatex asks questions during compilation, the template likely has syntax errors. 
+## Deployment
 
-**If using development mode (recommended):**
-Template fixes are automatically picked up - just fix the template and try generating again.
+### Docker
+```dockerfile
+FROM python:3.11-slim
 
-**If using production mode:**
-Restart the server to load template fixes:
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+CMD ["uvicorn", "main_v2:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+### Environment Variables
 ```bash
-# Stop server (Ctrl+C), then restart:
-source env/bin/activate
-python main.py
-
-# Or better yet, switch to development mode:
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+# .env file
+LOG_LEVEL=INFO
+PDF_TIMEOUT=30
+MAX_FILE_SIZE=10MB
 ```
 
-#### Template Syntax Errors
-Run the test script to validate templates:
+## Monitoring
+
+### Health Check
 ```bash
-python test_template.py
+curl http://localhost:8000/health
 ```
 
-#### Port Already in Use
-If port 8000 is busy:
+### Logs
 ```bash
-# Use a different port
-uvicorn main:app --host 0.0.0.0 --port 8001
+# View logs
+tail -f app.log
+
+# Filter by level
+grep "ERROR" app.log
 ```
-
-### Getting Help
-
-- **Use development mode**: Run with `--reload` flag for automatic restarts
-- Check the `generated/` folder for LaTeX error files (`.log`)
-- Run `python test_template.py` to validate the system
-- Ensure all dependencies are installed
-- In development mode, template changes are picked up automatically
-- For production mode, restart the server after making template changes
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Run tests: `python test_template.py`
-4. Submit a pull request
+1. **Follow the new architecture** patterns
+2. **Add proper validation** for new fields
+3. **Include error handling** for new endpoints
+4. **Add logging** for debugging
+5. **Update tests** for new functionality
+6. **Update documentation** for API changes
 
-## License
+## Changelog
 
-This project is open source. Feel free to use and modify as needed.
+### v2.0.0
+- ✅ Pydantic models for data validation
+- ✅ Service layer architecture
+- ✅ Proper error handling and logging
+- ✅ API versioning
+- ✅ Structured test data
+- ✅ Health check endpoint
+- ✅ Backward compatibility with legacy format
+
+### v1.0.0
+- ✅ Basic CV generation
+- ✅ HTML and PDF output
+- ✅ Form-based interface
+- ✅ Template rendering
