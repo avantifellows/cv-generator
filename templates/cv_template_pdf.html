@@ -6,11 +6,11 @@
     <title>CV - {{personal_info.full_name}}</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
             max-width: 800px;
             margin: 0 auto;
-            padding: 15px;
-            line-height: 1.3;
+            padding: 4px;
+            line-height: 1.2;
             color: #333;
             font-size: 12px;
         }
@@ -18,40 +18,52 @@
         .header {
             text-align: center;
             border-bottom: 2px solid #4C5196;
-            padding-bottom: 12px;
-            margin-bottom: 18px;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
         }
         
         .name {
-            font-size: 1.8em;
+            font-size: 2.5em;
             font-weight: bold;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
             color: #4C5196;
         }
         
         .contact-info {
-            font-size: 0.9em;
-            margin-bottom: 4px;
+            font-size: 1.1em;
+            margin-bottom: 10px;
         }
         
         .section {
-            margin-bottom: 18px;
+            margin-bottom: 12px;
         }
         
         .section-title {
-            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
             font-weight: bold;
             color: #4C5196;
-            border-bottom: 1px solid #4C5196;
-            padding-bottom: 3px;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        .section-title-text {
+            margin-right: 12px;
+            white-space: nowrap;
+        }
+        .section-title-line {
+            flex: 1;
+            height: 2px;
+            background: #4C5196;
+            border-radius: 1px;
+            opacity: 0.5;
         }
         
         .education-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 12px;
-            font-size: 0.85em;
+            margin-bottom: 10px;
         }
         
         .education-table th,
@@ -67,208 +79,229 @@
         }
         
         .experience-item {
-            margin-bottom: 12px;
+            margin-bottom: 20px;
         }
         
         .experience-header {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: baseline;
+        }
+        .experience-header .main-entity {
             font-weight: bold;
-            margin-bottom: 3px;
-            font-size: 0.95em;
         }
-        
+        .experience-header .secondary-entity {
+            font-weight: normal;
+        }
         .experience-duration {
-            float: right;
+            margin-left: auto;
             font-style: italic;
-            font-size: 0.9em;
+            font-weight: normal;
         }
-        
-        .experience-points {
-            margin-left: 15px;
-            margin-top: 3px;
+        .separator {
+            margin: 0 2px;
         }
-        
+        .achievement-header {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+        .achievement-desc {
+            font-weight: normal;
+        }
+        .achievement-year {
+            margin-left: auto;
+            font-weight: normal;
+            font-style: italic;
+        }
+        .extracurricular-section ul {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .extracurricular-section ul li {
+            margin-bottom: 5px;
+        }
         .experience-points li {
-            margin-bottom: 2px;
-            font-size: 0.9em;
+            margin-bottom: 5px;
         }
-        
         .skills {
-            font-size: 0.95em;
+            font-size: 1.1em;
         }
-        
         .clear {
             clear: both;
         }
-        
-        /* Compact list styles */
-        ul {
-            margin-top: 3px;
-            margin-bottom: 3px;
-            padding-left: 20px;
+        ul, .experience-points {
+            padding-left: 30px;
         }
-        
-        li {
-            margin-bottom: 2px;
-            font-size: 0.9em;
-        }
-        
         /* PDF-specific styles */
         @page {
             size: A4;
-            margin: 0.6in;
+            margin-top: 0.2in;
+            margin-bottom: 0.2in;
+            margin-left: 0.7in;
+            margin-right: 0.4in;
         }
-        
+        /* Auto-fit all content on a single page for PDF */
+        .pdf-fit-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
         @media print {
-            body {
-                margin: 0;
-                padding: 0;
+            .pdf-fit-wrapper {
+                transform-origin: top left;
+                transform: scale(0.92);
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="name">{{personal_info.full_name}}</div>
-        <div class="contact-info">
-            {{personal_info.highest_education}}, {{education[0].institute}}
+    <div class="pdf-fit-wrapper">
+        <div class="header">
+            <div class="name">{{personal_info.full_name}}</div>
+            <div class="contact-info">
+                {{personal_info.highest_education}}, {{education[0].institute}}
+            </div>
+            <div class="contact-info">
+                {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
+            </div>
         </div>
-        <div class="contact-info">
-            {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
-        </div>
-    </div>
 
-    <div class="section">
-        <div class="section-title">Educational Qualifications</div>
-        <table class="education-table">
-            <thead>
-                <tr>
-                    <th>Qualification</th>
-                    <th>Stream</th>
-                    <th>Institute</th>
-                    <th>Year</th>
-                    <th>CGPA/%</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for edu in education %}
-                {% if edu.qualification %}
-                <tr>
-                    <td>{{edu.qualification}}</td>
-                    <td>{{edu.stream}}</td>
-                    <td>{{edu.institute}}</td>
-                    <td>{{edu.year}}</td>
-                    <td>{{edu.cgpa}}</td>
-                </tr>
+        <div class="section">
+            <table class="education-table">
+                <thead>
+                    <tr>
+                        <th>Qualification</th>
+                        <th>Stream</th>
+                        <th>Institute</th>
+                        <th>Year</th>
+                        <th>CGPA/%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for edu in education %}
+                    {% if edu.qualification %}
+                    <tr>
+                        <td>{{edu.qualification}}</td>
+                        <td>{{edu.stream}}</td>
+                        <td>{{edu.institute}}</td>
+                        <td>{{edu.year}}</td>
+                        <td>{{edu.cgpa}}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% set valid_achievements = achievements|selectattr('description')|list %}
+        {% if valid_achievements %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Scholastic Achievements</span><span class="section-title-line"></span></div>
+            <ul>
+                {% for ach in valid_achievements %}
+                <li>
+                    <div class="achievement-header">
+                        <span class="achievement-desc">{{ach.description}}</span>
+                        <span class="achievement-year">({{ach.year}})</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% set valid_internships = internships|selectattr('company')|list %}
+        {% if valid_internships %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Internships</span><span class="section-title-line"></span></div>
+            {% for intern in valid_internships %}
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="main-entity">{{intern.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{intern.role}}</span><span class="experience-duration">({{intern.duration}})</span>
+                </div>
+                <div class="clear"></div>
+                {% set valid_points = intern.points|select|list %}
+                {% if valid_points %}
+                <ul class="experience-points">
+                    {% for point in valid_points %}
+                    <li>{{point}}</li>
+                    {% endfor %}
+                </ul>
                 {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    {% set valid_achievements = achievements|selectattr('description')|list %}
-    {% if valid_achievements %}
-    <div class="section">
-        <div class="section-title">Scholastic Achievements</div>
-        <ul>
-            {% for ach in valid_achievements %}
-            <li>{{ach.description}} <span class="experience-duration">({{ach.year}})</span></li>
+            </div>
             {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-    {% set valid_internships = internships|selectattr('company')|list %}
-    {% if valid_internships %}
-    <div class="section">
-        <div class="section-title">Internships</div>
-        {% for intern in valid_internships %}
-        <div class="experience-item">
-            <div class="experience-header">
-                {{intern.company}} | {{intern.role}}
-                <span class="experience-duration">({{intern.duration}})</span>
-            </div>
-            <div class="clear"></div>
-            {% set valid_points = intern.points|select|list %}
-            {% if valid_points %}
-            <ul class="experience-points">
-                {% for point in valid_points %}
-                <li>{{point}}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
         </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+        {% endif %}
 
-    {% set valid_projects = projects|selectattr('title')|list %}
-    {% if valid_projects %}
-    <div class="section">
-        <div class="section-title">Key Projects</div>
-        {% for proj in valid_projects %}
-        <div class="experience-item">
-            <div class="experience-header">
-                {{proj.title}} | {{proj.type}}
-                <span class="experience-duration">({{proj.duration}})</span>
+        {% set valid_projects = projects|selectattr('title')|list %}
+        {% if valid_projects %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Key Projects</span><span class="section-title-line"></span></div>
+            {% for proj in valid_projects %}
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="main-entity">{{proj.title}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{proj.type}}</span><span class="experience-duration">({{proj.duration}})</span>
+                </div>
+                <div class="clear"></div>
+                {% set valid_points = proj.points|select|list %}
+                {% if valid_points %}
+                <ul class="experience-points">
+                    {% for point in valid_points %}
+                    <li>{{point}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
-            <div class="clear"></div>
-            {% set valid_points = proj.points|select|list %}
-            {% if valid_points %}
-            <ul class="experience-points">
-                {% for point in valid_points %}
-                <li>{{point}}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
-    {% if valid_positions %}
-    <div class="section">
-        <div class="section-title">Positions of Responsibility</div>
-        {% for pos in valid_positions %}
-        <div class="experience-item">
-            <div class="experience-header">
-                {{pos.club}} | {{pos.role}}
-                <span class="experience-duration">({{pos.duration}})</span>
-            </div>
-            <div class="clear"></div>
-            {% set valid_points = pos.points|select|list %}
-            {% if valid_points %}
-            <ul class="experience-points">
-                {% for point in valid_points %}
-                <li>{{point}}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% set valid_extracurricular = extracurricular|select|list %}
-    {% if valid_extracurricular %}
-    <div class="section">
-        <div class="section-title">Extra Curricular Activities</div>
-        <ul>
-            {% for activity in valid_extracurricular %}
-            <li>{{activity}}</li>
             {% endfor %}
-        </ul>
-    </div>
-    {% endif %}
-
-    {% set valid_skills = technical_skills|select|list %}
-    {% if valid_skills %}
-    <div class="section">
-        <div class="section-title">Technical Skills</div>
-        <div class="skills">
-            {% for skill in valid_skills %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
         </div>
+        {% endif %}
+
+        {% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
+        {% if valid_positions %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Positions of Responsibility</span><span class="section-title-line"></span></div>
+            {% for pos in valid_positions %}
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="main-entity">{{pos.club}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{pos.role}}</span><span class="experience-duration">({{pos.duration}})</span>
+                </div>
+                <div class="clear"></div>
+                {% set valid_points = pos.points|select|list %}
+                {% if valid_points %}
+                <ul class="experience-points">
+                    {% for point in valid_points %}
+                    <li>{{point}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% set valid_extracurricular = extracurricular|select|list %}
+        {% if valid_extracurricular %}
+        <div class="section extracurricular-section">
+            <div class="section-title"><span class="section-title-text">Extra Curricular Activities</span><span class="section-title-line"></span></div>
+            <ul>
+                {% for activity in valid_extracurricular %}
+                <li>{{activity}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% set valid_skills = technical_skills|select|list %}
+        {% if valid_skills %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Technical Skills</span><span class="section-title-line"></span></div>
+            <div class="skills">
+                {% for skill in valid_skills %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </body>
 </html>

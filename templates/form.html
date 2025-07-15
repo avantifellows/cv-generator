@@ -223,8 +223,11 @@
             </div>
 
             <!-- Education -->
-            <div class="section">
-                <h2>Educational Qualifications</h2>
+            <div class="section" id="education-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Educational Qualifications</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('education-section')">Remove Section</button>
+                </div>
                 <div id="education-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
@@ -233,25 +236,25 @@
                         <div class="row">
                             <div class="col">
                                 <label>Qualification</label>
-                                <input type="text" name="education[0][qualification]" required>
+                                <input type="text" name="education[0][qualification]" required placeholder="e.g. B.Tech, M.Sc, 12th Grade">
                             </div>
                             <div class="col">
                                 <label>Stream</label>
-                                <input type="text" name="education[0][stream]" required>
+                                <input type="text" name="education[0][stream]" required placeholder="e.g. Computer Science, Science, Commerce">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Institute</label>
-                                <input type="text" name="education[0][institute]" required>
+                                <input type="text" name="education[0][institute]" required placeholder="e.g. IIT Delhi, ABC School">
                             </div>
                             <div class="col">
                                 <label>Year</label>
-                                <input type="text" name="education[0][year]" required>
+                                <input type="text" name="education[0][year]" required placeholder="e.g. 2024">
                             </div>
                             <div class="col">
                                 <label>CGPA/%</label>
-                                <input type="text" name="education[0][cgpa]" required>
+                                <input type="text" name="education[0][cgpa]" required placeholder="e.g. 8.5, 92%">
                             </div>
                         </div>
                     </div>
@@ -262,8 +265,11 @@
             </div>
 
             <!-- Achievements -->
-            <div class="section">
-                <h2>Scholastic Achievements</h2>
+            <div class="section" id="achievements-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Scholastic Achievements</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('achievements-section')">Remove Section</button>
+                </div>
                 <div id="achievements-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
@@ -271,11 +277,11 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="achievements[0][description]" required></textarea>
+                            <textarea name="achievements[0][description]" required placeholder="e.g. Secured AIR 100 in JEE Advanced, Won Gold Medal in Olympiad"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Year</label>
-                            <input type="text" name="achievements[0][year]" required>
+                            <input type="text" name="achievements[0][year]" required placeholder="e.g. 2022">
                         </div>
                     </div>
                 </div>
@@ -285,8 +291,11 @@
             </div>
 
             <!-- Internships -->
-            <div class="section">
-                <h2>Internships</h2>
+            <div class="section" id="internships-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Internships</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('internships-section')">Remove Section</button>
+                </div>
                 <div id="internships-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
@@ -295,22 +304,22 @@
                         <div class="row">
                             <div class="col">
                                 <label>Company</label>
-                                <input type="text" name="internships[0][company]" required>
+                                <input type="text" name="internships[0][company]" required placeholder="e.g. Google, Infosys">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="internships[0][role]" required>
+                                <input type="text" name="internships[0][role]" required placeholder="e.g. Software Intern, Research Intern">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="internships[0][duration]" required>
+                                <input type="text" name="internships[0][duration]" required placeholder="e.g. May 2023 - July 2023">
                             </div>
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="internship-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="internships[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <textarea name="internships[0][points][]" placeholder="e.g. Developed a web app for internal use" required></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -324,8 +333,11 @@
             </div>
 
             <!-- Projects -->
-            <div class="section">
-                <h2>Key Projects</h2>
+            <div class="section" id="projects-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Key Projects</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('projects-section')">Remove Section</button>
+                </div>
                 <div id="projects-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
@@ -334,22 +346,22 @@
                         <div class="row">
                             <div class="col">
                                 <label>Title</label>
-                                <input type="text" name="projects[0][title]" required>
+                                <input type="text" name="projects[0][title]" required placeholder="e.g. Inventory Management System">
                             </div>
                             <div class="col">
                                 <label>Type</label>
-                                <input type="text" name="projects[0][type]" required>
+                                <input type="text" name="projects[0][type]" required placeholder="e.g. Web App, Research Project">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="projects[0][duration]" required>
+                                <input type="text" name="projects[0][duration]" required placeholder="e.g. Jan 2023 - Apr 2023">
                             </div>
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="project-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="projects[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <textarea name="projects[0][points][]" placeholder="e.g. Built a REST API using Django" required></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -363,8 +375,11 @@
             </div>
 
             <!-- Positions of Responsibility -->
-            <div class="section">
-                <h2>Positions of Responsibility</h2>
+            <div class="section" id="positions-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Positions of Responsibility</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('positions-section')">Remove Section</button>
+                </div>
                 <div id="positions-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
@@ -373,22 +388,22 @@
                         <div class="row">
                             <div class="col">
                                 <label>Club/Organization</label>
-                                <input type="text" name="positions[0][club]" required>
+                                <input type="text" name="positions[0][club]" required placeholder="e.g. Coding Club, IEEE">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="positions[0][role]" required>
+                                <input type="text" name="positions[0][role]" required placeholder="e.g. Secretary, Coordinator">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="positions[0][duration]" required>
+                                <input type="text" name="positions[0][duration]" required placeholder="e.g. 2022-2023">
                             </div>
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="position-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="positions[0][points][]" placeholder="Key point 1" required></textarea>
+                                    <textarea name="positions[0][points][]" placeholder="e.g. Organized a national level hackathon" required></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -402,11 +417,14 @@
             </div>
 
             <!-- Extra Curricular Activities -->
-            <div class="section">
-                <h2>Extra Curricular Activities</h2>
+            <div class="section" id="extracurricular-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Extra Curricular Activities</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('extracurricular-section')">Remove Section</button>
+                </div>
                 <div id="activities-container">
                     <div class="activity-entry">
-                        <textarea name="extracurricular[]" placeholder="Activity 1" required></textarea>
+                        <textarea name="extracurricular[]" placeholder="e.g. Member of college football team" required></textarea>
                         <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
                     </div>
                 </div>
@@ -416,11 +434,14 @@
             </div>
 
             <!-- Technical Skills -->
-            <div class="section">
-                <h2>Technical Skills</h2>
+            <div class="section" id="skills-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Technical Skills</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('skills-section')">Remove Section</button>
+                </div>
                 <div id="skills-container">
                     <div class="skill-entry">
-                        <input type="text" name="technical_skills[]" placeholder="Skill 1" required>
+                        <input type="text" name="technical_skills[]" placeholder="e.g. Python, Java, SQL" required>
                         <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
                     </div>
                 </div>
@@ -694,8 +715,15 @@
             button.parentElement.remove();
         }
 
+        function removeSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.remove();
+            }
+        }
+
         // Pre-populate form with test data if available
-        {% if form_data %}
+{% if form_data %}
         window.addEventListener('DOMContentLoaded', function() {
             populateFormWithTestData();
         });
@@ -960,7 +988,21 @@
                 });
             }
         }
-        {% endif %}
+{% endif %}
+
+        // Personal Information placeholders
+        window.addEventListener('DOMContentLoaded', function() {
+            var fullName = document.getElementById('full_name');
+            if (fullName) fullName.setAttribute('placeholder', 'e.g. Jane Doe');
+            var highestEducation = document.getElementById('highest_education');
+            if (highestEducation) highestEducation.setAttribute('placeholder', 'e.g. B.Tech, M.Sc, 12th Grade');
+            var city = document.getElementById('city');
+            if (city) city.setAttribute('placeholder', 'e.g. New Delhi');
+            var phone = document.getElementById('phone');
+            if (phone) phone.setAttribute('placeholder', 'e.g. 9876543210');
+            var email = document.getElementById('email');
+            if (email) email.setAttribute('placeholder', 'e.g. jane.doe@email.com');
+        });
     </script>
 </body>
 </html>
