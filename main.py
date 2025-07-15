@@ -14,6 +14,7 @@ import os
 import re
 from pathlib import Path
 import weasyprint
+import pprint
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
@@ -230,21 +231,24 @@ async def generate_cv(request: Request):
     try:
         # Get form data
         form_data = await request.form()
-        
+        logger.info(f"[DEBUG] Raw form_data keys: {list(form_data.keys())}")
         # Check if this is dynamic form data (has array fields)
         is_dynamic = any(key.startswith(('education[', 'achievements[', 'internships[', 'projects[', 'positions[')) 
                         for key in form_data.keys())
-        
+        logger.info(f"[DEBUG] is_dynamic: {is_dynamic}")
         if is_dynamic:
             # Handle dynamic form data
             structured_data = parse_dynamic_form_data(form_data)
+            logger.info(f"[DEBUG] structured_data: {structured_data}")
             cv_data = CVData(**structured_data)
         else:
             # Handle legacy form data
             form_variables = dict(form_data)
+            logger.info(f"[DEBUG] form_variables: {form_variables}")
             cv_data = cv_service.convert_legacy_data(form_variables)
         
         # Generate CV using service
+        logger.info(f"[DEBUG] cv_data.dict(): {cv_data.dict()}")
         cv_id = cv_service.generate_cv(cv_data)
         
         # Generate HTML file for display
@@ -299,7 +303,6 @@ def parse_dynamic_form_data(form_data) -> dict:
         "extracurricular": [],
         "technical_skills": []
     }
-    
     # Parse personal info
     structured_data["personal_info"] = {
         "full_name": form_data.get("full_name", ""),
@@ -308,25 +311,18 @@ def parse_dynamic_form_data(form_data) -> dict:
         "phone": form_data.get("phone", ""),
         "email": form_data.get("email", "")
     }
-    
     # Parse education entries
     education_data = {}
     for key, value in form_data.items():
         if key.startswith("education["):
-            # Extract index and field name
-            # Format: education[0][qualification]
             parts = key.split('][')
             index = int(parts[0].split('[')[1])
             field = parts[1].rstrip(']')
-            
             if index not in education_data:
                 education_data[index] = {}
             education_data[index][field] = value
-    
-    # Convert to list
     for i in sorted(education_data.keys()):
         structured_data["education"].append(education_data[i])
-    
     # Parse achievements
     achievement_data = {}
     for key, value in form_data.items():
@@ -334,89 +330,68 @@ def parse_dynamic_form_data(form_data) -> dict:
             parts = key.split('][')
             index = int(parts[0].split('[')[1])
             field = parts[1].rstrip(']')
-            
             if index not in achievement_data:
                 achievement_data[index] = {}
             achievement_data[index][field] = value
-    
     for i in sorted(achievement_data.keys()):
         structured_data["achievements"].append(achievement_data[i])
-    
     # Parse internships
     internship_data = {}
-    for key, value in form_data.items():
+    for key in form_data.keys():
         if key.startswith("internships["):
             parts = key.split('][')
             index = int(parts[0].split('[')[1])
-            
             if index not in internship_data:
                 internship_data[index] = {"points": []}
-            
             if key.endswith("[points][]"):
-                # Handle multiple points
-                if isinstance(value, list):
-                    internship_data[index]["points"].extend(value)
-                else:
-                    internship_data[index]["points"].append(value)
+                values = form_data.getlist(key)
+                internship_data[index]["points"].extend(values)
             else:
                 field = parts[1].rstrip(']')
-                internship_data[index][field] = value
-    
+                internship_data[index][field] = form_data[key]
     for i in sorted(internship_data.keys()):
         structured_data["internships"].append(internship_data[i])
-    
     # Parse projects
     project_data = {}
-    for key, value in form_data.items():
+    for key in form_data.keys():
         if key.startswith("projects["):
             parts = key.split('][')
             index = int(parts[0].split('[')[1])
-            
             if index not in project_data:
                 project_data[index] = {"points": []}
-            
             if key.endswith("[points][]"):
-                if isinstance(value, list):
-                    project_data[index]["points"].extend(value)
-                else:
-                    project_data[index]["points"].append(value)
+                values = form_data.getlist(key)
+                project_data[index]["points"].extend(values)
             else:
                 field = parts[1].rstrip(']')
-                project_data[index][field] = value
-    
+                project_data[index][field] = form_data[key]
     for i in sorted(project_data.keys()):
         structured_data["projects"].append(project_data[i])
-    
     # Parse positions
     position_data = {}
-    for key, value in form_data.items():
+    for key in form_data.keys():
         if key.startswith("positions["):
             parts = key.split('][')
             index = int(parts[0].split('[')[1])
-            
             if index not in position_data:
                 position_data[index] = {"points": []}
-            
             if key.endswith("[points][]"):
-                if isinstance(value, list):
-                    position_data[index]["points"].extend(value)
-                else:
-                    position_data[index]["points"].append(value)
+                values = form_data.getlist(key)
+                position_data[index]["points"].extend(values)
             else:
                 field = parts[1].rstrip(']')
-                position_data[index][field] = value
-    
+                position_data[index][field] = form_data[key]
     for i in sorted(position_data.keys()):
         structured_data["positions_of_responsibility"].append(position_data[i])
-    
     # Parse extracurricular activities
     extracurricular = form_data.getlist("extracurricular[]")
     structured_data["extracurricular"] = [activity for activity in extracurricular if activity.strip()]
-    
     # Parse technical skills
     technical_skills = form_data.getlist("technical_skills[]")
     structured_data["technical_skills"] = [skill for skill in technical_skills if skill.strip()]
-    
+    # After parsing all data
+    logger.info("[DEBUG] Structured data after parsing dynamic form:")
+    logger.info(pprint.pformat(structured_data))
     return structured_data
 
 

@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "cv_id": "f5cd2480-eff8-4628-b668-e4fd39e43308",
+    "created_at": "2025-07-15 07:43:53.199261",
+    "last_modified": "2025-07-15 07:43:53.199265",
+    "version": "2.0"
+  },
+  "data": {
+    "personal_info": {
+      "full_name": "Jane Smith",
+      "highest_education": "M.Tech",
+      "city": "San Francisco",
+      "phone": "+1-555-0123",
+      "email": "jane.smith@example.com"
+    },
+    "education": [
+      {
+        "qualification": "M.Tech",
+        "stream": "Computer Science",
+        "institute": "Stanford University",
+        "year": "2023",
+        "cgpa": "9.2"
+      },
+      {
+        "qualification": "B.Tech",
+        "stream": "Computer Engineering",
+        "institute": "UC Berkeley",
+        "year": "2021",
+        "cgpa": "8.8"
+      }
+    ],
+    "achievements": [
+      {
+        "description": "Dean's List for Academic Excellence - Consistent performance in top 5% of class",
+        "year": "2023"
+      },
+      {
+        "description": "Winner, International Coding Competition - Secured 1st place among 500+ participants",
+        "year": "2022"
+      }
+    ],
+    "internships": [
+      {
+        "company": "Google",
+        "role": "Software Engineering Intern",
+        "duration": "Summer 2022",
+        "points": [
+          "Developed a machine learning pipeline that improved search result relevance by 15%",
+          "Collaborated with cross-functional teams to design and implement new API endpoints"
+        ]
+      },
+      {
+        "company": "Microsoft",
+        "role": "Research Intern",
+        "duration": "Summer 2021",
+        "points": [
+          "Built a distributed system for real-time data processing using Azure services",
+          "Published research paper on optimization algorithms in top-tier conference"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "title": "AI-Powered Code Review Tool",
+        "type": "Open Source Project",
+        "duration": "6 months",
+        "points": [
+          "Created an intelligent code review system using natural language processing",
+          "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities"
+        ]
+      },
+      {
+        "title": "Blockchain-based Voting System",
+        "type": "Academic Project",
+        "duration": "4 months",
+        "points": [
+          "Designed and implemented a secure, transparent voting platform using Ethereum",
+          "Ensured voter privacy while maintaining election integrity through cryptographic techniques"
+        ]
+      }
+    ],
+    "positions_of_responsibility": [
+      {
+        "club": "Computer Science Society",
+        "role": "Technical Lead",
+        "duration": "2022-2023",
+        "points": [
+          "Led a team of 20+ members in organizing technical workshops and hackathons",
+          "Mentored junior students in competitive programming and open source contributions"
+        ]
+      },
+      {
+        "club": "Women in Tech",
+        "role": "Vice President",
+        "duration": "2021-2022",
+        "points": [
+          "Organized diversity and inclusion initiatives that increased female participation by 40%",
+          "Established partnerships with 10+ tech companies for internship and job opportunities"
+        ]
+      }
+    ],
+    "extracurricular": [
+      "Marathon running - Completed 3 full marathons with personal best of 3:45",
+      "Photography - Featured in university magazine and local art exhibitions",
+      "Volunteer teaching - Taught programming to underprivileged children on weekends",
+      "Chess - Ranked in top 100 players in state-level tournaments"
+    ],
+    "technical_skills": [
+      "Python",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Machine Learning",
+      "Docker",
+      "Kubernetes",
+      "AWS"
+    ]
+  }
+}

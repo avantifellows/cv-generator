@@ -32,3 +32,1445 @@
 2025-07-11 16:52:38,451 - app.services.cv_service - WARNING - Error reading CV data file generated/e0807893-fdf8-49a5-8e53-03299355e32b_data.json: 'metadata'
 2025-07-11 17:02:47,639 - app.services.cv_service - INFO - CV generated successfully with ID: 3b2a7760-dd82-4bed-ad49-56b3de461d3d
 2025-07-11 17:02:47,662 - main - INFO - CV generated successfully: 3b2a7760-dd82-4bed-ad49-56b3de461d3d
+2025-07-13 23:32:22,861 - app.services.cv_service - INFO - CV generated successfully with ID: cd565810-a001-4c53-878e-e3ad75efd726
+2025-07-13 23:32:22,888 - __main__ - INFO - CV generated successfully: cd565810-a001-4c53-878e-e3ad75efd726
+2025-07-13 23:32:27,245 - __main__ - INFO - PDF generated successfully for CV: cd565810-a001-4c53-878e-e3ad75efd726
+2025-07-13 23:37:50,158 - app.services.cv_service - INFO - CV generated successfully with ID: 0aa3255e-47f3-4406-9462-e830413319a1
+2025-07-13 23:37:50,170 - __main__ - INFO - CV generated successfully: 0aa3255e-47f3-4406-9462-e830413319a1
+2025-07-14 18:28:05,715 - app.services.cv_service - INFO - CV generated successfully with ID: d6604bb7-dec1-4f5a-89e7-72bf860d49c5
+2025-07-14 18:28:05,723 - __main__ - INFO - CV generated successfully: d6604bb7-dec1-4f5a-89e7-72bf860d49c5
+2025-07-14 18:37:54,937 - app.services.cv_service - INFO - CV generated successfully with ID: 5dcd4992-fcba-4df8-a8cc-26b34e6d70fb
+2025-07-14 18:37:54,998 - __main__ - INFO - CV generated successfully: 5dcd4992-fcba-4df8-a8cc-26b34e6d70fb
+2025-07-14 20:34:38,259 - app.services.cv_service - INFO - CV generated successfully with ID: 5bb3fa6a-e21f-4cad-9a54-e4055b3b0f52
+2025-07-14 20:34:38,281 - __main__ - INFO - CV generated successfully: 5bb3fa6a-e21f-4cad-9a54-e4055b3b0f52
+2025-07-14 21:47:22,469 - app.services.cv_service - INFO - CV generated successfully with ID: fca62b33-8226-48b7-9107-cae78894c8c2
+2025-07-14 21:47:22,485 - __main__ - INFO - CV generated successfully: fca62b33-8226-48b7-9107-cae78894c8c2
+2025-07-14 21:56:13,272 - app.services.cv_service - INFO - CV generated successfully with ID: da430d3b-443e-4667-8342-b4028e6566df
+2025-07-14 21:56:13,279 - __main__ - INFO - CV generated successfully: da430d3b-443e-4667-8342-b4028e6566df
+2025-07-14 21:59:17,495 - app.services.cv_service - INFO - CV generated successfully with ID: 3c735a43-2a78-498f-9721-aaa11f239183
+2025-07-14 21:59:17,499 - __main__ - INFO - CV generated successfully: 3c735a43-2a78-498f-9721-aaa11f239183
+2025-07-14 21:59:23,906 - app.services.cv_service - INFO - CV generated successfully with ID: 002ed7ce-e6ef-428e-88a4-7d8971d5ef90
+2025-07-14 21:59:23,909 - __main__ - INFO - CV generated successfully: 002ed7ce-e6ef-428e-88a4-7d8971d5ef90
+2025-07-14 21:59:50,855 - app.services.cv_service - INFO - CV generated successfully with ID: e134835f-16cc-4adb-b6e7-94a721ad7b69
+2025-07-14 21:59:50,860 - __main__ - INFO - CV generated successfully: e134835f-16cc-4adb-b6e7-94a721ad7b69
+2025-07-15 11:44:12,711 - app.services.cv_service - INFO - CV generated successfully with ID: c74e1c7b-cf9b-41c8-ac91-04163089751c
+2025-07-15 11:44:12,716 - __main__ - INFO - CV generated successfully: c74e1c7b-cf9b-41c8-ac91-04163089751c
+2025-07-15 11:44:29,375 - app.services.cv_service - INFO - CV generated successfully with ID: 65e9339a-1540-4da5-b855-7ba55d6a919b
+2025-07-15 11:44:29,383 - __main__ - INFO - CV generated successfully: 65e9339a-1540-4da5-b855-7ba55d6a919b
+2025-07-15 11:47:53,794 - app.services.cv_service - INFO - CV generated successfully with ID: 803ab393-e640-40e8-8d5c-ca674522c9ba
+2025-07-15 11:47:53,798 - __main__ - INFO - CV generated successfully: 803ab393-e640-40e8-8d5c-ca674522c9ba
+2025-07-15 11:49:51,052 - app.services.cv_service - INFO - CV generated successfully with ID: 23197bba-b575-4e66-ab53-65712bf4bde2
+2025-07-15 11:49:51,056 - __main__ - INFO - CV generated successfully: 23197bba-b575-4e66-ab53-65712bf4bde2
+2025-07-15 11:53:33,114 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 11:53:33,116 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 11:53:33,116 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 11:53:33,118 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 11:53:33,118 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 11:53:33,121 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 11:53:33,125 - app.services.cv_service - INFO - CV generated successfully with ID: 8f454576-1eed-4280-acdc-bb99443cda6c
+2025-07-15 11:53:33,142 - __main__ - INFO - CV generated successfully: 8f454576-1eed-4280-acdc-bb99443cda6c
+2025-07-15 11:53:40,866 - __main__ - INFO - PDF generated successfully for CV: 8f454576-1eed-4280-acdc-bb99443cda6c
+2025-07-15 12:21:33,839 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:21:33,845 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:21:33,846 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:21:33,853 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:21:33,856 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:21:33,865 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:21:33,875 - app.services.cv_service - INFO - CV generated successfully with ID: d73b8898-01ea-41ed-9e85-667428880a23
+2025-07-15 12:21:33,901 - __main__ - INFO - CV generated successfully: d73b8898-01ea-41ed-9e85-667428880a23
+2025-07-15 12:27:53,326 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:27:53,329 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:27:53,330 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:27:53,332 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:27:53,332 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:27:53,346 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:27:53,354 - app.services.cv_service - INFO - CV generated successfully with ID: 216889d0-05f8-4f01-9555-1a5f1c59fc74
+2025-07-15 12:27:53,377 - __main__ - INFO - CV generated successfully: 216889d0-05f8-4f01-9555-1a5f1c59fc74
+2025-07-15 12:30:27,400 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:30:27,402 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:30:27,402 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:30:27,403 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:30:27,404 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:30:27,415 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:30:27,423 - app.services.cv_service - INFO - CV generated successfully with ID: ca914c5c-5390-48f3-a004-b4e527273789
+2025-07-15 12:30:27,481 - __main__ - INFO - CV generated successfully: ca914c5c-5390-48f3-a004-b4e527273789
+2025-07-15 12:31:20,031 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:31:20,033 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:31:20,033 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:31:20,035 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:31:20,036 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:31:20,043 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:31:20,049 - app.services.cv_service - INFO - CV generated successfully with ID: 01f9f876-a11f-4d4d-87d3-dcd075a860d6
+2025-07-15 12:31:20,075 - __main__ - INFO - CV generated successfully: 01f9f876-a11f-4d4d-87d3-dcd075a860d6
+2025-07-15 12:35:48,407 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:35:48,408 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:35:48,409 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:35:48,410 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:35:48,412 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:35:48,418 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:35:48,421 - app.services.cv_service - INFO - CV generated successfully with ID: ed47b43e-a016-419a-bc87-0c9d77ee1d83
+2025-07-15 12:35:48,456 - __main__ - INFO - CV generated successfully: ed47b43e-a016-419a-bc87-0c9d77ee1d83
+2025-07-15 12:51:34,898 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:51:34,903 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:51:34,905 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:51:34,909 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:51:34,912 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:51:34,926 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:51:34,941 - app.services.cv_service - INFO - CV generated successfully with ID: efb793a0-bea4-4df2-a1fe-7fba8e7be3fe
+2025-07-15 12:51:34,975 - __main__ - INFO - CV generated successfully: efb793a0-bea4-4df2-a1fe-7fba8e7be3fe
+2025-07-15 12:52:16,897 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 12:52:16,902 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 12:52:16,902 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 12:52:16,905 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job opportunities',
+                                             'Blah blah blah blah blah blah '
+                                             'blah blah'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 12:52:16,905 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities', 'Blah blah blah blah blah blah blah blah'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:52:16,922 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities', 'Blah blah blah blah blah blah blah blah']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 12:52:16,933 - app.services.cv_service - INFO - CV generated successfully with ID: db2ee425-19cb-4bdb-a71f-a5851dd16e96
+2025-07-15 12:52:16,936 - __main__ - INFO - CV generated successfully: db2ee425-19cb-4bdb-a71f-a5851dd16e96
+2025-07-15 12:54:07,754 - __main__ - INFO - PDF generated successfully for CV: db2ee425-19cb-4bdb-a71f-a5851dd16e96
+2025-07-15 13:13:53,172 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 13:13:53,176 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 13:13:53,177 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 13:13:53,182 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 13:13:53,182 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:13:53,190 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:13:53,205 - app.services.cv_service - INFO - CV generated successfully with ID: f5cd2480-eff8-4628-b668-e4fd39e43308
+2025-07-15 13:13:53,210 - __main__ - INFO - CV generated successfully: f5cd2480-eff8-4628-b668-e4fd39e43308
+2025-07-15 13:14:01,851 - __main__ - INFO - PDF generated successfully for CV: f5cd2480-eff8-4628-b668-e4fd39e43308
+2025-07-15 13:15:52,015 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 13:15:52,018 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 13:15:52,019 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 13:15:52,020 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 13:15:52,024 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:15:52,029 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:15:52,038 - app.services.cv_service - INFO - CV generated successfully with ID: 8b3679a5-00fb-4a09-9ef6-473452497d07
+2025-07-15 13:15:52,043 - __main__ - INFO - CV generated successfully: 8b3679a5-00fb-4a09-9ef6-473452497d07
+2025-07-15 13:21:22,339 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 13:21:22,342 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 13:21:22,343 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 13:21:22,345 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 13:21:22,351 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:21:22,362 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 13:21:22,371 - app.services.cv_service - INFO - CV generated successfully with ID: 9b9b8394-dd6b-4b4f-84be-09e8c3cf01c0
+2025-07-15 13:21:22,377 - __main__ - INFO - CV generated successfully: 9b9b8394-dd6b-4b4f-84be-09e8c3cf01c0
+2025-07-15 13:21:30,783 - __main__ - INFO - PDF generated successfully for CV: 9b9b8394-dd6b-4b4f-84be-09e8c3cf01c0
+2025-07-15 13:29:16,487 - __main__ - INFO - PDF generated successfully for CV: 9b9b8394-dd6b-4b4f-84be-09e8c3cf01c0
+2025-07-15 13:40:25,929 - __main__ - INFO - PDF generated successfully for CV: 9b9b8394-dd6b-4b4f-84be-09e8c3cf01c0
+2025-07-15 16:12:42,402 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 16:12:42,407 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 16:12:42,409 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 16:12:42,412 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 16:12:42,429 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:12:42,438 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:12:42,447 - app.services.cv_service - INFO - CV generated successfully with ID: 5378a188-0740-452a-bd4e-36f77a18f1a5
+2025-07-15 16:12:42,454 - __main__ - INFO - CV generated successfully: 5378a188-0740-452a-bd4e-36f77a18f1a5
+2025-07-15 16:12:44,240 - __main__ - INFO - PDF generated successfully for CV: 5378a188-0740-452a-bd4e-36f77a18f1a5
+2025-07-15 16:17:20,699 - __main__ - INFO - PDF generated successfully for CV: 5378a188-0740-452a-bd4e-36f77a18f1a5
+2025-07-15 16:20:36,624 - __main__ - INFO - PDF generated successfully for CV: 5378a188-0740-452a-bd4e-36f77a18f1a5
+2025-07-15 16:24:06,826 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 16:24:06,828 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 16:24:06,828 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 16:24:06,831 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 16:24:06,831 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:24:06,840 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:24:06,845 - app.services.cv_service - INFO - CV generated successfully with ID: ccc172a5-0a74-42b5-8336-f65022e122e8
+2025-07-15 16:24:06,850 - __main__ - INFO - CV generated successfully: ccc172a5-0a74-42b5-8336-f65022e122e8
+2025-07-15 16:24:09,333 - __main__ - INFO - PDF generated successfully for CV: ccc172a5-0a74-42b5-8336-f65022e122e8
+2025-07-15 16:36:29,935 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 16:36:29,938 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 16:36:29,939 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 16:36:29,942 - __main__ - INFO - {'achievements': [],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Blah blah blah Blah blah blah Blah blah blah Blah blah '
+                     'blah Blah blah blah Blah blah blah Blah blah blah',
+                     'Blah blah blah Blah blah blah Blah blah blah Blah blah '
+                     'blah Blah blah blah Blah blah blah Blah blah blah',
+                     'Blah blah blah Blah blah blah Blah blah blah Blah blah '
+                     'blah Blah blah blah Blah blah blah Blah blah blah',
+                     'Blah blah blah Blah blah blah Blah blah blah Blah blah '
+                     'blah Blah blah blah Blah blah blah Blah blah blah'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah',
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah',
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah',
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah',
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah Blah blah blah Blah blah blah '
+                             'Blah blah blah'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '1234567890'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah',
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah',
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah',
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah',
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah Blah blah blah '
+                                             'Blah blah blah'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah',
+                          'Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah',
+                          'Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah',
+                          'Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah',
+                          'Blah blah blah Blah blah blah Blah blah blah Blah '
+                          'blah blah Blah blah blah Blah blah blah Blah blah '
+                          'blah'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python', 'Python', 'Python', 'Python']}
+2025-07-15 16:36:29,943 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '1234567890', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [], 'internships': [{'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'technical_skills': ['Python', 'Python', 'Python', 'Python']}
+2025-07-15 16:36:29,956 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '1234567890', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah']}], 'extracurricular': ['Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah', 'Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah'], 'technical_skills': ['Python', 'Python', 'Python', 'Python']}
+2025-07-15 16:36:29,964 - app.services.cv_service - INFO - CV generated successfully with ID: e8e79204-3923-4b12-a9e5-0db9f55477d8
+2025-07-15 16:36:29,968 - __main__ - INFO - CV generated successfully: e8e79204-3923-4b12-a9e5-0db9f55477d8
+2025-07-15 16:36:42,076 - __main__ - INFO - PDF generated successfully for CV: e8e79204-3923-4b12-a9e5-0db9f55477d8
+2025-07-15 16:43:22,004 - __main__ - INFO - PDF generated successfully for CV: e8e79204-3923-4b12-a9e5-0db9f55477d8
+2025-07-15 16:44:31,823 - __main__ - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'education[1][qualification]', 'education[1][stream]', 'education[1][institute]', 'education[1][year]', 'education[1][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'achievements[1][description]', 'achievements[1][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'internships[1][company]', 'internships[1][role]', 'internships[1][duration]', 'internships[1][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'projects[1][title]', 'projects[1][type]', 'projects[1][duration]', 'projects[1][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'positions[1][club]', 'positions[1][role]', 'positions[1][duration]', 'positions[1][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-15 16:44:31,825 - __main__ - INFO - [DEBUG] is_dynamic: True
+2025-07-15 16:44:31,826 - __main__ - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-15 16:44:31,828 - __main__ - INFO - {'achievements': [{'description': "Dean's List for Academic Excellence - "
+                                  'Consistent performance in top 5% of class',
+                   'year': '2023'},
+                  {'description': 'Winner, International Coding Competition - '
+                                  'Secured 1st place among 500+ participants',
+                   'year': '2022'}],
+ 'education': [{'cgpa': '9.2',
+                'institute': 'Stanford University',
+                'qualification': 'M.Tech',
+                'stream': 'Computer Science',
+                'year': '2023'},
+               {'cgpa': '8.8',
+                'institute': 'UC Berkeley',
+                'qualification': 'B.Tech',
+                'stream': 'Computer Engineering',
+                'year': '2021'}],
+ 'extracurricular': ['Marathon running - Completed 3 full marathons with '
+                     'personal best of 3:45',
+                     'Photography - Featured in university magazine and local '
+                     'art exhibitions',
+                     'Volunteer teaching - Taught programming to '
+                     'underprivileged children on weekends',
+                     'Chess - Ranked in top 100 players in state-level '
+                     'tournaments'],
+ 'internships': [{'company': 'Google',
+                  'duration': 'Summer 2022',
+                  'points': ['Developed a machine learning pipeline that '
+                             'improved search result relevance by 15%',
+                             'Collaborated with cross-functional teams to '
+                             'design and implement new API endpoints'],
+                  'role': 'Software Engineering Intern'},
+                 {'company': 'Microsoft',
+                  'duration': 'Summer 2021',
+                  'points': ['Built a distributed system for real-time data '
+                             'processing using Azure services',
+                             'Published research paper on optimization '
+                             'algorithms in top-tier conference'],
+                  'role': 'Research Intern'}],
+ 'personal_info': {'city': 'San Francisco',
+                   'email': 'jane.smith@example.com',
+                   'full_name': 'Jane Smith',
+                   'highest_education': 'M.Tech',
+                   'phone': '+1-555-0123'},
+ 'positions_of_responsibility': [{'club': 'Computer Science Society',
+                                  'duration': '2022-2023',
+                                  'points': ['Led a team of 20+ members in '
+                                             'organizing technical workshops '
+                                             'and hackathons',
+                                             'Mentored junior students in '
+                                             'competitive programming and open '
+                                             'source contributions'],
+                                  'role': 'Technical Lead'},
+                                 {'club': 'Women in Tech',
+                                  'duration': '2021-2022',
+                                  'points': ['Organized diversity and '
+                                             'inclusion initiatives that '
+                                             'increased female participation '
+                                             'by 40%',
+                                             'Established partnerships with '
+                                             '10+ tech companies for '
+                                             'internship and job '
+                                             'opportunities'],
+                                  'role': 'Vice President'}],
+ 'projects': [{'duration': '6 months',
+               'points': ['Created an intelligent code review system using '
+                          'natural language processing',
+                          'Achieved 85% accuracy in detecting code quality '
+                          'issues and security vulnerabilities'],
+               'title': 'AI-Powered Code Review Tool',
+               'type': 'Open Source Project'},
+              {'duration': '4 months',
+               'points': ['Designed and implemented a secure, transparent '
+                          'voting platform using Ethereum',
+                          'Ensured voter privacy while maintaining election '
+                          'integrity through cryptographic techniques'],
+               'title': 'Blockchain-based Voting System',
+               'type': 'Academic Project'}],
+ 'technical_skills': ['Python',
+                      'JavaScript',
+                      'React',
+                      'Node.js',
+                      'Machine Learning',
+                      'Docker',
+                      'Kubernetes',
+                      'AWS']}
+2025-07-15 16:44:31,830 - __main__ - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints'], 'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022'}, {'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference'], 'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021'}], 'projects': [{'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities'], 'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months'}, {'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques'], 'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months'}], 'positions_of_responsibility': [{'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions'], 'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023'}, {'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities'], 'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022'}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:44:31,837 - __main__ - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Jane Smith', 'highest_education': 'M.Tech', 'city': 'San Francisco', 'phone': '+1-555-0123', 'email': 'jane.smith@example.com'}, 'education': [{'qualification': 'M.Tech', 'stream': 'Computer Science', 'institute': 'Stanford University', 'year': '2023', 'cgpa': '9.2'}, {'qualification': 'B.Tech', 'stream': 'Computer Engineering', 'institute': 'UC Berkeley', 'year': '2021', 'cgpa': '8.8'}], 'achievements': [{'description': "Dean's List for Academic Excellence - Consistent performance in top 5% of class", 'year': '2023'}, {'description': 'Winner, International Coding Competition - Secured 1st place among 500+ participants', 'year': '2022'}], 'internships': [{'company': 'Google', 'role': 'Software Engineering Intern', 'duration': 'Summer 2022', 'points': ['Developed a machine learning pipeline that improved search result relevance by 15%', 'Collaborated with cross-functional teams to design and implement new API endpoints']}, {'company': 'Microsoft', 'role': 'Research Intern', 'duration': 'Summer 2021', 'points': ['Built a distributed system for real-time data processing using Azure services', 'Published research paper on optimization algorithms in top-tier conference']}], 'projects': [{'title': 'AI-Powered Code Review Tool', 'type': 'Open Source Project', 'duration': '6 months', 'points': ['Created an intelligent code review system using natural language processing', 'Achieved 85% accuracy in detecting code quality issues and security vulnerabilities']}, {'title': 'Blockchain-based Voting System', 'type': 'Academic Project', 'duration': '4 months', 'points': ['Designed and implemented a secure, transparent voting platform using Ethereum', 'Ensured voter privacy while maintaining election integrity through cryptographic techniques']}], 'positions_of_responsibility': [{'club': 'Computer Science Society', 'role': 'Technical Lead', 'duration': '2022-2023', 'points': ['Led a team of 20+ members in organizing technical workshops and hackathons', 'Mentored junior students in competitive programming and open source contributions']}, {'club': 'Women in Tech', 'role': 'Vice President', 'duration': '2021-2022', 'points': ['Organized diversity and inclusion initiatives that increased female participation by 40%', 'Established partnerships with 10+ tech companies for internship and job opportunities']}], 'extracurricular': ['Marathon running - Completed 3 full marathons with personal best of 3:45', 'Photography - Featured in university magazine and local art exhibitions', 'Volunteer teaching - Taught programming to underprivileged children on weekends', 'Chess - Ranked in top 100 players in state-level tournaments'], 'technical_skills': ['Python', 'JavaScript', 'React', 'Node.js', 'Machine Learning', 'Docker', 'Kubernetes', 'AWS']}
+2025-07-15 16:44:31,842 - app.services.cv_service - INFO - CV generated successfully with ID: 95fb606d-2008-41fb-bae8-8d8d622935e1
+2025-07-15 16:44:31,845 - __main__ - INFO - CV generated successfully: 95fb606d-2008-41fb-bae8-8d8d622935e1
+2025-07-15 16:44:34,244 - __main__ - INFO - PDF generated successfully for CV: 95fb606d-2008-41fb-bae8-8d8d622935e1
+2025-07-15 16:59:00,135 - __main__ - INFO - PDF generated successfully for CV: 95fb606d-2008-41fb-bae8-8d8d622935e1

@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "cv_id": "fca62b33-8226-48b7-9107-cae78894c8c2",
+    "created_at": "2025-07-14 16:17:22.456677",
+    "last_modified": "2025-07-14 16:17:22.456683",
+    "version": "2.0"
+  },
+  "data": {
+    "personal_info": {
+      "full_name": "Jane Smith",
+      "highest_education": "M.Tech",
+      "city": "San Francisco",
+      "phone": "+1-555-0123",
+      "email": "jane.smith@example.com"
+    },
+    "education": [
+      {
+        "qualification": "M.Tech",
+        "stream": "Computer Science",
+        "institute": "Stanford University",
+        "year": "2023",
+        "cgpa": "9.2"
+      },
+      {
+        "qualification": "B.Tech",
+        "stream": "Computer Engineering",
+        "institute": "UC Berkeley",
+        "year": "2021",
+        "cgpa": "8.8"
+      }
+    ],
+    "achievements": [
+      {
+        "description": "Dean's List for Academic Excellence - Consistent performance in top 5% of class",
+        "year": "2023"
+      },
+      {
+        "description": "Winner, International Coding Competition - Secured 1st place among 500+ participants",
+        "year": "2022"
+      }
+    ],
+    "internships": [
+      {
+        "company": "Google",
+        "role": "Software Engineering Intern",
+        "duration": "Summer 2022",
+        "points": [
+          "Collaborated with cross-functional teams to design and implement new API endpoints"
+        ]
+      },
+      {
+        "company": "Microsoft",
+        "role": "Research Intern",
+        "duration": "Summer 2021",
+        "points": [
+          "Published research paper on optimization algorithms in top-tier conference"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "title": "AI-Powered Code Review Tool",
+        "type": "Open Source Project",
+        "duration": "6 months",
+        "points": [
+          "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities"
+        ]
+      },
+      {
+        "title": "Blockchain-based Voting System",
+        "type": "Academic Project",
+        "duration": "4 months",
+        "points": [
+          "Ensured voter privacy while maintaining election integrity through cryptographic techniques"
+        ]
+      }
+    ],
+    "positions_of_responsibility": [
+      {
+        "club": "Computer Science Society",
+        "role": "Technical Lead",
+        "duration": "2022-2023",
+        "points": [
+          "Mentored junior students in competitive programming and open source contributions"
+        ]
+      },
+      {
+        "club": "Women in Tech",
+        "role": "Vice President",
+        "duration": "2021-2022",
+        "points": [
+          "Established partnerships with 10+ tech companies for internship and job opportunities"
+        ]
+      }
+    ],
+    "extracurricular": [
+      "Marathon running - Completed 3 full marathons with personal best of 3:45",
+      "Photography - Featured in university magazine and local art exhibitions",
+      "Volunteer teaching - Taught programming to underprivileged children on weekends",
+      "Chess - Ranked in top 100 players in state-level tournaments"
+    ],
+    "technical_skills": [
+      "Python",
+      "JavaScript",
+      "React",
+      "Node.js",
+      "Machine Learning",
+      "Docker",
+      "Kubernetes",
+      "AWS"
+    ]
+  }
+}
