@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is the refactored version of the CV Generator with clean architecture, Pydantic models, and proper service layer separation.
+This is the refactored version of the CV Generator with clean architecture, Pydantic models, and proper service layer separation. It is a FastAPI application ready for deployment.
 
 ## Architecture
 
@@ -21,8 +21,7 @@ cv-generator/
 ├── templates/                   # Jinja2 templates
 ├── static/                      # Static assets
 ├── generated/                   # Generated CV files
-├── main_v2.py                   # New FastAPI application
-├── main.py                      # Legacy application (for comparison)
+├── main.py                      # FastAPI application
 └── requirements.txt
 ```
 
@@ -91,11 +90,8 @@ logger.error(f"Error generating PDF: {str(e)}")
 # Install dependencies
 pip install -r requirements.txt
 
-# Run the new application
-uvicorn main_v2:app --host 0.0.0.0 --port 8000 --reload
-
-# Or run the legacy application for comparison
-uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+# Run the application
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ### API Endpoints
@@ -139,7 +135,6 @@ print(f'✓ CV generated: {cv_id}')
 
 ## Data Structure
 
-### New Structured Format
 The new version uses proper data structures instead of flat field names:
 
 ```json
@@ -165,17 +160,7 @@ The new version uses proper data structures instead of flat field names:
 }
 ```
 
-### Legacy Format (for backward compatibility)
-The system still supports the old flat format during the transition:
-
-```json
-{
-  "full_name": "Jane Smith",
-  "edu_1_qual": "M.Tech",
-  "edu_1_institute": "Stanford University",
-  "intern_1_company": "Google"
-}
-```
+The system still supports a legacy flat format for backward compatibility during form submission.
 
 ## Features
 
@@ -204,48 +189,6 @@ The system still supports the old flat format during the transition:
 - **File path validation** prevents directory traversal
 - **Content-type validation** for uploads
 
-## Migration Guide
-
-### From v1.0 to v2.0
-
-1. **Install new dependencies**:
-   ```bash
-   pip install pydantic>=2.11.0
-   ```
-
-2. **Update imports**:
-   ```python
-   # Old
-   from main import generate_cv
-   
-   # New
-   from app.services.cv_service import CVService
-   from app.models.cv_data import CVData
-   ```
-
-3. **Update data structure**:
-   ```python
-   # Old
-   form_data = {"edu_1_qual": "M.Tech", "edu_2_qual": "B.Tech"}
-   
-   # New
-   cv_data = CVData(
-       education=[
-           EducationEntry(qualification="M.Tech"),
-           EducationEntry(qualification="B.Tech")
-       ]
-   )
-   ```
-
-4. **Update API calls**:
-   ```python
-   # Old
-   response = requests.post("/generate", data=form_data)
-   
-   # New
-   response = requests.post("/generate", json=cv_data.dict())
-   ```
-
 ## Development
 
 ### Adding New Fields
@@ -267,7 +210,7 @@ The system still supports the old flat format during the transition:
 
 ### Adding New Endpoints
 
-1. **Add to main_v2.py**:
+1. **Add to main.py**:
    ```python
    @app.get("/api/v1/new-endpoint")
    async def new_endpoint():
@@ -306,25 +249,7 @@ python -m pytest tests/test_integration.py
 
 ## Deployment
 
-### Docker
-```dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-CMD ["uvicorn", "main_v2:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-### Environment Variables
-```bash
-# .env file
-LOG_LEVEL=INFO
-PDF_TIMEOUT=30
-MAX_FILE_SIZE=10MB
-```
+For detailed deployment instructions, please see `DEPLOYMENT_GUIDE.md`.
 
 ## Monitoring
 
