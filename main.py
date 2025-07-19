@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 import weasyprint
 import pprint
+from mangum import Mangum
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
@@ -506,3 +507,11 @@ async def health_check():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+handler = Mangum(app)
+
+# import os
+
+# def handler(event, context):
+#     print("DEBUG: Handler was called")
+#     return {"status": "ok"}
