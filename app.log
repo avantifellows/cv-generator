@@ -1474,3 +1474,133 @@
 2025-07-15 16:44:31,845 - __main__ - INFO - CV generated successfully: 95fb606d-2008-41fb-bae8-8d8d622935e1
 2025-07-15 16:44:34,244 - __main__ - INFO - PDF generated successfully for CV: 95fb606d-2008-41fb-bae8-8d8d622935e1
 2025-07-15 16:59:00,135 - __main__ - INFO - PDF generated successfully for CV: 95fb606d-2008-41fb-bae8-8d8d622935e1
+2025-07-21 15:31:57,165 - main - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'linkedin_link', 'github_link', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-21 15:31:57,196 - main - INFO - [DEBUG] is_dynamic: True
+2025-07-21 15:31:57,208 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-21 15:31:57,212 - main - INFO - {'achievements': [{'description': 'secure', 'year': '2024'}],
+ 'education': [{'cgpa': '7.5',
+                'institute': 'SRMU',
+                'qualification': 'B. Tech',
+                'stream': 'CS',
+                'year': '2027'}],
+ 'extracurricular': ['men'],
+ 'internships': [{'company': 'Chapoint',
+                  'duration': 'May 2023-2024',
+                  'points': ['Developed '],
+                  'role': 'Software Intern'}],
+ 'personal_info': {'city': 'Agra',
+                   'email': 'amit@gmail.com',
+                   'full_name': 'Amit',
+                   'highest_education': 'B.Tech.',
+                   'phone': '04563726377'},
+ 'positions_of_responsibility': [{'club': 'Coding Club',
+                                  'duration': '2023-24',
+                                  'points': ['correct'],
+                                  'role': 'Secretory'}],
+ 'projects': [{'duration': 'Jan 2024 Feb 2024',
+               'points': ['hi'],
+               'title': 'News Text Analuzer',
+               'type': 'Web app'}],
+ 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:31:57,265 - main - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com'}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'points': ['Developed '], 'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024'}], 'projects': [{'points': ['hi'], 'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024'}], 'positions_of_responsibility': [{'points': ['correct'], 'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24'}], 'extracurricular': ['men'], 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:31:57,344 - main - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com', 'linkedin_link': None, 'github_link': None}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024', 'points': ['Developed']}], 'projects': [{'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024', 'points': ['hi']}], 'positions_of_responsibility': [{'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24', 'points': ['correct']}], 'extracurricular': ['men'], 'technical_skills': ['Java, Python, JavaScript']}
+2025-07-21 15:31:57,366 - app.services.cv_service - INFO - CV generated successfully with ID: a2e8493d-7a12-4955-8ec8-3d42af7a86bd
+2025-07-21 15:31:57,479 - main - ERROR - Error in generate_cv endpoint: 'charmap' codec can't encode character '\U0001f4c4' in position 3903: character maps to <undefined>
+2025-07-21 15:39:56,850 - main - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'linkedin_link', 'github_link', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-21 15:39:56,858 - main - INFO - [DEBUG] is_dynamic: True
+2025-07-21 15:39:56,875 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-21 15:39:56,895 - main - INFO - {'achievements': [{'description': 'secure', 'year': '2024'}],
+ 'education': [{'cgpa': '7.5',
+                'institute': 'SRMU',
+                'qualification': 'B. Tech',
+                'stream': 'CS',
+                'year': '2027'}],
+ 'extracurricular': ['men'],
+ 'internships': [{'company': 'Chapoint',
+                  'duration': 'May 2023-2024',
+                  'points': ['Developed '],
+                  'role': 'Software Intern'}],
+ 'personal_info': {'city': 'Agra',
+                   'email': 'amit@gmail.com',
+                   'full_name': 'Amit',
+                   'highest_education': 'B.Tech.',
+                   'phone': '04563726377'},
+ 'positions_of_responsibility': [{'club': 'Coding Club',
+                                  'duration': '2023-24',
+                                  'points': ['correct'],
+                                  'role': 'Secretory'}],
+ 'projects': [{'duration': 'Jan 2024 Feb 2024',
+               'points': ['hi'],
+               'title': 'News Text Analuzer',
+               'type': 'Web app'}],
+ 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:39:56,945 - main - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com'}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'points': ['Developed '], 'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024'}], 'projects': [{'points': ['hi'], 'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024'}], 'positions_of_responsibility': [{'points': ['correct'], 'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24'}], 'extracurricular': ['men'], 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:39:56,962 - main - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com', 'linkedin_link': None, 'github_link': None}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024', 'points': ['Developed']}], 'projects': [{'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024', 'points': ['hi']}], 'positions_of_responsibility': [{'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24', 'points': ['correct']}], 'extracurricular': ['men'], 'technical_skills': ['Java, Python, JavaScript']}
+2025-07-21 15:39:56,980 - app.services.cv_service - INFO - CV generated successfully with ID: 47ce4c8c-c21e-40b5-a1b9-b9030e9f8715
+2025-07-21 15:39:57,079 - main - INFO - CV generated successfully: 47ce4c8c-c21e-40b5-a1b9-b9030e9f8715
+2025-07-21 15:46:14,771 - main - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'linkedin_link', 'github_link', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-21 15:46:14,774 - main - INFO - [DEBUG] is_dynamic: True
+2025-07-21 15:46:14,775 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-21 15:46:14,779 - main - INFO - {'achievements': [{'description': 'secure', 'year': '2024'}],
+ 'education': [{'cgpa': '7.5',
+                'institute': 'SRMU',
+                'qualification': 'B. Tech',
+                'stream': 'CS',
+                'year': '2027'}],
+ 'extracurricular': ['bask'],
+ 'internships': [{'company': 'Chapoint',
+                  'duration': 'May 2023-2024',
+                  'points': ['Developed'],
+                  'role': 'Software Intern'}],
+ 'personal_info': {'city': 'Agra',
+                   'email': 'amit@gmail.com',
+                   'full_name': 'Amit',
+                   'highest_education': 'B.Tech.',
+                   'phone': '04563726377'},
+ 'positions_of_responsibility': [{'club': 'Coding Club',
+                                  'duration': '2023-24',
+                                  'points': ['hack'],
+                                  'role': 'Secretory'}],
+ 'projects': [{'duration': 'Jan 2024 Feb 2024',
+               'points': ['flask'],
+               'title': 'News Text Analuzer',
+               'type': 'Web app'}],
+ 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:46:14,806 - main - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com'}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'points': ['Developed'], 'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024'}], 'projects': [{'points': ['flask'], 'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024'}], 'positions_of_responsibility': [{'points': ['hack'], 'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24'}], 'extracurricular': ['bask'], 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:46:14,825 - main - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com', 'linkedin_link': None, 'github_link': None}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'secure', 'year': '2024'}], 'internships': [{'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024', 'points': ['Developed']}], 'projects': [{'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024', 'points': ['flask']}], 'positions_of_responsibility': [{'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24', 'points': ['hack']}], 'extracurricular': ['bask'], 'technical_skills': ['Java, Python, JavaScript']}
+2025-07-21 15:46:14,833 - app.services.cv_service - INFO - CV generated successfully with ID: ae740abf-9160-4ad3-9d79-c5b40a7fd793
+2025-07-21 15:46:14,956 - main - INFO - CV generated successfully: ae740abf-9160-4ad3-9d79-c5b40a7fd793
+2025-07-21 15:54:03,639 - main - INFO - [DEBUG] Raw form_data keys: ['full_name', 'highest_education', 'city', 'phone', 'email', 'linkedin_link', 'github_link', 'education[0][qualification]', 'education[0][stream]', 'education[0][institute]', 'education[0][year]', 'education[0][cgpa]', 'achievements[0][description]', 'achievements[0][year]', 'internships[0][company]', 'internships[0][role]', 'internships[0][duration]', 'internships[0][points][]', 'projects[0][title]', 'projects[0][type]', 'projects[0][duration]', 'projects[0][points][]', 'positions[0][club]', 'positions[0][role]', 'positions[0][duration]', 'positions[0][points][]', 'extracurricular[]', 'technical_skills[]']
+2025-07-21 15:54:03,643 - main - INFO - [DEBUG] is_dynamic: True
+2025-07-21 15:54:03,647 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-07-21 15:54:03,649 - main - INFO - {'achievements': [{'description': 'hi', 'year': '2024'}],
+ 'education': [{'cgpa': '7.5',
+                'institute': 'SRMU',
+                'qualification': 'B. Tech',
+                'stream': 'CS',
+                'year': '2027'}],
+ 'extracurricular': ['member'],
+ 'internships': [{'company': 'Chapoint',
+                  'duration': 'May 2023-2024',
+                  'points': ['web app'],
+                  'role': 'Software Intern'}],
+ 'personal_info': {'city': 'Agra',
+                   'email': 'amit@gmail.com',
+                   'full_name': 'Amit',
+                   'github_link': 'https://github.com/amitsitare',
+                   'highest_education': 'B.Tech.',
+                   'linkedin_link': 'https://www.linkedin.com/in/amit-diwakar-cse/',
+                   'phone': '04563726377'},
+ 'positions_of_responsibility': [{'club': 'Coding Club',
+                                  'duration': '2023-24',
+                                  'points': ['Hackathon'],
+                                  'role': 'Secretory'}],
+ 'projects': [{'duration': 'Jan 2024 Feb 2024',
+               'points': ['Flask'],
+               'title': 'News Text Analuzer',
+               'type': 'Web app'}],
+ 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:54:03,657 - main - INFO - [DEBUG] structured_data: {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com', 'linkedin_link': 'https://www.linkedin.com/in/amit-diwakar-cse/', 'github_link': 'https://github.com/amitsitare'}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'hi', 'year': '2024'}], 'internships': [{'points': ['web app'], 'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024'}], 'projects': [{'points': ['Flask'], 'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024'}], 'positions_of_responsibility': [{'points': ['Hackathon'], 'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24'}], 'extracurricular': ['member'], 'technical_skills': ['Java, Python, JavaScript ']}
+2025-07-21 15:54:03,671 - main - INFO - [DEBUG] cv_data.dict(): {'personal_info': {'full_name': 'Amit', 'highest_education': 'B.Tech.', 'city': 'Agra', 'phone': '04563726377', 'email': 'amit@gmail.com', 'linkedin_link': 'https://www.linkedin.com/in/amit-diwakar-cse/', 'github_link': 'https://github.com/amitsitare'}, 'education': [{'qualification': 'B. Tech', 'stream': 'CS', 'institute': 'SRMU', 'year': '2027', 'cgpa': '7.5'}], 'achievements': [{'description': 'hi', 'year': '2024'}], 'internships': [{'company': 'Chapoint', 'role': 'Software Intern', 'duration': 'May 2023-2024', 'points': ['web app']}], 'projects': [{'title': 'News Text Analuzer', 'type': 'Web app', 'duration': 'Jan 2024 Feb 2024', 'points': ['Flask']}], 'positions_of_responsibility': [{'club': 'Coding Club', 'role': 'Secretory', 'duration': '2023-24', 'points': ['Hackathon']}], 'extracurricular': ['member'], 'technical_skills': ['Java, Python, JavaScript']}
+2025-07-21 15:54:03,681 - app.services.cv_service - INFO - CV generated successfully with ID: 0d52b033-ce5e-49d5-b040-9911080497f6
+2025-07-21 15:54:03,784 - main - INFO - CV generated successfully: 0d52b033-ce5e-49d5-b040-9911080497f6

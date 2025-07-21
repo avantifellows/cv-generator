@@ -126,10 +126,13 @@
     <div class="header">
         <div class="name">{{personal_info.full_name}}</div>
         <div class="contact-info">
-            {{personal_info.highest_education}}, {{education[0].institute}}
-        </div>
-        <div class="contact-info">
-            {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
+            {{personal_info.city}} | {{personal_info.phone}} | <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
+            {% if personal_info.linkedin_link %}
+            | <a href="{{personal_info.linkedin_link}}" target="_blank">LinkedIn</a>
+            {% endif %}
+            {% if personal_info.github_link %}
+            | <a href="{{personal_info.github_link}}" target="_blank">GitHub</a>
+            {% endif %}
         </div>
     </div>
 
