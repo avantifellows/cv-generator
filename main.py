@@ -256,7 +256,7 @@ async def generate_cv(request: Request):
         
         # Save HTML file
         html_file = f"generated/{cv_id}.html"
-        with open(html_file, "w") as f:
+        with open(html_file, "w", encoding="utf-8") as f:
             f.write(html_content)
         
         # Create display HTML with download button
@@ -275,7 +275,7 @@ async def generate_cv(request: Request):
         html_with_button = html_content.replace('<body>', f'<body>{download_button}')
         
         # Save display HTML
-        with open(f"generated/{cv_id}_display.html", "w") as f:
+        with open(f"generated/{cv_id}_display.html", "w", encoding="utf-8") as f:
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")

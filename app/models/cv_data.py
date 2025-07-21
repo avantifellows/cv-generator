@@ -71,6 +71,7 @@ class ProjectEntry(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     type: str = Field(..., min_length=1, max_length=50)
     duration: str = Field(..., min_length=1, max_length=50)
+    repo_link: Optional[str] = Field(None, max_length=200)
     points: List[str] = Field(..., min_items=1, max_items=5)
 
     @validator('title', 'type', 'duration')
