@@ -12,41 +12,57 @@
             padding: 4px;
             line-height: 1.2;
             color: #333;
-            font-size: 12px;
+            font-size: 1em;
         }
         
         .header {
             text-align: center;
             border-bottom: 2px solid #4C5196;
-            padding-bottom: 6px;
-            margin-bottom: 10px;
+            padding-bottom: 18px;
+            margin-bottom: 24px;
         }
         
         .name {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             color: #4C5196;
         }
         
+        .degree {
+            text-align: center;
+            font-size: 1.15em;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        
         .contact-info {
-            font-size: 1.1em;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            justify-content: center;
+            font-size: 1em;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+        
+        .contact-info span, .contact-info a {
+            font-size: 1em;
         }
         
         .section {
-            margin-bottom: 12px;
+            margin-bottom: 28px;
         }
         
         .section-title {
             display: flex;
             align-items: center;
-            font-size: 1.5em;
             font-weight: bold;
             color: #4C5196;
-            margin-bottom: 15px;
-            padding-bottom: 0;
-            border-bottom: none;
+            margin-bottom: 10px;
+            font-size: 1.18em;
         }
         .section-title-text {
             margin-right: 12px;
@@ -54,22 +70,23 @@
         }
         .section-title-line {
             flex: 1;
-            height: 2px;
+            height: 1px;
             background: #4C5196;
-            border-radius: 1px;
+            margin-left: 12px;
             opacity: 0.5;
         }
         
         .education-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
+            margin-bottom: 18px;
+            font-size: 1em;
         }
         
         .education-table th,
         .education-table td {
             border: 1px solid #ddd;
-            padding: 4px 6px;
+            padding: 7px 8px;
             text-align: left;
         }
         
@@ -125,7 +142,7 @@
             margin-bottom: 5px;
         }
         .skills {
-            font-size: 1.1em;
+            font-size: 1em;
         }
         .clear {
             clear: both;
@@ -160,13 +177,48 @@
     <div class="pdf-fit-wrapper">
         <div class="header">
             <div class="name">{{personal_info.full_name}}</div>
+            <div class="degree">{{personal_info.highest_education}}, {{education[0].institute}}</div>
             <div class="contact-info">
-                {{personal_info.city}} | {{personal_info.phone}} | <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
-                {% if personal_info.linkedin_link %}
-                | <a href="{{personal_info.linkedin_link}}" target="_blank">LinkedIn</a>
-                {% endif %}
+                <span>{{personal_info.city}}</span>
+                <span>|</span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                    <!-- Phone Icon Hyperlink -->
+                    <a href="tel:{{personal_info.phone}}" style="display:inline-block;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" fill="none"/><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 4.5A1 1 0 013 3.5h3.5a1 1 0 011 1c0 1.35.27 2.67.76 3.88a1 1 0 01-.21 1.11l-2.2 2.2z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    {{personal_info.phone}}
+                </span>
+                <span>|</span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                    <!-- Email Icon Hyperlink -->
+                    <a href="mailto:{{personal_info.email}}" style="display:inline-block;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" fill="none"/><path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 6l-10 7L2 6" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
+                </span>
                 {% if personal_info.github_link %}
-                | <a href="{{personal_info.github_link}}" target="_blank">GitHub</a>
+                <span>|</span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                    <!-- GitHub Icon Hyperlink -->
+                    <a href="{{personal_info.github_link}}" target="_blank" style="display:inline-block;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" fill="none"/><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.5 2.87 8.32 6.84 9.67.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.38 9.38 0 0 1 12 7.07c.85.004 1.71.12 2.51.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="{{personal_info.github_link}}" target="_blank">
+                        {{ personal_info.github_link.split('/')[-1] }}
+                    </a>
+                </span>
+                {% endif %}
+                {% if personal_info.linkedin_link %}
+                <span>|</span>
+                <span style="display: flex; align-items: center; gap: 4px;">
+                    <!-- LinkedIn Icon Hyperlink -->
+                    <a href="{{personal_info.linkedin_link}}" target="_blank" style="display:inline-block;">
+                        <svg width="14" height="14" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg"><g><rect class="background" fill="#000" x="0" y="0" width="34" height="34" rx="4"/><g><path d="M8 12h4v12H8z" fill="#fff"/><circle cx="10" cy="10" r="2" fill="#fff"/><path d="M14 12h4v2h.1c.6-1.1 2-2.2 4.1-2.2 4.4 0 5.2 2.9 5.2 6.7V24h-4v-5.6c0-1.3 0-3-1.8-3-1.8 0-2.1 1.4-2.1 2.9V24h-4z" fill="#fff"/></g></g></svg>
+                    </a>
+                    <a href="{{personal_info.linkedin_link}}" target="_blank">
+                        {{ personal_info.linkedin_link.split('/')[-2] }}
+                    </a>
+                </span>
                 {% endif %}
             </div>
         </div>
