@@ -41,6 +41,9 @@ jobs:
     # Initialize a new or existing Terraform working directory
     - name: Terraform Init
       run: terraform init
+      env:
+        CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
 
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
@@ -49,7 +52,13 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan -input=false
+      env:
+        CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }}
 
     # Apply on push to "main" OR on pull requests (manual approval via production environment)
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false 
+      run: terraform apply -auto-approve -input=false
+      env:
+        CLOUDFLARE_EMAIL: ${{ secrets.CLOUDFLARE_EMAIL }}
+        CLOUDFLARE_API_KEY: ${{ secrets.CLOUDFLARE_API_KEY }} 
