@@ -18,8 +18,11 @@ logger = get_logger(__name__)
 class CVService:
     """Service for CV generation and management"""
     
-    def __init__(self, generated_dir: str = "generated"):
-        self.generated_dir = Path(generated_dir)
+    def __init__(self, base_path: Optional[Path] = None, generated_dir: str = "generated"):
+        if base_path:
+            self.generated_dir = base_path / generated_dir
+        else:
+            self.generated_dir = Path(generated_dir)
         self.generated_dir.mkdir(exist_ok=True)
         
     def generate_cv(self, cv_data: CVData) -> str:

@@ -18,18 +18,6 @@ variable "project_name" {
   default     = "cv-generator"
 }
 
-# A DynamoDB table for state locking
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-locks"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
-
 # S3 bucket for storing Terraform state
 # Note: The S3 bucket must be created manually before you run `terraform init`.
 terraform {
@@ -50,6 +38,7 @@ terraform {
 resource "aws_ecr_repository" "cv_generator_repo" {
   name                 = "${var.project_name}-repo"
   image_tag_mutability = "MUTABLE"
+  force_delete         = true
 
   image_scanning_configuration {
     scan_on_push = true
@@ -86,7 +75,7 @@ resource "aws_lambda_function" "cv_generator_lambda" {
   timeout       = 30 # seconds
 
   # The image URI is now dynamically updated by our build resource
-  image_uri = null_resource.docker_build_and_push.triggers.image_uri
+  image_uri = "${aws_ecr_repository.cv_generator_repo.repository_url}:${null_resource.docker_build_and_push.triggers.source_hash}"
 
   # This ensures the Lambda function is only updated after a new image is pushed
   depends_on = [null_resource.docker_build_and_push]
@@ -95,8 +84,18 @@ resource "aws_lambda_function" "cv_generator_lambda" {
 # Create a hash of all application files to use as a trigger
 data "archive_file" "source_code" {
   type        = "zip"
-  source_dir  = "${path.module}/app"
+  source_dir  = path.module
   output_path = "${path.module}/source.zip"
+  excludes = toset([
+    "main.tf",
+    "source.zip",
+    ".terraform",
+    "terraform-backend",
+    "*.tfstate*",
+    ".terraform.lock.hcl",
+    ".git",
+    "terraform.tfvars"
+  ])
 }
 
 # This resource builds and pushes the Docker image when source code changes
@@ -104,15 +103,14 @@ resource "null_resource" "docker_build_and_push" {
   # This trigger ensures the resource re-runs when our code changes
   triggers = {
     source_hash = data.archive_file.source_code.output_sha
-    image_uri   = "${aws_ecr_repository.cv_generator_repo.repository_url}:latest"
   }
 
   # This provisioner runs the actual shell commands
   provisioner "local-exec" {
     command = <<-EOT
       aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${aws_ecr_repository.cv_generator_repo.repository_url}
-      docker build -t ${self.triggers.image_uri} .
-      docker push ${self.triggers.image_uri}
+      docker build --platform linux/amd64 -t ${aws_ecr_repository.cv_generator_repo.repository_url}:${self.triggers.source_hash} .
+      docker push ${aws_ecr_repository.cv_generator_repo.repository_url}:${self.triggers.source_hash}
     EOT
   }
 

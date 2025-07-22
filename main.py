@@ -13,7 +13,8 @@ import json
 import os
 import re
 from pathlib import Path
-import weasyprint
+from xhtml2pdf import pisa
+from io import BytesIO
 import pprint
 from mangum import Mangum
 
@@ -27,6 +28,9 @@ from app.core.logging import setup_logging, get_logger
 setup_logging(level="INFO")
 logger = get_logger(__name__)
 
+# Define base path for Lambda's writable directory
+BASE_PATH = Path("/tmp") if os.environ.get("AWS_LAMBDA_FUNCTION_NAME") else Path(".")
+
 # Create FastAPI app
 app = FastAPI(
     title="CV Generator v2.0",
@@ -35,18 +39,18 @@ app = FastAPI(
 )
 
 # Create directories
-Path("static").mkdir(exist_ok=True)
-Path("templates").mkdir(exist_ok=True)
-Path("generated").mkdir(exist_ok=True)
+(BASE_PATH / "static").mkdir(exist_ok=True)
+(BASE_PATH / "templates").mkdir(exist_ok=True)
+(BASE_PATH / "generated").mkdir(exist_ok=True)
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=str(BASE_PATH / "static")), name="static")
 
 # Setup templates
 templates = Jinja2Templates(directory="templates")
 
 # Initialize services
-cv_service = CVService()
+cv_service = CVService(base_path=BASE_PATH)
 
 
 def create_filename(name: str) -> str:
@@ -123,8 +127,25 @@ async def download_test_cv_pdf():
         # Render PDF-specific HTML template
         html_content = render_template('cv_template_pdf.html', cv_data.dict())
         
-        # Generate PDF using WeasyPrint
-        pdf_bytes = weasyprint.HTML(string=html_content).write_pdf()
+        # Generate PDF using xhtml2pdf
+        try:
+            result_file = BytesIO()
+            logger.info("Starting PDF generation with xhtml2pdf")
+            pisa_status = pisa.CreatePDF(html_content, dest=result_file)
+            
+            if pisa_status.err:
+                logger.error(f"xhtml2pdf reported errors: {pisa_status.err}")
+                raise Exception(f"Error generating PDF: {pisa_status.err}")
+            
+            pdf_bytes = result_file.getvalue()
+            result_file.close()
+            logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
+        except Exception as e:
+            logger.error(f"Exception during PDF generation: {str(e)}")
+            logger.error(f"Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise
         
         # Create filename from user's name
         pdf_filename = f"{create_filename(cv_data.personal_info.full_name)}_test.pdf"
@@ -256,7 +277,7 @@ async def generate_cv(request: Request):
         html_content = render_template('cv_template.html', cv_data.dict())
         
         # Save HTML file
-        html_file = f"generated/{cv_id}.html"
+        html_file = BASE_PATH / f"generated/{cv_id}.html"
         with open(html_file, "w") as f:
             f.write(html_content)
         
@@ -276,7 +297,8 @@ async def generate_cv(request: Request):
         html_with_button = html_content.replace('<body>', f'<body>{download_button}')
         
         # Save display HTML
-        with open(f"generated/{cv_id}_display.html", "w") as f:
+        display_html_file = BASE_PATH / f"generated/{cv_id}_display.html"
+        with open(display_html_file, "w") as f:
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")
@@ -400,7 +422,7 @@ def parse_dynamic_form_data(form_data) -> dict:
 async def get_cv_display(cv_id: str):
     """Serve the CV display page with download button"""
     try:
-        display_file = f"generated/{cv_id}_display.html"
+        display_file = BASE_PATH / f"generated/{cv_id}_display.html"
         if os.path.exists(display_file):
             with open(display_file, "r") as f:
                 content = f.read()
@@ -418,7 +440,7 @@ async def get_cv_display(cv_id: str):
 async def get_cv_html(cv_id: str):
     """Serve generated HTML CV"""
     try:
-        html_file = f"generated/{cv_id}.html"
+        html_file = BASE_PATH / f"generated/{cv_id}.html"
         if os.path.exists(html_file):
             return FileResponse(html_file, media_type="text/html")
         else:
@@ -440,8 +462,25 @@ async def get_cv_pdf(cv_id: str):
         # Render PDF-specific HTML template
         html_content = render_template('cv_template_pdf.html', cv_document.data.dict())
         
-        # Generate PDF using WeasyPrint
-        pdf_bytes = weasyprint.HTML(string=html_content).write_pdf()
+        # Generate PDF using xhtml2pdf
+        try:
+            result_file = BytesIO()
+            logger.info("Starting PDF generation with xhtml2pdf")
+            pisa_status = pisa.CreatePDF(html_content, dest=result_file)
+            
+            if pisa_status.err:
+                logger.error(f"xhtml2pdf reported errors: {pisa_status.err}")
+                raise Exception(f"Error generating PDF: {pisa_status.err}")
+            
+            pdf_bytes = result_file.getvalue()
+            result_file.close()
+            logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
+        except Exception as e:
+            logger.error(f"Exception during PDF generation: {str(e)}")
+            logger.error(f"Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise
         
         # Create filename from user's name
         pdf_filename = f"{create_filename(cv_document.data.personal_info.full_name)}.pdf"
@@ -504,11 +543,13 @@ async def health_check():
     return {"status": "healthy", "version": "2.0.0"}
 
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+#if __name__ == "__main__":
+#    import uvicorn
+#    uvicorn.run(app, host="0.0.0.0", port=8000)
 
+logger.info("Creating Mangum handler")
 handler = Mangum(app)
+logger.info("Mangum handler created successfully")
 
 # import os
 

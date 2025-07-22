@@ -4,6 +4,7 @@ Logging configuration for CV Generator application
 import logging
 import sys
 from typing import Optional
+import os
 
 
 def setup_logging(level: str = "INFO", format_string: Optional[str] = None) -> None:
@@ -17,13 +18,19 @@ def setup_logging(level: str = "INFO", format_string: Optional[str] = None) -> N
     if format_string is None:
         format_string = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     
-    logging.basicConfig(
-        level=getattr(logging, level.upper()),
-        format=format_string,
-        handlers=[
+    # In AWS Lambda, only log to stdout
+    if "AWS_LAMBDA_FUNCTION_NAME" in os.environ:
+        handlers = [logging.StreamHandler(sys.stdout)]
+    else:
+        handlers = [
             logging.StreamHandler(sys.stdout),
             logging.FileHandler("app.log")
         ]
+        
+    logging.basicConfig(
+        level=getattr(logging, level.upper()),
+        format=format_string,
+        handlers=handlers
     )
 
 
