@@ -129,7 +129,7 @@
             {{personal_info.highest_education}}, {{education[0].institute}}
         </div>
         <div class="contact-info">
-            {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
+            {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
         </div>
     </div>
 
@@ -208,7 +208,13 @@
         {% for proj in valid_projects %}
         <div class="experience-item">
             <div class="experience-header">
-                <span class="main-entity">{{proj.title}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{proj.type}}</span><span class="experience-duration">({{proj.duration}})</span>
+                <span class="main-entity">
+                    {% if proj.repo_link %}
+                        <a href="{{proj.repo_link}}" target="_blank">{{proj.title}}</a>
+                    {% else %}
+                        {{proj.title}}
+                    {% endif %}
+                </span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{proj.type}}</span><span class="experience-duration">({{proj.duration}})</span>
             </div>
             <div class="clear"></div>
             {% set valid_points = proj.points|select|list %}

@@ -357,6 +357,10 @@
                                 <input type="text" name="projects[0][duration]" required placeholder="e.g. Jan 2023 - Apr 2023">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Repo Link</label>
+                            <input type="text" name="projects[0][repo_link]" placeholder="e.g. https://github.com/user/repo">
+                        </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="project-points" data-index="0">
@@ -597,6 +601,10 @@
                         <label>Duration</label>
                         <input type="text" name="projects[${projectCount}][duration]" required>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label>Repo Link</label>
+                    <input type="text" name="projects[${projectCount}][repo_link]" placeholder="e.g. https://github.com/user/repo">
                 </div>
                 <div class="points-container">
                     <label>Key Points</label>
@@ -894,6 +902,10 @@
                                 <label>Duration</label>
                                 <input type="text" name="projects[${index}][duration]" value="${proj.duration || ''}" required>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Repo Link</label>
+                            <input type="text" name="projects[${index}][repo_link]" value="${proj.repo_link || ''}" placeholder="e.g. https://github.com/user/repo">
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
