@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - {{personal_info.full_name}}</title>
+    <!-- Add this inside <head> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body {
             font-family: 'Times New Roman', Times, serif, sans-serif;
@@ -12,51 +15,75 @@
             padding: 5px;
             line-height: 1.3;
             color: #333;
-            font-size: 12px;
+            font-size: 1em;
         }
         
         .header {
             text-align: center;
             border-bottom: 2px solid #4C5196;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            padding-bottom: 18px;
+            margin-bottom: 24px;
         }
         
         .name {
-            font-size: 2.5em;
+            font-size: 2.2em;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             color: #4C5196;
+        }
+        
+        .degree {
+            text-align: center;
+            font-size: 1.15em;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #222;
         }
         
         .contact-info {
-            font-size: 1.1em;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 1em;
+            margin-bottom: 0;
+        }
+        .contact-info span, .contact-info a {
+            font-size: 1em;
         }
         
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
-        
+        /* Section title with line after text */
         .section-title {
-            font-size: 1.5em;
+            display: flex;
+            align-items: center;
             font-weight: bold;
             color: #4C5196;
-            border-bottom: 1px solid #4C5196;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            font-size: 1.18em;
+        }
+        .section-title-line {
+            flex: 1;
+            height: 1px;
+            background: #4C5196;
+            margin-left: 12px;
+            opacity: 0.5;
         }
         
         .education-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            font-size: 1em;
         }
         
         .education-table th,
         .education-table td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 7px 8px;
             text-align: left;
         }
         
@@ -111,7 +138,7 @@
         }
         
         .skills {
-            font-size: 1.1em;
+            font-size: 1em;
         }
         
         .clear {
@@ -125,16 +152,41 @@
 <body>
     <div class="header">
         <div class="name">{{personal_info.full_name}}</div>
+        <div class="degree">{{personal_info.highest_education}}, {{education[0].institute}}</div>
         <div class="contact-info">
-            {{personal_info.highest_education}}, {{education[0].institute}}
-        </div>
-        <div class="contact-info">
-            {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
+            <span>{{personal_info.city}}</span>
+            <span>|</span>
+            <span style="display: flex; align-items: center; gap: 4px;">
+                <i class="fa fa-phone"></i>
+                {{personal_info.phone}}
+            </span>
+            <span>|</span>
+            <span style="display: flex; align-items: center; gap: 4px;">
+                <i class="fa fa-envelope"></i>
+                <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
+            </span>
+            {% if personal_info.github_link %}
+            <span>|</span>
+            <span style="display: flex; align-items: center; gap: 4px;">
+                <i class="fab fa-github"></i>
+                <a href="{{personal_info.github_link}}" target="_blank">
+                    {{ personal_info.github_link.split('/')[-1] }}
+                </a>
+            </span>
+            {% endif %}
+            {% if personal_info.linkedin_link %}
+            <span>|</span>
+            <span style="display: flex; align-items: center; gap: 4px;">
+                <i class="fab fa-linkedin"></i>
+                <a href="{{personal_info.linkedin_link}}" target="_blank">
+                    {{ personal_info.linkedin_link.split('/')[-2] }}
+                </a>
+            </span>
+            {% endif %}
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">Educational Qualifications</div>
         <table class="education-table">
             <thead>
                 <tr>
@@ -164,7 +216,7 @@
     {% set valid_achievements = achievements|selectattr('description')|list %}
     {% if valid_achievements %}
     <div class="section">
-        <div class="section-title">Scholastic Achievements</div>
+        <div class="section-title">Scholastic Achievements<span class="section-title-line"></span></div>
         <ul>
             {% for ach in valid_achievements %}
             <li>
@@ -181,7 +233,7 @@
     {% set valid_internships = internships|selectattr('company')|list %}
     {% if valid_internships %}
     <div class="section">
-        <div class="section-title">Internships</div>
+        <div class="section-title">Internships<span class="section-title-line"></span></div>
         {% for intern in valid_internships %}
         <div class="experience-item">
             <div class="experience-header">
@@ -204,7 +256,7 @@
     {% set valid_projects = projects|selectattr('title')|list %}
     {% if valid_projects %}
     <div class="section">
-        <div class="section-title">Key Projects</div>
+        <div class="section-title">Key Projects<span class="section-title-line"></span></div>
         {% for proj in valid_projects %}
         <div class="experience-item">
             <div class="experience-header">
@@ -227,7 +279,7 @@
     {% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
     {% if valid_positions %}
     <div class="section">
-        <div class="section-title">Positions of Responsibility</div>
+        <div class="section-title">Positions of Responsibility<span class="section-title-line"></span></div>
         {% for pos in valid_positions %}
         <div class="experience-item">
             <div class="experience-header">
@@ -250,7 +302,7 @@
     {% set valid_extracurricular = extracurricular|select|list %}
     {% if valid_extracurricular %}
     <div class="section extracurricular-section">
-        <div class="section-title">Extra Curricular Activities</div>
+        <div class="section-title">Extra Curricular Activities<span class="section-title-line"></span></div>
         <ul>
             {% for activity in valid_extracurricular %}
             <li>{{activity}}</li>
@@ -262,7 +314,7 @@
     {% set valid_skills = technical_skills|select|list %}
     {% if valid_skills %}
     <div class="section">
-        <div class="section-title">Technical Skills</div>
+        <div class="section-title">Technical Skills<span class="section-title-line"></span></div>
         <div class="skills">
             {% for skill in valid_skills %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
         </div>

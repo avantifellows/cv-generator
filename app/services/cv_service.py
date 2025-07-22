@@ -228,7 +228,9 @@ class CVService:
                 "highest_education": legacy_data.get("highest_education", ""),
                 "city": legacy_data.get("city", ""),
                 "phone": legacy_data.get("phone", ""),
-                "email": legacy_data.get("email", "")
+                "email": legacy_data.get("email", ""),
+                "linkedin_link": legacy_data.get("linkedin_link", ""),
+                "github_link": legacy_data.get("github_link", "")
             }
             
             # Extract education entries

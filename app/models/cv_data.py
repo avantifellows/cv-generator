@@ -13,6 +13,8 @@ class PersonalInfo(BaseModel):
     city: str = Field(..., min_length=1, max_length=100)
     phone: str = Field(..., min_length=1, max_length=20)
     email: str = Field(..., pattern=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+    linkedin_link: Optional[str] = Field(None, max_length=200)
+    github_link: Optional[str] = Field(None, max_length=200)
 
 
 class EducationEntry(BaseModel):
