@@ -42,7 +42,7 @@ terraform {
       version = "~> 4.0"
     }
   }
-  
+
   backend "s3" {
     # This bucket name must be globally unique. You will create it manually.
     # We will provide instructions on this shortly.
