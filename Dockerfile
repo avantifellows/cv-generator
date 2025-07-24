@@ -1,7 +1,32 @@
 # Dockerfile
 
-# Use the official AWS Lambda Python base image
-FROM public.ecr.aws/lambda/python:3.11
+# Use Ubuntu as base for better GLIBC compatibility, then add Lambda runtime
+FROM ubuntu:22.04
+
+# Set timezone to avoid interactive prompt
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=UTC
+
+# Install AWS Lambda Runtime Interface Client
+RUN apt-get update && \
+    apt-get install -y \
+        python3.11 \
+        python3.11-venv \
+        python3-pip \
+        curl \
+        unzip \
+        software-properties-common \
+        && rm -rf /var/lib/apt/lists/*
+
+# Install AWS Lambda Runtime Interface Client
+RUN pip3 install awslambdaric
+
+# Set up Lambda environment
+ENV LAMBDA_TASK_ROOT=/var/task
+ENV LAMBDA_RUNTIME_DIR=/var/runtime
+
+# Set up working directory
+WORKDIR ${LAMBDA_TASK_ROOT}
 
 # Copy the application code and other necessary files
 COPY app/ ./app/
@@ -11,43 +36,27 @@ COPY templates/ ./templates/
 COPY test_data_structured.json .
 
 # Install system dependencies for Playwright
-RUN yum update -y && \
-    yum install -y \
-    glib2-devel \
-    nss \
-    nspr \
-    at-spi2-atk \
-    atk \
-    drm \
-    xkeyboard-config \
-    xorg-x11-xauth \
-    xrandr \
-    alsa-lib \
-    gtk3 \
-    libXcomposite \
-    libXcursor \
-    libXdamage \
-    libXext \
-    libXi \
-    libXrandr \
-    libXScrnSaver \
-    libXtst \
-    pango \
-    xorg-x11-fonts-100dpi \
-    xorg-x11-fonts-75dpi \
-    xorg-x11-fonts-cyrillic \
-    xorg-x11-fonts-misc \
-    xorg-x11-fonts-Type1 \
-    xorg-x11-utils && \
-    yum clean all
+RUN apt-get update && \
+    apt-get install -y \
+    wget \
+    gnupg \
+    ca-certificates \
+    libnss3-dev \
+    libatk-bridge2.0-dev \
+    libdrm-dev \
+    libxkbcommon-dev \
+    libgtk-3-dev \
+    libgbm-dev \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install the Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Install Playwright browsers
+# Install Playwright browsers with dependencies
 RUN playwright install chromium && \
     playwright install-deps chromium
 
-# Set the command to run when the container starts.
-# This tells Lambda to use the "handler" object in our "main.py" file.
+# Set the entry point for AWS Lambda
+ENTRYPOINT ["/usr/local/bin/python", "-m", "awslambdaric"]
 CMD ["main.handler"]
