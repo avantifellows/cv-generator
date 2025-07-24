@@ -94,9 +94,14 @@ sudo -u cvapp /home/cvapp/app/venv/bin/pip install --upgrade pip
 # Install Python dependencies
 sudo -u cvapp /home/cvapp/app/venv/bin/pip install -r requirements.txt
 
-# Install Playwright and browsers
+# Install Playwright browser dependencies (as root for system packages)
+/home/cvapp/app/venv/bin/python -m playwright install-deps chromium
+
+# Install Playwright browsers (as cvapp user)
 sudo -u cvapp /home/cvapp/app/venv/bin/playwright install chromium
-sudo -u cvapp /home/cvapp/app/venv/bin/playwright install-deps chromium
+
+# Ensure proper permissions for Playwright cache
+chown -R cvapp:cvapp /home/cvapp/.cache/
 
 # Create directories for generated files
 sudo -u cvapp mkdir -p /home/cvapp/app/generated
