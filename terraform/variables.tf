@@ -13,7 +13,7 @@ variable "project_name" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t3.small"  # Smallest that can handle Playwright
+  default     = "t3.small" # Smallest that can handle Playwright
 }
 
 variable "key_pair_name" {

@@ -15,7 +15,7 @@ terraform {
     }
   }
   required_version = ">= 1.0"
-  
+
   # S3 Backend configuration
   # This will be uncommented after initial backend setup
   backend "s3" {
@@ -154,7 +154,7 @@ locals {
 resource "aws_instance" "cv_generator" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.instance_type
-  key_name              = data.aws_key_pair.existing_key.key_name
+  key_name               = data.aws_key_pair.existing_key.key_name
   vpc_security_group_ids = [aws_security_group.cv_generator_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_profile.name
 
