@@ -11,11 +11,14 @@ permissions:
 env:
   TF_VERSION: "1.10.5"
   AWS_REGION: "ap-south-1"
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
 
 jobs:
   terraform:
     name: 'Terraform Plan & Apply'
     runs-on: ubuntu-latest
+    timeout-minutes: 20  # Prevent hanging workflows
     
     # Working directory for all terraform commands
     defaults:
@@ -62,16 +65,32 @@ jobs:
       run: terraform fmt -check -recursive
       continue-on-error: true
 
+    # Check for stale locks and clear if needed
+    - name: Check State Lock Status
+      run: |
+        echo "Checking for potential state locks..."
+        if ! terraform plan -input=false -lock-timeout=30s >/dev/null 2>&1; then
+          echo "⚠️ State appears to be locked. This might be a stale lock from a previous run."
+          echo "Attempting to diagnose the issue..."
+          # Don't auto-unlock in CI for safety, just report the issue
+          echo "If this persists, a manual 'terraform force-unlock' may be needed."
+          exit 1
+        fi
+        echo "✅ State lock check passed"
+      env:
+        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+
     # Generate Terraform plan
     - name: Terraform Plan
-      run: terraform plan -input=false
+      run: terraform plan -input=false -lock-timeout=5m
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
 
     # Apply Terraform changes
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -lock-timeout=5m
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }} 
