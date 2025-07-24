@@ -105,16 +105,19 @@ cv-generator/
 ### **AWS EC2 Deployment**
 - **Terraform Configuration**: Infrastructure as Code
 - **EC2 Instance**: t3.small Ubuntu 22.04 LTS
-- **Nginx Reverse Proxy**: HTTP traffic routing
+- **Nginx Reverse Proxy**: HTTP traffic routing with SSL termination
 - **SystemD Service**: Application lifecycle management
 - **Cloudflare DNS**: Custom domain management
-- **Automated Setup**: Complete deployment with user data scripts
+- **SSL/TLS**: Let's Encrypt certificates with automatic renewal
+- **Automated Setup**: Complete deployment with idempotent user data scripts
 
 ### **Key Infrastructure Components**
 - **Security Group**: SSH (22), HTTP (80), HTTPS (443), FastAPI (8000)
 - **Elastic IP**: Static IP address for the instance
 - **IAM Role**: EC2 instance profile for future AWS services
-- **User Data Script**: Automated application setup on instance launch
+- **User Data Script**: Idempotent application setup on instance launch
+- **SSL Certificate**: Automated Let's Encrypt certificate management
+- **Security Headers**: HSTS, X-Frame-Options, XSS protection
 
 ## **Recent Technical Improvements**
 
@@ -123,6 +126,9 @@ cv-generator/
 - ✅ **Template Optimization**: Improved formatting and spacing
 - ✅ **Dynamic Content**: Smart conditional rendering
 - ✅ **Clean Architecture**: Service layer and Pydantic models
+- ✅ **SSL/HTTPS Implementation**: Let's Encrypt certificates with automatic renewal
+- ✅ **Idempotent Deployment**: Safe multi-run user data scripts
+- ✅ **Security Headers**: HSTS, XSS protection, content security policies
 
 ## **Current Development Status**
 
@@ -246,19 +252,26 @@ python main.py
 cp terraform/terraform.tfvars.example terraform/terraform.tfvars
 # Edit terraform.tfvars with your values
 
-# Deploy infrastructure
+# Deploy infrastructure with SSL
 cd terraform
 terraform init
 terraform plan
 terraform apply
 ```
 
+### **SSL Configuration**
+- **Automatic Certificate Generation**: Let's Encrypt integration
+- **HTTPS Enforcement**: All HTTP traffic redirects to HTTPS
+- **Security Headers**: HSTS, X-Frame-Options, XSS protection
+- **Certificate Renewal**: Automated with systemd timers
+- **Modern TLS**: TLS 1.2/1.3 with secure cipher suites
+
 ### **Manual Updates**
 ```bash
 # SSH into instance
 ssh -i ~/.ssh/AvantiFellows.pem ubuntu@<ELASTIC_IP>
 
-# Update application
+# Update application (idempotent user data can also be re-run)
 sudo su - cvapp
 cd /home/cvapp/app
 git pull origin new-feature-branch
@@ -298,9 +311,12 @@ sudo systemctl restart cv-generator
 - Comprehensive client-side validation
 
 ### **Security Considerations**
-- Input validation with Pydantic models
-- Proper error messages without internal exposure
-- File path validation prevents directory traversal
-- Content-type validation for uploads
+- ✅ **Input validation**: Pydantic models with comprehensive validation
+- ✅ **Error handling**: Proper error messages without internal exposure
+- ✅ **File security**: Path validation prevents directory traversal
+- ✅ **Content validation**: Content-type validation for uploads
+- ✅ **SSL/TLS encryption**: HTTPS with Let's Encrypt certificates
+- ✅ **Security headers**: HSTS, X-Frame-Options, XSS protection
+- ✅ **HTTPS enforcement**: All traffic encrypted with automatic redirects
 
-This is a **well-architected, production-ready application** that demonstrates modern Python web development practices with clean code, proper separation of concerns, and comprehensive deployment automation. The project successfully generates professional academic resumes with a focus on user experience and code quality. 
+This is a **well-architected, production-ready application** that demonstrates modern Python web development practices with clean code, proper separation of concerns, comprehensive deployment automation, and enterprise-grade security. The project successfully generates professional academic resumes with a focus on user experience, code quality, and security best practices. 

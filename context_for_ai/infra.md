@@ -114,8 +114,8 @@ data "cloudflare_zone" "main" {
 | Port | Protocol | Source | Purpose |
 |------|----------|--------|---------|
 | 22 | TCP | 0.0.0.0/0 | SSH access for administration |
-| 80 | TCP | 0.0.0.0/0 | HTTP traffic (Nginx proxy) |
-| 443 | TCP | 0.0.0.0/0 | HTTPS traffic (future SSL) |
+| 80 | TCP | 0.0.0.0/0 | HTTP traffic (redirects to HTTPS) |
+| 443 | TCP | 0.0.0.0/0 | HTTPS traffic (SSL/TLS encrypted) |
 | 8000 | TCP | 0.0.0.0/0 | FastAPI direct access (debugging) |
 
 ### **Egress Rules (Outbound Traffic)**
@@ -125,7 +125,8 @@ data "cloudflare_zone" "main" {
 ### **Security Considerations**
 - ⚠️ **SSH Access**: Currently open to all IPs (consider restricting to specific IPs)
 - ⚠️ **Port 8000**: Exposed for debugging (consider removing in production)
-- ✅ **Standard Ports**: HTTP/HTTPS properly configured
+- ✅ **Standard Ports**: HTTP/HTTPS properly configured with SSL termination
+- ✅ **SSL/TLS**: Let's Encrypt certificates with automatic renewal
 
 ## **IAM Configuration**
 
@@ -169,6 +170,8 @@ resource "aws_iam_role" "ec2_role" {
 - **Purpose**: Automated application setup on instance launch
 - **Format**: Multipart MIME for complex initialization
 - **Logging**: Complete setup process logged to `/var/log/user-data.log`
+- **Idempotent**: Can run multiple times safely without completion markers
+- **SSL Automation**: Automatic Let's Encrypt certificate generation and renewal
 
 ## **Elastic IP Configuration**
 
@@ -203,6 +206,29 @@ resource "cloudflare_record" "cv_generator_dns" {
 - **TTL**: 300 seconds (5 minutes) for quick updates
 - **Dynamic**: Automatically points to Elastic IP
 - **Result**: `cv-generator.avantifellows.org` → Elastic IP
+
+## **SSL Certificate Configuration**
+
+### **Let's Encrypt Integration**
+```bash
+# Automated certificate generation
+certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domain} --redirect
+```
+
+### **Certificate Management**
+- **Certificate Authority**: Let's Encrypt (R11)
+- **Certificate Path**: `/etc/letsencrypt/live/${domain}/fullchain.pem`
+- **Private Key Path**: `/etc/letsencrypt/live/${domain}/privkey.pem`
+- **Validity**: 90 days with automatic renewal
+- **Auto-Renewal**: systemd timer runs `certbot renew` twice daily
+- **Deployment**: Automatic Nginx configuration with SSL termination
+
+### **SSL Security Features**
+- **Protocols**: TLS 1.2 and TLS 1.3 only
+- **Ciphers**: Modern ECDHE and AES cipher suites
+- **HSTS**: Strict-Transport-Security header (1 year)
+- **Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
+- **HTTP Redirect**: All HTTP traffic automatically redirects to HTTPS (301)
 
 ## **User Data Script Analysis**
 
@@ -358,11 +384,20 @@ EOL
 ```
 
 ### **Script Features**
-- **Idempotency**: Can be run multiple times safely
+- **Idempotency**: Can be run multiple times safely without completion markers
 - **Error Handling**: Exits on any error (`set -e`)
 - **Logging**: Complete process logged for debugging
-- **Completion Tracking**: Prevents duplicate execution
+- **Conditional Logic**: Checks existing installations before proceeding
 - **Health Monitoring**: Built-in health check capabilities
+- **SSL Automation**: Automatic Let's Encrypt certificate generation and renewal
+
+### **Idempotent Operations**
+- **Package Installation**: Uses apt's idempotent nature
+- **User Creation**: Checks if `cvapp` user exists before creating
+- **Repository Management**: Updates existing repo instead of re-cloning
+- **SSL Certificates**: Detects existing certificates, skips if valid
+- **Service Configuration**: Always updates configs, restarts services safely
+- **Node.js Installation**: Checks if already installed before proceeding
 
 ## **Terraform Outputs**
 
@@ -377,8 +412,9 @@ EOL
 | Output | Description | Example Value |
 |--------|-------------|---------------|
 | `ssh_command` | Ready-to-use SSH command | `ssh -i ~/.ssh/AvantiFellows.pem ubuntu@13.127.123.456` |
-| `application_url` | Direct IP access | `http://13.127.123.456` |
-| `custom_domain_url` | Custom domain access | `http://cv-generator.avantifellows.org` |
+| `application_url` | HTTPS IP access | `https://13.127.123.456` |
+| `custom_domain_url` | HTTPS custom domain | `https://cv-generator.avantifellows.org` |
+| `http_redirect_url` | HTTP URL that redirects to HTTPS | `http://cv-generator.avantifellows.org` |
 
 ## **Deployment Process**
 
@@ -489,13 +525,16 @@ cat /etc/nginx/sites-available/cv-generator
 - ✅ **IAM Roles**: Proper role-based access for EC2
 - ✅ **Service User**: Application runs as non-root user
 - ✅ **Firewall**: Security group controls network access
+- ✅ **SSL/TLS**: HTTPS with Let's Encrypt certificates and automatic renewal
+- ✅ **Security Headers**: HSTS, X-Frame-Options, XSS protection
+- ✅ **HTTP Redirect**: All traffic forced to HTTPS with 301 redirects
 
 ### **Security Recommendations**
 - 🔒 **SSH Access**: Restrict SSH to specific IP addresses
 - 🔒 **Port 8000**: Remove direct FastAPI access in production
-- 🔒 **SSL/TLS**: Implement HTTPS with Let's Encrypt
 - 🔒 **Updates**: Regular system and dependency updates
 - 🔒 **Monitoring**: Implement log monitoring and alerting
+- 🔒 **Certificate Monitoring**: Monitor SSL certificate expiration (auto-renewal enabled)
 
 ## **Cost Optimization**
 
@@ -526,13 +565,18 @@ cat /etc/nginx/sites-available/cv-generator
 
 ## **Future Enhancements**
 
+### **Completed Infrastructure Improvements**
+- ✅ **SSL/TLS**: Automated certificate management with Let's Encrypt
+- ✅ **Security Headers**: HSTS, XSS protection, and content security
+- ✅ **HTTPS Enforcement**: Automatic HTTP to HTTPS redirects
+- ✅ **Idempotent Deployment**: Safe multi-run user data scripts
+
 ### **Planned Infrastructure Improvements**
 - **S3 Integration**: Persistent storage for generated CVs
 - **Load Balancer**: Multiple instance support
 - **Auto Scaling**: Dynamic capacity management
 - **CDN**: CloudFront for static asset delivery
 - **Monitoring**: CloudWatch dashboards and alarms
-- **SSL/TLS**: Automated certificate management
 
 ### **Security Enhancements**
 - **VPC**: Custom networking with private subnets
