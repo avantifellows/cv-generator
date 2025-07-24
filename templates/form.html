@@ -186,9 +186,41 @@
             min-width: 80px;
             padding: 8px 12px;
         }
+        .main-flex {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+        justify-content: center;
+    }
+    .form-section, .preview-section {
+        flex: 0 0 600px;
+        max-width: 600px;
+        min-width: 350px;
+        box-sizing: border-box;
+    }
+    #cv-preview-container {
+        width: 100%;
+        height: 1123px;
+        border: 1px solid #ccc;
+        background: #fff;
+        overflow: auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 1300px) {
+        .main-flex {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .form-section, .preview-section {
+            max-width: 100%;
+            flex: 1 1 100%;
+        }
+    }
     </style>
 </head>
 <body>
+    <div class="main-flex">
+        <div class="form-section">
     <div class="container">
         <h1>CV Generator</h1>
         <form id="cvForm" method="post" action="/generate">
@@ -465,6 +497,12 @@
             <button type="submit">Generate CV</button>
         </form>
     </div>
+    </div>
+    <div class="preview-section">
+        <div id="cv-preview-container"></div>
+    </div>
+    </div>
+    
 
     <script>
         // Counter for dynamic entries
@@ -1015,6 +1053,238 @@
             var email = document.getElementById('email');
             if (email) email.setAttribute('placeholder', 'e.g. jane.doe@email.com');
         });
+    function getValue(name) {
+        const el = document.getElementById('cvForm').elements[name];
+        return el ? el.value.trim() : '';
+    }
+    function getValues(name) {
+        return Array.from(document.querySelectorAll(`#cvForm [name^="${name}"]`)).map(e => e.value.trim()).filter(Boolean);
+    }
+    function renderPreview() {
+        const preview = document.getElementById('cv-preview-container');
+        let html = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box;">';
+        
+        // Personal Info
+        const name = getValue('full_name');
+        const degree = getValue('highest_education');
+        const city = getValue('city');
+        const phone = getValue('phone');
+        const email = getValue('email');
+        
+        // Get institute from first education entry for header
+        const educationEntries = getArrayEntries('education');
+        const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
+        const institute = firstEducation.institute || '';
+        
+        if (name) html += `<div style="font-size:2.2em;font-weight:bold;color:#4C5196;text-align:center;margin-bottom:8px;">${name}</div>`;
+        
+        // Institute and degree line
+        if (degree || institute) {
+            html += `<div style="text-align:center;font-size:1.1em;margin-bottom:8px;">`;
+            if (degree) html += `${degree}`;
+            if (degree && institute) html += `, `;
+            if (institute) html += `${institute}`;
+            html += '</div>';
+        }
+        
+        // Contact info line
+        if (city || phone || email) {
+            html += `<div style="text-align:center;font-size:1.1em;margin-bottom:20px;">`;
+            const contactParts = [];
+            if (city) contactParts.push(city);
+            if (phone) contactParts.push(`Phone: ${phone}`);
+            if (email) contactParts.push(`Email: ${email}`);
+            html += contactParts.join(' | ');
+            html += '</div>';
+        }
+        
+        // Horizontal line after contact info
+        html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
+
+        // Education Table (no header)
+        if (educationEntries.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;">`;
+            html += `<thead><tr style="background:#f5f5f5;"><th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th></tr></thead><tbody>`;
+            educationEntries.forEach(entry => {
+                if (entry.qualification || entry.stream || entry.institute) {
+                    html += `<tr><td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td></tr>`;
+                }
+            });
+            html += `</tbody></table></div>`;
+        }
+
+        // Scholastic Achievements
+        let achievements = getArrayValues('achievements');
+        if (achievements.length === 0) {
+            achievements = getArrayValues('scholastic_achievements');
+        }
+        if (achievements.length === 0) {
+            achievements = getArrayValues('achievement');
+        }
+        if (achievements.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Scholastic Achievements</h3>`;
+            achievements.forEach(achievement => {
+                if (achievement.trim()) {
+                    html += `<div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;">`;
+                    html += `<div style="flex:1;">• ${achievement}</div>`;
+                    html += `<div style="font-style:italic;margin-left:10px;">(2024)</div>`;
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+        }
+
+        // Internships
+        const internshipEntries = getArrayEntries('internships');
+        if (internshipEntries.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Internships</h3>`;
+            internshipEntries.forEach(entry => {
+                if (entry.company || entry.role) {
+                    html += `<div style="margin-bottom:15px;">`;
+                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                    html += `<div><strong>${entry.company || ''}</strong>`;
+                    if (entry.role) html += ` | ${entry.role}`;
+                    html += `</div>`;
+                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `</div>`;
+                    if (entry.points && entry.points.length > 0) {
+                        entry.points.forEach(point => {
+                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+        }
+
+        // Key Projects
+        const projectEntries = getArrayEntries('projects');
+        if (projectEntries.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Key Projects</h3>`;
+            projectEntries.forEach(entry => {
+                if (entry.title || entry.type) {
+                    html += `<div style="margin-bottom:15px;">`;
+                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                    html += `<div><strong>${entry.title || ''}</strong>`;
+                    if (entry.type) html += ` | ${entry.type}`;
+                    html += `</div>`;
+                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `</div>`;
+                    if (entry.points && entry.points.length > 0) {
+                        entry.points.forEach(point => {
+                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+        }
+
+        // Positions of Responsibility
+        const positionEntries = getArrayEntries('positions');
+        if (positionEntries.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Positions of Responsibility</h3>`;
+            positionEntries.forEach(entry => {
+                if (entry.club || entry.role) {
+                    html += `<div style="margin-bottom:15px;">`;
+                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                    html += `<div><strong>${entry.club || ''}</strong>`;
+                    if (entry.role) html += ` | ${entry.role}`;
+                    html += `</div>`;
+                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `</div>`;
+                    if (entry.points && entry.points.length > 0) {
+                        entry.points.forEach(point => {
+                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+        }
+
+        // Extra Curricular Activities
+        const activities = getArrayValues('extracurricular_activities');
+        if (activities.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Extra Curricular Activities</h3>`;
+            activities.forEach(activity => {
+                if (activity.trim()) html += `<div style="margin-bottom:5px;">• ${activity}</div>`;
+            });
+            html += `</div>`;
+        }
+
+        // Technical Skills (at bottom)
+        const skills = getArrayValues('technical_skills');
+        if (skills.length > 0) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Technical Skills</h3>`;
+            html += `<div style="line-height:1.6;">${skills.filter(s => s.trim()).join(', ')}</div></div>`;
+        }
+
+        html += '</div>';
+        preview.innerHTML = html;
+    }
+    document.getElementById('cvForm').addEventListener('input', renderPreview);
+    window.addEventListener('DOMContentLoaded', renderPreview);
+
+    // Helper functions for getting form data
+    function getValue(id) {
+        const element = document.getElementById(id);
+        return element ? element.value : '';
+    }
+
+    function getArrayValues(fieldName) {
+        // Handle different field name patterns
+        let selector;
+        if (fieldName === 'achievements') {
+            selector = '[name="achievements[]"]';
+        } else if (fieldName === 'technical_skills') {
+            selector = '[name="technical_skills[]"]';
+        } else if (fieldName === 'extracurricular_activities') {
+            selector = '[name="extracurricular[]"]';
+        } else {
+            selector = `[name^="${fieldName}"]`;
+        }
+        
+        const inputs = document.querySelectorAll(selector);
+        return Array.from(inputs).map(input => input.value).filter(val => val && val.trim());
+    }
+
+    function getArrayEntries(sectionName) {
+        const entries = [];
+        const form = document.getElementById('cvForm');
+        const formData = new FormData(form);
+        
+        // Group entries by index
+        const grouped = {};
+        for (let [key, value] of formData.entries()) {
+            if (key.startsWith(`${sectionName}[`)) {
+                const match = key.match(/\[(\d+)\]\[([^\]]+)\]/);
+                if (match) {
+                    const index = match[1];
+                    const field = match[2];
+                    if (!grouped[index]) grouped[index] = {};
+                    if (field === 'points') {
+                        if (!grouped[index].points) grouped[index].points = [];
+                        grouped[index].points.push(value);
+                    } else {
+                        grouped[index][field] = value;
+                    }
+                }
+            }
+        }
+        
+        return Object.values(grouped);
+    }
     </script>
 </body>
 </html>
