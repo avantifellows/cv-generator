@@ -137,6 +137,31 @@ server {
     listen 80;
     server_name ${domain} _;
 
+    # Redirect all HTTP traffic to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${domain} _;
+
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/${domain}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;
+    
+    # Modern SSL configuration
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA256:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+    
+    # Security headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
+
     client_max_body_size 50M;
 
     location / {
@@ -180,9 +205,22 @@ sleep 10
 systemctl status nginx --no-pager
 systemctl status cv-generator --no-pager
 
+# Obtain SSL certificate from Let's Encrypt
+echo "Obtaining SSL certificate..."
+certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domain} --redirect
+
+# Set up automatic certificate renewal
+echo "Setting up automatic certificate renewal..."
+systemctl enable certbot.timer
+systemctl start certbot.timer
+
+# Test certificate renewal
+certbot renew --dry-run
+
 echo "Setup completed at $(date)"
 echo "FastAPI app should be running on http://localhost:8000"
-echo "Nginx should be proxying on port 80"
+echo "Nginx should be proxying on port 80 and redirecting to HTTPS on port 443"
+echo "SSL certificate obtained and configured for ${domain}"
 
 # Create a simple health check script
 cat > /home/cvapp/health-check.sh << 'EOL'
@@ -196,6 +234,8 @@ echo "Port 8000 check:"
 curl -s http://localhost:8000/health || echo "FastAPI not responding"
 echo "Port 80 check:"
 curl -s http://localhost/health || echo "Nginx proxy not working"
+echo "HTTPS check:"
+curl -s https://localhost/health || echo "HTTPS not working"
 EOL
 
 chmod +x /home/cvapp/health-check.sh

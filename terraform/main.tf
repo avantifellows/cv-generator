@@ -201,10 +201,15 @@ output "ssh_command" {
 
 output "application_url" {
   description = "URL to access the application"
-  value       = "http://${aws_eip.cv_generator_eip.public_ip}"
+  value       = "https://${aws_eip.cv_generator_eip.public_ip}"
 }
 
 output "custom_domain_url" {
   description = "URL of the custom domain"
+  value       = "https://${var.domain}.${var.cloudflare_zone_name}"
+}
+
+output "http_redirect_url" {
+  description = "HTTP URL that redirects to HTTPS"
   value       = "http://${var.domain}.${var.cloudflare_zone_name}"
 } 
