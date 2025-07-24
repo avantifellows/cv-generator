@@ -15,10 +15,7 @@ import re
 from pathlib import Path
 from io import BytesIO
 import pprint
-from mangum import Mangum
 from playwright.async_api import async_playwright
-
-# Clean imports for Playwright-based PDF generation
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
@@ -30,8 +27,8 @@ from app.core.logging import setup_logging, get_logger
 setup_logging(level="INFO")
 logger = get_logger(__name__)
 
-# Define base path for Lambda's writable directory
-BASE_PATH = Path("/tmp") if os.environ.get("AWS_LAMBDA_FUNCTION_NAME") else Path(".")
+# Define base path for application files
+BASE_PATH = Path(".")
 
 # Create FastAPI app
 app = FastAPI(
@@ -556,16 +553,6 @@ async def health_check():
     return {"status": "healthy", "version": "2.0.0"}
 
 
-#if __name__ == "__main__":
-#    import uvicorn
-#    uvicorn.run(app, host="0.0.0.0", port=8000)
-
-logger.info("Creating Mangum handler")
-handler = Mangum(app)
-logger.info("Mangum handler created successfully")
-
-# import os
-
-# def handler(event, context):
-#     print("DEBUG: Handler was called")
-#     return {"status": "ok"}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

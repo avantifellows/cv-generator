@@ -1,7 +1,0 @@
-# Copy this file to terraform.tfvars and fill in your actual values
-# terraform.tfvars is ignored by git for security
-
-cloudflare_email     = "your-email@domain.com"
-cloudflare_api_key   = "your-cloudflare-api-key"
-cloudflare_zone_name = "your-domain.com"
-domain              = "your-subdomain" 
