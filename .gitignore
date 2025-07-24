@@ -42,10 +42,12 @@ venv/
 *.zip
 *.pyc
 __pycache__/
-terraform/.terraform/providers/*
-terraform/terraform-backend/.terraform/*
-terraform/terraform.tfstate.backup
+# Terraform
+terraform/.terraform/
+terraform/.terraform.*
 terraform/terraform.tfstate
 terraform/terraform.tfstate.*
+terraform/terraform.tfstate.backup
 terraform/terraform.tfvars
 terraform/terraform.tfvars.json
+terraform/backend-config.txt

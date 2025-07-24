@@ -42,9 +42,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
-    # Initialize Terraform
+    # Initialize Terraform with S3 backend
     - name: Terraform Init
-      run: terraform init
+      run: |
+        terraform init \
+          -backend-config="bucket=${{ secrets.S3_BACKEND_BUCKET }}" \
+          -backend-config="dynamodb_table=${{ secrets.DYNAMODB_LOCK_TABLE }}" \
+          -backend-config="region=${{ env.AWS_REGION }}"
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}

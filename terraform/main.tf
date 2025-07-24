@@ -9,8 +9,22 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "~> 4.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
   required_version = ">= 1.0"
+  
+  # S3 Backend configuration
+  # This will be uncommented after initial backend setup
+  backend "s3" {
+    bucket         = "cv-generator-terraform-state-moh8l579"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "cv-generator-terraform-locks"
+    encrypt        = true
+  }
 }
 
 # Configure the AWS provider
