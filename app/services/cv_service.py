@@ -5,7 +5,7 @@ import os
 import json
 import uuid
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from pathlib import Path
 
 from app.models.cv_data import CVData, CVDocument, CVMetadata
@@ -166,7 +166,7 @@ class CVService:
         data_file = self.generated_dir / f"{cv_id}_data.json"
         return data_file.exists()
     
-    def list_cvs(self) -> list[Dict[str, Any]]:
+    def list_cvs(self) -> List[Dict[str, Any]]:
         """
         List all CVs with basic metadata
         

@@ -10,32 +10,31 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 4px;
-            line-height: 1.2;
+            line-height: 1.1;
             color: #333;
             font-size: 12px;
         }
         
         .header {
             text-align: center;
-            border-bottom: 2px solid #4C5196;
-            padding-bottom: 6px;
-            margin-bottom: 10px;
+            padding-bottom: 3px;
+            margin-bottom: 6px;
         }
         
         .name {
             font-size: 2.5em;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             color: #4C5196;
         }
         
         .contact-info {
             font-size: 1.1em;
-            margin-bottom: 10px;
+            margin-bottom: 3px;
         }
         
         .section {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
         
         .section-title {
@@ -44,9 +43,11 @@
             font-size: 1.5em;
             font-weight: bold;
             color: #4C5196;
-            margin-bottom: 15px;
-            padding-bottom: 0;
+            margin-bottom: 8px;
+            padding: 2px 2px;
             border-bottom: none;
+            /* background-color: #E8F4FD; */
+            border-radius: 3px;
         }
         .section-title-text {
             margin-right: 12px;
@@ -63,13 +64,13 @@
         .education-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .education-table th,
         .education-table td {
             border: 1px solid #ddd;
-            padding: 4px 6px;
+            padding: 2px 4px;
             text-align: left;
         }
         
@@ -79,13 +80,13 @@
         }
         
         .experience-item {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         
         .experience-header {
             margin-bottom: 5px;
-            display: flex;
-            align-items: baseline;
+            display: block;
+            overflow: hidden;
         }
         .experience-header .main-entity {
             font-weight: bold;
@@ -94,35 +95,49 @@
             font-weight: normal;
         }
         .experience-duration {
-            margin-left: auto;
+            float: right !important;
             font-style: italic;
             font-weight: normal;
+            text-align: right !important;
+            margin-left: auto;
+            clear: right;
         }
         .separator {
             margin: 0 2px;
         }
         .achievement-header {
-            display: flex;
-            align-items: baseline;
+            display: block;
+            overflow: hidden;
             margin-bottom: 5px;
         }
-        .achievement-desc {
+
+        .achievement-desc ul{
             font-weight: normal;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
+
+        .achievement-desc ul li {
+            margin-bottom: 3px;
+        }
+        
         .achievement-year {
-            margin-left: auto;
+            float: right !important;
             font-weight: normal;
             font-style: italic;
+            text-align: right !important;
+            margin-left: auto;
+            clear: right;
         }
         .extracurricular-section ul {
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
         .extracurricular-section ul li {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         .experience-points li {
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
         .skills {
             font-size: 1.1em;
@@ -131,7 +146,9 @@
             clear: both;
         }
         ul, .experience-points {
-            padding-left: 30px;
+            padding-left: 15px;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
         /* PDF-specific styles */
         @page {
@@ -147,6 +164,22 @@
             overflow: hidden;
             box-sizing: border-box;
         }
+        
+        /* Blue line separator */
+        .education-separator {
+            border-top: 2px solid #4C5196 !important;
+            margin-bottom: 10px !important;
+            opacity: 0.8 !important;
+            width: 100% !important;
+            height: 0 !important;
+        }
+        
+        .summary-content {
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -161,7 +194,15 @@
             </div>
         </div>
 
+        {% if summary and summary.strip() %}
         <div class="section">
+            <div class="section-title"><span class="section-title-text">Professional Summary</span><span class="section-title-line"></span></div>
+            <div class="summary-content">{{summary}}</div>
+        </div>
+        {% endif %}
+
+        <div class="section">
+            <div class="education-separator"></div>
             <table class="education-table">
                 <thead>
                     <tr>

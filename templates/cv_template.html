@@ -120,6 +120,13 @@
         ul, .experience-points {
             padding-left: 30px;
         }
+        
+        .summary-content {
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -132,6 +139,13 @@
             {{personal_info.city}} | Phone: {{personal_info.phone}} | Email: {{personal_info.email}}
         </div>
     </div>
+
+    {% if summary and summary.strip() %}
+    <div class="section">
+        <div class="section-title">Professional Summary</div>
+        <div class="summary-content">{{summary}}</div>
+    </div>
+    {% endif %}
 
     <div class="section">
         <div class="section-title">Educational Qualifications</div>

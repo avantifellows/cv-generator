@@ -13,10 +13,12 @@ import json
 import os
 import re
 from pathlib import Path
-from xhtml2pdf import pisa
 from io import BytesIO
 import pprint
 from mangum import Mangum
+from playwright.async_api import async_playwright
+
+# Clean imports for Playwright-based PDF generation
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
@@ -52,6 +54,30 @@ templates = Jinja2Templates(directory="templates")
 # Initialize services
 cv_service = CVService(base_path=BASE_PATH)
 
+async def generate_pdf_with_playwright(html_content: str) -> bytes:
+    """Generate PDF from HTML using Playwright"""
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        
+        # Set the HTML content
+        await page.set_content(html_content, wait_until='networkidle')
+        
+        # Generate PDF with A4 format and proper margins
+        pdf_bytes = await page.pdf(
+            format='A4',
+            margin={
+                'top': '0.2in',
+                'bottom': '0.2in', 
+                'left': '0.7in',
+                'right': '0.4in'
+            },
+            print_background=True,
+            prefer_css_page_size=True
+        )
+        
+        await browser.close()
+        return pdf_bytes
 
 def create_filename(name: str) -> str:
     """Create a clean filename from the user's name"""
@@ -127,18 +153,10 @@ async def download_test_cv_pdf():
         # Render PDF-specific HTML template
         html_content = render_template('cv_template_pdf.html', cv_data.dict())
         
-        # Generate PDF using xhtml2pdf
+        # Generate PDF using Playwright
         try:
-            result_file = BytesIO()
-            logger.info("Starting PDF generation with xhtml2pdf")
-            pisa_status = pisa.CreatePDF(html_content, dest=result_file)
-            
-            if pisa_status.err:
-                logger.error(f"xhtml2pdf reported errors: {pisa_status.err}")
-                raise Exception(f"Error generating PDF: {pisa_status.err}")
-            
-            pdf_bytes = result_file.getvalue()
-            result_file.close()
+            logger.info("Starting PDF generation with Playwright")
+            pdf_bytes = await generate_pdf_with_playwright(html_content)
             logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
         except Exception as e:
             logger.error(f"Exception during PDF generation: {str(e)}")
@@ -334,6 +352,9 @@ def parse_dynamic_form_data(form_data) -> dict:
         "phone": form_data.get("phone", ""),
         "email": form_data.get("email", "")
     }
+    
+    # Parse summary
+    structured_data["summary"] = form_data.get("summary", "")
     # Parse education entries
     education_data = {}
     for key, value in form_data.items():
@@ -462,18 +483,10 @@ async def get_cv_pdf(cv_id: str):
         # Render PDF-specific HTML template
         html_content = render_template('cv_template_pdf.html', cv_document.data.dict())
         
-        # Generate PDF using xhtml2pdf
+        # Generate PDF using Playwright
         try:
-            result_file = BytesIO()
-            logger.info("Starting PDF generation with xhtml2pdf")
-            pisa_status = pisa.CreatePDF(html_content, dest=result_file)
-            
-            if pisa_status.err:
-                logger.error(f"xhtml2pdf reported errors: {pisa_status.err}")
-                raise Exception(f"Error generating PDF: {pisa_status.err}")
-            
-            pdf_bytes = result_file.getvalue()
-            result_file.close()
+            logger.info("Starting PDF generation with Playwright")
+            pdf_bytes = await generate_pdf_with_playwright(html_content)
             logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
         except Exception as e:
             logger.error(f"Exception during PDF generation: {str(e)}")

@@ -117,6 +117,7 @@ class PositionEntry(BaseModel):
 class CVData(BaseModel):
     """Complete CV data structure"""
     personal_info: PersonalInfo
+    summary: Optional[str] = Field(default="", max_length=1000)
     education: List[EducationEntry] = Field(..., min_items=1, max_items=5)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
     internships: List[InternshipEntry] = Field(..., min_items=1, max_items=3)

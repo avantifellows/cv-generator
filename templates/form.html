@@ -222,6 +222,18 @@
                 </div>
             </div>
 
+            <!-- Summary -->
+            <div class="section" id="summary-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Professional Summary</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('summary-section')">Remove Section</button>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <textarea id="summary" name="summary" placeholder="Brief professional summary highlighting your key skills, experience, and career objectives..." rows="4">{{ form_data.summary if form_data else '' }}</textarea>
+                </div>
+            </div>
+
             <!-- Education -->
             <div class="section" id="education-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
