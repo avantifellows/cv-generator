@@ -26,17 +26,11 @@ set -e
 exec > >(tee /var/log/user-data.log) 2>&1
 echo "Starting user data script at $(date)"
 
-# Check if this is first run
-if [ -f /var/log/user-data-completed ]; then
-    echo "User data script already completed successfully. Skipping..."
-    exit 0
-fi
-
-# Update system
+# Update system (always safe to run)
 apt-get update
 apt-get upgrade -y
 
-# Install required packages
+# Install required packages (idempotent)
 apt-get install -y \
     python3.11 \
     python3.11-venv \
@@ -53,27 +47,37 @@ apt-get install -y \
     libffi-dev \
     libssl-dev
 
-# Install Node.js (required for Playwright)
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-apt-get install -y nodejs
-
-# Create application user
-if ! id "cvapp" &>/dev/null; then
-    useradd -m -s /bin/bash cvapp
-    usermod -aG sudo cvapp
+# Install Node.js (check if already installed)
+if ! command -v node &> /dev/null; then
+    echo "Installing Node.js..."
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    apt-get install -y nodejs
+else
+    echo "Node.js already installed: $(node --version)"
 fi
 
-# Create application directory
+# Create application user (idempotent)
+if ! id "cvapp" &>/dev/null; then
+    echo "Creating cvapp user..."
+    useradd -m -s /bin/bash cvapp
+    usermod -aG sudo cvapp
+else
+    echo "cvapp user already exists"
+fi
+
+# Create application directory (idempotent)
 mkdir -p /home/cvapp/app
 chown cvapp:cvapp /home/cvapp/app
 
-# Clone the repository as cvapp user (only if not exists)
+# Clone/update the repository
 if [ ! -d "/home/cvapp/app/.git" ]; then
+    echo "Cloning repository..."
     cd /home/cvapp
     sudo -u cvapp git clone ${repo_url} app
     cd /home/cvapp/app
     sudo -u cvapp git checkout new-feature-branch
 else
+    echo "Repository exists, updating..."
     cd /home/cvapp/app
     # Stash any uncommitted changes
     sudo -u cvapp git stash
@@ -85,33 +89,38 @@ fi
 
 cd /home/cvapp/app
 
-# Set up Python virtual environment
+# Set up Python virtual environment (idempotent)
 if [ ! -d "/home/cvapp/app/venv" ]; then
+    echo "Creating Python virtual environment..."
     sudo -u cvapp python3.11 -m venv venv
 fi
 sudo -u cvapp /home/cvapp/app/venv/bin/pip install --upgrade pip
 
-# Install Python dependencies
+# Install Python dependencies (always update)
+echo "Installing/updating Python dependencies..."
 sudo -u cvapp /home/cvapp/app/venv/bin/pip install -r requirements.txt
 
-# Install Playwright browser dependencies (as root for system packages)
+# Install Playwright browser dependencies (idempotent)
+echo "Installing Playwright dependencies..."
 /home/cvapp/app/venv/bin/python -m playwright install-deps chromium
 
-# Install Playwright browsers (as cvapp user)
+# Install Playwright browsers (idempotent)
 sudo -u cvapp /home/cvapp/app/venv/bin/playwright install chromium
 
 # Ensure proper permissions for Playwright cache
-chown -R cvapp:cvapp /home/cvapp/.cache/
+chown -R cvapp:cvapp /home/cvapp/.cache/ 2>/dev/null || true
 
-# Create directories for generated files
+# Create directories for generated files (idempotent)
 sudo -u cvapp mkdir -p /home/cvapp/app/generated
 sudo -u cvapp mkdir -p /home/cvapp/app/static
 
 # Set proper permissions
 chown -R cvapp:cvapp /home/cvapp/app
 
-# Create systemd service for FastAPI
-cat > /etc/systemd/system/cv-generator.service << 'EOL'
+# Create systemd service for FastAPI (check if exists)
+if [ ! -f /etc/systemd/system/cv-generator.service ]; then
+    echo "Creating systemd service..."
+    cat > /etc/systemd/system/cv-generator.service << 'EOL'
 [Unit]
 Description=CV Generator FastAPI application
 After=network.target
@@ -130,8 +139,12 @@ RestartSec=3
 [Install]
 WantedBy=multi-user.target
 EOL
+else
+    echo "systemd service already exists"
+fi
 
-# Configure nginx
+# Configure nginx (always update configuration)
+echo "Configuring Nginx..."
 cat > /etc/nginx/sites-available/cv-generator << 'EOL'
 server {
     listen 80;
@@ -183,7 +196,7 @@ server {
 }
 EOL
 
-# Enable the site
+# Enable the site (idempotent)
 ln -sf /etc/nginx/sites-available/cv-generator /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 
@@ -199,30 +212,37 @@ systemctl restart nginx
 systemctl restart cv-generator
 
 # Wait a moment for services to start
-sleep 10
+sleep 5
 
 # Check service status
 systemctl status nginx --no-pager
 systemctl status cv-generator --no-pager
 
-# Obtain SSL certificate from Let's Encrypt
-echo "Obtaining SSL certificate..."
-certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domain} --redirect
-
-# Set up automatic certificate renewal
-echo "Setting up automatic certificate renewal..."
-systemctl enable certbot.timer
-systemctl start certbot.timer
-
-# Test certificate renewal
-certbot renew --dry-run
+# Obtain SSL certificate (only if not exists)
+if [ ! -f "/etc/letsencrypt/live/${domain}/fullchain.pem" ]; then
+    echo "Obtaining SSL certificate..."
+    certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domain} --redirect
+    
+    # Set up automatic certificate renewal
+    echo "Setting up automatic certificate renewal..."
+    systemctl enable certbot.timer
+    systemctl start certbot.timer
+    
+    # Test certificate renewal
+    certbot renew --dry-run
+else
+    echo "SSL certificate already exists for ${domain}"
+    # Ensure certbot timer is enabled
+    systemctl enable certbot.timer
+    systemctl start certbot.timer
+fi
 
 echo "Setup completed at $(date)"
 echo "FastAPI app should be running on http://localhost:8000"
 echo "Nginx should be proxying on port 80 and redirecting to HTTPS on port 443"
-echo "SSL certificate obtained and configured for ${domain}"
+echo "SSL certificate configured for ${domain}"
 
-# Create a simple health check script
+# Create a simple health check script (always update)
 cat > /home/cvapp/health-check.sh << 'EOL'
 #!/bin/bash
 echo "=== Health Check ==="
@@ -240,9 +260,6 @@ EOL
 
 chmod +x /home/cvapp/health-check.sh
 chown cvapp:cvapp /home/cvapp/health-check.sh
-
-# Mark setup as completed
-touch /var/log/user-data-completed
 
 echo "Health check script created at /home/cvapp/health-check.sh"
 echo "Run it as: sudo -u cvapp /home/cvapp/health-check.sh"
