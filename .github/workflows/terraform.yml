@@ -1,64 +1,73 @@
-# name: 'Terraform'
+name: 'Terraform Infrastructure'
 
-# on:
-#   push:
-#     branches: [ "main", "release", "new-feature-branch" ]
-#   pull_request:
+on:
+  push:
+    branches: [ "new-feature-branch" ]
+  workflow_dispatch: # Allow manual trigger
 
-# permissions:
-#   contents: read
-#   pull-requests: write
+permissions:
+  contents: read
 
-# jobs:
-#   terraform:
-#     name: 'Terraform'
-#     runs-on: ubuntu-latest
+env:
+  TF_VERSION: "1.10.5"
+  AWS_REGION: "ap-south-1"
 
-#     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-#     defaults:
-#       run:
-#         shell: bash
+jobs:
+  terraform:
+    name: 'Terraform Plan & Apply'
+    runs-on: ubuntu-latest
+    
+    # Working directory for all terraform commands
+    defaults:
+      run:
+        shell: bash
+        working-directory: terraform
 
-#     steps:
-#     # Checkout the repository to the GitHub Actions runner
-#     - name: Checkout
-#       uses: actions/checkout@v4
+    steps:
+    # Checkout the repository
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-#     # Install the latest version of Terraform CLI
-#     - name: Setup Terraform
-#       uses: hashicorp/setup-terraform@v3
-#       with:
-#         terraform_version: "1.10.5"
+    # Setup Terraform with specified version
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: ${{ env.TF_VERSION }}
 
-#     # Configure AWS credentials
-#     - name: Configure AWS credentials
-#       uses: aws-actions/configure-aws-credentials@v4
-#       with:
-#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         aws-region: ap-south-1
+    # Configure AWS credentials
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
 
-#     # Initialize a new or existing Terraform working directory
-#     - name: Terraform Init
-#       run: terraform init
-#       env:
-#         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-#         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+    # Initialize Terraform
+    - name: Terraform Init
+      run: terraform init
+      env:
+        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
 
-#     # Checks that all Terraform configuration files adhere to a canonical format
-#     - name: Terraform Format
-#       run: terraform fmt -check
+    # Validate Terraform configuration
+    - name: Terraform Validate
+      run: terraform validate
 
-#     # Generates an execution plan for Terraform
-#     - name: Terraform Plan
-#       run: terraform plan -input=false
-#       env:
-#         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-#         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+    # Check Terraform formatting
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive
+      continue-on-error: true
 
-#     # Apply on push to "main" OR on pull requests (manual approval via production environment)
-#     - name: Terraform Apply
-#       run: terraform apply -auto-approve -input=false
-#       env:
-#         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-#         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }} 
+    # Generate Terraform plan
+    - name: Terraform Plan
+      run: terraform plan -input=false
+      env:
+        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+
+    # Apply Terraform changes
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -input=false
+      env:
+        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }} 
