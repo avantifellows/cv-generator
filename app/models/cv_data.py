@@ -13,6 +13,8 @@ class PersonalInfo(BaseModel):
     city: str = Field(..., min_length=1, max_length=100)
     phone: str = Field(..., min_length=1, max_length=20)
     email: str = Field(..., pattern=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+    github: Optional[str] = Field(None, max_length=100)
+    linkedin: Optional[str] = Field(None, max_length=100)
 
 
 class EducationEntry(BaseModel):
@@ -71,6 +73,7 @@ class ProjectEntry(BaseModel):
     title: str = Field(..., min_length=1, max_length=100)
     type: str = Field(..., min_length=1, max_length=50)
     duration: str = Field(..., min_length=1, max_length=50)
+    repo_link: Optional[str] = Field(None, max_length=200)
     points: List[str] = Field(..., min_items=1, max_items=5)
 
     @validator('title', 'type', 'duration')
@@ -169,6 +172,8 @@ class CVGenerateRequest(BaseModel):
     city: str = Field(..., min_length=1, max_length=100)
     phone: str = Field(..., min_length=1, max_length=20)
     email: str = Field(..., pattern=r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+    github: Optional[str] = Field(None, max_length=100)
+    linkedin: Optional[str] = Field(None, max_length=100)
     
     # Education (support up to 5 entries)
     education_entries: List[EducationEntry] = Field(..., min_items=1, max_items=5)
@@ -199,7 +204,9 @@ class CVGenerateRequest(BaseModel):
                 highest_education=self.highest_education,
                 city=self.city,
                 phone=self.phone,
-                email=self.email
+                email=self.email,
+                github=self.github,
+                linkedin=self.linkedin
             ),
             education=self.education_entries,
             achievements=self.achievements,

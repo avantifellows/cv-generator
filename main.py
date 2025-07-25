@@ -293,7 +293,7 @@ async def generate_cv(request: Request):
         
         # Save HTML file
         html_file = BASE_PATH / f"generated/{cv_id}.html"
-        with open(html_file, "w") as f:
+        with open(html_file, "w", encoding="utf-8") as f:
             f.write(html_content)
         
         # Create display HTML with download button
@@ -313,7 +313,7 @@ async def generate_cv(request: Request):
         
         # Save display HTML
         display_html_file = BASE_PATH / f"generated/{cv_id}_display.html"
-        with open(display_html_file, "w") as f:
+        with open(display_html_file, "w", encoding="utf-8") as f:
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")
@@ -347,7 +347,9 @@ def parse_dynamic_form_data(form_data) -> dict:
         "highest_education": form_data.get("highest_education", ""),
         "city": form_data.get("city", ""),
         "phone": form_data.get("phone", ""),
-        "email": form_data.get("email", "")
+        "email": form_data.get("email", ""),
+        "github": form_data.get("github", ""),
+        "linkedin": form_data.get("linkedin", "")
     }
     
     # Parse summary

@@ -252,6 +252,16 @@
                         <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}" required>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="github">GitHub</label>
+                        <input type="text" id="github" name="github" value="{{ form_data.github if form_data else '' }}" placeholder="e.g. https://github.com/amitsitare">
+                    </div>
+                    <div class="col">
+                        <label for="linkedin">LinkedIn</label>
+                        <input type="text" id="linkedin" name="linkedin" value="{{ form_data.linkedin if form_data else '' }}" placeholder="e.g. https://linkedin.com/in/amit-diwakar-cse">
+                    </div>
+                </div>
             </div>
 
             <!-- Summary -->
@@ -401,6 +411,12 @@
                                 <input type="text" name="projects[0][duration]" required placeholder="e.g. Jan 2023 - Apr 2023">
                             </div>
                         </div>
+                
+                        <div class="form-group">
+                            <label>Repo Link</label>
+                            <input type="text" name="projects[0][repo_link]" placeholder="e.g. https://github.com/user/repo">
+                        </div>
+                
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="project-points" data-index="0">
@@ -788,6 +804,8 @@
                 document.getElementById('city').value = formData.personal_info.city || '';
                 document.getElementById('phone').value = formData.personal_info.phone || '';
                 document.getElementById('email').value = formData.personal_info.email || '';
+                document.getElementById('github').value = formData.personal_info.github || '';
+                document.getElementById('linkedin').value = formData.personal_info.linkedin || '';
             }
             
             // Education
@@ -1070,15 +1088,16 @@
         const city = getValue('city');
         const phone = getValue('phone');
         const email = getValue('email');
+        const github = getValue('github');
+        const linkedin = getValue('linkedin');
         
         // Get institute from first education entry for header
         const educationEntries = getArrayEntries('education');
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
         const institute = firstEducation.institute || '';
         
+        // Header
         if (name) html += `<div style="font-size:2.2em;font-weight:bold;color:#4C5196;text-align:center;margin-bottom:8px;">${name}</div>`;
-        
-        // Institute and degree line
         if (degree || institute) {
             html += `<div style="text-align:center;font-size:1.1em;margin-bottom:8px;">`;
             if (degree) html += `${degree}`;
@@ -1086,26 +1105,38 @@
             if (institute) html += `${institute}`;
             html += '</div>';
         }
-        
-        // Contact info line
-        if (city || phone || email) {
-            html += `<div style="text-align:center;font-size:1.1em;margin-bottom:20px;">`;
-            const contactParts = [];
-            if (city) contactParts.push(city);
-            if (phone) contactParts.push(`Phone: ${phone}`);
-            if (email) contactParts.push(`Email: ${email}`);
-            html += contactParts.join(' | ');
-            html += '</div>';
+        // Contact info line (icons, links, profile id)
+        html += `<div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:8px;white-space:nowrap;overflow-x:auto;font-size:1.1em;margin-bottom:8px;">`;
+        let contactParts = [];
+        if (city) contactParts.push(`<span>${city}</span>`);
+        if (phone) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${phone}</span>`);
+        if (email) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="mailto:${email}" style="vertical-align:middle; text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4V4zm0 0l8 8 8-8" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${email}</a></span>`);
+        if (github) {
+            let githubId = github.replace(/\/$/, '').split('/').pop();
+            contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${github}" target="_blank" style="vertical-align:middle; text-decoration:none;"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg> ${githubId}</a></span>`);
         }
-        
-        // Horizontal line after contact info
+        if (linkedin) {
+            let linkedinId = linkedin.replace(/\/$/, '').split('/').pop();
+            const linkedInSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0A66C2" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.025-3.037-1.849-3.037-1.851 0-2.132 1.445-2.132 2.939v5.667h-3.554V9h3.414v1.561h.049c.476-.899 1.637-1.849 3.369-1.849 3.602 0 4.267 2.369 4.267 5.455v6.285zM5.337 7.433c-1.144 0-2.069-.926-2.069-2.068 0-1.143.925-2.069 2.069-2.069 1.143 0 2.068.926 2.068 2.069 0 1.142-.925 2.068-2.068 2.068zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.549C0 23.229.792 24 1.771 24h20.451C23.2 24 24 23.229 24 22.271V1.723C24 .771 23.2 0 22.222 0z"/></svg>`;
+            contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${linkedin}" target="_blank" style="vertical-align:middle; text-decoration:none;">${linkedInSVG} ${linkedinId}</a></span>`);
+        }
+        html += contactParts.join(' <span style="color:#888;">|</span> ');
+        html += `</div>`;
+        // Simple horizontal line after contact info
         html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
-
-        // Education Table (no header)
+        // Professional Summary
+        const summary = getValue('summary');
+        if (summary && summary.trim()) {
+            html += `<div style="margin-bottom:20px;">
+                <div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;">Professional Summary</div>
+                <div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>
+                <div style="font-size:12px;line-height:1.4;text-align:justify;">• ${summary}</div>
+            </div>`;
+        }
+        // Education
         if (educationEntries.length > 0) {
-            html += `<div style="margin-bottom:20px;">`;
-            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;">`;
-            html += `<thead><tr style="background:#f5f5f5;"><th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th></tr></thead><tbody>`;
+            html += `<div style="margin-bottom:20px;"><div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:8px;">Educational Qualifications</div>`;
+            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;"><thead><tr style="background:#f5f5f5;"><th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th></tr></thead><tbody>`;
             educationEntries.forEach(entry => {
                 if (entry.qualification || entry.stream || entry.institute) {
                     html += `<tr><td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td></tr>`;
@@ -1113,27 +1144,19 @@
             });
             html += `</tbody></table></div>`;
         }
-
         // Scholastic Achievements
-        let achievements = getArrayValues('achievements');
-        if (achievements.length === 0) {
-            achievements = getArrayValues('scholastic_achievements');
-        }
-        if (achievements.length === 0) {
-            achievements = getArrayValues('achievement');
-        }
-        if (achievements.length > 0) {
-            html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Scholastic Achievements</h3>`;
-            achievements.forEach(achievement => {
-                if (achievement.trim()) {
-                    html += `<div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;">`;
-                    html += `<div style="flex:1;">• ${achievement}</div>`;
-                    html += `<div style="font-style:italic;margin-left:10px;">(2024)</div>`;
-                    html += `</div>`;
+        const achievementEntries = getArrayEntries('achievements');
+        if (achievementEntries.length > 0) {
+            html += `<div style="margin-bottom:20px;">
+                <div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;">Scholastic Achievements</div>
+                <div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>
+                <ul style="margin-top:0;margin-bottom:0;">`;
+            achievementEntries.forEach(entry => {
+                if (entry.description) {
+                    html += `<li style='display:flex;justify-content:space-between;align-items:center;'><span>• ${entry.description}</span>${entry.year ? `<span style='font-style:italic;float:right;margin-left:10px;'>(${entry.year})</span>` : ''}</li>`;
                 }
             });
-            html += `</div>`;
+            html += `</ul></div>`;
         }
 
         // Internships
@@ -1164,23 +1187,26 @@
         // Key Projects
         const projectEntries = getArrayEntries('projects');
         if (projectEntries.length > 0) {
-            html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Key Projects</h3>`;
+            html += `<div style=\"margin-bottom:20px;\"><div style=\"font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;\">Key Projects</div><div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>`;
             projectEntries.forEach(entry => {
                 if (entry.title || entry.type) {
-                    html += `<div style="margin-bottom:15px;">`;
-                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
-                    html += `<div><strong>${entry.title || ''}</strong>`;
-                    if (entry.type) html += ` | ${entry.type}`;
-                    html += `</div>`;
-                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `<div style=\"margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;\">`;
+                    html += `<div><span style=\"font-weight:bold;\">`;
+                    if (entry.repo_link) {
+                        html += `<a href=\"${entry.repo_link}\" target=\"_blank\">${entry.title}</a>`;
+                    } else {
+                        html += `${entry.title}`;
+                    }
+                    html += `</span>${entry.type ? ` | ${entry.type}` : ''}</div>`;
+                    if (entry.duration) html += `<div style=\"font-style:italic;float:right;\">(${entry.duration})</div>`;
                     html += `</div>`;
                     if (entry.points && entry.points.length > 0) {
+                        html += `<ul style='margin:0 0 0 20px;'>`;
                         entry.points.forEach(point => {
-                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                            if (point.trim()) html += `<li>• ${point}</li>`;
                         });
+                        html += `</ul>`;
                     }
-                    html += `</div>`;
                 }
             });
             html += `</div>`;
