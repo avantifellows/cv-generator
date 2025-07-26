@@ -1124,60 +1124,125 @@
         html += `</div>`;
         // Simple horizontal line after contact info
         html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
-        // Professional Summary
-        const summary = getValue('summary');
+      const summary = getValue('summary');
+      // Professional Summary
         if (summary && summary.trim()) {
             html += `<div style="margin-bottom:20px;">
-                <div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;">Professional Summary</div>
-                <div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>
-                <div style="font-size:12px;line-height:1.4;text-align:justify;">• ${summary}</div>
+                <div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Professional Summary
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div>
+                <div style="font-size:12px;line-height:1.4;text-align:justify;">${summary}</div>
             </div>`;
         }
+
         // Education
         if (educationEntries.length > 0) {
-            html += `<div style="margin-bottom:20px;"><div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:8px;">Educational Qualifications</div>`;
-            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;"><thead><tr style="background:#f5f5f5;"><th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th><th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th></tr></thead><tbody>`;
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Educational Qualifications
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div>`;
+            
+
+            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
+            html += `<thead><tr style="background:#f5f5f5;">`;
+            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th>`;
+            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th>`;
+            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th>`;
+            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th>`;
+            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th>`;
+            html += `</tr></thead><tbody>`;
+            
             educationEntries.forEach(entry => {
                 if (entry.qualification || entry.stream || entry.institute) {
-                    html += `<tr><td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td><td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td></tr>`;
+                    html += `<tr>`;
+                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td>`;
+                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td>`;
+                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td>`;
+                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td>`;
+                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td>`;
+                    html += `</tr>`;
                 }
             });
+
             html += `</tbody></table></div>`;
         }
-        // Scholastic Achievements
+
+      // Scholastic Achievements
         const achievementEntries = getArrayEntries('achievements');
         if (achievementEntries.length > 0) {
-            html += `<div style="margin-bottom:20px;">
-                <div style="font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;">Scholastic Achievements</div>
-                <div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>
-                <ul style="margin-top:0;margin-bottom:0;">`;
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Scholastic Achievements
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div> `;
+           
+
+            
+            // Increase margin-left for more bullet indentation
+            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+
             achievementEntries.forEach(entry => {
                 if (entry.description) {
-                    html += `<li style='display:flex;justify-content:space-between;align-items:center;'><span>• ${entry.description}</span>${entry.year ? `<span style='font-style:italic;float:right;margin-left:10px;'>(${entry.year})</span>` : ''}</li>`;
+                    html += `<li style="margin-bottom:8px;">`;
+
+                    // Inner div flex inside li, not span
+                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+                    html += `<span>${entry.description}</span>`;
+                    if (entry.year) {
+                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+                    }
+                    html += `</div></li>`;
                 }
             });
+
             html += `</ul></div>`;
         }
 
+
+
         // Internships
-        const internshipEntries = getArrayEntries('internships');
+       const internshipEntries = getArrayEntries('internships');
         if (internshipEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Internships</h3>`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Internships
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div> `;
+            
+
             internshipEntries.forEach(entry => {
                 if (entry.company || entry.role) {
                     html += `<div style="margin-bottom:15px;">`;
+
+                    // Company and role in flex box
                     html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
                     html += `<div><strong>${entry.company || ''}</strong>`;
                     if (entry.role) html += ` | ${entry.role}`;
                     html += `</div>`;
                     if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
                     html += `</div>`;
+
+                    // Bullet points with proper list styling
                     if (entry.points && entry.points.length > 0) {
+                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
                         entry.points.forEach(point => {
-                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                            if (point.trim()) {
+                                html += `<li style="margin-bottom:5px;">${point}</li>`;
+                            }
                         });
+                        html += `</ul>`;
                     }
+
                     html += `</div>`;
                 }
             });
@@ -1187,72 +1252,126 @@
         // Key Projects
         const projectEntries = getArrayEntries('projects');
         if (projectEntries.length > 0) {
-            html += `<div style=\"margin-bottom:20px;\"><div style=\"font-weight:bold;font-size:1.2em;color:#4C5196;margin-bottom:2px;\">Key Projects</div><div style='border-bottom:2px solid #4C5196;margin-bottom:8px;'></div>`;
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Key Projects
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div> `;
+            
+            
+            
             projectEntries.forEach(entry => {
                 if (entry.title || entry.type) {
-                    html += `<div style=\"margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;\">`;
-                    html += `<div><span style=\"font-weight:bold;\">`;
+                    html += `<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;">`;
+                    
+                    html += `<div><span style="font-weight:bold;">`;
                     if (entry.repo_link) {
-                        html += `<a href=\"${entry.repo_link}\" target=\"_blank\">${entry.title}</a>`;
+                        html += `<a href="${entry.repo_link}" target="_blank">${entry.title}</a>`;
                     } else {
                         html += `${entry.title}`;
                     }
                     html += `</span>${entry.type ? ` | ${entry.type}` : ''}</div>`;
-                    if (entry.duration) html += `<div style=\"font-style:italic;float:right;\">(${entry.duration})</div>`;
+                    
+                    if (entry.duration) {
+                        html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    }
+
                     html += `</div>`;
+
+                    // Bullet points
                     if (entry.points && entry.points.length > 0) {
-                        html += `<ul style='margin:0 0 0 20px;'>`;
+                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
                         entry.points.forEach(point => {
-                            if (point.trim()) html += `<li>• ${point}</li>`;
+                            if (point.trim()) {
+                                html += `<li style="margin-bottom:5px;">${point}</li>`;
+                            }
                         });
                         html += `</ul>`;
                     }
                 }
             });
+
             html += `</div>`;
         }
 
+
         // Positions of Responsibility
-        const positionEntries = getArrayEntries('positions');
+       const positionEntries = getArrayEntries('positions');
         if (positionEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Positions of Responsibility</h3>`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                Positions of Responsibility
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+           </div>`; 
+            
             positionEntries.forEach(entry => {
                 if (entry.club || entry.role) {
                     html += `<div style="margin-bottom:15px;">`;
+                    
                     html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
                     html += `<div><strong>${entry.club || ''}</strong>`;
                     if (entry.role) html += ` | ${entry.role}`;
                     html += `</div>`;
                     if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
                     html += `</div>`;
+
                     if (entry.points && entry.points.length > 0) {
+                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
                         entry.points.forEach(point => {
-                            if (point.trim()) html += `<div style="margin-left:15px;margin-bottom:3px;">• ${point}</div>`;
+                            if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
                         });
+                        html += `</ul>`;
                     }
+
                     html += `</div>`;
                 }
             });
+
             html += `</div>`;
         }
 
-        // Extra Curricular Activities
+       // Extra Curricular Activities
         const activities = getArrayValues('extracurricular_activities');
         if (activities.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Extra Curricular Activities</h3>`;
+
+            // Updated heading style with horizontal line
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Extra Curricular Activities
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div> `;
+            
+
+            // Bullet points list
+            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
             activities.forEach(activity => {
-                if (activity.trim()) html += `<div style="margin-bottom:5px;">• ${activity}</div>`;
+                if (activity.trim()) {
+                    html += `<li style="margin-bottom:5px;">${activity}</li>`;
+                }
             });
-            html += `</div>`;
+            html += `</ul></div>`;
         }
+
+
 
         // Technical Skills (at bottom)
         const skills = getArrayValues('technical_skills');
         if (skills.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
-            html += `<h3 style="color:#4C5196;border-bottom:2px solid #4C5196;margin-bottom:10px;font-size:1.1em;padding-bottom:5px;">Technical Skills</h3>`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                    Technical Skills
+                </div>
+                <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+            </div> `;
+       
+
             html += `<div style="line-height:1.6;">${skills.filter(s => s.trim()).join(', ')}</div></div>`;
         }
 
@@ -1314,3 +1433,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
