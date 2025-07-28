@@ -81,16 +81,80 @@ jobs:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
 
-    # Generate Terraform plan
+    # Generate Terraform plan and check for changes
     - name: Terraform Plan
-      run: terraform plan -input=false -lock-timeout=5m
+      id: plan
+      run: |
+        terraform plan -input=false -lock-timeout=5m -detailed-exitcode
+        echo "plan_exit_code=$?" >> $GITHUB_OUTPUT
+      env:
+        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+      continue-on-error: true
+
+    # Apply Terraform changes (only if there are changes)
+    - name: Terraform Apply
+      if: steps.plan.outputs.plan_exit_code == '2'
+      run: terraform apply -auto-approve -input=false -lock-timeout=5m
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
 
-    # Apply Terraform changes
-    - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -lock-timeout=5m
+    # Get EC2 instance ID for reboot (only if no changes)
+    - name: Get EC2 Instance ID
+      if: steps.plan.outputs.plan_exit_code == '0'
+      id: instance
+      run: |
+        # Get instance ID from terraform output or by tag
+        INSTANCE_ID=$(terraform output -raw ec2_instance_id 2>/dev/null || \
+                     aws ec2 describe-instances \
+                       --filters "Name=tag:Name,Values=cv-generator*" "Name=instance-state-name,Values=running" \
+                       --query "Reservations[0].Instances[0].InstanceId" \
+                       --output text)
+        
+        if [ "$INSTANCE_ID" == "None" ] || [ "$INSTANCE_ID" == "null" ] || [ -z "$INSTANCE_ID" ]; then
+          echo "❌ Could not find EC2 instance to reboot"
+          exit 1
+        fi
+        
+        echo "Found EC2 instance: $INSTANCE_ID"
+        echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }} 
+        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+
+    # Reboot EC2 instance (only if no changes)
+    - name: Reboot EC2 Instance
+      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
+      run: |
+        echo "🔄 Rebooting EC2 instance: ${{ steps.instance.outputs.instance_id }}"
+        aws ec2 reboot-instances --instance-ids ${{ steps.instance.outputs.instance_id }}
+        echo "✅ Reboot command sent successfully"
+
+    # Wait for instance to be running after reboot
+    - name: Wait for Instance to be Running
+      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
+      run: |
+        echo "⏳ Waiting for instance to complete reboot and become running..."
+        aws ec2 wait instance-running --instance-ids ${{ steps.instance.outputs.instance_id }}
+        echo "✅ Instance is now running after reboot"
+
+    # Wait for instance to pass status checks
+    - name: Wait for Instance Status Checks
+      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
+      run: |
+        echo "⏳ Waiting for instance to pass status checks..."
+        aws ec2 wait instance-status-ok --instance-ids ${{ steps.instance.outputs.instance_id }}
+        echo "✅ Instance has passed all status checks and is ready"
+
+    # Summary step
+    - name: Deployment Summary
+      run: |
+        if [ "${{ steps.plan.outputs.plan_exit_code }}" == "2" ]; then
+          echo "📦 Terraform changes were applied successfully"
+        elif [ "${{ steps.plan.outputs.plan_exit_code }}" == "0" ]; then
+          echo "🔄 No terraform changes detected - EC2 instance was rebooted instead"
+        else
+          echo "❌ Terraform plan failed"
+          exit 1
+        fi 
