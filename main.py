@@ -293,7 +293,7 @@ async def generate_cv(request: Request):
         
         # Save HTML file
         html_file = BASE_PATH / f"generated/{cv_id}.html"
-        with open(html_file, "w") as f:
+        with open(html_file, "w", encoding="utf-8") as f:
             f.write(html_content)
         
         # Create display HTML with download button
@@ -313,7 +313,7 @@ async def generate_cv(request: Request):
         
         # Save display HTML
         display_html_file = BASE_PATH / f"generated/{cv_id}_display.html"
-        with open(display_html_file, "w") as f:
+        with open(display_html_file, "w", encoding="utf-8") as f:
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")
@@ -343,17 +343,19 @@ def parse_dynamic_form_data(form_data) -> dict:
     }
     # Parse personal info
     structured_data["personal_info"] = {
-        "full_name": form_data.get("full_name", ""),
-        "highest_education": form_data.get("highest_education", ""),
-        "city": form_data.get("city", ""),
-        "phone": form_data.get("phone", ""),
-        "email": form_data.get("email", ""),
+        "full_name": form_data.get("full_name", "") or "—",
+        "highest_education": form_data.get("highest_education", "") or "—",
+        "city": form_data.get("city", "") or "—",
+        "phone": form_data.get("phone", "") or "—",
+        "email": form_data.get("email", "") or "notfilled@email.com",
         "github": form_data.get("github", ""),
         "linkedin": form_data.get("linkedin", "")
     }
     
     # Parse summary
     structured_data["summary"] = form_data.get("summary", "")
+    
+
     # Parse education entries
     education_data = {}
     for key, value in form_data.items():
@@ -365,7 +367,21 @@ def parse_dynamic_form_data(form_data) -> dict:
                 education_data[index] = {}
             education_data[index][field] = value
     for i in sorted(education_data.keys()):
-        structured_data["education"].append(education_data[i])
+        # Only add if at least one field is filled and not just default values
+        entry = education_data[i]
+        filled_fields = [field for field in ['qualification', 'stream', 'institute', 'year', 'cgpa'] 
+                        if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
+        if filled_fields:
+            # Ensure all fields have values
+            entry = {
+                'qualification': entry.get('qualification', '').strip() or '—',
+                'stream': entry.get('stream', '').strip() or '—',
+                'institute': entry.get('institute', '').strip() or '—',
+                'year': entry.get('year', '').strip() or '—',
+                'cgpa': entry.get('cgpa', '').strip() or '—'
+            }
+            structured_data["education"].append(entry)
+    
     # Parse achievements
     achievement_data = {}
     for key, value in form_data.items():
@@ -377,7 +393,15 @@ def parse_dynamic_form_data(form_data) -> dict:
                 achievement_data[index] = {}
             achievement_data[index][field] = value
     for i in sorted(achievement_data.keys()):
-        structured_data["achievements"].append(achievement_data[i])
+        # Only add if description is filled and not just default values
+        entry = achievement_data[i]
+        if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
+            # Ensure all fields have values
+            entry = {
+                'description': entry.get('description', '').strip() or '—',
+                'year': entry.get('year', '').strip() or '—'
+            }
+            structured_data["achievements"].append(entry)
     # Parse internships
     internship_data = {}
     for key in form_data.keys():
@@ -393,7 +417,21 @@ def parse_dynamic_form_data(form_data) -> dict:
                 field = parts[1].rstrip(']')
                 internship_data[index][field] = form_data[key]
     for i in sorted(internship_data.keys()):
-        structured_data["internships"].append(internship_data[i])
+        # Only add if at least one field is filled and not just default values
+        entry = internship_data[i]
+        filled_fields = [field for field in ['company', 'role', 'duration'] 
+                        if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
+        valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
+        if filled_fields or valid_points:
+            # Ensure all fields have values
+            entry = {
+                'company': entry.get('company', '').strip() or '—',
+                'role': entry.get('role', '').strip() or '—',
+                'duration': entry.get('duration', '').strip() or '—',
+                'points': entry.get('points', [])
+            }
+            structured_data["internships"].append(entry)
+    
     # Parse projects
     project_data = {}
     for key in form_data.keys():
@@ -409,7 +447,21 @@ def parse_dynamic_form_data(form_data) -> dict:
                 field = parts[1].rstrip(']')
                 project_data[index][field] = form_data[key]
     for i in sorted(project_data.keys()):
-        structured_data["projects"].append(project_data[i])
+        # Only add if at least one field is filled and not just default values
+        entry = project_data[i]
+        filled_fields = [field for field in ['title', 'type', 'duration'] 
+                        if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
+        valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
+        if filled_fields or valid_points:
+            # Ensure all fields have values
+            entry = {
+                'title': entry.get('title', '').strip() or '—',
+                'type': entry.get('type', '').strip() or '—',
+                'duration': entry.get('duration', '').strip() or '—',
+                'repo_link': entry.get('repo_link', ''),
+                'points': entry.get('points', [])
+            }
+            structured_data["projects"].append(entry)
     # Parse positions
     position_data = {}
     for key in form_data.keys():
@@ -425,13 +477,29 @@ def parse_dynamic_form_data(form_data) -> dict:
                 field = parts[1].rstrip(']')
                 position_data[index][field] = form_data[key]
     for i in sorted(position_data.keys()):
-        structured_data["positions_of_responsibility"].append(position_data[i])
+        # Only add if at least one field is filled and not just default values
+        entry = position_data[i]
+        filled_fields = [field for field in ['club', 'role', 'duration'] 
+                        if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
+        valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
+        if filled_fields or valid_points:
+            # Ensure all fields have values
+            entry = {
+                'club': entry.get('club', '').strip() or '—',
+                'role': entry.get('role', '').strip() or '—',
+                'duration': entry.get('duration', '').strip() or '—',
+                'points': entry.get('points', [])
+            }
+            structured_data["positions_of_responsibility"].append(entry)
+    
     # Parse extracurricular activities
     extracurricular = form_data.getlist("extracurricular[]")
-    structured_data["extracurricular"] = [activity for activity in extracurricular if activity.strip()]
+    structured_data["extracurricular"] = [activity.strip() for activity in extracurricular 
+                                         if activity.strip() and activity.strip() not in ['', '—', 'notfilled@email.com']]
     # Parse technical skills
     technical_skills = form_data.getlist("technical_skills[]")
-    structured_data["technical_skills"] = [skill for skill in technical_skills if skill.strip()]
+    structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
+                                         if skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']]
     # After parsing all data
     logger.info("[DEBUG] Structured data after parsing dynamic form:")
     logger.info(pprint.pformat(structured_data))
@@ -444,7 +512,7 @@ async def get_cv_display(cv_id: str):
     try:
         display_file = BASE_PATH / f"generated/{cv_id}_display.html"
         if os.path.exists(display_file):
-            with open(display_file, "r") as f:
+            with open(display_file, "r", encoding="utf-8") as f:
                 content = f.read()
             return HTMLResponse(content=content)
         else:

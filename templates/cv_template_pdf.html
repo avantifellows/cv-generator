@@ -205,9 +205,9 @@
     <div class="pdf-fit-wrapper">
         <div class="header">
             <div class="name">{{personal_info.full_name}}</div>
-            <div class="contact-info">
-                {{personal_info.highest_education}}, {{education[0].institute}}
-            </div>
+                    <div class="contact-info">
+            {{personal_info.highest_education}}{% if education and education|length > 0 %}, {{education[0].institute}}{% endif %}
+        </div>
             <div class="contact-info">
                 {{personal_info.city}}
                 | <span style="vertical-align:middle;">

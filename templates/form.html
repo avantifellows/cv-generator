@@ -126,6 +126,28 @@
         .btn-danger:hover {
             background-color: #c53030;
         }
+        .btn-primary {
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #3182ce;
+        }
+        .add-section-button {
+            margin-bottom: 15px;
+        }
+        .add-section-button button:hover {
+            background-color: #3182ce !important;
+        }
+        .add-section-button button:active {
+            background-color: #2c5aa0 !important;
+        }
         .add-button-container {
             text-align: center;
             margin-top: 15px;
@@ -229,37 +251,37 @@
             <div class="section">
                 <h2>Personal Information</h2>
                 <div class="form-group">
-                    <label for="full_name">Full Name <span class="required">*</span></label>
-                    <input type="text" id="full_name" name="full_name" value="{{ form_data.full_name if form_data else '' }}" required>
+                    <label for="full_name">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" value="{{ form_data.full_name if form_data else '' }}">
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="highest_education">Highest Education <span class="required">*</span></label>
-                        <input type="text" id="highest_education" name="highest_education" value="{{ form_data.highest_education if form_data else '' }}" required>
+                        <label for="highest_education">Highest Education</label>
+                        <input type="text" id="highest_education" name="highest_education" value="{{ form_data.highest_education if form_data else '' }}">
                     </div>
                     <div class="col">
-                        <label for="city">City <span class="required">*</span></label>
-                        <input type="text" id="city" name="city" value="{{ form_data.city if form_data else '' }}" required>
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" value="{{ form_data.city if form_data else '' }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="phone">Phone <span class="required">*</span></label>
-                        <input type="text" id="phone" name="phone" value="{{ form_data.phone if form_data else '' }}" required>
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" value="{{ form_data.phone if form_data else '' }}">
                     </div>
                     <div class="col">
-                        <label for="email">Email <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="{{ form_data.email if form_data else '' }}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label for="github">GitHub</label>
-                        <input type="text" id="github" name="github" value="{{ form_data.github if form_data else '' }}" placeholder="e.g. https://github.com/amitsitare">
+                        <input type="text" id="github" name="github" value="{{ form_data.github if form_data else '' }}" placeholder="e.g. https://github.com/amit">
                     </div>
                     <div class="col">
                         <label for="linkedin">LinkedIn</label>
-                        <input type="text" id="linkedin" name="linkedin" value="{{ form_data.linkedin if form_data else '' }}" placeholder="e.g. https://linkedin.com/in/amit-diwakar-cse">
+                        <input type="text" id="linkedin" name="linkedin" value="{{ form_data.linkedin if form_data else '' }}" placeholder="e.g. https://linkedin.com/in/amit-cse">
                     </div>
                 </div>
             </div>
@@ -272,7 +294,7 @@
                 </div>
                 <div class="form-group">
                     <label for="summary">Summary</label>
-                    <textarea id="summary" name="summary" placeholder="Brief professional summary highlighting your key skills, experience, and career objectives..." rows="4">{{ form_data.summary if form_data else '' }}</textarea>
+                    <textarea id="summary" name="summary" placeholder="e.g. A motivated Computer Science student skilled in Python and Java, seeking an internship to apply experience from personal projects..." rows="4">{{ form_data.summary if form_data else '' }}</textarea>
                 </div>
             </div>
 
@@ -285,30 +307,30 @@
                 <div id="education-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Education Entry 1 <span class="required">*</span></div>
+                            <div class="entry-title">Education Entry 1</div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Qualification</label>
-                                <input type="text" name="education[0][qualification]" required placeholder="e.g. B.Tech, M.Sc, 12th Grade">
+                                <input type="text" name="education[0][qualification]" placeholder="e.g. B.Tech, M.Sc, 12th Grade">
                             </div>
                             <div class="col">
                                 <label>Stream</label>
-                                <input type="text" name="education[0][stream]" required placeholder="e.g. Computer Science, Science, Commerce">
+                                <input type="text" name="education[0][stream]" placeholder="e.g. Computer Science, Science, Commerce">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Institute</label>
-                                <input type="text" name="education[0][institute]" required placeholder="e.g. IIT Delhi, ABC School">
+                                <input type="text" name="education[0][institute]" placeholder="e.g. IIT Delhi, ABC School">
                             </div>
                             <div class="col">
                                 <label>Year</label>
-                                <input type="text" name="education[0][year]" required placeholder="e.g. 2024">
+                                <input type="text" name="education[0][year]" placeholder="e.g. 2024">
                             </div>
                             <div class="col">
                                 <label>CGPA/%</label>
-                                <input type="text" name="education[0][cgpa]" required placeholder="e.g. 8.5, 92%">
+                                <input type="text" name="education[0][cgpa]" placeholder="e.g. 8.5, 92%">
                             </div>
                         </div>
                     </div>
@@ -327,15 +349,15 @@
                 <div id="achievements-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Achievement 1 <span class="required">*</span></div>
+                            <div class="entry-title">Achievement 1</div>
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="achievements[0][description]" required placeholder="e.g. Secured AIR 100 in JEE Advanced, Won Gold Medal in Olympiad"></textarea>
+                            <textarea name="achievements[0][description]" placeholder="e.g. Secured AIR 100 in JEE Advanced, Won Gold Medal in Olympiad"></textarea>
                         </div>
                         <div class="form-group">
                             <label>Year</label>
-                            <input type="text" name="achievements[0][year]" required placeholder="e.g. 2022">
+                            <input type="text" name="achievements[0][year]" placeholder="e.g. 2022">
                         </div>
                     </div>
                 </div>
@@ -353,27 +375,27 @@
                 <div id="internships-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Internship 1 <span class="required">*</span></div>
+                            <div class="entry-title">Internship 1</div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Company</label>
-                                <input type="text" name="internships[0][company]" required placeholder="e.g. Google, Infosys">
+                                <input type="text" name="internships[0][company]" placeholder="e.g. Google, Infosys">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="internships[0][role]" required placeholder="e.g. Software Intern, Research Intern">
+                                <input type="text" name="internships[0][role]" placeholder="e.g. Software Intern, Research Intern">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="internships[0][duration]" required placeholder="e.g. May 2023 - July 2023">
+                                <input type="text" name="internships[0][duration]" placeholder="e.g. May 2023 - July 2023">
                             </div>
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="internship-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="internships[0][points][]" placeholder="e.g. Developed a web app for internal use" required></textarea>
+                                    <textarea name="internships[0][points][]" placeholder="e.g. Developed a web app for internal use"></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -395,20 +417,20 @@
                 <div id="projects-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Project 1 <span class="required">*</span></div>
+                            <div class="entry-title">Project 1</div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Title</label>
-                                <input type="text" name="projects[0][title]" required placeholder="e.g. Inventory Management System">
+                                <input type="text" name="projects[0][title]" placeholder="e.g. Inventory Management System">
                             </div>
                             <div class="col">
                                 <label>Type</label>
-                                <input type="text" name="projects[0][type]" required placeholder="e.g. Web App, Research Project">
+                                <input type="text" name="projects[0][type]" placeholder="e.g. Web App, Research Project">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="projects[0][duration]" required placeholder="e.g. Jan 2023 - Apr 2023">
+                                <input type="text" name="projects[0][duration]" placeholder="e.g. Jan 2023 - Apr 2023">
                             </div>
                         </div>
                 
@@ -421,7 +443,7 @@
                             <label>Key Points</label>
                             <div class="project-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="projects[0][points][]" placeholder="e.g. Built a REST API using Django" required></textarea>
+                                    <textarea name="projects[0][points][]" placeholder="e.g. Built a REST API using Django"></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -443,27 +465,27 @@
                 <div id="positions-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Position 1 <span class="required">*</span></div>
+                            <div class="entry-title">Position 1</div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Club/Organization</label>
-                                <input type="text" name="positions[0][club]" required placeholder="e.g. Coding Club, IEEE">
+                                <input type="text" name="positions[0][club]" placeholder="e.g. Coding Club, IEEE">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="positions[0][role]" required placeholder="e.g. Secretary, Coordinator">
+                                <input type="text" name="positions[0][role]" placeholder="e.g. Secretary, Coordinator">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="positions[0][duration]" required placeholder="e.g. 2022-2023">
+                                <input type="text" name="positions[0][duration]" placeholder="e.g. 2022-2023">
                             </div>
                         </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="position-points" data-index="0">
                                 <div class="point-entry">
-                                    <textarea name="positions[0][points][]" placeholder="e.g. Organized a national level hackathon" required></textarea>
+                                    <textarea name="positions[0][points][]" placeholder="e.g. Organized a national level hackathon"></textarea>
                                     <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                                 </div>
                             </div>
@@ -484,7 +506,7 @@
                 </div>
                 <div id="activities-container">
                     <div class="activity-entry">
-                        <textarea name="extracurricular[]" placeholder="e.g. Member of college football team" required></textarea>
+                        <textarea name="extracurricular[]" placeholder="e.g. Member of college football team"></textarea>
                         <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
                     </div>
                 </div>
@@ -501,7 +523,7 @@
                 </div>
                 <div id="skills-container">
                     <div class="skill-entry">
-                        <input type="text" name="technical_skills[]" placeholder="e.g. Python, Java, SQL" required>
+                        <input type="text" name="technical_skills[]" placeholder="e.g. Python, Java, SQL">
                         <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
                     </div>
                 </div>
@@ -541,25 +563,25 @@
                 <div class="row">
                     <div class="col">
                         <label>Qualification</label>
-                        <input type="text" name="education[${educationCount}][qualification]" required>
+                        <input type="text" name="education[${educationCount}][qualification]">
                     </div>
                     <div class="col">
                         <label>Stream</label>
-                        <input type="text" name="education[${educationCount}][stream]" required>
+                        <input type="text" name="education[${educationCount}][stream]">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <label>Institute</label>
-                        <input type="text" name="education[${educationCount}][institute]" required>
+                        <input type="text" name="education[${educationCount}][institute]">
                     </div>
                     <div class="col">
                         <label>Year</label>
-                        <input type="text" name="education[${educationCount}][year]" required>
+                        <input type="text" name="education[${educationCount}][year]">
                     </div>
                     <div class="col">
                         <label>CGPA/%</label>
-                        <input type="text" name="education[${educationCount}][cgpa]" required>
+                        <input type="text" name="education[${educationCount}][cgpa]">
                     </div>
                 </div>
             `;
@@ -579,11 +601,11 @@
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea name="achievements[${achievementCount}][description]" required></textarea>
+                    <textarea name="achievements[${achievementCount}][description]"></textarea>
                 </div>
                 <div class="form-group">
                     <label>Year</label>
-                    <input type="text" name="achievements[${achievementCount}][year]" required>
+                    <input type="text" name="achievements[${achievementCount}][year]">
                 </div>
             `;
             container.appendChild(newEntry);
@@ -603,22 +625,22 @@
                 <div class="row">
                     <div class="col">
                         <label>Company</label>
-                        <input type="text" name="internships[${internshipCount}][company]" required>
+                        <input type="text" name="internships[${internshipCount}][company]">
                     </div>
                     <div class="col">
                         <label>Role</label>
-                        <input type="text" name="internships[${internshipCount}][role]" required>
+                        <input type="text" name="internships[${internshipCount}][role]">
                     </div>
                     <div class="col">
                         <label>Duration</label>
-                        <input type="text" name="internships[${internshipCount}][duration]" required>
+                        <input type="text" name="internships[${internshipCount}][duration]">
                     </div>
                 </div>
                 <div class="points-container">
                     <label>Key Points</label>
                     <div class="internship-points" data-index="${internshipCount}">
                         <div class="point-entry">
-                            <textarea name="internships[${internshipCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <textarea name="internships[${internshipCount}][points][]" placeholder="Key point 1"></textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     </div>
@@ -634,7 +656,7 @@
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
-                <textarea name="internships[${index}][points][]" placeholder="Key point" required></textarea>
+                <textarea name="internships[${index}][points][]" placeholder="Key point"></textarea>
                 <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
             `;
             container.appendChild(newPoint);
@@ -653,22 +675,22 @@
                 <div class="row">
                     <div class="col">
                         <label>Title</label>
-                        <input type="text" name="projects[${projectCount}][title]" required>
+                        <input type="text" name="projects[${projectCount}][title]">
                     </div>
                     <div class="col">
                         <label>Type</label>
-                        <input type="text" name="projects[${projectCount}][type]" required>
+                        <input type="text" name="projects[${projectCount}][type]">
                     </div>
                     <div class="col">
                         <label>Duration</label>
-                        <input type="text" name="projects[${projectCount}][duration]" required>
+                        <input type="text" name="projects[${projectCount}][duration]">
                     </div>
                 </div>
                 <div class="points-container">
                     <label>Key Points</label>
                     <div class="project-points" data-index="${projectCount}">
                         <div class="point-entry">
-                            <textarea name="projects[${projectCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <textarea name="projects[${projectCount}][points][]" placeholder="Key point 1"></textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     </div>
@@ -684,7 +706,7 @@
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
-                <textarea name="projects[${index}][points][]" placeholder="Key point" required></textarea>
+                <textarea name="projects[${index}][points][]" placeholder="Key point"></textarea>
                 <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
             `;
             container.appendChild(newPoint);
@@ -703,22 +725,22 @@
                 <div class="row">
                     <div class="col">
                         <label>Club/Organization</label>
-                        <input type="text" name="positions[${positionCount}][club]" required>
+                        <input type="text" name="positions[${positionCount}][club]">
                     </div>
                     <div class="col">
                         <label>Role</label>
-                        <input type="text" name="positions[${positionCount}][role]" required>
+                        <input type="text" name="positions[${positionCount}][role]">
                     </div>
                     <div class="col">
                         <label>Duration</label>
-                        <input type="text" name="positions[${positionCount}][duration]" required>
+                        <input type="text" name="positions[${positionCount}][duration]">
                     </div>
                 </div>
                 <div class="points-container">
                     <label>Key Points</label>
                     <div class="position-points" data-index="${positionCount}">
                         <div class="point-entry">
-                            <textarea name="positions[${positionCount}][points][]" placeholder="Key point 1" required></textarea>
+                            <textarea name="positions[${positionCount}][points][]" placeholder="Key point 1"></textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     </div>
@@ -734,7 +756,7 @@
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
-                <textarea name="positions[${index}][points][]" placeholder="Key point" required></textarea>
+                <textarea name="positions[${index}][points][]" placeholder="Key point"></textarea>
                 <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
             `;
             container.appendChild(newPoint);
@@ -746,7 +768,7 @@
             const newEntry = document.createElement('div');
             newEntry.className = 'activity-entry';
             newEntry.innerHTML = `
-                <textarea name="extracurricular[]" placeholder="Activity" required></textarea>
+                <textarea name="extracurricular[]" placeholder="Activity"></textarea>
                 <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
             `;
             container.appendChild(newEntry);
@@ -762,7 +784,7 @@
             const newEntry = document.createElement('div');
             newEntry.className = 'skill-entry';
             newEntry.innerHTML = `
-                <input type="text" name="technical_skills[]" placeholder="Skill" required>
+                <input type="text" name="technical_skills[]" placeholder="Skill">
                 <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
             `;
             container.appendChild(newEntry);
@@ -784,8 +806,59 @@
         function removeSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
-                section.remove();
+                // Hide the section instead of removing it
+                section.style.display = 'none';
+                
+                // Create and show "Add Section" button
+                const sectionName = getSectionDisplayName(sectionId);
+                const addButton = createAddSectionButton(sectionId, sectionName);
+                
+                // Insert the add button after the hidden section
+                section.parentNode.insertBefore(addButton, section.nextSibling);
             }
+        }
+
+        function createAddSectionButton(sectionId, sectionName) {
+            const button = document.createElement('div');
+            button.className = 'section add-section-button';
+            button.id = sectionId + '-add-button';
+            button.innerHTML = `
+                <div style="text-align: center; padding: 20px; border: 2px dashed #ccc; border-radius: 5px; background-color: #f9f9f9;">
+                    <button type="button" class="btn-primary" onclick="restoreSection('${sectionId}')" style="background-color: #4299e1; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                        + Add ${sectionName} Section
+                    </button>
+                </div>
+            `;
+            return button;
+        }
+
+        function restoreSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const addButton = document.getElementById(sectionId + '-add-button');
+            
+            if (section) {
+                // Show the section again
+                section.style.display = 'block';
+                
+                // Remove the add button
+                if (addButton) {
+                    addButton.remove();
+                }
+            }
+        }
+
+        function getSectionDisplayName(sectionId) {
+            const sectionNames = {
+                'summary-section': 'Professional Summary',
+                'education-section': 'Educational Qualifications',
+                'achievements-section': 'Scholastic Achievements',
+                'internships-section': 'Internships',
+                'projects-section': 'Key Projects',
+                'positions-section': 'Positions of Responsibility',
+                'extracurricular-section': 'Extra Curricular Activities',
+                'skills-section': 'Technical Skills'
+            };
+            return sectionNames[sectionId] || 'Section';
         }
 
         // Pre-populate form with test data if available
@@ -868,11 +941,11 @@
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="achievements[${index}][description]" required>${ach.description || ''}</textarea>
+                            <textarea name="achievements[${index}][description]">${ach.description || ''}</textarea>
                         </div>
                         <div class="form-group">
                             <label>Year</label>
-                            <input type="text" name="achievements[${index}][year]" value="${ach.year || ''}" required>
+                            <input type="text" name="achievements[${index}][year]" value="${ach.year || ''}">
                         </div>
                     `;
                     achContainer.appendChild(entry);
@@ -889,7 +962,7 @@
                 formData.internships.forEach((intern, index) => {
                     const pointsHtml = intern.points ? intern.points.map(point => `
                         <div class="point-entry">
-                            <textarea name="internships[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <textarea name="internships[${index}][points][]" placeholder="Key point">${point}</textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     `).join('') : '';
@@ -898,21 +971,21 @@
                     entry.className = 'dynamic-entry';
                     entry.innerHTML = `
                         <div class="entry-header">
-                            <div class="entry-title">Internship ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            <div class="entry-title">Internship ${index + 1}</div>
                             ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Company</label>
-                                <input type="text" name="internships[${index}][company]" value="${intern.company || ''}" required>
+                                <input type="text" name="internships[${index}][company]" value="${intern.company || ''}">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="internships[${index}][role]" value="${intern.role || ''}" required>
+                                <input type="text" name="internships[${index}][role]" value="${intern.role || ''}">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="internships[${index}][duration]" value="${intern.duration || ''}" required>
+                                <input type="text" name="internships[${index}][duration]" value="${intern.duration || ''}">
                             </div>
                         </div>
                         <div class="points-container">
@@ -937,7 +1010,7 @@
                 formData.projects.forEach((proj, index) => {
                     const pointsHtml = proj.points ? proj.points.map(point => `
                         <div class="point-entry">
-                            <textarea name="projects[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <textarea name="projects[${index}][points][]" placeholder="Key point">${point}</textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     `).join('') : '';
@@ -946,21 +1019,21 @@
                     entry.className = 'dynamic-entry';
                     entry.innerHTML = `
                         <div class="entry-header">
-                            <div class="entry-title">Project ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            <div class="entry-title">Project ${index + 1}</div>
                             ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Title</label>
-                                <input type="text" name="projects[${index}][title]" value="${proj.title || ''}" required>
+                                <input type="text" name="projects[${index}][title]" value="${proj.title || ''}">
                             </div>
                             <div class="col">
                                 <label>Type</label>
-                                <input type="text" name="projects[${index}][type]" value="${proj.type || ''}" required>
+                                <input type="text" name="projects[${index}][type]" value="${proj.type || ''}">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="projects[${index}][duration]" value="${proj.duration || ''}" required>
+                                <input type="text" name="projects[${index}][duration]" value="${proj.duration || ''}">
                             </div>
                         </div>
                         <div class="points-container">
@@ -985,7 +1058,7 @@
                 formData.positions_of_responsibility.forEach((pos, index) => {
                     const pointsHtml = pos.points ? pos.points.map(point => `
                         <div class="point-entry">
-                            <textarea name="positions[${index}][points][]" placeholder="Key point" required>${point}</textarea>
+                            <textarea name="positions[${index}][points][]" placeholder="Key point">${point}</textarea>
                             <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
                         </div>
                     `).join('') : '';
@@ -994,21 +1067,21 @@
                     entry.className = 'dynamic-entry';
                     entry.innerHTML = `
                         <div class="entry-header">
-                            <div class="entry-title">Position ${index + 1} ${index === 0 ? '<span class="required">*</span>' : ''}</div>
+                            <div class="entry-title">Position ${index + 1}</div>
                             ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label>Club/Organization</label>
-                                <input type="text" name="positions[${index}][club]" value="${pos.club || ''}" required>
+                                <input type="text" name="positions[${index}][club]" value="${pos.club || ''}">
                             </div>
                             <div class="col">
                                 <label>Role</label>
-                                <input type="text" name="positions[${index}][role]" value="${pos.role || ''}" required>
+                                <input type="text" name="positions[${index}][role]" value="${pos.role || ''}">
                             </div>
                             <div class="col">
                                 <label>Duration</label>
-                                <input type="text" name="positions[${index}][duration]" value="${pos.duration || ''}" required>
+                                <input type="text" name="positions[${index}][duration]" value="${pos.duration || ''}">
                             </div>
                         </div>
                         <div class="points-container">
@@ -1033,7 +1106,7 @@
                     const entry = document.createElement('div');
                     entry.className = 'activity-entry';
                     entry.innerHTML = `
-                        <textarea name="extracurricular[]" placeholder="Activity" required>${activity}</textarea>
+                        <textarea name="extracurricular[]" placeholder="Activity">${activity}</textarea>
                         <button type="button" class="btn-danger" onclick="removeActivity(this)">Remove</button>
                     `;
                     actContainer.appendChild(entry);
@@ -1049,7 +1122,7 @@
                     const entry = document.createElement('div');
                     entry.className = 'skill-entry';
                     entry.innerHTML = `
-                        <input type="text" name="technical_skills[]" placeholder="Skill" value="${skill}" required>
+                        <input type="text" name="technical_skills[]" placeholder="Skill" value="${skill}">
                         <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
                     `;
                     skillContainer.appendChild(entry);
@@ -1096,36 +1169,40 @@
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
         const institute = firstEducation.institute || '';
         
-        // Header
-        if (name) html += `<div style="font-size:2.2em;font-weight:bold;color:#4C5196;text-align:center;margin-bottom:8px;">${name}</div>`;
-        if (degree || institute) {
-            html += `<div style="text-align:center;font-size:1.1em;margin-bottom:8px;">`;
-            if (degree) html += `${degree}`;
-            if (degree && institute) html += `, `;
-            if (institute) html += `${institute}`;
-            html += '</div>';
+        // Header - only show if name is filled
+        if (name && name.trim()) {
+            html += `<div style="font-size:2.2em;font-weight:bold;color:#4C5196;text-align:center;margin-bottom:8px;">${name}</div>`;
+            if (degree || institute) {
+                html += `<div style="text-align:center;font-size:1.1em;margin-bottom:8px;">`;
+                if (degree) html += `${degree}`;
+                if (degree && institute) html += `, `;
+                if (institute) html += `${institute}`;
+                html += '</div>';
+            }
         }
-        // Contact info line (icons, links, profile id)
-        html += `<div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:8px;white-space:nowrap;overflow-x:auto;font-size:1.1em;margin-bottom:8px;">`;
-        let contactParts = [];
-        if (city) contactParts.push(`<span>${city}</span>`);
-        if (phone) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${phone}</span>`);
-        if (email) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="mailto:${email}" style="vertical-align:middle; text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4V4zm0 0l8 8 8-8" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${email}</a></span>`);
-        if (github) {
-            let githubId = github.replace(/\/$/, '').split('/').pop();
-            contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${github}" target="_blank" style="vertical-align:middle; text-decoration:none;"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg> ${githubId}</a></span>`);
+        // Contact info line (icons, links, profile id) - only show if there's contact info
+        if (city || phone || email || github || linkedin) {
+            html += `<div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:8px;white-space:nowrap;overflow-x:auto;font-size:1.1em;margin-bottom:8px;">`;
+            let contactParts = [];
+            if (city) contactParts.push(`<span>${city}</span>`);
+            if (phone) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${phone}</span>`);
+            if (email) contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="mailto:${email}" style="vertical-align:middle; text-decoration:none;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4V4zm0 0l8 8 8-8" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> ${email}</a></span>`);
+            if (github) {
+                let githubId = github.replace(/\/$/, '').split('/').pop();
+                contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${github}" target="_blank" style="vertical-align:middle; text-decoration:none;"><svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg> ${githubId}</a></span>`);
+            }
+            if (linkedin) {
+                let linkedinId = linkedin.replace(/\/$/, '').split('/').pop();
+                const linkedInSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0A66C2" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.025-3.037-1.849-3.037-1.851 0-2.132 1.445-2.132 2.939v5.667h-3.554V9h3.414v1.561h.049c.476-.899 1.637-1.849 3.369-1.849 3.602 0 4.267 2.369 4.267 5.455v6.285zM5.337 7.433c-1.144 0-2.069-.926-2.069-2.068 0-1.143.925-2.069 2.069-2.069 1.143 0 2.068.926 2.068 2.069 0 1.142-.925 2.068-2.068 2.068zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.549C0 23.229.792 24 1.771 24h20.451C23.2 24 24 23.229 24 22.271V1.723C24 .771 23.2 0 22.222 0z"/></svg>`;
+                contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${linkedin}" target="_blank" style="vertical-align:middle; text-decoration:none;">${linkedInSVG} ${linkedinId}</a></span>`);
+            }
+            html += contactParts.join(' <span style="color:#888;">|</span> ');
+            html += `</div>`;
         }
-        if (linkedin) {
-            let linkedinId = linkedin.replace(/\/$/, '').split('/').pop();
-            const linkedInSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0A66C2" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.025-3.037-1.849-3.037-1.851 0-2.132 1.445-2.132 2.939v5.667h-3.554V9h3.414v1.561h.049c.476-.899 1.637-1.849 3.369-1.849 3.602 0 4.267 2.369 4.267 5.455v6.285zM5.337 7.433c-1.144 0-2.069-.926-2.069-2.068 0-1.143.925-2.069 2.069-2.069 1.143 0 2.068.926 2.068 2.069 0 1.142-.925 2.068-2.068 2.068zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.549C0 23.229.792 24 1.771 24h20.451C23.2 24 24 23.229 24 22.271V1.723C24 .771 23.2 0 22.222 0z"/></svg>`;
-            contactParts.push(`<span style='display:inline-flex;align-items:center;gap:2px;'><a href="${linkedin}" target="_blank" style="vertical-align:middle; text-decoration:none;">${linkedInSVG} ${linkedinId}</a></span>`);
-        }
-        html += contactParts.join(' <span style="color:#888;">|</span> ');
-        html += `</div>`;
         // Simple horizontal line after contact info
         html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
       const summary = getValue('summary');
-      // Professional Summary
+      // Professional Summary - only show if there's actual content
         if (summary && summary.trim()) {
             html += `<div style="margin-bottom:20px;">
                 <div style="display:flex;align-items:center;margin-bottom:10px;">
@@ -1138,7 +1215,7 @@
             </div>`;
         }
 
-        // Education
+        // Education - only show if there are actual education entries
         if (educationEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
@@ -1173,7 +1250,7 @@
             html += `</tbody></table></div>`;
         }
 
-      // Scholastic Achievements
+            // Scholastic Achievements - only show if there are actual achievements
         const achievementEntries = getArrayEntries('achievements');
         if (achievementEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
@@ -1208,7 +1285,7 @@
 
 
 
-        // Internships
+        // Internships - only show if there are actual internships
        const internshipEntries = getArrayEntries('internships');
         if (internshipEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
@@ -1249,7 +1326,7 @@
             html += `</div>`;
         }
 
-        // Key Projects
+        // Key Projects - only show if there are actual projects
         const projectEntries = getArrayEntries('projects');
         if (projectEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
@@ -1297,7 +1374,7 @@
         }
 
 
-        // Positions of Responsibility
+        // Positions of Responsibility - only show if there are actual positions
        const positionEntries = getArrayEntries('positions');
         if (positionEntries.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
@@ -1334,7 +1411,7 @@
             html += `</div>`;
         }
 
-       // Extra Curricular Activities
+              // Extra Curricular Activities - only show if there are actual activities
         const activities = getArrayValues('extracurricular_activities');
         if (activities.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
@@ -1360,7 +1437,7 @@
 
 
 
-        // Technical Skills (at bottom)
+        // Technical Skills (at bottom) - only show if there are actual skills
         const skills = getArrayValues('technical_skills');
         if (skills.length > 0) {
             html += `<div style="margin-bottom:20px;">`;
