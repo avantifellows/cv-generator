@@ -105,20 +105,36 @@ jobs:
       if: steps.plan.outputs.plan_exit_code == '0'
       id: instance
       run: |
-        # Get instance ID from terraform output or by tag
-        INSTANCE_ID=$(terraform output -raw ec2_instance_id 2>/dev/null || \
-                     aws ec2 describe-instances \
-                       --filters "Name=tag:Name,Values=cv-generator*" "Name=instance-state-name,Values=running" \
-                       --query "Reservations[0].Instances[0].InstanceId" \
-                       --output text)
+        set -e
         
-        if [ "$INSTANCE_ID" == "None" ] || [ "$INSTANCE_ID" == "null" ] || [ -z "$INSTANCE_ID" ]; then
-          echo "❌ Could not find EC2 instance to reboot"
+        # Try to get instance ID from terraform output first
+        echo "🔍 Attempting to get instance ID from terraform output..."
+        if INSTANCE_ID=$(terraform output -raw ec2_instance_id 2>/dev/null) && [ -n "$INSTANCE_ID" ] && [ "$INSTANCE_ID" != "null" ]; then
+          echo "✅ Found instance ID from terraform output: $INSTANCE_ID"
+        else
+          echo "⚠️ Terraform output not available, searching by tags..."
+          # Fallback to finding instance by tag
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=cv-generator*" "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text 2>/dev/null || echo "")
+          
+          if [ -z "$INSTANCE_ID" ] || [ "$INSTANCE_ID" == "None" ] || [ "$INSTANCE_ID" == "null" ]; then
+            echo "❌ Could not find EC2 instance to reboot"
+            exit 1
+          fi
+          echo "✅ Found instance ID by tag: $INSTANCE_ID"
+        fi
+        
+        # Validate instance ID format
+        if [[ ! "$INSTANCE_ID" =~ ^i-[0-9a-f]{8,17}$ ]]; then
+          echo "❌ Invalid instance ID format: $INSTANCE_ID"
           exit 1
         fi
         
+        # Clean output for GitHub Actions
+        echo "instance_id=${INSTANCE_ID}" >> "$GITHUB_OUTPUT"
         echo "Found EC2 instance: $INSTANCE_ID"
-        echo "instance_id=$INSTANCE_ID" >> $GITHUB_OUTPUT
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
