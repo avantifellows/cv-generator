@@ -1153,9 +1153,8 @@
     }
     function renderPreview() {
         const preview = document.getElementById('cv-preview-container');
-        let html = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box;">';
         
-        // Personal Info
+        // Get all form data
         const name = getValue('full_name');
         const degree = getValue('highest_education');
         const city = getValue('city');
@@ -1163,9 +1162,38 @@
         const email = getValue('email');
         const github = getValue('github');
         const linkedin = getValue('linkedin');
+        const summary = getValue('summary');
+        
+        // Get all section data
+        const educationEntries = getArrayEntries('education');
+        const achievementEntries = getArrayEntries('achievements');
+        const internshipEntries = getArrayEntries('internships');
+        const projectEntries = getArrayEntries('projects');
+        const positionEntries = getArrayEntries('positions');
+        const activities = getArrayValues('extracurricular_activities');
+        const skills = getArrayValues('technical_skills');
+        
+        // Check if any data is filled
+        const hasPersonalInfo = name || degree || city || phone || email || github || linkedin;
+        const hasSummary = summary && summary.trim();
+        const hasEducation = educationEntries.some(entry => entry.qualification || entry.stream || entry.institute);
+        const hasAchievements = achievementEntries.some(entry => entry.description);
+        const hasInternships = internshipEntries.some(entry => entry.company || entry.role);
+        const hasProjects = projectEntries.some(entry => entry.title || entry.type);
+        const hasPositions = positionEntries.some(entry => entry.club || entry.role);
+        const hasActivities = activities.length > 0;
+        const hasSkills = skills.length > 0;
+        
+        // If no data is filled, show empty page
+        if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasAchievements && 
+            !hasInternships && !hasProjects && !hasPositions && !hasActivities && !hasSkills) {
+            preview.innerHTML = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #999; font-size: 1.2em;">Empty CV Preview<br><span style="font-size: 0.8em;">Start filling the form to see your CV here</span></div>';
+            return;
+        }
+        
+        let html = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box;">';
         
         // Get institute from first education entry for header
-        const educationEntries = getArrayEntries('education');
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
         const institute = firstEducation.institute || '';
         
@@ -1180,7 +1208,8 @@
                 html += '</div>';
             }
         }
-        // Contact info line (icons, links, profile id) - only show if there's contact info
+        
+        // Contact info line - only show if there's contact info
         if (city || phone || email || github || linkedin) {
             html += `<div style="display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:8px;white-space:nowrap;overflow-x:auto;font-size:1.1em;margin-bottom:8px;">`;
             let contactParts = [];
@@ -1199,11 +1228,14 @@
             html += contactParts.join(' <span style="color:#888;">|</span> ');
             html += `</div>`;
         }
-        // Simple horizontal line after contact info
-        html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
-      const summary = getValue('summary');
-      // Professional Summary - only show if there's actual content
-        if (summary && summary.trim()) {
+        
+        // Only show horizontal line if we have header or contact info
+        if (hasPersonalInfo) {
+            html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
+        }
+        
+        // Professional Summary - only show if there's actual content
+        if (hasSummary) {
             html += `<div style="margin-bottom:20px;">
                 <div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1215,8 +1247,8 @@
             </div>`;
         }
 
-        // Education - only show if there are actual education entries
-        if (educationEntries.length > 0) {
+        // Education - only show if there are actual education entries with content
+        if (hasEducation) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1250,9 +1282,8 @@
             html += `</tbody></table></div>`;
         }
 
-            // Scholastic Achievements - only show if there are actual achievements
-        const achievementEntries = getArrayEntries('achievements');
-        if (achievementEntries.length > 0) {
+        // Scholastic Achievements - only show if there are actual achievements with content
+        if (hasAchievements) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1283,11 +1314,8 @@
             html += `</ul></div>`;
         }
 
-
-
-        // Internships - only show if there are actual internships
-       const internshipEntries = getArrayEntries('internships');
-        if (internshipEntries.length > 0) {
+        // Internships - only show if there are actual internships with content
+        if (hasInternships) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1326,9 +1354,8 @@
             html += `</div>`;
         }
 
-        // Key Projects - only show if there are actual projects
-        const projectEntries = getArrayEntries('projects');
-        if (projectEntries.length > 0) {
+        // Key Projects - only show if there are actual projects with content
+        if (hasProjects) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1373,10 +1400,8 @@
             html += `</div>`;
         }
 
-
-        // Positions of Responsibility - only show if there are actual positions
-       const positionEntries = getArrayEntries('positions');
-        if (positionEntries.length > 0) {
+        // Positions of Responsibility - only show if there are actual positions with content
+        if (hasPositions) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
             <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
@@ -1411,9 +1436,8 @@
             html += `</div>`;
         }
 
-              // Extra Curricular Activities - only show if there are actual activities
-        const activities = getArrayValues('extracurricular_activities');
-        if (activities.length > 0) {
+        // Extra Curricular Activities - only show if there are actual activities with content
+        if (hasActivities) {
             html += `<div style="margin-bottom:20px;">`;
 
             // Updated heading style with horizontal line
@@ -1437,9 +1461,8 @@
 
 
 
-        // Technical Skills (at bottom) - only show if there are actual skills
-        const skills = getArrayValues('technical_skills');
-        if (skills.length > 0) {
+        // Technical Skills (at bottom) - only show if there are actual skills with content
+        if (hasSkills) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                 <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
