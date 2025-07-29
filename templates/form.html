@@ -139,6 +139,21 @@
         .btn-primary:hover {
             background-color: #3182ce;
         }
+        .btn-transparent {
+            background-color: transparent;
+            color: #4299e1;
+            border: 1px solid #4299e1;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-transparent:hover {
+            background-color: rgba(66, 153, 225, 0.1);
+            color: #3182ce;
+            border-color: #3182ce;
+        }
         .add-section-button {
             margin-bottom: 15px;
         }
@@ -246,9 +261,9 @@
     <div class="container">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <h1 style="margin: 0;">CV Generator</h1>
-            <button type="button" id="download-pdf-top-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 12px 20px; font-size: 16px;">
+            <!-- <button type="button" id="download-pdf-top-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 12px 20px; font-size: 16px;">
                 📄 Download PDF
-            </button>
+            </button> -->
         </div>
         <form id="cvForm" method="post" action="/generate">
             
@@ -345,29 +360,45 @@
                 </div>
             </div>
 
-            <!-- Achievements -->
-            <div class="section" id="achievements-section">
+            <!-- Work Experience -->
+            <div class="section" id="work-experience-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h2>Scholastic Achievements</h2>
-                    <button type="button" class="btn-danger" onclick="removeSection('achievements-section')">Remove Section</button>
+                    <h2>Work Experience</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('work-experience-section')">Remove Section</button>
                 </div>
-                <div id="achievements-container">
+                <div id="work-experience-container">
                     <div class="dynamic-entry">
                         <div class="entry-header">
-                            <div class="entry-title">Achievement 1</div>
+                            <div class="entry-title">Work Experience 1</div>
                         </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea name="achievements[0][description]" placeholder="e.g. Secured AIR 100 in JEE Advanced, Won Gold Medal in Olympiad"></textarea>
+                        <div class="row">
+                            <div class="col">
+                                <label>Company</label>
+                                <input type="text" name="work_experience[0][company]" placeholder="e.g. Microsoft, Accenture">
+                            </div>
+                            <div class="col">
+                                <label>Position</label>
+                                <input type="text" name="work_experience[0][position]" placeholder="e.g. Software Engineer, Data Analyst">
+                            </div>
+                            <div class="col">
+                                <label>Duration</label>
+                                <input type="text" name="work_experience[0][duration]" placeholder="e.g. Jan 2023 - Present">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Year</label>
-                            <input type="text" name="achievements[0][year]" placeholder="e.g. 2022">
+                        <div class="points-container">
+                            <label>Key Responsibilities</label>
+                            <div class="work-experience-points" data-index="0">
+                                <div class="point-entry">
+                                    <textarea name="work_experience[0][points][]" placeholder="e.g. Developed scalable backend systems using Node.js"></textarea>
+                                    <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addWorkExperiencePoint(0)">+ Add Responsibility</button>
                         </div>
                     </div>
                 </div>
                 <div class="add-button-container">
-                    <button type="button" class="btn-secondary" onclick="addAchievementEntry()">+ Add Another Achievement</button>
+                    <button type="button" class="btn-secondary" onclick="addWorkExperienceEntry()">+ Add Another Work Experience</button>
                 </div>
             </div>
 
@@ -410,6 +441,32 @@
                 </div>
                 <div class="add-button-container">
                     <button type="button" class="btn-secondary" onclick="addInternshipEntry()">+ Add Another Internship</button>
+                </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="section" id="achievements-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Scholastic Achievements</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('achievements-section')">Remove Section</button>
+                </div>
+                <div id="achievements-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Achievement 1</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="achievements[0][description]" placeholder="e.g. Secured AIR 100 in JEE Advanced, Won Gold Medal in Olympiad"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="achievements[0][year]" placeholder="e.g. 2022">
+                        </div>
+                    </div>
+                </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addAchievementEntry()">+ Add Another Achievement</button>
                 </div>
             </div>
 
@@ -552,10 +609,10 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <h3 style="margin: 0; color: #4a5568;">Live Preview</h3>
             <div style="display: flex; gap: 10px;">
-                <button type="button" id="expand-preview-btn" class="btn-primary" onclick="togglePreviewExpand()" style="padding: 8px 16px; font-size: 14px;">
-                    📱 Expand
+                <button type="button" id="expand-preview-btn" class="btn-transparent" onclick="togglePreviewExpand()" style="padding: 8px 16px; font-size: 14px;">
+                    ↙↗ Expand
                 </button>
-                <button type="button" id="download-pdf-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 8px 16px; font-size: 14px;">
+                <button type="button" id="download-pdf-btn" class="btn-transparent" onclick="downloadPDF()" style="padding: 8px 16px; font-size: 14px;">
                     📄 Download PDF
                 </button>
             </div>
@@ -570,6 +627,7 @@
         let educationCount = 1;
         let achievementCount = 1;
         let internshipCount = 1;
+        let workExperienceCount = 1;
         let projectCount = 1;
         let positionCount = 1;
 
@@ -680,6 +738,56 @@
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
                 <textarea name="internships[${index}][points][]" placeholder="Key point"></textarea>
+                <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+            `;
+            container.appendChild(newPoint);
+        }
+
+        // Work Experience functions
+        function addWorkExperienceEntry() {
+            const container = document.getElementById('work-experience-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Work Experience ${workExperienceCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Company</label>
+                        <input type="text" name="work_experience[${workExperienceCount}][company]">
+                    </div>
+                    <div class="col">
+                        <label>Position</label>
+                        <input type="text" name="work_experience[${workExperienceCount}][position]">
+                    </div>
+                    <div class="col">
+                        <label>Duration</label>
+                        <input type="text" name="work_experience[${workExperienceCount}][duration]">
+                    </div>
+                </div>
+                <div class="points-container">
+                    <label>Key Responsibilities</label>
+                    <div class="work-experience-points" data-index="${workExperienceCount}">
+                        <div class="point-entry">
+                            <textarea name="work_experience[${workExperienceCount}][points][]" placeholder="Key responsibility"></textarea>
+                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-secondary" onclick="addWorkExperiencePoint(${workExperienceCount})">+ Add Responsibility</button>
+                </div>
+            `;
+            container.appendChild(newEntry);
+            workExperienceCount++;
+        }
+
+        function addWorkExperiencePoint(index) {
+            const container = document.querySelector(`.work-experience-points[data-index="${index}"]`);
+            const newPoint = document.createElement('div');
+            newPoint.className = 'point-entry';
+            newPoint.innerHTML = `
+                <textarea name="work_experience[${index}][points][]" placeholder="Key responsibility"></textarea>
                 <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
             `;
             container.appendChild(newPoint);
@@ -876,6 +984,7 @@
                 'education-section': 'Educational Qualifications',
                 'achievements-section': 'Scholastic Achievements',
                 'internships-section': 'Internships',
+                'work-experience-section': 'Work Experience',
                 'projects-section': 'Key Projects',
                 'positions-section': 'Positions of Responsibility',
                 'extracurricular-section': 'Extra Curricular Activities',
@@ -1189,6 +1298,7 @@
         
         // Get all section data
         const educationEntries = getArrayEntries('education');
+        const workExperienceEntries = getArrayEntries('work_experience');
         const achievementEntries = getArrayEntries('achievements');
         const internshipEntries = getArrayEntries('internships');
         const projectEntries = getArrayEntries('projects');
@@ -1200,6 +1310,7 @@
         const hasPersonalInfo = name || degree || city || phone || email || github || linkedin;
         const hasSummary = summary && summary.trim();
         const hasEducation = educationEntries.some(entry => entry.qualification || entry.stream || entry.institute);
+        const hasWorkExperience = workExperienceEntries.some(entry => entry.company || entry.position);
         const hasAchievements = achievementEntries.some(entry => entry.description);
         const hasInternships = internshipEntries.some(entry => entry.company || entry.role);
         const hasProjects = projectEntries.some(entry => entry.title || entry.type);
@@ -1208,13 +1319,13 @@
         const hasSkills = skills.length > 0;
         
         // If no data is filled, show empty page
-        if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasAchievements && 
+        if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasWorkExperience && !hasAchievements && 
             !hasInternships && !hasProjects && !hasPositions && !hasActivities && !hasSkills) {
             preview.innerHTML = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #999; font-size: 1.2em;">Empty CV Preview<br><span style="font-size: 0.8em;">Start filling the form to see your CV here</span></div>';
             return;
         }
         
-        let html = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box;">';
+        let html = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; font-size: 12px;">';
         
         // Get institute from first education entry for header
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
@@ -1270,15 +1381,9 @@
             </div>`;
         }
 
-        // Education - only show if there are actual education entries with content
+        // Education - only show if there are actual education entries with content (no title)
         if (hasEducation) {
             html += `<div style="margin-bottom:20px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
-                        Educational Qualifications
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
-                </div>`;
             
 
             html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
@@ -1305,36 +1410,43 @@
             html += `</tbody></table></div>`;
         }
 
-        // Scholastic Achievements - only show if there are actual achievements with content
-        if (hasAchievements) {
+        // Work Experience - only show if there are actual work experiences with content
+        if (hasWorkExperience) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
                     <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
-                        Scholastic Achievements
+                        Work Experience
                     </div>
                     <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
                 </div> `;
-           
-
             
-            // Increase margin-left for more bullet indentation
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+            workExperienceEntries.forEach(entry => {
+                if (entry.company || entry.position) {
+                    html += `<div style="margin-bottom:15px;">`;
 
-            achievementEntries.forEach(entry => {
-                if (entry.description) {
-                    html += `<li style="margin-bottom:8px;">`;
+                    // Company and position in flex box
+                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                    html += `<div><strong>${entry.company || ''}</strong>`;
+                    if (entry.position) html += ` | ${entry.position}`;
+                    html += `</div>`;
+                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `</div>`;
 
-                    // Inner div flex inside li, not span
-                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-                    html += `<span>${entry.description}</span>`;
-                    if (entry.year) {
-                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+                    // Bullet points with proper list styling
+                    if (entry.points && entry.points.length > 0) {
+                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                        entry.points.forEach(point => {
+                            if (point.trim()) {
+                                html += `<li style="margin-bottom:5px;">${point}</li>`;
+                            }
+                        });
+                        html += `</ul>`;
                     }
-                    html += `</div></li>`;
+
+                    html += `</div>`;
                 }
             });
-
-            html += `</ul></div>`;
+            html += `</div>`;
         }
 
         // Internships - only show if there are actual internships with content
@@ -1375,6 +1487,38 @@
                 }
             });
             html += `</div>`;
+        }
+
+        // Scholastic Achievements - only show if there are actual achievements with content
+        if (hasAchievements) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:#4C5196;font-size:1.1em;margin-right:10px;white-space:nowrap;">
+                        Scholastic Achievements
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:#4C5196;"></div>
+                </div> `;
+           
+
+            
+            // Increase margin-left for more bullet indentation
+            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+
+            achievementEntries.forEach(entry => {
+                if (entry.description) {
+                    html += `<li style="margin-bottom:8px;">`;
+
+                    // Inner div flex inside li, not span
+                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+                    html += `<span>${entry.description}</span>`;
+                    if (entry.year) {
+                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+                    }
+                    html += `</div></li>`;
+                }
+            });
+
+            html += `</ul></div>`;
         }
 
         // Key Projects - only show if there are actual projects with content
@@ -1526,7 +1670,7 @@
             previewContainer.style.padding = '20px';
             previewContainer.style.boxSizing = 'border-box';
             
-            expandBtn.innerHTML = '🔙 Exit';
+            expandBtn.innerHTML = '↙↗ Exit';
             isPreviewExpanded = true;
             
             // Add close button overlay
@@ -1563,7 +1707,7 @@
             previewContainer.style.padding = '';
             previewContainer.style.boxSizing = '';
             
-            expandBtn.innerHTML = '📱 Expand';
+            expandBtn.innerHTML = '↙↗ Expand';
             isPreviewExpanded = false;
             
             // Remove close button overlay
