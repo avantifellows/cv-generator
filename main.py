@@ -269,6 +269,10 @@ async def generate_cv(request: Request):
         # Get form data
         form_data = await request.form()
         logger.info(f"[DEBUG] Raw form_data keys: {list(form_data.keys())}")
+        
+        # Check if this is a direct PDF download request
+        is_pdf_download = form_data.get('download_pdf') == 'true'
+        
         # Check if this is dynamic form data (has array fields)
         is_dynamic = any(key.startswith(('education[', 'achievements[', 'internships[', 'projects[', 'positions[')) 
                         for key in form_data.keys())
@@ -284,7 +288,35 @@ async def generate_cv(request: Request):
             logger.info(f"[DEBUG] form_variables: {form_variables}")
             cv_data = cv_service.convert_legacy_data(form_variables)
         
-        # Generate CV using service
+        # If PDF download requested, generate and return PDF directly
+        if is_pdf_download:
+            # Render PDF-specific HTML template
+            html_content = render_template('cv_template_pdf.html', cv_data.dict())
+            
+            # Generate PDF using Playwright
+            try:
+                logger.info("Starting PDF generation with Playwright for direct download")
+                pdf_bytes = await generate_pdf_with_playwright(html_content)
+                logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
+            except Exception as e:
+                logger.error(f"Exception during PDF generation: {str(e)}")
+                logger.error(f"Exception type: {type(e).__name__}")
+                import traceback
+                logger.error(f"Traceback: {traceback.format_exc()}")
+                raise
+            
+            # Create filename from user's name
+            pdf_filename = f"{create_filename(cv_data.personal_info.full_name)}.pdf"
+            
+            logger.info(f"PDF generated successfully for direct download: {pdf_filename}")
+            
+            return Response(
+                content=pdf_bytes,
+                media_type="application/pdf",
+                headers={"Content-Disposition": f"attachment; filename={pdf_filename}"}
+            )
+        
+        # Otherwise, generate CV using service for regular flow
         logger.info(f"[DEBUG] cv_data.dict(): {cv_data.dict()}")
         cv_id = cv_service.generate_cv(cv_data)
         

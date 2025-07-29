@@ -244,7 +244,12 @@
     <div class="main-flex">
         <div class="form-section">
     <div class="container">
-        <h1>CV Generator</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="margin: 0;">CV Generator</h1>
+            <button type="button" id="download-pdf-top-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 12px 20px; font-size: 16px;">
+                📄 Download PDF
+            </button>
+        </div>
         <form id="cvForm" method="post" action="/generate">
             
             <!-- Personal Information -->
@@ -532,11 +537,29 @@
                 </div>
             </div>
 
-            <button type="submit">Generate CV</button>
+            <!-- Generate CV button removed as per Task 6 -->
         </form>
+        
+        <!-- Bottom Download PDF Button -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button type="button" id="download-pdf-bottom-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 15px 30px; font-size: 16px; width: 100%;">
+                📄 Download PDF
+            </button>
+        </div>
     </div>
     </div>
     <div class="preview-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="margin: 0; color: #4a5568;">Live Preview</h3>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" id="expand-preview-btn" class="btn-primary" onclick="togglePreviewExpand()" style="padding: 8px 16px; font-size: 14px;">
+                    📱 Expand
+                </button>
+                <button type="button" id="download-pdf-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 8px 16px; font-size: 14px;">
+                    📄 Download PDF
+                </button>
+            </div>
+        </div>
         <div id="cv-preview-container"></div>
     </div>
     </div>
@@ -1480,6 +1503,118 @@
     }
     document.getElementById('cvForm').addEventListener('input', renderPreview);
     window.addEventListener('DOMContentLoaded', renderPreview);
+    
+    // Full-screen preview functionality
+    let isPreviewExpanded = false;
+    
+    function togglePreviewExpand() {
+        const previewContainer = document.getElementById('cv-preview-container');
+        const expandBtn = document.getElementById('expand-preview-btn');
+        const mainFlex = document.querySelector('.main-flex');
+        const formSection = document.querySelector('.form-section');
+        
+        if (!isPreviewExpanded) {
+            // Enter full screen mode
+            previewContainer.style.position = 'fixed';
+            previewContainer.style.top = '0';
+            previewContainer.style.left = '0';
+            previewContainer.style.width = '100vw';
+            previewContainer.style.height = '100vh';
+            previewContainer.style.zIndex = '9999';
+            previewContainer.style.backgroundColor = '#fff';
+            previewContainer.style.overflow = 'auto';
+            previewContainer.style.padding = '20px';
+            previewContainer.style.boxSizing = 'border-box';
+            
+            expandBtn.innerHTML = '🔙 Exit';
+            isPreviewExpanded = true;
+            
+            // Add close button overlay
+            const closeOverlay = document.createElement('div');
+            closeOverlay.id = 'preview-close-overlay';
+            closeOverlay.style.position = 'fixed';
+            closeOverlay.style.top = '20px';
+            closeOverlay.style.right = '20px';
+            closeOverlay.style.zIndex = '10000';
+            closeOverlay.innerHTML = `
+                <button onclick="togglePreviewExpand()" style="
+                    background: #e53e3e; 
+                    color: white; 
+                    border: none; 
+                    padding: 12px 20px; 
+                    border-radius: 5px; 
+                    cursor: pointer; 
+                    font-size: 16px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+                ">✕ Close Full Screen</button>
+            `;
+            document.body.appendChild(closeOverlay);
+            
+        } else {
+            // Exit full screen mode
+            previewContainer.style.position = '';
+            previewContainer.style.top = '';
+            previewContainer.style.left = '';
+            previewContainer.style.width = '';
+            previewContainer.style.height = '1123px';
+            previewContainer.style.zIndex = '';
+            previewContainer.style.backgroundColor = '';
+            previewContainer.style.overflow = 'auto';
+            previewContainer.style.padding = '';
+            previewContainer.style.boxSizing = '';
+            
+            expandBtn.innerHTML = '📱 Expand';
+            isPreviewExpanded = false;
+            
+            // Remove close button overlay
+            const closeOverlay = document.getElementById('preview-close-overlay');
+            if (closeOverlay) {
+                closeOverlay.remove();
+            }
+        }
+    }
+    
+    // Download PDF functionality
+    function downloadPDF() {
+        // Check if form has data
+        const formData = new FormData(document.getElementById('cvForm'));
+        let hasData = false;
+        
+        // Check if any required fields are filled
+        const fullName = formData.get('full_name');
+        if (fullName && fullName.trim()) {
+            hasData = true;
+        }
+        
+        if (!hasData) {
+            alert('Please fill in at least your name before downloading the PDF.');
+            return;
+        }
+        
+        // Submit form to generate endpoint but set target to open in new tab for PDF download
+        const form = document.getElementById('cvForm');
+        const originalAction = form.action;
+        const originalTarget = form.target;
+        
+        // Temporarily modify form to download PDF directly
+        form.action = '/generate';
+        form.target = '_blank';
+        
+        // Create hidden input to indicate PDF download request
+        const pdfInput = document.createElement('input');
+        pdfInput.type = 'hidden';
+        pdfInput.name = 'download_pdf';
+        pdfInput.value = 'true';
+        form.appendChild(pdfInput);
+        
+        // Submit the form
+        form.submit();
+        
+        // Restore original form attributes
+        form.action = originalAction;
+        form.target = originalTarget;
+        form.removeChild(pdfInput);
+    }
 
     // Helper functions for getting form data
     function getValue(id) {
