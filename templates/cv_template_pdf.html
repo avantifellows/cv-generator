@@ -11,8 +11,8 @@
             margin: 0 auto;
             padding: 4px;
             line-height: 1.1;
-            color: #333;
-            font-size: 12px;
+            color: {{font_settings.body_font_color}};
+            font-size: {{font_settings.body_font_size}};
         }
         
         .header {
@@ -59,9 +59,9 @@
         .section-title {
             display: flex;
             align-items: center;
-            font-size: 1.5em;
+            font-size: {{font_settings.title_font_size}};
             font-weight: bold;
-            color: #4C5196;
+            color: {{font_settings.title_font_color}};
             margin-bottom: 8px;
             padding: 2px 2px;
             border-bottom: none;
@@ -75,7 +75,7 @@
         .section-title-line {
             flex: 1;
             height: 2px;
-            background: #4C5196;
+            background: {{font_settings.title_font_color}};
             border-radius: 1px;
             opacity: 0.5;
         }

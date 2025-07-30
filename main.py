@@ -532,6 +532,15 @@ def parse_dynamic_form_data(form_data) -> dict:
     technical_skills = form_data.getlist("technical_skills[]")
     structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
                                          if skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']]
+    
+    # Parse font settings
+    structured_data["font_settings"] = {
+        "title_font_size": form_data.get("title_font_size", "12px"),
+        "title_font_color": form_data.get("title_font_color", "#4C5196"),
+        "body_font_size": form_data.get("body_font_size", "12px"),
+        "body_font_color": form_data.get("body_font_color", "#000000")
+    }
+    
     # After parsing all data
     logger.info("[DEBUG] Structured data after parsing dynamic form:")
     logger.info(pprint.pformat(structured_data))

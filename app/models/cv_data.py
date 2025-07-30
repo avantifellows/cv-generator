@@ -105,6 +105,14 @@ class PositionEntry(BaseModel):
         return non_empty_points
 
 
+class FontSettings(BaseModel):
+    """Font customization settings"""
+    title_font_size: str = Field(default="12px")
+    title_font_color: str = Field(default="#4C5196")
+    body_font_size: str = Field(default="12px")
+    body_font_color: str = Field(default="#000000")
+
+
 class CVData(BaseModel):
     """Complete CV data structure"""
     personal_info: PersonalInfo
@@ -116,6 +124,7 @@ class CVData(BaseModel):
     positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
     technical_skills: List[str] = Field(default_factory=list, max_items=10)
+    font_settings: FontSettings = Field(default_factory=FontSettings)
 
     @validator('extracurricular')
     def validate_extracurricular(cls, v):
