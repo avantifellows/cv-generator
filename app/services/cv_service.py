@@ -231,7 +231,9 @@ class CVService:
                 "highest_education": legacy_data.get("highest_education", ""),
                 "city": legacy_data.get("city", ""),
                 "phone": legacy_data.get("phone", ""),
-                "email": legacy_data.get("email", "")
+                "email": legacy_data.get("email", ""),
+                "github": legacy_data.get("github", ""),
+                "linkedin": legacy_data.get("linkedin", "")
             }
             
             # Extract education entries
@@ -328,16 +330,29 @@ class CVService:
                 if skill and skill.strip():
                     technical_skills.append(skill)
             
+            # Extract summary
+            summary = legacy_data.get("summary", "")
+            
+            # Extract font settings from legacy data
+            font_settings = {
+                "title_font_size": legacy_data.get("title_font_size", "12px"),
+                "title_font_color": legacy_data.get("title_font_color", "#4C5196"),
+                "body_font_size": legacy_data.get("body_font_size", "12px"),
+                "body_font_color": legacy_data.get("body_font_color", "#000000")
+            }
+            
             # Create structured CV data
             cv_data_dict = {
                 "personal_info": personal_info,
+                "summary": summary,
                 "education": education,
                 "achievements": achievements,
                 "internships": internships,
                 "projects": projects,
                 "positions_of_responsibility": positions,
                 "extracurricular": extracurricular,
-                "technical_skills": technical_skills
+                "technical_skills": technical_skills,
+                "font_settings": font_settings
             }
             
             return CVData(**cv_data_dict)

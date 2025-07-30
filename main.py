@@ -589,7 +589,10 @@ async def get_cv_pdf(cv_id: str):
         cv_document = cv_service.get_cv_data(cv_id)
         
         # Render PDF-specific HTML template
-        html_content = render_template('cv_template_pdf.html', cv_document.data.dict())
+        cv_data_dict = cv_document.data.dict()
+        logger.info(f"[DEBUG] PDF generation - cv_data_dict keys: {list(cv_data_dict.keys())}")
+        logger.info(f"[DEBUG] PDF generation - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
+        html_content = render_template('cv_template_pdf.html', cv_data_dict)
         
         # Generate PDF using Playwright
         try:
