@@ -291,7 +291,10 @@ async def generate_cv(request: Request):
         # If PDF download requested, generate and return PDF directly
         if is_pdf_download:
             # Render PDF-specific HTML template
-            html_content = render_template('cv_template_pdf.html', cv_data.dict())
+            cv_data_dict = cv_data.dict()
+            logger.info(f"[DEBUG] Direct PDF download - cv_data_dict keys: {list(cv_data_dict.keys())}")
+            logger.info(f"[DEBUG] Direct PDF download - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
+            html_content = render_template('cv_template_pdf.html', cv_data_dict)
             
             # Generate PDF using Playwright
             try:
