@@ -1904,6 +1904,9 @@
             bodyFontColor: document.getElementById('bodyFontColor').value
         };
         
+        // Update hidden inputs with new font settings
+        updateFontSettingsInputs();
+        
         // Update preview with new font settings
         renderPreview();
         
@@ -1968,39 +1971,46 @@
         };
     }
     
-    // Override form submission to include font settings
-    document.addEventListener('DOMContentLoaded', function() {
+    // Function to update hidden font settings inputs
+    function updateFontSettingsInputs() {
         const form = document.getElementById('cvForm');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                const fontSettings = getFontSettings();
-                
-                // Add font settings as hidden inputs
-                const titleSizeInput = document.createElement('input');
-                titleSizeInput.type = 'hidden';
-                titleSizeInput.name = 'title_font_size';
-                titleSizeInput.value = fontSettings.titleFontSize;
-                form.appendChild(titleSizeInput);
-                
-                const titleColorInput = document.createElement('input');
-                titleColorInput.type = 'hidden';
-                titleColorInput.name = 'title_font_color';
-                titleColorInput.value = fontSettings.titleFontColor;
-                form.appendChild(titleColorInput);
-                
-                const bodySizeInput = document.createElement('input');
-                bodySizeInput.type = 'hidden';
-                bodySizeInput.name = 'body_font_size';
-                bodySizeInput.value = fontSettings.bodyFontSize;
-                form.appendChild(bodySizeInput);
-                
-                const bodyColorInput = document.createElement('input');
-                bodyColorInput.type = 'hidden';
-                bodyColorInput.name = 'body_font_color';
-                bodyColorInput.value = fontSettings.bodyFontColor;
-                form.appendChild(bodyColorInput);
-            });
-        }
+        if (!form) return;
+        
+        const fontSettings = getFontSettings();
+        
+        // Remove existing font settings inputs
+        const existingInputs = form.querySelectorAll('input[name^="title_font_"], input[name^="body_font_"]');
+        existingInputs.forEach(input => input.remove());
+        
+        // Add font settings as hidden inputs
+        const titleSizeInput = document.createElement('input');
+        titleSizeInput.type = 'hidden';
+        titleSizeInput.name = 'title_font_size';
+        titleSizeInput.value = fontSettings.titleFontSize;
+        form.appendChild(titleSizeInput);
+        
+        const titleColorInput = document.createElement('input');
+        titleColorInput.type = 'hidden';
+        titleColorInput.name = 'title_font_color';
+        titleColorInput.value = fontSettings.titleFontColor;
+        form.appendChild(titleColorInput);
+        
+        const bodySizeInput = document.createElement('input');
+        bodySizeInput.type = 'hidden';
+        bodySizeInput.name = 'body_font_size';
+        bodySizeInput.value = fontSettings.bodyFontSize;
+        form.appendChild(bodySizeInput);
+        
+        const bodyColorInput = document.createElement('input');
+        bodyColorInput.type = 'hidden';
+        bodyColorInput.name = 'body_font_color';
+        bodyColorInput.value = fontSettings.bodyFontColor;
+        form.appendChild(bodyColorInput);
+    }
+    
+    // Initialize font settings inputs on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateFontSettingsInputs();
     });
     </script>
 </body>
