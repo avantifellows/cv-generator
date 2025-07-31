@@ -98,6 +98,78 @@
             font-weight: bold;
             color: #2d3748;
         }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .row {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .col {
+                flex: none;
+            }
+            
+            #fontCustomizationPanel {
+                position: fixed !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                right: auto !important;
+                width: 90vw !important;
+                max-width: 400px !important;
+                min-width: 280px !important;
+                max-height: 80vh !important;
+                overflow-y: auto !important;
+            }
+            
+            #fontCustomizationPanel > div:first-child {
+                grid-template-columns: 1fr !important;
+            }
+            
+            #fontSettingsBtn {
+                position: fixed !important;
+                top: 20px !important;
+                right: 20px !important;
+                z-index: 1001 !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            .section h2 {
+                font-size: 16px;
+            }
+        }
+        
+        .font-panel-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @media (min-width: 768px) {
+            .font-panel-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
         .btn-secondary {
             background-color: #48bb78;
             color: white;
@@ -262,21 +334,21 @@
         <!-- Font Customization Button and Panel -->
         <div style="position: relative;">
             <!-- Font Settings Button -->
-            <button type="button" id="fontSettingsBtn" style="position: absolute; top: 0; right: 0; background-color: #007bff; color: white; padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 3px; min-width: auto; width: auto;">
+            <button type="button" id="fontSettingsBtn" style="position: absolute; top: 0; right: 0; background-color: transparent; color: #007bff; padding: 8px 12px; border: 1px solid #007bff; border-radius: 6px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 6px; min-width: auto; width: auto; transition: all 0.3s ease; backdrop-filter: blur(10px);">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                 </svg>
-                Font
+                Edit Font
             </button>
             
             <!-- Font Customization Panel (Hidden by default) -->
-            <div id="fontCustomizationPanel" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 30px; display: none; position: absolute; top: 40px; right: 0; width: 400px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+            <div id="fontCustomizationPanel" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 30px; display: none; position: absolute; top: 40px; right: 0; width: 400px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: calc(100vw - 40px); min-width: 300px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h3 style="margin: 0; color: #495057; border-bottom: 2px solid #007bff; padding-bottom: 10px;">Font Customization</h3>
                     <button type="button" id="closeFontPanel" style="background: none; border: none; font-size: 18px; cursor: pointer; color: #666;">×</button>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="font-panel-grid">
                     <!-- Section Titles Customization -->
                     <div>
                         <h4 style="margin: 0 0 15px 0; color: #495057;">Section Titles</h4>
@@ -295,7 +367,7 @@
                             <select id="titleFontColor" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
                                 <option value="#4C5196" selected>Blue</option>
                                 <option value="#000000">Black</option>
-                                <option value="#28a745">Green</option>
+                                <option value="#14532d">Green</option>
                                 <option value="#8B4513">Brown</option>
                             </select>
                         </div>
@@ -314,21 +386,13 @@
                             </select>
                         </div>
                         
-                        <div style="margin-bottom: 15px;">
-                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Font Color:</label>
-                            <select id="bodyFontColor" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
-                                <option value="#000000" selected>Black</option>
-                                <option value="#4C5196">Blue</option>
-                                <option value="#28a745">Green</option>
-                                <option value="#8B4513">Brown</option>
-                            </select>
-                        </div>
+
                     </div>
                 </div>
                 
                 <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #dee2e6;">
-                    <button type="button" id="applyFontSettings" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">Apply Font Settings</button>
-                    <span style="margin-left: 10px; font-size: 12px; color: #6c757d;">Changes will apply to both preview and final CV</span>
+                    <button type="button" id="applyFontSettings" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; width: 100%; margin-bottom: 10px;">Apply Font Settings</button>
+                    <span style="font-size: 12px; color: #6c757d; text-align: center; display: block;">Changes will apply to both preview and final CV</span>
                 </div>
             </div>
         </div>
@@ -1402,7 +1466,7 @@
         // Get current font settings
         const fontSettings = getFontSettings();
         
-        let html = `<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; font-size: ${fontSettings.bodyFontSize}; color: ${fontSettings.bodyFontColor};">`;
+        let html = `<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; font-size: ${fontSettings.bodyFontSize}; color: #000000;">`;
         
         // Get institute from first education entry for header
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
@@ -1410,7 +1474,7 @@
         
         // Header - only show if name is filled
         if (name && name.trim()) {
-            html += `<div style="font-size:2.2em;font-weight:bold;color:#4C5196;text-align:center;margin-bottom:8px;">${name}</div>`;
+            html += `<div style="font-size:2.2em;font-weight:bold;color:${fontSettings.titleFontColor};text-align:center;margin-bottom:8px;">${name}</div>`;
             if (degree || institute) {
                 html += `<div style="text-align:center;font-size:1.1em;margin-bottom:8px;">`;
                 if (degree) html += `${degree}`;
@@ -1454,7 +1518,7 @@
                     </div>
                     <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
                 </div>
-                <div style="font-size:${fontSettings.bodyFontSize};line-height:1.4;text-align:justify;color:${fontSettings.bodyFontColor};">${summary}</div>
+                <div style="font-size:${fontSettings.bodyFontSize};line-height:1.4;text-align:justify;color:#000000;">${summary}</div>
             </div>`;
         }
 
@@ -1901,7 +1965,7 @@
             titleFontSize: document.getElementById('titleFontSize').value,
             titleFontColor: document.getElementById('titleFontColor').value,
             bodyFontSize: document.getElementById('bodyFontSize').value,
-            bodyFontColor: document.getElementById('bodyFontColor').value
+            bodyFontColor: '#000000' // Always black for body text
         };
         
         // Update hidden inputs with new font settings
@@ -1967,7 +2031,7 @@
             titleFontSize: document.getElementById('titleFontSize').value,
             titleFontColor: document.getElementById('titleFontColor').value,
             bodyFontSize: document.getElementById('bodyFontSize').value,
-            bodyFontColor: document.getElementById('bodyFontColor').value
+            bodyFontColor: '#000000' // Always black for body text
         };
     }
     
@@ -2004,7 +2068,7 @@
         const bodyColorInput = document.createElement('input');
         bodyColorInput.type = 'hidden';
         bodyColorInput.name = 'body_font_color';
-        bodyColorInput.value = fontSettings.bodyFontColor;
+        bodyColorInput.value = '#000000'; // Always black for body text
         form.appendChild(bodyColorInput);
     }
     
