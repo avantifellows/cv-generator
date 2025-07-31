@@ -323,12 +323,63 @@ class CVService:
                 if activity and activity.strip():
                     extracurricular.append(activity)
             
-            # Extract technical skills
-            technical_skills = []
-            for i in range(1, 11):  # Support up to 10 skills
-                skill = legacy_data.get(f"techskill_{i}", "")
+            # Extract technical skills - handle both legacy and new categorized format
+            technical_skills = {
+                "programming_languages": [],
+                "web_technologies": [],
+                "database_management": [],
+                "tools_and_technologies": []
+            }
+            
+            # Check if we have categorized skills from the form
+            if any(key.startswith('tech_') for key in legacy_data.keys()):
+                # New categorized format
+                # Programming Languages
+                skill = legacy_data.get("tech_prog_1", "")
                 if skill and skill.strip():
-                    technical_skills.append(skill)
+                    # Split by comma and clean up each skill
+                    skills = [s.strip() for s in skill.split(',') if s.strip()]
+                    technical_skills["programming_languages"].extend(skills)
+                
+                # Web Technologies
+                skill = legacy_data.get("tech_web_1", "")
+                if skill and skill.strip():
+                    # Split by comma and clean up each skill
+                    skills = [s.strip() for s in skill.split(',') if s.strip()]
+                    technical_skills["web_technologies"].extend(skills)
+                
+                # Database Management
+                skill = legacy_data.get("tech_db_1", "")
+                if skill and skill.strip():
+                    # Split by comma and clean up each skill
+                    skills = [s.strip() for s in skill.split(',') if s.strip()]
+                    technical_skills["database_management"].extend(skills)
+                
+                # Tools and Technologies
+                skill = legacy_data.get("tech_tools_1", "")
+                if skill and skill.strip():
+                    # Split by comma and clean up each skill
+                    skills = [s.strip() for s in skill.split(',') if s.strip()]
+                    technical_skills["tools_and_technologies"].extend(skills)
+            else:
+                # Legacy format - convert simple list to categorized
+                legacy_skills = []
+                for i in range(1, 11):  # Support up to 10 skills
+                    skill = legacy_data.get(f"techskill_{i}", "")
+                    if skill and skill.strip():
+                        legacy_skills.append(skill)
+                
+                # Categorize legacy skills
+                for skill in legacy_skills:
+                    skill_lower = skill.lower()
+                    if any(lang in skill_lower for lang in ['python', 'java', 'javascript', 'c++', 'c#', 'ruby', 'php', 'go', 'rust', 'swift', 'kotlin']):
+                        technical_skills["programming_languages"].append(skill)
+                    elif any(tech in skill_lower for tech in ['html', 'css', 'react', 'angular', 'vue', 'node', 'express', 'django', 'flask', 'spring', 'bootstrap', 'jquery']):
+                        technical_skills["web_technologies"].append(skill)
+                    elif any(db in skill_lower for db in ['mysql', 'postgresql', 'mongodb', 'sqlite', 'oracle', 'sql server', 'redis', 'elasticsearch']):
+                        technical_skills["database_management"].append(skill)
+                    else:
+                        technical_skills["tools_and_technologies"].append(skill)
             
             # Extract summary
             summary = legacy_data.get("summary", "")

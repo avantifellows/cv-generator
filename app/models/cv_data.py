@@ -105,6 +105,20 @@ class PositionEntry(BaseModel):
         return non_empty_points
 
 
+class TechnicalSkillsCategory(BaseModel):
+    """Technical skills organized by category"""
+    programming_languages: List[str] = Field(default_factory=list, max_items=20)
+    web_technologies: List[str] = Field(default_factory=list, max_items=20)
+    database_management: List[str] = Field(default_factory=list, max_items=20)
+    tools_and_technologies: List[str] = Field(default_factory=list, max_items=20)
+
+    @validator('programming_languages', 'web_technologies', 'database_management', 'tools_and_technologies')
+    def validate_skills(cls, v):
+        # Filter out empty skills
+        non_empty_skills = [skill.strip() for skill in v if skill and skill.strip()]
+        return non_empty_skills
+
+
 class FontSettings(BaseModel):
     """Font customization settings"""
     title_font_size: str = Field(default="12px")
@@ -123,7 +137,7 @@ class CVData(BaseModel):
     projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
     positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
-    technical_skills: List[str] = Field(default_factory=list, max_items=10)
+    technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
     font_settings: FontSettings = Field(default_factory=FontSettings)
 
     @validator('extracurricular')
@@ -131,11 +145,30 @@ class CVData(BaseModel):
         # Filter out empty activities
         return [activity.strip() for activity in v if activity and activity.strip()]
 
-    @validator('technical_skills')
-    def validate_technical_skills(cls, v):
-        # Filter out empty skills
-        non_empty_skills = [skill.strip() for skill in v if skill and skill.strip()]
-        return non_empty_skills
+    # Legacy support for backward compatibility
+    @classmethod
+    def from_legacy_skills(cls, **data):
+        """Create CVData from legacy format with simple technical_skills list"""
+        if 'technical_skills' in data and isinstance(data['technical_skills'], list):
+            # Convert legacy skills list to categorized format
+            legacy_skills = data['technical_skills']
+            categorized_skills = TechnicalSkillsCategory()
+            
+            # Simple categorization logic - can be improved
+            for skill in legacy_skills:
+                skill_lower = skill.lower()
+                if any(lang in skill_lower for lang in ['python', 'java', 'javascript', 'c++', 'c#', 'ruby', 'php', 'go', 'rust', 'swift', 'kotlin']):
+                    categorized_skills.programming_languages.append(skill)
+                elif any(tech in skill_lower for tech in ['html', 'css', 'react', 'angular', 'vue', 'node', 'express', 'django', 'flask', 'spring', 'bootstrap', 'jquery']):
+                    categorized_skills.web_technologies.append(skill)
+                elif any(db in skill_lower for db in ['mysql', 'postgresql', 'mongodb', 'sqlite', 'oracle', 'sql server', 'redis', 'elasticsearch']):
+                    categorized_skills.database_management.append(skill)
+                else:
+                    categorized_skills.tools_and_technologies.append(skill)
+            
+            data['technical_skills'] = categorized_skills
+        
+        return cls(**data)
 
 
 class CVMetadata(BaseModel):
@@ -186,8 +219,8 @@ class CVGenerateRequest(BaseModel):
     # Extracurricular Activities (optional, up to 5)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
     
-    # Technical Skills (optional, up to 10)
-    technical_skills: List[str] = Field(default_factory=list, max_items=10)
+    # Technical Skills (categorized)
+    technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
 
     def to_cv_data(self) -> CVData:
         """Convert form request to structured CV data"""

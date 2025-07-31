@@ -99,14 +99,32 @@
     "Volunteer teaching - Taught programming to underprivileged children on weekends",
     "Chess - Ranked in top 100 players in state-level tournaments"
   ],
-  "technical_skills": [
-    "Python",
-    "JavaScript",
-    "React",
-    "Node.js",
-    "Machine Learning",
-    "Docker",
-    "Kubernetes",
-    "AWS"
-  ]
+  "technical_skills": {
+    "programming_languages": [
+      "Python",
+      "Java",
+      "JavaScript"
+    ],
+    "web_technologies": [
+      "HTML",
+      "CSS",
+      "Flask",
+      "ReactJS",
+      "NodeJS",
+      "Spring Boot"
+    ],
+    "database_management": [
+      "MongoDB",
+      "MySQL",
+      "PostgreSQL"
+    ],
+    "tools_and_technologies": [
+      "Linux",
+      "NLTK",
+      "Pandas",
+      "Git",
+      "GitHub",
+      "Beautiful Soup"
+    ]
+  }
 }

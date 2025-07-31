@@ -98,6 +98,20 @@
             font-weight: normal;
             font-style: italic;
         }
+        
+        .skills-categorized {
+            margin-top: 10px;
+        }
+        
+        .skill-category {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .skill-category strong {
+            color: #000000;
+            font-weight: bold;
+        }
         .extracurricular-section ul {
             margin-top: 10px;
             margin-bottom: 10px;
@@ -310,12 +324,37 @@
     </div>
     {% endif %}
 
-    {% set valid_skills = technical_skills|select|list %}
-    {% if valid_skills %}
+    {% if technical_skills %}
     <div class="section">
         <div class="section-title">Technical Skills</div>
-        <div class="skills">
-            {% for skill in valid_skills %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+        <div class="skills-categorized">
+            {% if technical_skills.programming_languages %}
+            <div class="skill-category">
+                <strong>Programming Languages:</strong> 
+                {% for skill in technical_skills.programming_languages %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+            {% endif %}
+            
+            {% if technical_skills.web_technologies %}
+            <div class="skill-category">
+                <strong>Web Technologies / Frameworks:</strong> 
+                {% for skill in technical_skills.web_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+            {% endif %}
+            
+            {% if technical_skills.database_management %}
+            <div class="skill-category">
+                <strong>Database Management:</strong> 
+                {% for skill in technical_skills.database_management %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+            {% endif %}
+            
+            {% if technical_skills.tools_and_technologies %}
+            <div class="skill-category">
+                <strong>Tools and Technologies:</strong> 
+                {% for skill in technical_skills.tools_and_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endif %}

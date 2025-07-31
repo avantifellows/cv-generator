@@ -531,10 +531,57 @@ def parse_dynamic_form_data(form_data) -> dict:
     extracurricular = form_data.getlist("extracurricular[]")
     structured_data["extracurricular"] = [activity.strip() for activity in extracurricular 
                                          if activity.strip() and activity.strip() not in ['', '—', 'notfilled@email.com']]
+    
     # Parse technical skills
     technical_skills = form_data.getlist("technical_skills[]")
     structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
                                          if skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']]
+    
+    # Parse categorized technical skills
+    categorized_skills = {
+        "programming_languages": [],
+        "web_technologies": [],
+        "database_management": [],
+        "tools_and_technologies": []
+    }
+    
+    # Extract skills by category (only one field per category)
+    # Programming Languages
+    skill = form_data.get("tech_prog_1", "")
+    if skill and skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']:
+        # Split by comma and clean up each skill
+        skills = [s.strip() for s in skill.split(',') if s.strip()]
+        categorized_skills["programming_languages"].extend(skills)
+    
+    # Web Technologies
+    skill = form_data.get("tech_web_1", "")
+    if skill and skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']:
+        # Split by comma and clean up each skill
+        skills = [s.strip() for s in skill.split(',') if s.strip()]
+        categorized_skills["web_technologies"].extend(skills)
+    
+    # Database Management
+    skill = form_data.get("tech_db_1", "")
+    if skill and skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']:
+        # Split by comma and clean up each skill
+        skills = [s.strip() for s in skill.split(',') if s.strip()]
+        categorized_skills["database_management"].extend(skills)
+    
+    # Tools and Technologies
+    skill = form_data.get("tech_tools_1", "")
+    if skill and skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']:
+        # Split by comma and clean up each skill
+        skills = [s.strip() for s in skill.split(',') if s.strip()]
+        categorized_skills["tools_and_technologies"].extend(skills)
+    
+    # If we have categorized skills, use them; otherwise, use the legacy format
+    if any(categorized_skills.values()):
+        structured_data["technical_skills"] = categorized_skills
+    else:
+        # Fall back to legacy format if no categorized skills found
+        technical_skills = form_data.getlist("technical_skills[]")
+        structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
+                                             if skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']]
     
     # Parse font settings
     logger.info(f"[DEBUG] Font settings from form_data:")

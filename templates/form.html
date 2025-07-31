@@ -198,6 +198,29 @@
         .btn-danger:hover {
             background-color: #c53030;
         }
+        
+        .skill-category {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f8f9fa;
+        }
+        
+        .skill-category h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #4a5568;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .skill-category-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+            font-size: 14px;
+        }
         .btn-primary {
             background-color: #4299e1;
             color: white;
@@ -721,14 +744,37 @@
                     <h2>Technical Skills</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('skills-section')">Remove Section</button>
                 </div>
-                <div id="skills-container">
-                    <div class="skill-entry">
-                        <input type="text" name="technical_skills[]" placeholder="e.g. Python, Java, SQL">
-                        <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
+                
+                <!-- Programming Languages -->
+                <div class="skill-category">
+                    <div class="skill-category-label">Programming Languages:</div>
+                    <div id="prog-languages-container">
+                        <input type="text" name="tech_prog_1" placeholder="e.g. Python, Java, JavaScript" style="width: 100%; margin-bottom: 8px;">
                     </div>
                 </div>
-                <div class="add-button-container">
-                    <button type="button" class="btn-secondary" onclick="addSkillEntry()">+ Add Another Skill</button>
+
+                <!-- Web Technologies -->
+                <div class="skill-category">
+                    <div class="skill-category-label">Web Technologies / Frameworks:</div>
+                    <div id="web-tech-container">
+                        <input type="text" name="tech_web_1" placeholder="e.g. HTML, CSS, React, Node.js" style="width: 100%; margin-bottom: 8px;">
+                    </div>
+                </div>
+
+                <!-- Database Management -->
+                <div class="skill-category">
+                    <div class="skill-category-label">Database Management:</div>
+                    <div id="db-container">
+                        <input type="text" name="tech_db_1" placeholder="e.g. MySQL, MongoDB, PostgreSQL" style="width: 100%; margin-bottom: 8px;">
+                    </div>
+                </div>
+
+                <!-- Tools and Technologies -->
+                <div class="skill-category">
+                    <div class="skill-category-label">Tools and Technologies:</div>
+                    <div id="tools-container">
+                        <input type="text" name="tech_tools_1" placeholder="e.g. Git, Docker, AWS, Linux" style="width: 100%; margin-bottom: 8px;">
+                    </div>
                 </div>
             </div>
 
@@ -1048,12 +1094,15 @@
         }
 
         // Skill functions
-        function addSkillEntry() {
-            const container = document.getElementById('skills-container');
+        function addSkillEntry(containerId, namePrefix) {
+            const container = document.getElementById(containerId);
+            const existingEntries = container.querySelectorAll('.skill-entry');
+            const nextIndex = existingEntries.length + 1;
+            
             const newEntry = document.createElement('div');
             newEntry.className = 'skill-entry';
             newEntry.innerHTML = `
-                <input type="text" name="technical_skills[]" placeholder="Skill">
+                <input type="text" name="${namePrefix}_${nextIndex}" placeholder="Skill">
                 <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
             `;
             container.appendChild(newEntry);
@@ -1383,20 +1432,48 @@
                 });
             }
             
-            // Technical Skills
-            if (formData.technical_skills && formData.technical_skills.length > 0) {
-                const skillContainer = document.getElementById('skills-container');
-                skillContainer.innerHTML = '';
-                
-                formData.technical_skills.forEach((skill, index) => {
-                    const entry = document.createElement('div');
-                    entry.className = 'skill-entry';
-                    entry.innerHTML = `
-                        <input type="text" name="technical_skills[]" placeholder="Skill" value="${skill}">
-                        <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
-                    `;
-                    skillContainer.appendChild(entry);
-                });
+            // Technical Skills - handle both legacy and new categorized format
+            if (formData.technical_skills) {
+                if (Array.isArray(formData.technical_skills)) {
+                    // Legacy format - convert to categorized
+                    const skillContainer = document.getElementById('skills-container');
+                    skillContainer.innerHTML = '';
+                    
+                    formData.technical_skills.forEach((skill, index) => {
+                        const entry = document.createElement('div');
+                        entry.className = 'skill-entry';
+                        entry.innerHTML = `
+                            <input type="text" name="technical_skills[]" placeholder="Skill" value="${skill}">
+                            <button type="button" class="btn-danger" onclick="removeSkill(this)">Remove</button>
+                        `;
+                        skillContainer.appendChild(entry);
+                    });
+                } else {
+                    // New categorized format - populate the single input fields
+                    // Programming Languages
+                    if (formData.technical_skills.programming_languages && formData.technical_skills.programming_languages.length > 0) {
+                        const input = document.querySelector(`input[name="tech_prog_1"]`);
+                        if (input) input.value = formData.technical_skills.programming_languages.join(', ');
+                    }
+                    
+                    // Web Technologies
+                    if (formData.technical_skills.web_technologies && formData.technical_skills.web_technologies.length > 0) {
+                        const input = document.querySelector(`input[name="tech_web_1"]`);
+                        if (input) input.value = formData.technical_skills.web_technologies.join(', ');
+                    }
+                    
+                    // Database Management
+                    if (formData.technical_skills.database_management && formData.technical_skills.database_management.length > 0) {
+                        const input = document.querySelector(`input[name="tech_db_1"]`);
+                        if (input) input.value = formData.technical_skills.database_management.join(', ');
+                    }
+                    
+                    // Tools and Technologies
+                    if (formData.technical_skills.tools_and_technologies && formData.technical_skills.tools_and_technologies.length > 0) {
+                        const input = document.querySelector(`input[name="tech_tools_1"]`);
+                        if (input) input.value = formData.technical_skills.tools_and_technologies.join(', ');
+                    }
+                }
             }
         }
 {% endif %}
@@ -1454,7 +1531,21 @@
         const hasProjects = projectEntries.some(entry => entry.title || entry.type);
         const hasPositions = positionEntries.some(entry => entry.club || entry.role);
         const hasActivities = activities.length > 0;
-        const hasSkills = skills.length > 0;
+        // Check for categorized skills in single input fields
+        let hasCategorizedSkills = false;
+        const progInput = document.querySelector(`input[name="tech_prog_1"]`);
+        const webInput = document.querySelector(`input[name="tech_web_1"]`);
+        const dbInput = document.querySelector(`input[name="tech_db_1"]`);
+        const toolInput = document.querySelector(`input[name="tech_tools_1"]`);
+        
+        if ((progInput && progInput.value.trim()) || 
+            (webInput && webInput.value.trim()) || 
+            (dbInput && dbInput.value.trim()) || 
+            (toolInput && toolInput.value.trim())) {
+            hasCategorizedSkills = true;
+        }
+        
+        const hasSkills = skills.length > 0 || hasCategorizedSkills;
         
         // If no data is filled, show empty page
         if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasWorkExperience && !hasAchievements && 
@@ -1779,8 +1870,51 @@
                 <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
             </div> `;
        
-
-            html += `<div style="line-height:1.6;">${skills.filter(s => s.trim()).join(', ')}</div></div>`;
+            // Get categorized skills (only one field per category)
+            const progSkills = [];
+            const webSkills = [];
+            const dbSkills = [];
+            const toolSkills = [];
+            
+            // Get values from single input fields
+            const progInput = document.querySelector(`input[name="tech_prog_1"]`);
+            const webInput = document.querySelector(`input[name="tech_web_1"]`);
+            const dbInput = document.querySelector(`input[name="tech_db_1"]`);
+            const toolInput = document.querySelector(`input[name="tech_tools_1"]`);
+            
+            if (progInput && progInput.value.trim()) progSkills.push(progInput.value.trim());
+            if (webInput && webInput.value.trim()) webSkills.push(webInput.value.trim());
+            if (dbInput && dbInput.value.trim()) dbSkills.push(dbInput.value.trim());
+            if (toolInput && toolInput.value.trim()) toolSkills.push(toolInput.value.trim());
+            
+            // Check if we have categorized skills
+            if (progSkills.length > 0 || webSkills.length > 0 || dbSkills.length > 0 || toolSkills.length > 0) {
+                // New categorized format
+                html += `<div style="line-height:1.6;">`;
+                
+                if (progSkills.length > 0) {
+                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Programming Languages:</strong> ${progSkills.filter(s => s.trim()).join(', ')}</div>`;
+                }
+                
+                if (webSkills.length > 0) {
+                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Web Technologies / Frameworks:</strong> ${webSkills.filter(s => s.trim()).join(', ')}</div>`;
+                }
+                
+                if (dbSkills.length > 0) {
+                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Database Management:</strong> ${dbSkills.filter(s => s.trim()).join(', ')}</div>`;
+                }
+                
+                if (toolSkills.length > 0) {
+                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Tools and Technologies:</strong> ${toolSkills.filter(s => s.trim()).join(', ')}</div>`;
+                }
+                
+                html += `</div>`;
+            } else {
+                // Legacy format
+                html += `<div style="line-height:1.6;">${skills.filter(s => s.trim()).join(', ')}</div>`;
+            }
+            
+            html += `</div>`;
         }
 
         html += '</div>';
