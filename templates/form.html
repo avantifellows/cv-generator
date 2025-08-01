@@ -409,6 +409,15 @@
                             </select>
                         </div>
                         
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Line Height:</label>
+                            <select id="lineHeight" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                                <option value="1.0">1.0</option>
+                                <option value="1.1" selected>1.1</option>
+                                <option value="1.3">1.3</option>
+                                <option value="1.5">1.5</option>
+                            </select>
+                        </div>
 
                     </div>
                 </div>
@@ -1001,6 +1010,10 @@
                         <input type="text" name="projects[${projectCount}][duration]">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label>Repo Link</label>
+                    <input type="text" name="projects[${projectCount}][repo_link]" placeholder="e.g. https://github.com/user/repo">
+                </div>
                 <div class="points-container">
                     <label>Key Points</label>
                     <div class="project-points" data-index="${projectCount}">
@@ -1355,6 +1368,10 @@
                                 <input type="text" name="projects[${index}][duration]" value="${proj.duration || ''}">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label>Repo Link</label>
+                            <input type="text" name="projects[${index}][repo_link]" value="${proj.repo_link || ''}" placeholder="e.g. https://github.com/user/repo">
+                        </div>
                         <div class="points-container">
                             <label>Key Points</label>
                             <div class="project-points" data-index="${index}">
@@ -1557,7 +1574,7 @@
         // Get current font settings
         const fontSettings = getFontSettings();
         
-        let html = `<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; font-size: ${fontSettings.bodyFontSize}; color: #000000;">`;
+        let html = `<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; font-size: ${fontSettings.bodyFontSize}; line-height: ${fontSettings.lineHeight}; color: #000000;">`;
         
         // Get institute from first education entry for header
         const firstEducation = educationEntries.length > 0 ? educationEntries[0] : {};
@@ -2090,7 +2107,8 @@
         titleFontSize: '12px',
         titleFontColor: '#4C5196',
         bodyFontSize: '12px',
-        bodyFontColor: '#000000'
+        bodyFontColor: '#000000',
+        lineHeight: '1.1'
     };
     
     // Function to apply font settings
@@ -2099,7 +2117,8 @@
             titleFontSize: document.getElementById('titleFontSize').value,
             titleFontColor: document.getElementById('titleFontColor').value,
             bodyFontSize: document.getElementById('bodyFontSize').value,
-            bodyFontColor: '#000000' // Always black for body text
+            bodyFontColor: '#000000', // Always black for body text
+            lineHeight: document.getElementById('lineHeight').value
         };
         
         // Update hidden inputs with new font settings
@@ -2165,7 +2184,8 @@
             titleFontSize: document.getElementById('titleFontSize').value,
             titleFontColor: document.getElementById('titleFontColor').value,
             bodyFontSize: document.getElementById('bodyFontSize').value,
-            bodyFontColor: '#000000' // Always black for body text
+            bodyFontColor: '#000000', // Always black for body text
+            lineHeight: document.getElementById('lineHeight').value
         };
     }
     
@@ -2177,7 +2197,7 @@
         const fontSettings = getFontSettings();
         
         // Remove existing font settings inputs
-        const existingInputs = form.querySelectorAll('input[name^="title_font_"], input[name^="body_font_"]');
+        const existingInputs = form.querySelectorAll('input[name^="title_font_"], input[name^="body_font_"], input[name^="line_height"]');
         existingInputs.forEach(input => input.remove());
         
         // Add font settings as hidden inputs
@@ -2204,6 +2224,12 @@
         bodyColorInput.name = 'body_font_color';
         bodyColorInput.value = '#000000'; // Always black for body text
         form.appendChild(bodyColorInput);
+        
+        const lineHeightInput = document.createElement('input');
+        lineHeightInput.type = 'hidden';
+        lineHeightInput.name = 'line_height';
+        lineHeightInput.value = fontSettings.lineHeight;
+        form.appendChild(lineHeightInput);
     }
     
     // Initialize font settings inputs on page load

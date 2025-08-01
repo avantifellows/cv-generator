@@ -145,6 +145,7 @@ class FontSettings(BaseModel):
     title_font_color: str = Field(default="#4C5196")
     body_font_size: str = Field(default="12px")
     body_font_color: str = Field(default="#000000")
+    line_height: str = Field(default="1.1")
 
 
 class CVData(BaseModel):

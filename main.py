@@ -606,14 +606,17 @@ def parse_dynamic_form_data(form_data) -> dict:
         skills = [s.strip() for s in skill.split(',') if s.strip()]
         categorized_skills["tools_and_technologies"].extend(skills)
     
-    # If we have categorized skills, use them; otherwise, use the legacy format
+    # If we have categorized skills, use them; otherwise, create empty TechnicalSkillsCategory
     if any(categorized_skills.values()):
         structured_data["technical_skills"] = categorized_skills
     else:
-        # Fall back to legacy format if no categorized skills found
-        technical_skills = form_data.getlist("technical_skills[]")
-        structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
-                                             if skill.strip() and skill.strip() not in ['', '—', 'notfilled@email.com']]
+        # Create empty TechnicalSkillsCategory object when no skills are provided
+        structured_data["technical_skills"] = {
+            "programming_languages": [],
+            "web_technologies": [],
+            "database_management": [],
+            "tools_and_technologies": []
+        }
     
     # Parse font settings
     logger.info(f"[DEBUG] Font settings from form_data:")
@@ -621,12 +624,14 @@ def parse_dynamic_form_data(form_data) -> dict:
     logger.info(f"  - title_font_color: {form_data.get('title_font_color', 'NOT FOUND')}")
     logger.info(f"  - body_font_size: {form_data.get('body_font_size', 'NOT FOUND')}")
     logger.info(f"  - body_font_color: {form_data.get('body_font_color', 'NOT FOUND')}")
+    logger.info(f"  - line_height: {form_data.get('line_height', 'NOT FOUND')}")
     
     structured_data["font_settings"] = {
         "title_font_size": form_data.get("title_font_size", "12px"),
         "title_font_color": form_data.get("title_font_color", "#4C5196"),
         "body_font_size": form_data.get("body_font_size", "12px"),
-        "body_font_color": form_data.get("body_font_color", "#000000")
+        "body_font_color": form_data.get("body_font_color", "#000000"),
+        "line_height": form_data.get("line_height", "1.1")
     }
     
     # After parsing all data
