@@ -47,3 +47,42 @@
 - templates/cv_template_pdf.html (formatting improvements, summary, achievement styling)
 - app/models/cv_data.py (summary field addition)
 - test_data_structured.json (comprehensive test data)
+
+## Task 6 - UX changes
+- Remove the Generate CV button and move the Download PDF button to the top right as well as the bottom of the landing page.
+- Add an expand option at the top right of the live preview window which allows the user to preview the page in full screen mode
+
+## Task 7 - Add reordering functionality and work experience section, UX changes
+- Remove the top pdf download button, make the boxes of the Expand and Download PDF buttons transparent background and change the icon in the Expand button to be the standard image of two outward pointing arrowheads 
+- Make the font size of the main body text in all the sections = 10px in the form.html file for consistency
+- Add a "Work Experience" section with all styling akin to the internships section, also add placeholder text in form.html
+- Give users the option to reorder sections in the form by adding drag and drop functionality  
+
+## Task 8 ✅ COMPLETED - Improve PDF UI
+- ✅ Add a 3px indent before all the section points in the cv_template_pdf.html file
+- ✅ Add the professional summary section to the cv_data.py pydantic model
+- ✅ Add the body_font_size, title_font_size, body_font_color, title_font_color customizations present in form.html to cv_template_pdf.html without changing anything else
+- ✅ Add work experience section which present in form.html to cv_template_pdf.html, style it as body, use the same classes as for internships
+
+## Task 8 Implementation Details:
+1. **PDF Bullet Point Indentation**: Increased padding-left from 15px to 18px for all ul and .experience-points elements
+2. **Professional Summary Color Fix**: Added user-selected body font color to .summary-content class
+3. **Font Customizations**: Verified all font settings (body_font_size, title_font_size, body_font_color, title_font_color) are properly implemented
+4. **Work Experience Section Integration**: 
+   - Added WorkExperienceEntry pydantic model with company, position, duration, and points fields
+   - Updated CVData and CVGenerateRequest models to include work_experience field
+   - Added work_experience parsing logic in main.py parse_dynamic_form_data function
+   - Added work_experience template section in cv_template_pdf.html positioned after education
+   - Updated dynamic form detection to recognize work_experience[] form fields
+5. **Professional Summary Styling**: Fixed color inheritance to use user-selected body font color
+
+## Additional Improvements Made:
+- Fixed summary section color to use user-selected body font color instead of default black
+- Enhanced form data parsing to properly handle work experience entries
+- Maintained consistent styling and validation patterns across all sections
+- Ensured work experience section appears in correct order (after education, before internships)
+
+## Files Modified in Task 8:
+- templates/cv_template_pdf.html (bullet point indentation, summary color, work experience section)
+- app/models/cv_data.py (WorkExperienceEntry class, CVData and CVGenerateRequest updates)
+- main.py (work experience parsing logic, dynamic form detection)

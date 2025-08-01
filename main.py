@@ -274,7 +274,7 @@ async def generate_cv(request: Request):
         is_pdf_download = form_data.get('download_pdf') == 'true'
         
         # Check if this is dynamic form data (has array fields)
-        is_dynamic = any(key.startswith(('education[', 'achievements[', 'internships[', 'projects[', 'positions[')) 
+        is_dynamic = any(key.startswith(('education[', 'work_experience[', 'achievements[', 'internships[', 'projects[', 'positions[')) 
                         for key in form_data.keys())
         logger.info(f"[DEBUG] is_dynamic: {is_dynamic}")
         if is_dynamic:
@@ -369,6 +369,7 @@ def parse_dynamic_form_data(form_data) -> dict:
     structured_data = {
         "personal_info": {},
         "education": [],
+        "work_experience": [],
         "achievements": [],
         "internships": [],
         "projects": [],
@@ -466,6 +467,37 @@ def parse_dynamic_form_data(form_data) -> dict:
                 'points': entry.get('points', [])
             }
             structured_data["internships"].append(entry)
+    
+    # Parse work experience
+    work_experience_data = {}
+    for key in form_data.keys():
+        if key.startswith("work_experience["):
+            parts = key.split('][')
+            index = int(parts[0].split('[')[1])
+            if index not in work_experience_data:
+                work_experience_data[index] = {"points": []}
+            if key.endswith("[points][]"):
+                values = form_data.getlist(key)
+                work_experience_data[index]["points"].extend(values)
+            else:
+                field = parts[1].rstrip(']')
+                work_experience_data[index][field] = form_data[key]
+    for i in sorted(work_experience_data.keys()):
+        # Only add if at least one field is filled and not just default values
+        entry = work_experience_data[i]
+        filled_fields = [field for field in ['company', 'position', 'duration'] 
+                        if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
+        if filled_fields:
+            # Filter out empty points
+            valid_points = [point.strip() for point in entry.get("points", []) 
+                          if point.strip() and point.strip() not in ['', '—']]
+            entry = {
+                'company': entry.get('company', '').strip() or '—',
+                'position': entry.get('position', '').strip() or '—',
+                'duration': entry.get('duration', '').strip() or '—',
+                'points': valid_points
+            }
+            structured_data["work_experience"].append(entry)
     
     # Parse projects
     project_data = {}

@@ -64,6 +64,26 @@ class InternshipEntry(BaseModel):
         return non_empty_points
 
 
+class WorkExperienceEntry(BaseModel):
+    """Single work experience entry"""
+    company: str = Field(default="—", min_length=1, max_length=100)
+    position: str = Field(default="—", min_length=1, max_length=100)
+    duration: str = Field(default="—", min_length=1, max_length=50)
+    points: List[str] = Field(default_factory=list, max_items=5)
+
+    @validator('company', 'position', 'duration')
+    def validate_not_empty(cls, v):
+        if not v or not v.strip():
+            return "—"
+        return v.strip()
+
+    @validator('points')
+    def validate_points(cls, v):
+        # Filter out empty points
+        non_empty_points = [point.strip() for point in v if point and point.strip()]
+        return non_empty_points
+
+
 class ProjectEntry(BaseModel):
     """Single project entry"""
     title: str = Field(default="—", min_length=1, max_length=100)
@@ -132,6 +152,7 @@ class CVData(BaseModel):
     personal_info: PersonalInfo
     summary: Optional[str] = Field(default="", max_length=1000)
     education: List[EducationEntry] = Field(default_factory=list, max_items=5)
+    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=3)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
     internships: List[InternshipEntry] = Field(default_factory=list, max_items=3)
     projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
@@ -204,6 +225,9 @@ class CVGenerateRequest(BaseModel):
     # Education (support up to 5 entries)
     education_entries: List[EducationEntry] = Field(default_factory=list, max_items=5)
     
+    # Work Experience (optional, up to 3)
+    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=3)
+    
     # Achievements (optional, up to 5 entries)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
     
@@ -235,6 +259,7 @@ class CVGenerateRequest(BaseModel):
                 linkedin=self.linkedin
             ),
             education=self.education_entries,
+            work_experience=self.work_experience,
             achievements=self.achievements,
             internships=self.internships,
             projects=self.projects,

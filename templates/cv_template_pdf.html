@@ -15,6 +15,16 @@
             font-size: {{font_settings.body_font_size}};
         }
         
+        /* .education-separator {
+            margin: 0 2px;
+        } */
+        
+        .summary-content {
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        
         .header {
             text-align: center;
             padding-bottom: 3px;
@@ -141,17 +151,18 @@
         .achievement-header {
             display: block;
             overflow: hidden;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .achievement-desc ul{
             font-weight: normal;
             margin-top: 4px;
             margin-bottom: 4px;
+            padding-left: 4px;
         }
 
         .achievement-desc ul li {
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         
         .achievement-year {
@@ -165,11 +176,12 @@
         .extracurricular-section ul {
             margin-top: 4px;
             margin-bottom: 4px;
+            padding-left: 40px;
         }
         .extracurricular-section ul li {
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
-        .experience-points li {
+        .experience-points ul li {
             margin-bottom: 2px;
         }
         .skills {
@@ -178,8 +190,8 @@
         .clear {
             clear: both;
         }
-        ul, .experience-points {
-            padding-left: 15px;
+        .experience-points ul{
+            padding-left: 4px;
             margin-top: 4px;
             margin-bottom: 4px;
         }
@@ -198,21 +210,6 @@
             box-sizing: border-box;
         }
         
-        /* Blue line separator */
-        .education-separator {
-            border-top: 2px solid #4C5196 !important;
-            margin-bottom: 10px !important;
-            opacity: 0.8 !important;
-            width: 100% !important;
-            height: 0 !important;
-        }
-        
-        .summary-content {
-            font-size: 12px;
-            line-height: 1.5;
-            text-align: justify;
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
@@ -266,7 +263,7 @@
         {% endif %}
 
         <div class="section">
-            <div class="education-separator"></div>
+            <div class="section-title-line"></div>
             <table class="education-table">
                 <thead>
                     <tr>
@@ -293,20 +290,26 @@
             </table>
         </div>
 
-        {% set valid_achievements = achievements|selectattr('description')|list %}
-        {% if valid_achievements %}
+        {% set valid_work_experience = work_experience|selectattr('company')|list %}
+        {% if valid_work_experience %}
         <div class="section">
-            <div class="section-title"><span class="section-title-text">Scholastic Achievements</span><span class="section-title-line"></span></div>
-            <ul>
-                {% for ach in valid_achievements %}
-                <li>
-                    <div class="achievement-header">
-                        <span class="achievement-desc">{{ach.description}}</span>
-                        <span class="achievement-year">({{ach.year}})</span>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="section-title"><span class="section-title-text">Work Experience</span><span class="section-title-line"></span></div>
+            {% for work in valid_work_experience %}
+            <div class="experience-item">
+                <div class="experience-header">
+                    <span class="main-entity">{{work.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{work.position}}</span><span class="experience-duration">({{work.duration}})</span>
+                </div>
+                <div class="clear"></div>
+                {% set valid_points = work.points|select|list %}
+                {% if valid_points %}
+                <ul class="experience-points">
+                    {% for point in valid_points %}
+                    <li>{{point}}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
         </div>
         {% endif %}
 
@@ -330,6 +333,23 @@
                 {% endif %}
             </div>
             {% endfor %}
+        </div>
+        {% endif %}
+
+        {% set valid_achievements = achievements|selectattr('description')|list %}
+        {% if valid_achievements %}
+        <div class="section">
+            <div class="section-title"><span class="section-title-text">Scholastic Achievements</span><span class="section-title-line"></span></div>
+            <ul>
+                {% for ach in valid_achievements %}
+                <li>
+                    <div class="achievement-header">
+                        <span class="achievement-desc">{{ach.description}}</span>
+                        <span class="achievement-year">({{ach.year}})</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
         {% endif %}
 
@@ -389,7 +409,7 @@
         {% if valid_extracurricular %}
         <div class="section extracurricular-section">
             <div class="section-title"><span class="section-title-text">Extra Curricular Activities</span><span class="section-title-line"></span></div>
-            <ul>
+            <ul class = "extracurricular-section">
                 {% for activity in valid_extracurricular %}
                 <li>{{activity}}</li>
                 {% endfor %}
