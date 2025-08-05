@@ -44,6 +44,30 @@ class AchievementEntry(BaseModel):
         return v.strip()
 
 
+class CertificationEntry(BaseModel):
+    """Single certification entry"""
+    description: str = Field(default="—", min_length=1, max_length=500)
+    year: str = Field(default="—", min_length=1, max_length=10)
+
+    @validator('description', 'year')
+    def validate_not_empty(cls, v):
+        if not v or not v.strip():
+            return "—"
+        return v.strip()
+
+
+class PublicationEntry(BaseModel):
+    """Single publication entry"""
+    description: str = Field(default="—", min_length=1, max_length=500)
+    year: str = Field(default="—", min_length=1, max_length=10)
+
+    @validator('description', 'year')
+    def validate_not_empty(cls, v):
+        if not v or not v.strip():
+            return "—"
+        return v.strip()
+
+
 class InternshipEntry(BaseModel):
     """Single internship entry"""
     company: str = Field(default="—", min_length=1, max_length=100)
@@ -155,6 +179,8 @@ class CVData(BaseModel):
     education: List[EducationEntry] = Field(default_factory=list, max_items=5)
     work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=3)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
+    certifications: List[CertificationEntry] = Field(default_factory=list, max_items=5)
+    publications: List[PublicationEntry] = Field(default_factory=list, max_items=5)
     internships: List[InternshipEntry] = Field(default_factory=list, max_items=3)
     projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
     positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
@@ -231,6 +257,12 @@ class CVGenerateRequest(BaseModel):
     
     # Achievements (optional, up to 5 entries)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
+    
+    # Certifications (optional, up to 5 entries)
+    certifications: List[CertificationEntry] = Field(default_factory=list, max_items=5)
+    
+    # Publications (optional, up to 5 entries)
+    publications: List[PublicationEntry] = Field(default_factory=list, max_items=5)
     
     # Internships (optional, up to 3)
     internships: List[InternshipEntry] = Field(default_factory=list, max_items=3)

@@ -640,6 +640,58 @@
                 </div>
             </div>
 
+            <!-- Certifications -->
+            <div class="section" id="certifications-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Certifications</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('certifications-section')">Remove Section</button>
+                </div>
+                <div id="certifications-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Certification 1</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="certifications[0][description]" placeholder="e.g. AWS Certified Solutions Architect, Google Cloud Professional"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="certifications[0][year]" placeholder="e.g. 2023">
+                        </div>
+                    </div>
+                </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addCertificationEntry()">+ Add Another Certification</button>
+                </div>
+            </div>
+
+            <!-- Publications -->
+            <div class="section" id="publications-section">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2>Publications</h2>
+                    <button type="button" class="btn-danger" onclick="removeSection('publications-section')">Remove Section</button>
+                </div>
+                <div id="publications-container">
+                    <div class="dynamic-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Publication 1</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="publications[0][description]" placeholder="e.g. Research paper on Machine Learning published in IEEE Conference"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="publications[0][year]" placeholder="e.g. 2023">
+                        </div>
+                    </div>
+                </div>
+                <div class="add-button-container">
+                    <button type="button" class="btn-secondary" onclick="addPublicationEntry()">+ Add Another Publication</button>
+                </div>
+            </div>
+
             <!-- Projects -->
             <div class="section" id="projects-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -819,6 +871,8 @@
         // Counter for dynamic entries
         let educationCount = 1;
         let achievementCount = 1;
+        let certificationCount = 1;
+        let publicationCount = 1;
         let internshipCount = 1;
         let workExperienceCount = 1;
         let projectCount = 1;
@@ -884,6 +938,52 @@
             `;
             container.appendChild(newEntry);
             achievementCount++;
+        }
+
+        // Certification functions
+        function addCertificationEntry() {
+            const container = document.getElementById('certifications-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Certification ${certificationCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="certifications[${certificationCount}][description]"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" name="certifications[${certificationCount}][year]">
+                </div>
+            `;
+            container.appendChild(newEntry);
+            certificationCount++;
+        }
+
+        // Publication functions
+        function addPublicationEntry() {
+            const container = document.getElementById('publications-container');
+            const newEntry = document.createElement('div');
+            newEntry.className = 'dynamic-entry';
+            newEntry.innerHTML = `
+                <div class="entry-header">
+                    <div class="entry-title">Publication ${publicationCount + 1}</div>
+                    <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="publications[${publicationCount}][description]"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Year</label>
+                    <input type="text" name="publications[${publicationCount}][year]">
+                </div>
+            `;
+            container.appendChild(newEntry);
+            publicationCount++;
         }
 
         // Internship functions
@@ -1285,6 +1385,62 @@
                 });
             }
             
+            // Certifications
+            if (formData.certifications && formData.certifications.length > 0) {
+                const certContainer = document.getElementById('certifications-container');
+                certContainer.innerHTML = '';
+                certificationCount = 0;
+                
+                formData.certifications.forEach((cert, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Certification ${index + 1}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="certifications[${index}][description]">${cert.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="certifications[${index}][year]" value="${cert.year || ''}">
+                        </div>
+                    `;
+                    certContainer.appendChild(entry);
+                    certificationCount++;
+                });
+            }
+            
+            // Publications
+            if (formData.publications && formData.publications.length > 0) {
+                const pubContainer = document.getElementById('publications-container');
+                pubContainer.innerHTML = '';
+                publicationCount = 0;
+                
+                formData.publications.forEach((pub, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'dynamic-entry';
+                    entry.innerHTML = `
+                        <div class="entry-header">
+                            <div class="entry-title">Publication ${index + 1}</div>
+                            ${index > 0 ? '<button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>' : ''}
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="publications[${index}][description]">${pub.description || ''}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="publications[${index}][year]" value="${pub.year || ''}">
+                        </div>
+                    `;
+                    pubContainer.appendChild(entry);
+                    publicationCount++;
+                });
+            }
+            
             // Internships
             if (formData.internships && formData.internships.length > 0) {
                 const internContainer = document.getElementById('internships-container');
@@ -1566,7 +1722,7 @@
         
         // If no data is filled, show empty page
         if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasWorkExperience && !hasAchievements && 
-            !hasInternships && !hasProjects && !hasPositions && !hasActivities && !hasSkills) {
+            !hasCertifications && !hasPublications && !hasInternships && !hasProjects && !hasPositions && !hasActivities && !hasSkills) {
             preview.innerHTML = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #999; font-size: 1.2em;">Empty CV Preview<br><span style="font-size: 0.8em;">Start filling the form to see your CV here</span></div>';
             return;
         }
@@ -1758,6 +1914,64 @@
                     html += `<li style="margin-bottom:8px;">`;
 
                     // Inner div flex inside li, not span
+                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+                    html += `<span>${entry.description}</span>`;
+                    if (entry.year) {
+                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+                    }
+                    html += `</div></li>`;
+                }
+            });
+
+            html += `</ul></div>`;
+        }
+
+        // Certifications - only show if there are actual certifications with content
+        const certificationEntries = getArrayEntries('certifications');
+        const hasCertifications = certificationEntries.some(entry => entry.description);
+        if (hasCertifications) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                        Certifications
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                </div> `;
+           
+            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+
+            certificationEntries.forEach(entry => {
+                if (entry.description) {
+                    html += `<li style="margin-bottom:8px;">`;
+                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+                    html += `<span>${entry.description}</span>`;
+                    if (entry.year) {
+                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+                    }
+                    html += `</div></li>`;
+                }
+            });
+
+            html += `</ul></div>`;
+        }
+
+        // Publications - only show if there are actual publications with content
+        const publicationEntries = getArrayEntries('publications');
+        const hasPublications = publicationEntries.some(entry => entry.description);
+        if (hasPublications) {
+            html += `<div style="margin-bottom:20px;">`;
+            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                        Publications
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                </div> `;
+           
+            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+
+            publicationEntries.forEach(entry => {
+                if (entry.description) {
+                    html += `<li style="margin-bottom:8px;">`;
                     html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
                     html += `<span>${entry.description}</span>`;
                     if (entry.year) {

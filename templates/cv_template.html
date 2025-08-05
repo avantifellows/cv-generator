@@ -237,6 +237,40 @@
     </div>
     {% endif %}
 
+    {% set valid_certifications = certifications|selectattr('description')|list %}
+    {% if valid_certifications %}
+    <div class="section">
+        <div class="section-title">Certifications</div>
+        <ul>
+            {% for cert in valid_certifications %}
+            <li>
+                <div class="achievement-header">
+                    <span class="achievement-desc">{{cert.description}}</span>
+                    <span class="achievement-year">({{cert.year}})</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% set valid_publications = publications|selectattr('description')|list %}
+    {% if valid_publications %}
+    <div class="section">
+        <div class="section-title">Publications</div>
+        <ul>
+            {% for pub in valid_publications %}
+            <li>
+                <div class="achievement-header">
+                    <span class="achievement-desc">{{pub.description}}</span>
+                    <span class="achievement-year">({{pub.year}})</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
     {% set valid_internships = internships|selectattr('company')|list %}
     {% if valid_internships %}
     <div class="section">

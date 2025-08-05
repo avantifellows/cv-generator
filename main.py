@@ -371,6 +371,8 @@ def parse_dynamic_form_data(form_data) -> dict:
         "education": [],
         "work_experience": [],
         "achievements": [],
+        "certifications": [],
+        "publications": [],
         "internships": [],
         "projects": [],
         "positions_of_responsibility": [],
@@ -438,6 +440,49 @@ def parse_dynamic_form_data(form_data) -> dict:
                 'year': entry.get('year', '').strip() or '—'
             }
             structured_data["achievements"].append(entry)
+    
+    # Parse certifications
+    certification_data = {}
+    for key, value in form_data.items():
+        if key.startswith("certifications["):
+            parts = key.split('][')
+            index = int(parts[0].split('[')[1])
+            field = parts[1].rstrip(']')
+            if index not in certification_data:
+                certification_data[index] = {}
+            certification_data[index][field] = value
+    for i in sorted(certification_data.keys()):
+        # Only add if description is filled and not just default values
+        entry = certification_data[i]
+        if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
+            # Ensure all fields have values
+            entry = {
+                'description': entry.get('description', '').strip() or '—',
+                'year': entry.get('year', '').strip() or '—'
+            }
+            structured_data["certifications"].append(entry)
+    
+    # Parse publications
+    publication_data = {}
+    for key, value in form_data.items():
+        if key.startswith("publications["):
+            parts = key.split('][')
+            index = int(parts[0].split('[')[1])
+            field = parts[1].rstrip(']')
+            if index not in publication_data:
+                publication_data[index] = {}
+            publication_data[index][field] = value
+    for i in sorted(publication_data.keys()):
+        # Only add if description is filled and not just default values
+        entry = publication_data[i]
+        if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
+            # Ensure all fields have values
+            entry = {
+                'description': entry.get('description', '').strip() or '—',
+                'year': entry.get('year', '').strip() or '—'
+            }
+            structured_data["publications"].append(entry)
+    
     # Parse internships
     internship_data = {}
     for key in form_data.keys():
