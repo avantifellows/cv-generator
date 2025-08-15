@@ -77,6 +77,55 @@
         button:hover {
             background-color: #3182ce;
         }
+        
+        /* Resume management styles */
+        .resume-info {
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .resume-info input[readonly] {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+        
+        .resume-info button {
+            width: auto;
+            margin: 0 0 0 10px;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        
+        .save-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2196f3;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 1000;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
         .required {
             color: red;
         }
@@ -448,6 +497,10 @@
             </button> -->
         </div>
         <form id="cvForm" method="post" action="/generate">
+            <!-- Hidden fields for resume management -->
+            {% if resume_id %}
+            <input type="hidden" name="resume_id" value="{{ resume_id }}">
+            {% endif %}
             
             <!-- Personal Information -->
             <div class="section">
@@ -851,8 +904,26 @@
                 </div>
             </div>
 
-            <!-- Generate CV button removed as per Task 6 -->
+            <!-- Form Action Buttons -->
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                {% if resume_id %}
+                <button type="button" onclick="copyEditUrl()" style="flex: 1; background-color: #2196f3; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                    📋 Copy Edit URL
+                </button>
+                {% endif %}
+                <button type="button" onclick="shareResume()" style="flex: 1; background-color: #4caf50; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                    📋 Copy Share URL
+                </button>
+            </div>
         </form>
+        
+        <!-- Hidden form for CV generation -->
+        {% if resume_id %}
+        <form id="cvGenerateForm" method="post" action="/generate" style="display: none;">
+            <input type="hidden" name="resume_id" value="{{ resume_id }}">
+            <input type="hidden" name="download_pdf" value="true">
+        </form>
+        {% endif %}
         
         <!-- Bottom Download PDF Button -->
         <div style="text-align: center; margin-top: 30px;">
@@ -880,6 +951,12 @@
     
 
     <script>
+        // Resume management variables
+        let currentResumeId = '{{ resume_id if resume_id else "" }}';
+        let autoSaveTimer = null;
+        let isEditMode = {{ 'true' if is_edit_mode else 'false' }};
+        let isCompleted = {{ 'true' if is_completed else 'false' }};
+        
         // Counter for dynamic entries
         let educationCount = 1;
         let achievementCount = 1;
@@ -2461,7 +2538,183 @@
     // Initialize font settings inputs on page load
     document.addEventListener('DOMContentLoaded', function() {
         updateFontSettingsInputs();
+        
+        // Initialize auto-save if resume ID exists
+        if (currentResumeId) {
+            initializeAutoSave();
+            showResumeInfo();
+        }
+        
+        // Add beforeunload event for URL copy popup
+        window.addEventListener('beforeunload', function(e) {
+            if (currentResumeId && !isCompleted) {
+                e.preventDefault();
+                e.returnValue = 'Please copy the URL to edit later your resume.';
+                return e.returnValue;
+            }
+        });
     });
+    
+    // Auto-save functionality
+    function initializeAutoSave() {
+        const form = document.getElementById('cvForm');
+        if (!form) return;
+        
+        // Auto-save on form changes
+        form.addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(function() {
+                autoSaveDraft();
+            }, 2000); // Save after 2 seconds of inactivity
+        });
+        
+        // Auto-save on form submission
+        form.addEventListener('submit', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveDraft();
+        });
+    }
+    
+    // Auto-save draft data
+    async function autoSaveDraft() {
+        if (!currentResumeId) return Promise.resolve();
+        
+        try {
+            const form = document.getElementById('cvForm');
+            const formData = new FormData(form);
+            
+            const response = await fetch(`/resume/${currentResumeId}/save`, {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (response.ok) {
+                console.log('Draft saved successfully');
+                // Don't show notification for auto-save to avoid spam
+                return Promise.resolve();
+            } else {
+                console.error('Failed to save draft');
+                return Promise.reject('Failed to save draft');
+            }
+        } catch (error) {
+            console.error('Error saving draft:', error);
+            return Promise.reject(error);
+        }
+    }
+    
+    // Show save notification
+    function showSaveNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            font-size: 14px;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+    
+    // Show resume information and controls
+    function showResumeInfo() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+        
+        const resumeInfo = document.createElement('div');
+        resumeInfo.style.cssText = `
+            background-color: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        `;
+        
+        const currentUrl = window.location.href;
+        const shareUrl = currentUrl + '/view';
+        
+        resumeInfo.innerHTML = `
+            <div style="margin-bottom: 10px;">
+                <strong>Resume ID:</strong> ${currentResumeId}
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>Edit URL (Copy this to return later):</strong> 
+                <input type="text" value="${currentUrl}" readonly style="width: 300px; padding: 5px; margin-left: 10px;">
+                <button type="button" onclick="copyToClipboard('${currentUrl}')" style="margin-left: 10px; padding: 5px 10px; background-color: #2196f3; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Copy Edit URL
+                </button>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>Share URL (For others to view only):</strong> 
+                <input type="text" value="${shareUrl}" readonly style="width: 300px; padding: 5px; margin-left: 10px;">
+                <button type="button" onclick="copyToClipboard('${shareUrl}')" style="margin-left: 10px; padding: 5px 10px; background-color: #4caf50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Copy Share URL
+                </button>
+            </div>
+            <div style="font-size: 12px; color: #666;">
+                💡 <strong>Auto-save is enabled!</strong> Your work is automatically saved every 2 seconds.
+                <br>💡 <strong>Tip:</strong> Copy the Edit URL to return to edit this resume later. 
+                Click "Copy Share URL" to copy the shareable link for others to view your resume.
+            </div>
+        `;
+        
+        header.parentNode.insertBefore(resumeInfo, header.nextSibling);
+    }
+    
+    // Copy text to clipboard
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            showSaveNotification('✅ URL copied to clipboard!');
+        }).catch(function(err) {
+            console.error('Could not copy text: ', err);
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showSaveNotification('✅ URL copied to clipboard!');
+        });
+    }
+    
+    // Copy edit URL function
+    function copyEditUrl() {
+        const currentUrl = window.location.href;
+        copyToClipboard(currentUrl);
+    }
+    
+    // Share resume function
+    function shareResume() {
+        if (!currentResumeId) return;
+        
+        // First, save the current draft
+        autoSaveDraft().then(() => {
+            // Then copy the share URL to clipboard
+            const shareUrl = window.location.href + '/view';
+            copyToClipboard(shareUrl);
+        });
+    }
+    
+    // Generate CV function
+    function generateCV() {
+        if (!currentResumeId) return;
+        
+        // Submit the hidden CV generation form
+        const cvForm = document.getElementById('cvGenerateForm');
+        if (cvForm) {
+            cvForm.submit();
+        }
+    }
     </script>
 </body>
 </html>

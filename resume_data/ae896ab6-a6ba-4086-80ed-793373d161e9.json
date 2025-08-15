@@ -1,0 +1,58 @@
+{
+  "resume_id": "ae896ab6-a6ba-4086-80ed-793373d161e9",
+  "created_at": "2025-08-15T07:37:10.488793",
+  "last_modified": "2025-08-15T08:07:58.136592",
+  "data": {
+    "personal_info": {
+      "full_name": "AMIT",
+      "highest_education": "—",
+      "city": "Agra",
+      "phone": "04563726377",
+      "email": "amit@gmail.com",
+      "github": "",
+      "linkedin": ""
+    },
+    "education": [],
+    "work_experience": [],
+    "achievements": [],
+    "certifications": [],
+    "publications": [],
+    "internships": [
+      {
+        "company": "Chapoint",
+        "role": "—",
+        "duration": "—",
+        "points": [
+          ""
+        ]
+      }
+    ],
+    "projects": [],
+    "positions_of_responsibility": [
+      {
+        "club": "Chapoint",
+        "role": "—",
+        "duration": "—",
+        "points": [
+          ""
+        ]
+      }
+    ],
+    "extracurricular": [],
+    "technical_skills": {
+      "programming_languages": [],
+      "web_technologies": [],
+      "database_management": [],
+      "tools_and_technologies": []
+    },
+    "summary": "jksdskfklsd",
+    "font_settings": {
+      "title_font_size": "12px",
+      "title_font_color": "#4C5196",
+      "body_font_size": "12px",
+      "body_font_color": "#000000",
+      "line_height": "1.1"
+    }
+  },
+  "is_completed": false
+}

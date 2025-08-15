@@ -20,6 +20,7 @@ from playwright.async_api import async_playwright
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
 from app.services.cv_service import CVService
+from app.services.resume_storage_service import create_resume_storage_service
 from app.core.exceptions import CVGenerationError, CVNotFoundError, TemplateError, PDFGenerationError
 from app.core.logging import setup_logging, get_logger
 
@@ -50,6 +51,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Initialize services
 cv_service = CVService(base_path=BASE_PATH)
+resume_storage_service = create_resume_storage_service(BASE_PATH, "local")
 
 async def generate_pdf_with_playwright(html_content: str) -> bytes:
     """Generate PDF from HTML using Playwright"""
@@ -114,8 +116,145 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 # API Endpoints
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    """Serve the dynamic CV form"""
-    return templates.TemplateResponse("form.html", {"request": request})
+    """Serve the dynamic CV form - creates new resume with UUID"""
+    try:
+        # Create a new resume with UUID
+        resume_id = resume_storage_service.create_new_resume()
+        
+        # Redirect to the UUID-based URL
+        return RedirectResponse(url=f"/resume/{resume_id}", status_code=302)
+        
+    except Exception as e:
+        logger.error(f"Error creating new resume: {str(e)}")
+        # Fall back to empty form
+        return templates.TemplateResponse("form.html", {"request": request})
+
+
+@app.get("/resume/{resume_id}", response_class=HTMLResponse)
+async def resume_form(request: Request, resume_id: str):
+    """Serve the CV form with existing data or create new if not exists"""
+    try:
+        # Check if resume exists
+        if resume_storage_service.resume_exists(resume_id):
+            # Load existing resume data
+            resume_data = resume_storage_service.get_resume_data(resume_id)
+            if resume_data and resume_data.get("data"):
+                # Resume exists with data - show in edit mode
+                return templates.TemplateResponse("form.html", {
+                    "request": request, 
+                    "form_data": resume_data["data"],
+                    "resume_id": resume_id,
+                    "is_edit_mode": True,
+                    "is_completed": resume_data.get("is_completed", False)
+                })
+            else:
+                # Resume exists but no data - show empty form
+                return templates.TemplateResponse("form.html", {
+                    "request": request,
+                    "resume_id": resume_id,
+                    "is_edit_mode": False,
+                    "is_completed": False
+                })
+        else:
+            # Resume doesn't exist - create new
+            resume_storage_service.create_new_resume(resume_id=resume_id)
+            return templates.TemplateResponse("form.html", {
+                "request": request,
+                "resume_id": resume_id,
+                "is_edit_mode": False,
+                "is_completed": False
+            })
+            
+    except Exception as e:
+        logger.error(f"Error serving resume form for ID {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error serving resume form: {str(e)}")
+
+
+@app.get("/resume/{resume_id}/view", response_class=HTMLResponse)
+async def view_resume(request: Request, resume_id: str):
+    """View-only mode for shared resumes"""
+    try:
+        if not resume_storage_service.resume_exists(resume_id):
+            raise HTTPException(status_code=404, detail="Resume not found")
+        
+        resume_data = resume_storage_service.get_resume_data(resume_id)
+        if not resume_data or not resume_data.get("data"):
+            raise HTTPException(status_code=404, detail="Resume data not found")
+        
+        # Allow viewing even if resume is not completed (for sharing drafts)
+        # No completion check needed
+        
+        # Render the resume in view-only mode
+        cv_data = CVData(**resume_data["data"])
+        
+        return templates.TemplateResponse("cv_template.html", {
+            "request": request,
+            "cv_data": cv_data,
+            **cv_data.dict(),
+            "is_view_only": True,
+            "resume_id": resume_id
+        })
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error viewing resume {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error viewing resume: {str(e)}")
+
+
+@app.post("/resume/{resume_id}/save")
+async def save_resume_draft(request: Request, resume_id: str):
+    """Save resume draft data"""
+    try:
+        # Get form data
+        form_data = await request.form()
+        
+        # Parse the form data into structured format
+        structured_data = parse_dynamic_form_data(form_data)
+        
+        # Save to resume storage service
+        success = resume_storage_service.update_resume_data(
+            resume_id, 
+            structured_data, 
+            is_completed=False
+        )
+        
+        if success:
+            return {"status": "success", "message": "Draft saved successfully"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to save draft")
+            
+    except Exception as e:
+        logger.error(f"Error saving resume draft for ID {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error saving draft: {str(e)}")
+
+
+@app.get("/resume/{resume_id}/share")
+async def get_shareable_link(request: Request, resume_id: str):
+    """Get shareable link for completed resume"""
+    try:
+        if not resume_storage_service.resume_exists(resume_id):
+            raise HTTPException(status_code=404, detail="Resume not found")
+        
+        resume_data = resume_storage_service.get_resume_data(resume_id)
+        if not resume_data:
+            raise HTTPException(status_code=400, detail="Resume not found")
+        
+        # Generate shareable link
+        base_url = str(request.base_url).rstrip('/')
+        shareable_url = f"{base_url}/resume/{resume_id}/view"
+        
+        return {
+            "status": "success",
+            "shareable_url": shareable_url,
+            "resume_id": resume_id
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error generating shareable link for resume {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating shareable link: {str(e)}")
 
 
 
@@ -148,7 +287,10 @@ async def download_test_cv_pdf():
         cv_data = CVData(**structured_data)
         
         # Render PDF-specific HTML template
-        html_content = render_template('cv_template_pdf.html', cv_data.dict())
+        html_content = render_template('cv_template_pdf.html', {
+            "cv_data": cv_data,
+            **cv_data.dict()
+        })
         
         # Generate PDF using Playwright
         try:
@@ -270,6 +412,9 @@ async def generate_cv(request: Request):
         form_data = await request.form()
         logger.info(f"[DEBUG] Raw form_data keys: {list(form_data.keys())}")
         
+        # Get resume_id if present
+        resume_id = form_data.get('resume_id')
+        
         # Check if this is a direct PDF download request
         is_pdf_download = form_data.get('download_pdf') == 'true'
         
@@ -294,7 +439,10 @@ async def generate_cv(request: Request):
             cv_data_dict = cv_data.dict()
             logger.info(f"[DEBUG] Direct PDF download - cv_data_dict keys: {list(cv_data_dict.keys())}")
             logger.info(f"[DEBUG] Direct PDF download - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
-            html_content = render_template('cv_template_pdf.html', cv_data_dict)
+            html_content = render_template('cv_template_pdf.html', {
+                "cv_data": cv_data,
+                **cv_data_dict
+            })
             
             # Generate PDF using Playwright
             try:
@@ -324,7 +472,10 @@ async def generate_cv(request: Request):
         cv_id = cv_service.generate_cv(cv_data)
         
         # Generate HTML file for display
-        html_content = render_template('cv_template.html', cv_data.dict())
+        html_content = render_template('cv_template.html', {
+            "cv_data": cv_data,
+            **cv_data.dict()
+        })
         
         # Save HTML file
         html_file = BASE_PATH / f"generated/{cv_id}.html"
@@ -352,6 +503,20 @@ async def generate_cv(request: Request):
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")
+        
+        # Save data to resume storage service if resume_id is provided
+        if resume_id:
+            try:
+                # Mark resume as completed
+                resume_storage_service.update_resume_data(
+                    resume_id, 
+                    cv_data.dict(), 
+                    is_completed=True
+                )
+                logger.info(f"Resume data saved for ID: {resume_id}")
+            except Exception as e:
+                logger.error(f"Error saving resume data for ID {resume_id}: {str(e)}")
+                # Continue with CV generation even if storage fails
         
         # Return redirect response
         return RedirectResponse(url=f"/cv/{cv_id}", status_code=302)
@@ -730,7 +895,10 @@ async def get_cv_pdf(cv_id: str):
         cv_data_dict = cv_document.data.dict()
         logger.info(f"[DEBUG] PDF generation - cv_data_dict keys: {list(cv_data_dict.keys())}")
         logger.info(f"[DEBUG] PDF generation - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
-        html_content = render_template('cv_template_pdf.html', cv_data_dict)
+        html_content = render_template('cv_template_pdf.html', {
+            "cv_data": cv_document.data,
+            **cv_data_dict
+        })
         
         # Generate PDF using Playwright
         try:
