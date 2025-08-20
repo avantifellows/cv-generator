@@ -16,6 +16,14 @@ from pathlib import Path
 from io import BytesIO
 import pprint
 from playwright.async_api import async_playwright
+from dotenv import load_dotenv
+
+# Load .env file if it exists (for local development only)
+# On server, environment variables are set via systemd service
+env_file_loaded = False
+if os.path.exists(".env"):
+    load_dotenv()
+    env_file_loaded = True
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
@@ -27,6 +35,12 @@ from app.core.logging import setup_logging, get_logger
 # Setup logging
 setup_logging(level="INFO")
 logger = get_logger(__name__)
+
+# Log environment setup
+if env_file_loaded:
+    logger.info("Loaded .env file for local development")
+else:
+    logger.info("No .env file found, using system environment variables")
 
 # Define base path for application files
 BASE_PATH = Path(".")
@@ -51,7 +65,9 @@ templates = Jinja2Templates(directory="templates")
 
 # Initialize services
 cv_service = CVService(base_path=BASE_PATH)
-resume_storage_service = create_resume_storage_service(BASE_PATH, "local")
+# Select storage type via environment (default local)
+storage_type = os.getenv("RESUME_STORAGE_TYPE", "local")
+resume_storage_service = create_resume_storage_service(BASE_PATH, storage_type)
 
 async def generate_pdf_with_playwright(html_content: str) -> bytes:
     """Generate PDF from HTML using Playwright"""

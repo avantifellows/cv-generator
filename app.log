@@ -3379,3 +3379,6 @@ NameError: name 'async_playwright' is not defined
  'work_experience': []}
 2025-08-20 18:35:34,110 - app.services.resume_storage_service - INFO - Retrieved resume data for ID: 3aeb6ea8-af02-4c8d-97a9-9a1278b1ccd0
 2025-08-20 18:35:34,111 - app.services.resume_storage_service - INFO - Updated resume data for ID: 3aeb6ea8-af02-4c8d-97a9-9a1278b1ccd0
+2025-08-20 20:53:42,978 - main - INFO - Loaded .env file for local development
+2025-08-20 20:53:42,987 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-08-20 20:53:43,188 - app.services.resume_storage_service - ERROR - Error saving S3 metadata: An error occurred (NoSuchBucket) when calling the PutObject operation: The specified bucket does not exist
