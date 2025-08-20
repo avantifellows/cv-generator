@@ -108,15 +108,21 @@ jobs:
         # Capture apply output to detect changes
         terraform apply -auto-approve -input=false -lock-timeout=5m | tee apply_output.txt
         
-        # Check if any resources were changed
+        # Check if any resources were actually changed (not just 0 added, 0 changed, 0 destroyed)
         if grep -q "Apply complete! Resources:" apply_output.txt; then
-          # Extract the change summary
           changes_line=$(grep "Apply complete! Resources:" apply_output.txt)
-          echo "apply_changes=true" >> $GITHUB_OUTPUT
-          echo "📦 Terraform made changes: $changes_line"
+          
+          # Check if all counts are 0 (no actual changes)
+          if echo "$changes_line" | grep -q "0 added, 0 changed, 0 destroyed"; then
+            echo "apply_changes=false" >> $GITHUB_OUTPUT
+            echo "✅ No infrastructure changes were needed: $changes_line"
+          else
+            echo "apply_changes=true" >> $GITHUB_OUTPUT
+            echo "📦 Terraform made changes: $changes_line"
+          fi
         else
           echo "apply_changes=false" >> $GITHUB_OUTPUT
-          echo "✅ No infrastructure changes were needed"
+          echo "✅ No terraform apply completion message found"
         fi
         
         # Clean up
