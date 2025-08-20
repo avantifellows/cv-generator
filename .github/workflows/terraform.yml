@@ -91,21 +91,8 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: |
-        set +e  # Don't exit on error
-        terraform plan -input=false -lock-timeout=5m -detailed-exitcode
-        PLAN_EXIT_CODE=$?
-        echo "plan_exit_code=$PLAN_EXIT_CODE" >> $GITHUB_OUTPUT
-        echo "Plan exit code: $PLAN_EXIT_CODE"
-        
-        # Exit codes: 0 = no changes, 1 = error, 2 = changes
-        if [ $PLAN_EXIT_CODE -eq 1 ]; then
-          echo "❌ Terraform plan failed"
-          exit 1
-        elif [ $PLAN_EXIT_CODE -eq 2 ]; then
-          echo "📦 Changes detected - terraform apply will run"
-        else
-          echo "✅ No changes detected - will reboot instance"
-        fi
+        terraform plan -input=false -lock-timeout=5m
+        echo "📋 Terraform plan completed - will always apply to ensure consistency"
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
@@ -113,9 +100,8 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Apply Terraform changes (only if there are changes)
+    # Apply Terraform changes (always apply)
     - name: Terraform Apply
-      if: steps.plan.outputs.plan_exit_code == '2'
       run: terraform apply -auto-approve -input=false -lock-timeout=5m
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
@@ -124,9 +110,9 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Get EC2 instance ID for reboot (only if no changes)
+    # Get EC2 instance ID for post-deployment verification
     - name: Get EC2 Instance ID
-      if: steps.plan.outputs.plan_exit_code == '0'
+      if: always()
       id: instance
       run: |
         set -e
@@ -166,25 +152,17 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Reboot EC2 instance (only if no changes)
-    - name: Reboot EC2 Instance
-      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
-      run: |
-        echo "🔄 Rebooting EC2 instance: ${{ steps.instance.outputs.instance_id }}"
-        aws ec2 reboot-instances --instance-ids ${{ steps.instance.outputs.instance_id }}
-        echo "✅ Reboot command sent successfully"
-
-    # Wait for instance to be running after reboot
+    # Wait for instance to be ready after terraform apply
     - name: Wait for Instance to be Running
-      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
+      if: steps.instance.outputs.instance_id != ''
       run: |
-        echo "⏳ Waiting for instance to complete reboot and become running..."
+        echo "⏳ Waiting for instance to be running..."
         aws ec2 wait instance-running --instance-ids ${{ steps.instance.outputs.instance_id }}
-        echo "✅ Instance is now running after reboot"
+        echo "✅ Instance is now running"
 
     # Wait for instance to pass status checks
     - name: Wait for Instance Status Checks
-      if: steps.plan.outputs.plan_exit_code == '0' && steps.instance.outputs.instance_id != ''
+      if: steps.instance.outputs.instance_id != ''
       run: |
         echo "⏳ Waiting for instance to pass status checks..."
         aws ec2 wait instance-status-ok --instance-ids ${{ steps.instance.outputs.instance_id }}
@@ -193,11 +171,5 @@ jobs:
     # Summary step
     - name: Deployment Summary
       run: |
-        if [ "${{ steps.plan.outputs.plan_exit_code }}" == "2" ]; then
-          echo "📦 Terraform changes were applied successfully"
-        elif [ "${{ steps.plan.outputs.plan_exit_code }}" == "0" ]; then
-          echo "🔄 No terraform changes detected - EC2 instance was rebooted instead"
-        else
-          echo "❌ Terraform plan failed"
-          exit 1
-        fi 
+        echo "📦 Terraform apply completed successfully"
+        echo "🚀 Infrastructure deployment finished" 
