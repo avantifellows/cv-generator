@@ -48,37 +48,32 @@
         return null;
       }
 
-      function clearLocalStorage() {
-        try {
-          localStorage.removeItem('lastResumeId');
-          localStorage.removeItem('lastResumeTimestamp');
-        } catch (e) { /* ignore */ }
-      }
-
-      function checkResumeExists(resumeId, callback) {
-        fetch('/api/resume/' + encodeURIComponent(resumeId) + '/exists')
-          .then(function(response) { return response.json(); })
-          .then(function(data) { callback(data.exists); })
-          .catch(function() { callback(false); });
-      }
-
       var lastId = getLastResume();
       if (lastId) {
-        // Validate that the resume still exists in storage
-        hint.textContent = 'Checking if your recent resume is still available...';
-        checkResumeExists(lastId, function(exists) {
-          if (exists) {
-            continueBtn.disabled = false;
-            hint.textContent = 'Found a recent resume. You can continue or start a new one.';
-          } else {
-            // Resume no longer exists - clear localStorage and redirect to new
-            clearLocalStorage();
-            hint.textContent = 'Your previous resume is no longer available. Creating a new one...';
-            setTimeout(function() {
+        // Validate with server before enabling continue button
+        try {
+          fetch('/api/v1/resume/' + encodeURIComponent(lastId) + '/exists', { cache: 'no-store' })
+            .then(function(resp) { return resp.json(); })
+            .then(function(json) {
+              if (json && json.exists) {
+                continueBtn.disabled = false;
+                hint.textContent = 'Found a recent resume. You can continue or start a new one.';
+              } else {
+                // Clear invalid localStorage and start new
+                try {
+                  localStorage.removeItem('lastResumeId');
+                  localStorage.removeItem('lastResumeTimestamp');
+                } catch (e) { /* ignore */ }
+                window.location.replace('/?new=1');
+              }
+            })
+            .catch(function() {
+              // On network error, fallback to new to avoid a broken continue flow
               window.location.replace('/?new=1');
-            }, 1500);
-          }
-        });
+            });
+        } catch (e) {
+          window.location.replace('/?new=1');
+        }
       } else {
         // If nothing is found, skip UI and go straight to new
         window.location.replace('/?new=1');

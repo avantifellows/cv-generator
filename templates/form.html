@@ -1033,16 +1033,6 @@
             }
             return null;
         }
-
-        function clearLocalStorage() {
-            try {
-                localStorage.removeItem('lastResumeId');
-                localStorage.removeItem('lastResumeTimestamp');
-                console.log('Cleared localStorage due to invalid resume ID');
-            } catch (e) {
-                console.warn('Failed to clear localStorage:', e);
-            }
-        }
         let autoSaveTimer = null;
         let isEditMode = {{ 'true' if is_edit_mode else 'false' }};
         let isCompleted = {{ 'true' if is_completed else 'false' }};
@@ -2631,7 +2621,24 @@
         if (window.location.pathname === '/') {
             const lastId = getLastResumeFromStorage();
             if (lastId) {
-                window.location.href = `/?resume_id=${encodeURIComponent(lastId)}`;
+                // Validate existence before redirecting
+                fetch(`/api/v1/resume/${encodeURIComponent(lastId)}/exists`, { cache: 'no-store' })
+                    .then(r => r.json())
+                    .then(j => {
+                        if (j && j.exists) {
+                            window.location.href = `/?resume_id=${encodeURIComponent(lastId)}`;
+                        } else {
+                            try {
+                                localStorage.removeItem('lastResumeId');
+                                localStorage.removeItem('lastResumeTimestamp');
+                            } catch (e) {}
+                            window.location.href = '/?new=1';
+                        }
+                    })
+                    .catch(() => {
+                        // On error, just start fresh to avoid dead-end
+                        window.location.href = '/?new=1';
+                    });
                 return;
             }
         }
@@ -2643,15 +2650,6 @@
             initializeAutoSave();
             showResumeInfo();
             saveToLocalStorage(currentResumeId);
-            
-            // Check if localStorage has a different UUID - if so, clear it
-            // This handles cases where user manually navigated to a different UUID
-            const storedId = getLastResumeFromStorage();
-            if (storedId && storedId !== currentResumeId) {
-                console.log('Current resume ID differs from stored ID, updating localStorage');
-                // Don't clear completely, just update with current ID
-                saveToLocalStorage(currentResumeId);
-            }
         }
 
         // Add beforeunload event for URL copy popup

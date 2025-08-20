@@ -235,15 +235,16 @@ async def view_resume(request: Request, resume_id: str):
         raise HTTPException(status_code=500, detail=f"Error viewing resume: {str(e)}")
 
 
-@app.get("/api/resume/{resume_id}/exists")
-async def check_resume_exists(resume_id: str):
-    """Check if a resume exists in storage"""
+@app.get("/api/v1/resume/{resume_id}/exists")
+async def resume_exists_api(resume_id: str):
+    """Lightweight existence check for a resume UUID (used by homepage to validate localStorage)."""
     try:
         exists = resume_storage_service.resume_exists(resume_id)
-        return {"exists": exists}
+        return {"resume_id": resume_id, "exists": bool(exists)}
     except Exception as e:
-        logger.error(f"Error checking resume existence: {str(e)}")
-        return {"exists": False}
+        logger.error(f"Error checking existence for resume {resume_id}: {str(e)}")
+        # On error, be safe and report non-existence to trigger a fresh flow
+        return {"resume_id": resume_id, "exists": False}
 
 
 @app.post("/resume/{resume_id}/save")
