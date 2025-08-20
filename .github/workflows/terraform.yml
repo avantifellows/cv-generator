@@ -87,12 +87,11 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Generate Terraform plan and check for changes
+    # Generate Terraform plan 
     - name: Terraform Plan
-      id: plan
       run: |
         terraform plan -input=false -lock-timeout=5m
-        echo "📋 Terraform plan completed - will always apply to ensure consistency"
+        echo "📋 Terraform plan completed"
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
@@ -100,9 +99,28 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Apply Terraform changes (always apply)
+    # Apply Terraform changes and detect if changes were made
     - name: Terraform Apply
-      run: terraform apply -auto-approve -input=false -lock-timeout=5m
+      id: apply
+      run: |
+        echo "🚀 Running terraform apply..."
+        
+        # Capture apply output to detect changes
+        terraform apply -auto-approve -input=false -lock-timeout=5m | tee apply_output.txt
+        
+        # Check if any resources were changed
+        if grep -q "Apply complete! Resources:" apply_output.txt; then
+          # Extract the change summary
+          changes_line=$(grep "Apply complete! Resources:" apply_output.txt)
+          echo "apply_changes=true" >> $GITHUB_OUTPUT
+          echo "📦 Terraform made changes: $changes_line"
+        else
+          echo "apply_changes=false" >> $GITHUB_OUTPUT
+          echo "✅ No infrastructure changes were needed"
+        fi
+        
+        # Clean up
+        rm -f apply_output.txt
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
@@ -152,11 +170,24 @@ jobs:
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
-    # Wait for instance to be ready after terraform apply
+    # Reboot EC2 instance (only if terraform didn't make changes)
+    - name: Reboot EC2 Instance
+      if: steps.apply.outputs.apply_changes == 'false' && steps.instance.outputs.instance_id != ''
+      run: |
+        echo "🔄 No terraform changes were made, rebooting EC2 instance to refresh application"
+        echo "🔄 Rebooting EC2 instance: ${{ steps.instance.outputs.instance_id }}"
+        aws ec2 reboot-instances --instance-ids ${{ steps.instance.outputs.instance_id }}
+        echo "✅ Reboot command sent successfully"
+
+    # Wait for instance to be running (after terraform changes OR reboot)
     - name: Wait for Instance to be Running
       if: steps.instance.outputs.instance_id != ''
       run: |
-        echo "⏳ Waiting for instance to be running..."
+        if [ "${{ steps.apply.outputs.apply_changes }}" == "true" ]; then
+          echo "⏳ Waiting for instance to be running after terraform changes..."
+        else
+          echo "⏳ Waiting for instance to complete reboot and become running..."
+        fi
         aws ec2 wait instance-running --instance-ids ${{ steps.instance.outputs.instance_id }}
         echo "✅ Instance is now running"
 
@@ -171,5 +202,9 @@ jobs:
     # Summary step
     - name: Deployment Summary
       run: |
-        echo "📦 Terraform apply completed successfully"
-        echo "🚀 Infrastructure deployment finished" 
+        if [ "${{ steps.apply.outputs.apply_changes }}" == "true" ]; then
+          echo "📦 Terraform made infrastructure changes - instance was updated"
+        else
+          echo "🔄 No terraform changes needed - EC2 instance was rebooted to refresh application"
+        fi
+        echo "🚀 Deployment completed successfully" 
