@@ -91,17 +91,27 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: |
+        set +e  # Don't exit on error
         terraform plan -input=false -lock-timeout=5m -detailed-exitcode
         PLAN_EXIT_CODE=$?
         echo "plan_exit_code=$PLAN_EXIT_CODE" >> $GITHUB_OUTPUT
-        exit $PLAN_EXIT_CODE
+        echo "Plan exit code: $PLAN_EXIT_CODE"
+        
+        # Exit codes: 0 = no changes, 1 = error, 2 = changes
+        if [ $PLAN_EXIT_CODE -eq 1 ]; then
+          echo "❌ Terraform plan failed"
+          exit 1
+        elif [ $PLAN_EXIT_CODE -eq 2 ]; then
+          echo "📦 Changes detected - terraform apply will run"
+        else
+          echo "✅ No changes detected - will reboot instance"
+        fi
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
         TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
         TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
         TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
-      continue-on-error: true
 
     # Apply Terraform changes (only if there are changes)
     - name: Terraform Apply
