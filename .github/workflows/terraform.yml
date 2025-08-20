@@ -55,6 +55,9 @@ jobs:
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Validate Terraform configuration
     - name: Terraform Validate
@@ -80,6 +83,9 @@ jobs:
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Generate Terraform plan and check for changes
     - name: Terraform Plan
@@ -90,6 +96,9 @@ jobs:
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
       continue-on-error: true
 
     # Apply Terraform changes (only if there are changes)
@@ -99,6 +108,9 @@ jobs:
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Get EC2 instance ID for reboot (only if no changes)
     - name: Get EC2 Instance ID
@@ -138,6 +150,9 @@ jobs:
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Reboot EC2 instance (only if no changes)
     - name: Reboot EC2 Instance
