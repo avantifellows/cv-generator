@@ -8,77 +8,77 @@ from datetime import datetime
 
 class PersonalInfo(BaseModel):
     """Personal information section of CV"""
-    full_name: str = Field(default="—", min_length=1, max_length=100)
-    highest_education: str = Field(default="—", min_length=1, max_length=100)
-    city: str = Field(default="—", min_length=1, max_length=100)
-    phone: str = Field(default="—", min_length=1, max_length=20)
-    email: str = Field(default="notfilled@email.com")
+    full_name: str = Field(default="", max_length=100)
+    highest_education: str = Field(default="", max_length=100)  
+    city: str = Field(default="", max_length=100)
+    phone: str = Field(default="", max_length=20)
+    email: str = Field(default="")
     github: Optional[str] = Field(None, max_length=100)
     linkedin: Optional[str] = Field(None, max_length=100)
 
 
 class EducationEntry(BaseModel):
     """Single education entry"""
-    qualification: str = Field(default="—", min_length=1, max_length=100)
-    stream: str = Field(default="—", min_length=1, max_length=100)
-    institute: str = Field(default="—", min_length=1, max_length=200)
-    year: str = Field(default="—", min_length=1, max_length=10)
-    cgpa: str = Field(default="—", min_length=1, max_length=10)
+    qualification: str = Field(default="", max_length=100)
+    stream: str = Field(default="", max_length=100)
+    institute: str = Field(default="", max_length=200)
+    year: str = Field(default="", max_length=10)
+    cgpa: str = Field(default="", max_length=10)
 
     @validator('qualification', 'stream', 'institute', 'year', 'cgpa')
     def validate_not_empty(cls, v):
-        if not v or not v.strip():
-            return "—"
+        if not v:
+            return ""
         return v.strip()
 
 
 class AchievementEntry(BaseModel):
     """Single achievement entry"""
-    description: str = Field(default="—", min_length=1, max_length=500)
-    year: str = Field(default="—", min_length=1, max_length=10)
+    description: str = Field(default="", max_length=500)
+    year: str = Field(default="", max_length=10)
 
     @validator('description', 'year')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
 
 class CertificationEntry(BaseModel):
     """Single certification entry"""
-    description: str = Field(default="—", min_length=1, max_length=500)
-    year: str = Field(default="—", min_length=1, max_length=10)
+    description: str = Field(default="", max_length=500)
+    year: str = Field(default="", max_length=10)
 
     @validator('description', 'year')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
 
 class PublicationEntry(BaseModel):
     """Single publication entry"""
-    description: str = Field(default="—", min_length=1, max_length=500)
-    year: str = Field(default="—", min_length=1, max_length=10)
+    description: str = Field(default="", max_length=500)
+    year: str = Field(default="", max_length=10)
 
     @validator('description', 'year')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
 
 class InternshipEntry(BaseModel):
     """Single internship entry"""
-    company: str = Field(default="—", min_length=1, max_length=100)
-    role: str = Field(default="—", min_length=1, max_length=100)
-    duration: str = Field(default="—", min_length=1, max_length=50)
+    company: str = Field(default="", max_length=100)
+    role: str = Field(default="", max_length=100)
+    duration: str = Field(default="", max_length=50)
     points: List[str] = Field(default_factory=list, max_items=5)
 
     @validator('company', 'role', 'duration')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
     @validator('points')
@@ -90,15 +90,15 @@ class InternshipEntry(BaseModel):
 
 class WorkExperienceEntry(BaseModel):
     """Single work experience entry"""
-    company: str = Field(default="—", min_length=1, max_length=100)
-    position: str = Field(default="—", min_length=1, max_length=100)
-    duration: str = Field(default="—", min_length=1, max_length=50)
+    company: str = Field(default="", max_length=100)
+    position: str = Field(default="", max_length=100)
+    duration: str = Field(default="", max_length=50)
     points: List[str] = Field(default_factory=list, max_items=5)
 
     @validator('company', 'position', 'duration')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
     @validator('points')
@@ -110,16 +110,16 @@ class WorkExperienceEntry(BaseModel):
 
 class ProjectEntry(BaseModel):
     """Single project entry"""
-    title: str = Field(default="—", min_length=1, max_length=100)
-    type: str = Field(default="—", min_length=1, max_length=50)
-    duration: str = Field(default="—", min_length=1, max_length=50)
+    title: str = Field(default="", max_length=100)
+    type: str = Field(default="", max_length=50)
+    duration: str = Field(default="", max_length=50)
     repo_link: Optional[str] = Field(None, max_length=200)
     points: List[str] = Field(default_factory=list, max_items=5)
 
     @validator('title', 'type', 'duration')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
     @validator('points')
@@ -131,15 +131,15 @@ class ProjectEntry(BaseModel):
 
 class PositionEntry(BaseModel):
     """Single position of responsibility entry"""
-    club: str = Field(default="—", min_length=1, max_length=100)
-    role: str = Field(default="—", min_length=1, max_length=100)
-    duration: str = Field(default="—", min_length=1, max_length=50)
+    club: str = Field(default="", max_length=100)
+    role: str = Field(default="", max_length=100)
+    duration: str = Field(default="", max_length=50)
     points: List[str] = Field(default_factory=list, max_items=5)
 
     @validator('club', 'role', 'duration')
     def validate_not_empty(cls, v):
         if not v or not v.strip():
-            return "—"
+            return ""
         return v.strip()
 
     @validator('points')
@@ -241,11 +241,11 @@ class CVDocument(BaseModel):
 class CVGenerateRequest(BaseModel):
     """Request model for CV generation from form data"""
     # Personal Information
-    full_name: str = Field(default="—", min_length=1, max_length=100)
-    highest_education: str = Field(default="—", min_length=1, max_length=100)
-    city: str = Field(default="—", min_length=1, max_length=100)
-    phone: str = Field(default="—", min_length=1, max_length=20)
-    email: str = Field(default="notfilled@email.com")
+    full_name: str = Field(default="", max_length=100)
+    highest_education: str = Field(default="", max_length=100)
+    city: str = Field(default="", max_length=100)
+    phone: str = Field(default="", max_length=20)
+    email: str = Field(default="")
     github: Optional[str] = Field(None, max_length=100)
     linkedin: Optional[str] = Field(None, max_length=100)
     

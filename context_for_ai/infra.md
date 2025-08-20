@@ -21,7 +21,7 @@ Internet
     ▼
 [EC2 Instance] ─── Ubuntu 22.04 LTS (t3.small)
     │
-    ├── [Nginx] ─── Reverse Proxy (Port 80 → 8000)
+    ├── [Nginx] ─── HTTP→HTTPS redirect; Reverse Proxy (Port 443 → 8000)
     │
     └── [FastAPI App] ─── CV Generator Application (Port 8000)
 ```
@@ -40,6 +40,10 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "~> 4.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.0"
+    }
   }
   required_version = ">= 1.0"
 }
@@ -48,6 +52,22 @@ terraform {
 ### **Provider Setup**
 - **AWS Provider**: Configured with region variable (default: ap-south-1)
 - **Cloudflare Provider**: Configured with email and API key for DNS management
+
+### **Remote Backend (Terraform State)**
+- **S3 Backend**: Remote state stored in an S3 bucket with server-side encryption
+- **DynamoDB Locking**: State locking via DynamoDB table
+- The Terraform configuration uses a remote backend in the `terraform` block. Supporting resources are provisioned in `terraform/backend.tf` (S3 bucket with versioning and DynamoDB lock table).
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "cv-generator-terraform-state-moh8l579"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"
+    dynamodb_table = "cv-generator-terraform-locks"
+    encrypt        = true
+  }
+}
+```
 
 ## **Variables Configuration**
 
@@ -62,7 +82,7 @@ terraform {
 ### **Application Variables**
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
-| `repo_url` | string | "https://github.com/..." | Git repository URL to clone |
+| `repo_url` | string | "https://github.com/your-username/cv-generator.git" | Git repository URL to clone |
 
 ### **Cloudflare Variables**
 | Variable | Type | Default | Description |
@@ -216,12 +236,12 @@ certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domai
 ```
 
 ### **Certificate Management**
-- **Certificate Authority**: Let's Encrypt (R11)
+- **Certificate Authority**: Let's Encrypt
 - **Certificate Path**: `/etc/letsencrypt/live/${domain}/fullchain.pem`
 - **Private Key Path**: `/etc/letsencrypt/live/${domain}/privkey.pem`
 - **Validity**: 90 days with automatic renewal
-- **Auto-Renewal**: systemd timer runs `certbot renew` twice daily
-- **Deployment**: Automatic Nginx configuration with SSL termination
+- **Auto-Renewal**: systemd timer runs `certbot renew` (enabled via `certbot.timer`)
+- **Deployment**: Automatic Nginx configuration with SSL termination and HTTP→HTTPS redirect
 
 ### **SSL Security Features**
 - **Protocols**: TLS 1.2 and TLS 1.3 only
@@ -330,11 +350,31 @@ EOL
 
 #### **8. Nginx Configuration**
 ```bash
-# Reverse proxy configuration
+# HTTP→HTTPS redirect and HTTPS reverse proxy configuration
 cat > /etc/nginx/sites-available/cv-generator << 'EOL'
 server {
     listen 80;
     server_name ${domain} _;
+
+    # Redirect all HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${domain} _;
+
+    # SSL
+    ssl_certificate /etc/letsencrypt/live/${domain}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    # Security headers
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options DENY always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header X-XSS-Protection "1; mode=block" always;
 
     client_max_body_size 50M;
 
@@ -364,6 +404,10 @@ EOL
 systemctl daemon-reload
 systemctl enable nginx cv-generator
 systemctl restart nginx cv-generator
+
+# Enable certbot timer for auto-renewal
+systemctl enable certbot.timer
+systemctl start certbot.timer
 
 # Health verification
 systemctl status nginx --no-pager

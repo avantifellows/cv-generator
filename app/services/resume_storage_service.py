@@ -61,9 +61,10 @@ class ResumeStorageService:
         """Get the file path for a specific resume"""
         return self.storage_dir / f"{resume_id}.json"
     
-    def create_new_resume(self, initial_data: Optional[Dict[str, Any]] = None) -> str:
-        """Create a new resume with a unique UUID"""
-        resume_id = str(uuid.uuid4())
+    def create_new_resume(self, initial_data: Optional[Dict[str, Any]] = None, resume_id: Optional[str] = None) -> str:
+        """Create a new resume with a unique UUID or a provided one"""
+        if not resume_id:
+            resume_id = str(uuid.uuid4())
         
         # Create resume data structure
         resume_data = {

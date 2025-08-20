@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CV Generator</title>
+    <noscript>
+        JavaScript is required. Redirecting to start a new resume...
+        <meta http-equiv="refresh" content="0; url=/?new=1" />
+    </noscript>
+    <script>
+        (function () {
+            try {
+                var id = localStorage.getItem('lastResumeId');
+                var ts = localStorage.getItem('lastResumeTimestamp');
+                var within = true;
+                if (ts) {
+                    var age = Date.now() - Number(ts);
+                    within = !isNaN(age) && age < (7 * 24 * 60 * 60 * 1000);
+                }
+                if (id && within) {
+                    window.location.replace('/?resume_id=' + encodeURIComponent(id));
+                    return;
+                }
+            } catch (e) { /* ignore */ }
+            // No usable localStorage; start a new resume
+            window.location.replace('/?new=1');
+        })();
+    </script>
+</head>
+<body>
+    Redirecting...
+</body>
+</html>
+

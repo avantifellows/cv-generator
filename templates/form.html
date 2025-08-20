@@ -409,6 +409,57 @@
             overflow-y: visible;
         }
     }
+    
+    /* Save Status Styles */
+    .save-status-saved {
+        background-color: #f0f9f0;
+        border-left-color: #22c55e !important;
+        color: #16a34a;
+    }
+    
+    .save-status-unsaved {
+        background-color: #fff7ed;
+        border-left-color: #f59e0b !important;
+        color: #d97706;
+    }
+    
+    .save-status-icon {
+        margin-right: 6px;
+        display: inline-block;
+    }
+    
+    /* Loading spinner animation */
+    .spinner {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #d97706;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-right: 6px;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Status message fade-in animation */
+    .status-fade-in {
+        animation: statusFadeIn 0.3s ease-out;
+    }
+    
+    @keyframes statusFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
     </style>
 </head>
 <body>
@@ -945,6 +996,11 @@
                 </button>
             </div>
         </div>
+        <!-- Status Message -->
+        <div id="save-status-container" style="display: none; margin-bottom: 15px; font-size: 12px; padding: 8px 12px; border-radius: 4px; border-left: 4px solid;">
+            <span id="save-status-icon"></span>
+            <span id="save-status-text"></span>
+        </div>
         <div id="cv-preview-container"></div>
     </div>
     </div>
@@ -953,6 +1009,30 @@
     <script>
         // Resume management variables
         let currentResumeId = '{{ resume_id if resume_id else "" }}';
+        // localStorage helpers for resuming recent work
+        function saveToLocalStorage(resumeId) {
+            if (!resumeId) return;
+            try {
+                localStorage.setItem('lastResumeId', resumeId);
+                localStorage.setItem('lastResumeTimestamp', String(Date.now()));
+            } catch (e) {
+                console.warn('localStorage not available:', e);
+            }
+        }
+
+        function getLastResumeFromStorage(maxAgeDays = 7) {
+            try {
+                const lastId = localStorage.getItem('lastResumeId');
+                const ts = localStorage.getItem('lastResumeTimestamp');
+                if (!lastId || !ts) return null;
+                const ageMs = Date.now() - Number(ts);
+                if (isNaN(ageMs)) return lastId; // if ts invalid, still return id
+                if (ageMs < maxAgeDays * 24 * 60 * 60 * 1000) return lastId;
+            } catch (e) {
+                console.warn('localStorage not available:', e);
+            }
+            return null;
+        }
         let autoSaveTimer = null;
         let isEditMode = {{ 'true' if is_edit_mode else 'false' }};
         let isCompleted = {{ 'true' if is_completed else 'false' }};
@@ -1777,6 +1857,8 @@
         const educationEntries = getArrayEntries('education');
         const workExperienceEntries = getArrayEntries('work_experience');
         const achievementEntries = getArrayEntries('achievements');
+        const certificationEntries = getArrayEntries('certifications');
+        const publicationEntries = getArrayEntries('publications');
         const internshipEntries = getArrayEntries('internships');
         const projectEntries = getArrayEntries('projects');
         const positionEntries = getArrayEntries('positions');
@@ -1789,6 +1871,8 @@
         const hasEducation = educationEntries.some(entry => entry.qualification || entry.stream || entry.institute);
         const hasWorkExperience = workExperienceEntries.some(entry => entry.company || entry.position);
         const hasAchievements = achievementEntries.some(entry => entry.description);
+        const hasCertifications = certificationEntries.some(entry => entry.description);
+        const hasPublications = publicationEntries.some(entry => entry.description);
         const hasInternships = internshipEntries.some(entry => entry.company || entry.role);
         const hasProjects = projectEntries.some(entry => entry.title || entry.type);
         const hasPositions = positionEntries.some(entry => entry.club || entry.role);
@@ -1812,7 +1896,7 @@
         // If no data is filled, show empty page
         if (!hasPersonalInfo && !hasSummary && !hasEducation && !hasWorkExperience && !hasAchievements && 
             !hasCertifications && !hasPublications && !hasInternships && !hasProjects && !hasPositions && !hasActivities && !hasSkills) {
-            preview.innerHTML = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; color: #999; font-size: 1.2em;">Empty CV Preview<br><span style="font-size: 0.8em;">Start filling the form to see your CV here</span></div>';
+            preview.innerHTML = '<div class="cv-preview" style="font-family: Times New Roman, Times, serif; max-width: 794px; min-height: 1123px; background: #fff; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #999; font-size: 1.2em; text-align: center;">Empty CV Preview<br><span style="font-size: 0.8em;">Start filling the form to see your CV here</span></div>';
             return;
         }
         
@@ -2016,8 +2100,6 @@
         }
 
         // Certifications - only show if there are actual certifications with content
-        const certificationEntries = getArrayEntries('certifications');
-        const hasCertifications = certificationEntries.some(entry => entry.description);
         if (hasCertifications) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
@@ -2045,8 +2127,6 @@
         }
 
         // Publications - only show if there are actual publications with content
-        const publicationEntries = getArrayEntries('publications');
-        const hasPublications = publicationEntries.some(entry => entry.description);
         if (hasPublications) {
             html += `<div style="margin-bottom:20px;">`;
             html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
@@ -2537,14 +2617,24 @@
     
     // Initialize font settings inputs on page load
     document.addEventListener('DOMContentLoaded', function() {
+        // If on root, optionally continue last resume from localStorage by redirecting with query param
+        if (window.location.pathname === '/') {
+            const lastId = getLastResumeFromStorage();
+            if (lastId) {
+                window.location.href = `/?resume_id=${encodeURIComponent(lastId)}`;
+                return;
+            }
+        }
+
         updateFontSettingsInputs();
-        
+
         // Initialize auto-save if resume ID exists
         if (currentResumeId) {
             initializeAutoSave();
             showResumeInfo();
+            saveToLocalStorage(currentResumeId);
         }
-        
+
         // Add beforeunload event for URL copy popup
         window.addEventListener('beforeunload', function(e) {
             if (currentResumeId && !isCompleted) {
@@ -2555,6 +2645,59 @@
         });
     });
     
+    // Save status management
+    let hasUserMadeChanges = false;
+    
+    function showSaveStatus(status, timestamp = null) {
+        if (!hasUserMadeChanges) return; // Don't show until user has made changes
+        
+        const container = document.getElementById('save-status-container');
+        const icon = document.getElementById('save-status-icon');
+        const text = document.getElementById('save-status-text');
+        
+        if (!container || !icon || !text) return;
+        
+        // Remove existing classes
+        container.className = container.className.replace(/save-status-\w+/g, '');
+        
+        if (status === 'saved') {
+            container.classList.add('save-status-saved');
+            icon.innerHTML = '✓';
+            icon.className = 'save-status-icon';
+            
+            const time = timestamp || new Date().toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            text.textContent = `Changes saved last at ${time}`;
+            
+        } else if (status === 'unsaved') {
+            container.classList.add('save-status-unsaved');
+            icon.innerHTML = '';
+            icon.className = 'save-status-icon spinner';
+            text.textContent = 'Unsaved changes present ... auto saving';
+        }
+        
+        // Show container with animation if hidden
+        if (container.style.display === 'none') {
+            container.style.display = 'block';
+            container.classList.add('status-fade-in');
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                container.classList.remove('status-fade-in');
+            }, 300);
+        }
+    }
+    
+    function markUserChangeMade() {
+        if (!hasUserMadeChanges) {
+            hasUserMadeChanges = true;
+        }
+    }
+
     // Auto-save functionality
     function initializeAutoSave() {
         const form = document.getElementById('cvForm');
@@ -2562,6 +2705,8 @@
         
         // Auto-save on form changes
         form.addEventListener('input', function() {
+            markUserChangeMade();
+            showSaveStatus('unsaved');
             clearTimeout(autoSaveTimer);
             autoSaveTimer = setTimeout(function() {
                 autoSaveDraft();
@@ -2590,7 +2735,7 @@
             
             if (response.ok) {
                 console.log('Draft saved successfully');
-                // Don't show notification for auto-save to avoid spam
+                showSaveStatus('saved');
                 return Promise.resolve();
             } else {
                 console.error('Failed to save draft');
@@ -2665,6 +2810,9 @@
                 <br>💡 <strong>Tip:</strong> Copy the Edit URL to return to edit this resume later. 
                 Click "Copy Share URL" to copy the shareable link for others to view your resume.
             </div>
+            <div style="margin-top: 12px;">
+                <button type="button" onclick="startNewResume()" style="padding: 6px 10px; background-color: #6c757d; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Start new resume</button>
+            </div>
         `;
         
         header.parentNode.insertBefore(resumeInfo, header.nextSibling);
@@ -2714,6 +2862,16 @@
         if (cvForm) {
             cvForm.submit();
         }
+    }
+
+    // Start new resume function
+    function startNewResume() {
+        // Optionally clear stored last resume
+        try {
+            localStorage.removeItem('lastResumeId');
+            localStorage.removeItem('lastResumeTimestamp');
+        } catch (e) { /* ignore */ }
+        window.location.href = '/?new=1';
     }
     </script>
 </body>

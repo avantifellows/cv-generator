@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome | CV Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 80vh; margin: 0; }
+    .card { border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; max-width: 520px; width: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    h1 { margin: 0 0 8px 0; font-size: 22px; }
+    p { margin: 0 0 20px 0; color: #555; }
+    .btn { display: inline-block; border: none; background: #4C5196; color: #fff; padding: 10px 16px; border-radius: 6px; cursor: pointer; margin-right: 12px; }
+    .btn.secondary { background: #6c757d; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hint { font-size: 12px; color: #666; margin-top: 14px; }
+  </style>
+  <noscript>
+    <meta http-equiv="refresh" content="0; url=/?new=1" />
+  </noscript>
+</head>
+<body>
+  <div class="card">
+    <h1>Welcome to CV Generator</h1>
+    <p>Pick an option to get started.</p>
+    <div class="actions">
+      <button id="continueBtn" class="btn" disabled>Continue where you left off</button>
+      <button id="newBtn" class="btn secondary">Start a new resume</button>
+    </div>
+    <div id="hint" class="hint"></div>
+  </div>
+
+  <script>
+    (function () {
+      var continueBtn = document.getElementById('continueBtn');
+      var newBtn = document.getElementById('newBtn');
+      var hint = document.getElementById('hint');
+
+      function getLastResume() {
+        try {
+          var id = localStorage.getItem('lastResumeId');
+          var ts = localStorage.getItem('lastResumeTimestamp');
+          if (!id || !ts) return null;
+          var age = Date.now() - Number(ts);
+          if (isNaN(age)) return id;
+          if (age < 7 * 24 * 60 * 60 * 1000) return id;
+        } catch (e) { /* ignore */ }
+        return null;
+      }
+
+      var lastId = getLastResume();
+      if (lastId) {
+        continueBtn.disabled = false;
+        hint.textContent = 'Found a recent resume. You can continue or start a new one.';
+      } else {
+        // If nothing is found, skip UI and go straight to new
+        window.location.replace('/?new=1');
+        return;
+      }
+
+      continueBtn.addEventListener('click', function () {
+        if (!lastId) return;
+        window.location.href = '/?resume_id=' + encodeURIComponent(lastId);
+      });
+      newBtn.addEventListener('click', function () {
+        window.location.href = '/?new=1';
+      });
+    })();
+  </script>
+</body>
+</html>
+

@@ -116,16 +116,25 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 # API Endpoints
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    """Serve the dynamic CV form - creates new resume with UUID"""
+    """Serve the dynamic CV form - continue last resume or create new"""
     try:
-        # Create a new resume with UUID
-        resume_id = resume_storage_service.create_new_resume()
-        
-        # Redirect to the UUID-based URL
-        return RedirectResponse(url=f"/resume/{resume_id}", status_code=302)
+        # Explicit request to start a new resume ignores cookies/local state
+        new_param = request.query_params.get('new')
+        if new_param and new_param.lower() in ('1', 'true', 'yes'):
+            new_resume_id = resume_storage_service.create_new_resume()
+            return RedirectResponse(url=f"/resume/{new_resume_id}", status_code=302)
+
+        # Allow resume continuation via query param
+        resume_id_param = request.query_params.get('resume_id')
+        if resume_id_param and resume_storage_service.resume_exists(resume_id_param):
+            return RedirectResponse(url=f"/resume/{resume_id_param}", status_code=302)
+
+        # Otherwise, render a tiny bootstrap page to let the browser check localStorage
+        # and redirect accordingly (continue last resume or start new)
+        return templates.TemplateResponse("root_choice.html", {"request": request})
         
     except Exception as e:
-        logger.error(f"Error creating new resume: {str(e)}")
+        logger.error(f"Error creating or continuing resume: {str(e)}")
         # Fall back to empty form
         return templates.TemplateResponse("form.html", {"request": request})
 
@@ -140,7 +149,7 @@ async def resume_form(request: Request, resume_id: str):
             resume_data = resume_storage_service.get_resume_data(resume_id)
             if resume_data and resume_data.get("data"):
                 # Resume exists with data - show in edit mode
-                return templates.TemplateResponse("form.html", {
+                response = templates.TemplateResponse("form.html", {
                     "request": request, 
                     "form_data": resume_data["data"],
                     "resume_id": resume_id,
@@ -149,25 +158,33 @@ async def resume_form(request: Request, resume_id: str):
                 })
             else:
                 # Resume exists but no data - show empty form
-                return templates.TemplateResponse("form.html", {
+                response = templates.TemplateResponse("form.html", {
                     "request": request,
                     "resume_id": resume_id,
                     "is_edit_mode": False,
                     "is_completed": False
                 })
         else:
-            # Resume doesn't exist - create new
+            # Resume doesn't exist - create new shell and show empty form
             resume_storage_service.create_new_resume(resume_id=resume_id)
-            return templates.TemplateResponse("form.html", {
+            response = templates.TemplateResponse("form.html", {
                 "request": request,
                 "resume_id": resume_id,
                 "is_edit_mode": False,
                 "is_completed": False
             })
+
+        return response
             
     except Exception as e:
         logger.error(f"Error serving resume form for ID {resume_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error serving resume form: {str(e)}")
+
+
+@app.get("/resume/", response_class=HTMLResponse)
+async def resume_form_trailing_slash():
+    """Redirect /resume/ to / to avoid 404 when missing an ID."""
+    return RedirectResponse(url="/", status_code=302)
 
 
 @app.get("/resume/{resume_id}/view", response_class=HTMLResponse)
@@ -546,11 +563,11 @@ def parse_dynamic_form_data(form_data) -> dict:
     }
     # Parse personal info
     structured_data["personal_info"] = {
-        "full_name": form_data.get("full_name", "") or "—",
-        "highest_education": form_data.get("highest_education", "") or "—",
-        "city": form_data.get("city", "") or "—",
-        "phone": form_data.get("phone", "") or "—",
-        "email": form_data.get("email", "") or "notfilled@email.com",
+        "full_name": form_data.get("full_name", ""),
+        "highest_education": form_data.get("highest_education", ""),
+        "city": form_data.get("city", ""),
+        "phone": form_data.get("phone", ""),
+        "email": form_data.get("email", ""),
         "github": form_data.get("github", ""),
         "linkedin": form_data.get("linkedin", "")
     }
@@ -575,13 +592,13 @@ def parse_dynamic_form_data(form_data) -> dict:
         filled_fields = [field for field in ['qualification', 'stream', 'institute', 'year', 'cgpa'] 
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'qualification': entry.get('qualification', '').strip() or '—',
-                'stream': entry.get('stream', '').strip() or '—',
-                'institute': entry.get('institute', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—',
-                'cgpa': entry.get('cgpa', '').strip() or '—'
+                'qualification': entry.get('qualification', '').strip(),
+                'stream': entry.get('stream', '').strip(),
+                'institute': entry.get('institute', '').strip(),
+                'year': entry.get('year', '').strip(),
+                'cgpa': entry.get('cgpa', '').strip()
             }
             structured_data["education"].append(entry)
     
@@ -599,10 +616,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = achievement_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["achievements"].append(entry)
     
@@ -620,10 +637,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = certification_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["certifications"].append(entry)
     
@@ -641,10 +658,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = publication_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["publications"].append(entry)
     
@@ -669,11 +686,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'company': entry.get('company', '').strip() or '—',
-                'role': entry.get('role', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'company': entry.get('company', '').strip(),
+                'role': entry.get('role', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': entry.get('points', [])
             }
             structured_data["internships"].append(entry)
@@ -702,9 +719,9 @@ def parse_dynamic_form_data(form_data) -> dict:
             valid_points = [point.strip() for point in entry.get("points", []) 
                           if point.strip() and point.strip() not in ['', '—']]
             entry = {
-                'company': entry.get('company', '').strip() or '—',
-                'position': entry.get('position', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'company': entry.get('company', '').strip(),
+                'position': entry.get('position', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': valid_points
             }
             structured_data["work_experience"].append(entry)
@@ -730,11 +747,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'title': entry.get('title', '').strip() or '—',
-                'type': entry.get('type', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'title': entry.get('title', '').strip(),
+                'type': entry.get('type', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'repo_link': entry.get('repo_link', ''),
                 'points': entry.get('points', [])
             }
@@ -760,11 +777,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'club': entry.get('club', '').strip() or '—',
-                'role': entry.get('role', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'club': entry.get('club', '').strip(),
+                'role': entry.get('role', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': entry.get('points', [])
             }
             structured_data["positions_of_responsibility"].append(entry)
