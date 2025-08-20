@@ -51,7 +51,7 @@ variable "domain" {
   description = "Subdomain for cv generator"
   type        = string
   default     = "cv-generator"
-} 
+}
 
 variable "app_s3_bucket_name" {
   description = "S3 bucket name for application resume storage"

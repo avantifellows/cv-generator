@@ -184,8 +184,8 @@ data "aws_iam_policy_document" "app_s3_access" {
   statement {
     actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
     resources = [
-      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}resumes/*",
-      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}metadata/*"
+      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}/resumes/*",
+      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}/metadata/*"
     ]
   }
 }
@@ -203,8 +203,8 @@ resource "aws_iam_role_policy_attachment" "ec2_app_s3" {
 # User data script for setting up the application
 locals {
   user_data = base64encode(templatefile("${path.module}/user_data.sh", {
-    repo_url          = var.repo_url
-    domain            = "${var.domain}.${var.cloudflare_zone_name}"
+    repo_url           = var.repo_url
+    domain             = "${var.domain}.${var.cloudflare_zone_name}"
     app_s3_bucket_name = var.app_s3_bucket_name
     app_s3_prefix      = var.app_s3_prefix
     aws_region         = var.aws_region
@@ -287,7 +287,7 @@ output "custom_domain_url" {
 output "http_redirect_url" {
   description = "HTTP URL that redirects to HTTPS"
   value       = "http://${var.domain}.${var.cloudflare_zone_name}"
-} 
+}
 
 output "app_s3_bucket_name" {
   description = "Application S3 bucket name"

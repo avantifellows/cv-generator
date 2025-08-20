@@ -56,6 +56,19 @@ else
     echo "Node.js already installed: $(node --version)"
 fi
 
+# Install AWS CLI (check if already installed)
+if ! command -v aws &> /dev/null; then
+    echo "Installing AWS CLI..."
+    cd /tmp
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip -q awscliv2.zip
+    ./aws/install
+    rm -rf awscliv2.zip aws/
+    echo "AWS CLI installed: $(aws --version)"
+else
+    echo "AWS CLI already installed: $(aws --version)"
+fi
+
 # Create application user (idempotent)
 if ! id "cvapp" &>/dev/null; then
     echo "Creating cvapp user..."
@@ -147,9 +160,20 @@ else
     echo "systemd service already exists"
 fi
 
-# Configure nginx (always update configuration)
+# Check if SSL certificates exist to determine nginx config
+ssl_cert_exists=false
+if [ -f "/etc/letsencrypt/live/${domain}/fullchain.pem" ]; then
+    ssl_cert_exists=true
+    echo "SSL certificates already exist for ${domain}"
+else
+    echo "SSL certificates do not exist yet for ${domain}"
+fi
+
+# Configure nginx based on SSL certificate availability
 echo "Configuring Nginx..."
-cat > /etc/nginx/sites-available/cv-generator << 'EOL'
+if [ "$ssl_cert_exists" = true ]; then
+    echo "Creating nginx config with SSL..."
+    cat > /etc/nginx/sites-available/cv-generator << 'EOL'
 server {
     listen 80;
     server_name ${domain} _;
@@ -199,6 +223,34 @@ server {
     }
 }
 EOL
+else
+    echo "Creating nginx config for HTTP only (SSL certificates will be obtained)..."
+    cat > /etc/nginx/sites-available/cv-generator << 'EOL'
+server {
+    listen 80;
+    server_name ${domain} _;
+
+    client_max_body_size 50M;
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_read_timeout 300;
+        proxy_connect_timeout 300;
+        proxy_send_timeout 300;
+    }
+
+    location /static/ {
+        alias /home/cvapp/app/static/;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+EOL
+fi
 
 # Enable the site (idempotent)
 ln -sf /etc/nginx/sites-available/cv-generator /etc/nginx/sites-enabled/
@@ -225,6 +277,10 @@ systemctl status cv-generator --no-pager
 # Obtain SSL certificate (only if not exists)
 if [ ! -f "/etc/letsencrypt/live/${domain}/fullchain.pem" ]; then
     echo "Obtaining SSL certificate..."
+    # Give nginx a moment to be fully ready
+    sleep 2
+    
+    # Get SSL certificate and let certbot update nginx config
     certbot --nginx -d ${domain} --non-interactive --agree-tos --email admin@${domain} --redirect
     
     # Set up automatic certificate renewal
@@ -233,7 +289,10 @@ if [ ! -f "/etc/letsencrypt/live/${domain}/fullchain.pem" ]; then
     systemctl start certbot.timer
     
     # Test certificate renewal
+    echo "Testing certificate renewal..."
     certbot renew --dry-run
+    
+    echo "SSL certificate obtained and nginx configuration updated"
 else
     echo "SSL certificate already exists for ${domain}"
     # Ensure certbot timer is enabled
