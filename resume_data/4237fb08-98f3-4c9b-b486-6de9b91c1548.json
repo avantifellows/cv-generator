@@ -1,0 +1,40 @@
+{
+  "resume_id": "4237fb08-98f3-4c9b-b486-6de9b91c1548",
+  "created_at": "2025-08-20T17:54:22.564609",
+  "last_modified": "2025-08-20T17:59:27.499946",
+  "data": {
+    "personal_info": {
+      "full_name": "—",
+      "highest_education": "—",
+      "city": "—",
+      "phone": "—",
+      "email": "notfilled@email.com",
+      "github": "",
+      "linkedin": ""
+    },
+    "education": [],
+    "work_experience": [],
+    "achievements": [],
+    "certifications": [],
+    "publications": [],
+    "internships": [],
+    "projects": [],
+    "positions_of_responsibility": [],
+    "extracurricular": [],
+    "technical_skills": {
+      "programming_languages": [],
+      "web_technologies": [],
+      "database_management": [],
+      "tools_and_technologies": []
+    },
+    "summary": "",
+    "font_settings": {
+      "title_font_size": "12px",
+      "title_font_color": "#4C5196",
+      "body_font_size": "12px",
+      "body_font_color": "#000000",
+      "line_height": "1.1"
+    }
+  },
+  "is_completed": false
+}

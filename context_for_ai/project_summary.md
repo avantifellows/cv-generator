@@ -16,11 +16,17 @@ This is a **professional CV/Resume Generator web application** built with FastAP
 ```
 fastapi==0.104.1
 uvicorn==0.24.0
+python-multipart==0.0.6
+jinja2==3.1.2
+aiofiles==23.2.1
+python-dotenv==1.0.0
 playwright>=1.40.0
 pydantic>=2.11.0
-jinja2==3.1.2
-python-multipart==0.0.6
-aiofiles==23.2.1
+```
+
+Additional production dependency:
+```
+boto3>=1.34.0
 ```
 
 ## **Project Structure**
@@ -28,17 +34,19 @@ aiofiles==23.2.1
 ```
 cv-generator/
 ├── app/
-│   ├── models/cv_data.py         # Pydantic data models
-│   ├── services/cv_service.py    # Business logic layer
-│   └── core/                     # Exceptions, logging
+│   ├── models/cv_data.py                   # Pydantic data models
+│   ├── services/cv_service.py              # Business logic layer
+│   ├── services/resume_storage_service.py  # Resume draft persistence service
+│   └── core/                               # Exceptions, logging
 ├── templates/
-│   ├── form.html                 # Dynamic web form
-│   ├── cv_template.html          # Web display template
-│   └── cv_template_pdf.html      # PDF-optimized template
-├── terraform/                    # AWS deployment infrastructure
-├── main.py                       # FastAPI application entry point
-├── generated/                    # Output directory for CVs
-└── test_data_structured.json     # Sample data
+│   ├── root_choice.html                    # Root landing UI (continue or start new)
+│   ├── form.html                           # Dynamic web form (UUID-aware)
+│   ├── cv_template.html                    # Web display template (view and view-only modes)
+│   └── cv_template_pdf.html                # PDF-optimized template
+├── terraform/                              # AWS deployment infrastructure
+├── main.py                                 # FastAPI application entry point
+├── generated/                              # Output directory for CVs
+└── test_data_structured.json               # Sample data
 ```
 
 ## **Key Features & Capabilities**
@@ -52,6 +60,10 @@ cv-generator/
 ### **2. Dynamic Form System**
 - **Interactive Web Form**: Add/remove sections dynamically
 - **Real-time Preview**: Live CV preview as you type
+- **Auto-save Status Indicator**: Small banner under "Live Preview" that toggles between saved and unsaved states:
+  - Saved: “Changes saved last at HH:MM:SS” with a green checkmark
+  - Unsaved: “Unsaved changes present ... auto saving” with a subtle spinner
+  - Hidden until the user makes their first change
 - **Data Validation**: Client and server-side validation
 - **Test Data Integration**: Pre-filled form for testing
 
@@ -60,12 +72,16 @@ cv-generator/
 - **Smart Rendering**: Conditional sections (only shows filled content)
 - **Professional Styling**: Clean, academic resume format
 - **Optimized PDF**: A4 format with proper margins using Playwright
+- **Font Customization**: End-user controls for heading/body font sizes, colors, and line-height
 
 ### **4. Data Management**
 - **Structured Storage**: JSON format with metadata
 - **UUID-based IDs**: Unique identifiers for each CV
+- **Resume Storage Service**: S3-backed drafts in production; local JSON files in `resume_data/` for development. Metadata tracked via `metadata/resume_metadata.json` object in S3 (best-effort cache)
+- **Client-side Persistence (localStorage)**: Stores the most recent `resume_id` to let users continue where they left off; cookies removed for simplicity
 - **Legacy Support**: Backward compatibility with old data formats
 - **Complete Workflow**: Form → Validation → Storage → Rendering → PDF
+- **No Placeholder Defaults**: Empty fields remain empty across parsing, models, and templates (no auto-inserted dashes or dummy emails)
 
 ## **Core Workflow**
 
@@ -73,12 +89,15 @@ cv-generator/
    - Personal Information
    - Professional Summary (optional)
    - Education (multiple entries)
+   - Work Experience
    - Achievements
+   - Certifications
+   - Publications
    - Internships
    - Projects
    - Positions of Responsibility
    - Extracurricular Activities
-   - Technical Skills
+   - Technical Skills (categorized)
 
 2. **Data Processing** → Pydantic validation and structured storage
 3. **Template Rendering** → Jinja2 templates for HTML output
@@ -88,47 +107,59 @@ cv-generator/
 ## **API Endpoints**
 
 ### **Web Interface**
-- `GET /` - Main CV form
+- `GET /` - Root landing UI that lets users continue the last resume (via localStorage) or start a new one; supports `?new=1` to force a fresh resume and `?resume_id={id}` to open a specific resume
+- `GET /resume/` - Redirects to `/` to avoid 404 when missing an ID
+- `GET /resume/{resume_id}` - Edit form for that resume (draft-aware)
+- `POST /resume/{resume_id}/save` - Save draft data
+- `GET /resume/{resume_id}/view` - View-only mode for sharing
+- `GET /resume/{resume_id}/share` - Returns shareable link JSON
 - `GET /test` - Pre-filled test form
-- `POST /generate` - Generate CV from form data
-- `GET /cv/{cv_id}` - View CV with download button
-- `GET /cv/{cv_id}/pdf` - Download PDF
+- `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
+- `GET /cv/{cv_id}` - View generated CV with download button
+- `GET /cv/{cv_id}/html` - Raw HTML CV
+- `GET /cv/{cv_id}/pdf` - On-demand PDF generation via Playwright
 
 ### **API Endpoints**
 - `GET /api/v1/cvs` - List all CVs
 - `GET /api/v1/cv/{cv_id}` - Get CV data
 - `DELETE /api/v1/cv/{cv_id}` - Delete CV
-- `GET /health` - Health check
 
 ## **Deployment Infrastructure**
 
 ### **AWS EC2 Deployment**
-- **Terraform Configuration**: Infrastructure as Code
+- **Terraform Configuration**: Infrastructure as Code with remote backend (S3 + DynamoDB locking)
 - **EC2 Instance**: t3.small Ubuntu 22.04 LTS
-- **Nginx Reverse Proxy**: HTTP traffic routing with SSL termination
+- **Nginx Reverse Proxy**: HTTPS termination and HTTP→HTTPS redirect; reverse proxy to 127.0.0.1:8000
 - **SystemD Service**: Application lifecycle management
 - **Cloudflare DNS**: Custom domain management
-- **SSL/TLS**: Let's Encrypt certificates with automatic renewal
+- **SSL/TLS**: Let's Encrypt certificates with automatic renewal (certbot.timer)
 - **Automated Setup**: Complete deployment with idempotent user data scripts
 
 ### **Key Infrastructure Components**
 - **Security Group**: SSH (22), HTTP (80), HTTPS (443), FastAPI (8000)
 - **Elastic IP**: Static IP address for the instance
 - **IAM Role**: EC2 instance profile for future AWS services
+- **Remote Backend**: S3 state bucket with versioning + DynamoDB lock table
 - **User Data Script**: Idempotent application setup on instance launch
 - **SSL Certificate**: Automated Let's Encrypt certificate management
 - **Security Headers**: HSTS, X-Frame-Options, XSS protection
 
 ## **Recent Technical Improvements**
 
+- ✅ **UUID-based Resume Flow**: Create/edit/view via `/resume/{resume_id}` with shareable view-only link
+- ✅ **Resume Storage Service**: Draft persistence in `resume_data/` with metadata tracking
 - ✅ **PDF Library Migration**: Playwright for better quality (from xhtml2pdf)
 - ✅ **Professional Summary**: Added optional summary section
 - ✅ **Template Optimization**: Improved formatting and spacing
 - ✅ **Dynamic Content**: Smart conditional rendering
+- ✅ **Font Customization**: Title/body font sizes/colors and line-height
 - ✅ **Clean Architecture**: Service layer and Pydantic models
 - ✅ **SSL/HTTPS Implementation**: Let's Encrypt certificates with automatic renewal
 - ✅ **Idempotent Deployment**: Safe multi-run user data scripts
 - ✅ **Security Headers**: HSTS, XSS protection, content security policies
+- ✅ **Save-status UI**: Added saved/unsaved banner with timestamp, checkmark, and spinner under “Live Preview”
+- ✅ **Removed Placeholder Dashes**: Eliminated auto-insertion of “—”/dummy email; models now default to empty strings and parsers preserve empties
+- ✅ **S3-backed Resume Storage**: Draft persistence moved to S3 in production with environment-based switching; Terraform-managed bucket, encryption, and IAM
 
 ## **Current Development Status**
 
@@ -139,11 +170,12 @@ cv-generator/
 - Professional template design
 - AWS deployment infrastructure
 - Comprehensive error handling and logging
+- UUID-based resume creation/editing and view-only sharing
+- Resume drafts persisted via `ResumeStorageService` (S3 in production; local in development)
 
 ### **Planned Enhancements** (from TODOs)
-- AWS S3 integration for persistent storage
+- AWS S3 integration for persistent storage of generated CVs and drafts
 - Search functionality for generated CVs
-- Resume editing capabilities
 - Enhanced user management
 
 ## **Data Structure Example**
@@ -165,9 +197,10 @@ The application uses structured JSON format:
 ## **Template System**
 
 ### **Template Files**
-- `cv_template.html` - Web display with embedded CSS and interactive features
-- `cv_template_pdf.html` - PDF-optimized with specific styling for print
-- `form.html` - Dynamic form with JavaScript for adding/removing sections
+- `root_choice.html` - Minimal root landing UI to continue or start new using localStorage
+- `cv_template.html` - Web display with embedded CSS; supports view-only mode and font settings
+- `cv_template_pdf.html` - PDF-optimized with specific styling for print and font settings
+- `form.html` - Dynamic, UUID-aware form with JavaScript for adding/removing sections and draft-saving
 
 ### **Template Features**
 - **Conditional Rendering**: Only shows sections with actual content
@@ -185,15 +218,33 @@ The application uses structured JSON format:
 - `list_cvs()` - Get all CVs with metadata
 - `convert_legacy_data(form_data)` - Backward compatibility
 
+### **ResumeStorageService** (`app/services/resume_storage_service.py`)
+- `create_new_resume(initial_data=None, resume_id=None)` - Returns a new `resume_id`; optionally accepts a pre-defined `resume_id`
+- `get_resume_data(resume_id)` - Retrieve draft data and status
+- `update_resume_data(resume_id, data, is_completed=False)` - Save draft or mark completed
+- `resume_exists(resume_id)` - Check for existence
+- `list_resumes()` - List metadata from `resume_metadata.json`
+- `delete_resume(resume_id)` - Remove draft and clean metadata
+
 ### **Data Models** (`app/models/cv_data.py`)
 - `PersonalInfo` - Name, contact details, education
 - `EducationEntry` - Qualification, institute, year, CGPA
 - `AchievementEntry` - Description and year
+- `CertificationEntry` - Description and year
+- `PublicationEntry` - Description and year
 - `InternshipEntry` - Company, role, duration, points
+- `WorkExperienceEntry` - Company, position, duration, points
 - `ProjectEntry` - Title, type, duration, points
 - `PositionEntry` - Club, role, duration, points
+- `TechnicalSkillsCategory` - Categorized skills (languages, web, DB, tools)
+- `FontSettings` - Title/body sizes, colors, line-height
 - `CVData` - Complete CV structure with validation
 - `CVDocument` - CV data with metadata
+  
+  Model defaults and validation:
+  - Fields default to empty strings instead of placeholder symbols
+  - Validators trim whitespace but do not force placeholder values
+  - Rendering logic only displays fields with actual content
 
 ## **Error Handling & Logging**
 
@@ -303,10 +354,13 @@ sudo systemctl restart cv-generator
 - A4 format with optimized margins
 - Handles complex CSS layouts correctly
 - Supports background colors and modern styling
+- Honors user font settings (sizes, colors, line-height)
 
 ### **Form Handling**
 - Dynamic JavaScript for adding/removing sections
 - Real-time preview with live updates
+- Auto-save with visual status (saved/unsaved) and last-saved timestamp
+- UUID-based routing and draft save via `/resume/{resume_id}/save`
 - Supports both legacy flat format and new structured format
 - Comprehensive client-side validation
 

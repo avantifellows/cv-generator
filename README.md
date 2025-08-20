@@ -13,12 +13,12 @@ cv-generator/
 │   ├── models/
 │   │   └── cv_data.py          # Pydantic models for data validation
 │   ├── services/
-│   │   └── cv_service.py       # Business logic layer
-│   ├── core/
-│   │   ├── exceptions.py       # Custom exceptions
-│   │   └── logging.py          # Logging configuration
-│   └── utils/
-├── templates/                   # Jinja2 templates
+│   │   ├── cv_service.py       # Business logic layer
+│   │   └── resume_storage_service.py  # UUID-based draft storage
+│   └── core/
+│       ├── exceptions.py       # Custom exceptions
+│       └── logging.py          # Logging configuration
+├── templates/                   # Jinja2 templates (web + PDF)
 ├── static/                      # Static assets
 ├── generated/                   # Generated CV files
 ├── main.py                      # FastAPI application
@@ -90,6 +90,9 @@ logger.error(f"Error generating PDF: {str(e)}")
 # Install dependencies
 pip install -r requirements.txt
 
+# Install Playwright browser (required for PDF generation)
+playwright install chromium
+
 # Run the application
 uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
@@ -97,11 +100,16 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ### API Endpoints
 
 #### Web Interface
-- `GET /` - CV form
+- `GET /` - Creates a new resume UUID and redirects to `/resume/{resume_id}`
+- `GET /resume/{resume_id}` - Edit form for that resume (draft-aware)
+- `POST /resume/{resume_id}/save` - Save draft data
+- `GET /resume/{resume_id}/view` - View-only mode for sharing
+- `GET /resume/{resume_id}/share` - Returns shareable link JSON
 - `GET /test` - Pre-filled test form
-- `POST /generate` - Generate CV from form data
-- `GET /cv/{cv_id}` - View CV with download button
-- `GET /cv/{cv_id}/pdf` - Download PDF
+- `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
+- `GET /cv/{cv_id}` - View generated CV with download button
+- `GET /cv/{cv_id}/html` - Raw HTML CV
+- `GET /cv/{cv_id}/pdf` - On-demand PDF generation via Playwright
 
 #### API Endpoints
 - `GET /api/v1/cvs` - List all CVs

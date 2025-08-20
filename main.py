@@ -16,16 +16,31 @@ from pathlib import Path
 from io import BytesIO
 import pprint
 from playwright.async_api import async_playwright
+from dotenv import load_dotenv
+
+# Load .env file if it exists (for local development only)
+# On server, environment variables are set via systemd service
+env_file_loaded = False
+if os.path.exists(".env"):
+    load_dotenv()
+    env_file_loaded = True
 
 # Import our new models and services
 from app.models.cv_data import CVData, CVGenerateRequest, CVGenerateResponse
 from app.services.cv_service import CVService
+from app.services.resume_storage_service import create_resume_storage_service
 from app.core.exceptions import CVGenerationError, CVNotFoundError, TemplateError, PDFGenerationError
 from app.core.logging import setup_logging, get_logger
 
 # Setup logging
 setup_logging(level="INFO")
 logger = get_logger(__name__)
+
+# Log environment setup
+if env_file_loaded:
+    logger.info("Loaded .env file for local development")
+else:
+    logger.info("No .env file found, using system environment variables")
 
 # Define base path for application files
 BASE_PATH = Path(".")
@@ -50,6 +65,9 @@ templates = Jinja2Templates(directory="templates")
 
 # Initialize services
 cv_service = CVService(base_path=BASE_PATH)
+# Select storage type via environment (default local)
+storage_type = os.getenv("RESUME_STORAGE_TYPE", "local")
+resume_storage_service = create_resume_storage_service(BASE_PATH, storage_type)
 
 async def generate_pdf_with_playwright(html_content: str) -> bytes:
     """Generate PDF from HTML using Playwright"""
@@ -114,8 +132,174 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 # API Endpoints
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    """Serve the dynamic CV form"""
-    return templates.TemplateResponse("form.html", {"request": request})
+    """Serve the dynamic CV form - continue last resume or create new"""
+    try:
+        # Explicit request to start a new resume ignores cookies/local state
+        new_param = request.query_params.get('new')
+        if new_param and new_param.lower() in ('1', 'true', 'yes'):
+            new_resume_id = resume_storage_service.create_new_resume()
+            return RedirectResponse(url=f"/resume/{new_resume_id}", status_code=302)
+
+        # Allow resume continuation via query param
+        resume_id_param = request.query_params.get('resume_id')
+        if resume_id_param and resume_storage_service.resume_exists(resume_id_param):
+            return RedirectResponse(url=f"/resume/{resume_id_param}", status_code=302)
+
+        # Otherwise, render a tiny bootstrap page to let the browser check localStorage
+        # and redirect accordingly (continue last resume or start new)
+        return templates.TemplateResponse("root_choice.html", {"request": request})
+        
+    except Exception as e:
+        logger.error(f"Error creating or continuing resume: {str(e)}")
+        # Fall back to empty form
+        return templates.TemplateResponse("form.html", {"request": request})
+
+
+@app.get("/resume/{resume_id}", response_class=HTMLResponse)
+async def resume_form(request: Request, resume_id: str):
+    """Serve the CV form with existing data or create new if not exists"""
+    try:
+        # Check if resume exists
+        if resume_storage_service.resume_exists(resume_id):
+            # Load existing resume data
+            resume_data = resume_storage_service.get_resume_data(resume_id)
+            if resume_data and resume_data.get("data"):
+                # Resume exists with data - show in edit mode
+                response = templates.TemplateResponse("form.html", {
+                    "request": request, 
+                    "form_data": resume_data["data"],
+                    "resume_id": resume_id,
+                    "is_edit_mode": True,
+                    "is_completed": resume_data.get("is_completed", False)
+                })
+            else:
+                # Resume exists but no data - show empty form
+                response = templates.TemplateResponse("form.html", {
+                    "request": request,
+                    "resume_id": resume_id,
+                    "is_edit_mode": False,
+                    "is_completed": False
+                })
+        else:
+            # Resume doesn't exist - create new shell and show empty form
+            resume_storage_service.create_new_resume(resume_id=resume_id)
+            response = templates.TemplateResponse("form.html", {
+                "request": request,
+                "resume_id": resume_id,
+                "is_edit_mode": False,
+                "is_completed": False
+            })
+
+        return response
+            
+    except Exception as e:
+        logger.error(f"Error serving resume form for ID {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error serving resume form: {str(e)}")
+
+
+@app.get("/resume/", response_class=HTMLResponse)
+async def resume_form_trailing_slash():
+    """Redirect /resume/ to / to avoid 404 when missing an ID."""
+    return RedirectResponse(url="/", status_code=302)
+
+
+@app.get("/resume/{resume_id}/view", response_class=HTMLResponse)
+async def view_resume(request: Request, resume_id: str):
+    """View-only mode for shared resumes"""
+    try:
+        if not resume_storage_service.resume_exists(resume_id):
+            raise HTTPException(status_code=404, detail="Resume not found")
+        
+        resume_data = resume_storage_service.get_resume_data(resume_id)
+        if not resume_data or not resume_data.get("data"):
+            raise HTTPException(status_code=404, detail="Resume data not found")
+        
+        # Allow viewing even if resume is not completed (for sharing drafts)
+        # No completion check needed
+        
+        # Render the resume in view-only mode
+        cv_data = CVData(**resume_data["data"])
+        
+        return templates.TemplateResponse("cv_template.html", {
+            "request": request,
+            "cv_data": cv_data,
+            **cv_data.dict(),
+            "is_view_only": True,
+            "resume_id": resume_id
+        })
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error viewing resume {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error viewing resume: {str(e)}")
+
+
+@app.get("/api/v1/resume/{resume_id}/exists")
+async def resume_exists_api(resume_id: str):
+    """Lightweight existence check for a resume UUID (used by homepage to validate localStorage)."""
+    try:
+        exists = resume_storage_service.resume_exists(resume_id)
+        return {"resume_id": resume_id, "exists": bool(exists)}
+    except Exception as e:
+        logger.error(f"Error checking existence for resume {resume_id}: {str(e)}")
+        # On error, be safe and report non-existence to trigger a fresh flow
+        return {"resume_id": resume_id, "exists": False}
+
+
+@app.post("/resume/{resume_id}/save")
+async def save_resume_draft(request: Request, resume_id: str):
+    """Save resume draft data"""
+    try:
+        # Get form data
+        form_data = await request.form()
+        
+        # Parse the form data into structured format
+        structured_data = parse_dynamic_form_data(form_data)
+        
+        # Save to resume storage service
+        success = resume_storage_service.update_resume_data(
+            resume_id, 
+            structured_data, 
+            is_completed=False
+        )
+        
+        if success:
+            return {"status": "success", "message": "Draft saved successfully"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to save draft")
+            
+    except Exception as e:
+        logger.error(f"Error saving resume draft for ID {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error saving draft: {str(e)}")
+
+
+@app.get("/resume/{resume_id}/share")
+async def get_shareable_link(request: Request, resume_id: str):
+    """Get shareable link for completed resume"""
+    try:
+        if not resume_storage_service.resume_exists(resume_id):
+            raise HTTPException(status_code=404, detail="Resume not found")
+        
+        resume_data = resume_storage_service.get_resume_data(resume_id)
+        if not resume_data:
+            raise HTTPException(status_code=400, detail="Resume not found")
+        
+        # Generate shareable link
+        base_url = str(request.base_url).rstrip('/')
+        shareable_url = f"{base_url}/resume/{resume_id}/view"
+        
+        return {
+            "status": "success",
+            "shareable_url": shareable_url,
+            "resume_id": resume_id
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error generating shareable link for resume {resume_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating shareable link: {str(e)}")
 
 
 
@@ -148,7 +332,10 @@ async def download_test_cv_pdf():
         cv_data = CVData(**structured_data)
         
         # Render PDF-specific HTML template
-        html_content = render_template('cv_template_pdf.html', cv_data.dict())
+        html_content = render_template('cv_template_pdf.html', {
+            "cv_data": cv_data,
+            **cv_data.dict()
+        })
         
         # Generate PDF using Playwright
         try:
@@ -270,6 +457,9 @@ async def generate_cv(request: Request):
         form_data = await request.form()
         logger.info(f"[DEBUG] Raw form_data keys: {list(form_data.keys())}")
         
+        # Get resume_id if present
+        resume_id = form_data.get('resume_id')
+        
         # Check if this is a direct PDF download request
         is_pdf_download = form_data.get('download_pdf') == 'true'
         
@@ -294,7 +484,10 @@ async def generate_cv(request: Request):
             cv_data_dict = cv_data.dict()
             logger.info(f"[DEBUG] Direct PDF download - cv_data_dict keys: {list(cv_data_dict.keys())}")
             logger.info(f"[DEBUG] Direct PDF download - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
-            html_content = render_template('cv_template_pdf.html', cv_data_dict)
+            html_content = render_template('cv_template_pdf.html', {
+                "cv_data": cv_data,
+                **cv_data_dict
+            })
             
             # Generate PDF using Playwright
             try:
@@ -324,7 +517,10 @@ async def generate_cv(request: Request):
         cv_id = cv_service.generate_cv(cv_data)
         
         # Generate HTML file for display
-        html_content = render_template('cv_template.html', cv_data.dict())
+        html_content = render_template('cv_template.html', {
+            "cv_data": cv_data,
+            **cv_data.dict()
+        })
         
         # Save HTML file
         html_file = BASE_PATH / f"generated/{cv_id}.html"
@@ -352,6 +548,20 @@ async def generate_cv(request: Request):
             f.write(html_with_button)
         
         logger.info(f"CV generated successfully: {cv_id}")
+        
+        # Save data to resume storage service if resume_id is provided
+        if resume_id:
+            try:
+                # Mark resume as completed
+                resume_storage_service.update_resume_data(
+                    resume_id, 
+                    cv_data.dict(), 
+                    is_completed=True
+                )
+                logger.info(f"Resume data saved for ID: {resume_id}")
+            except Exception as e:
+                logger.error(f"Error saving resume data for ID {resume_id}: {str(e)}")
+                # Continue with CV generation even if storage fails
         
         # Return redirect response
         return RedirectResponse(url=f"/cv/{cv_id}", status_code=302)
@@ -381,11 +591,11 @@ def parse_dynamic_form_data(form_data) -> dict:
     }
     # Parse personal info
     structured_data["personal_info"] = {
-        "full_name": form_data.get("full_name", "") or "—",
-        "highest_education": form_data.get("highest_education", "") or "—",
-        "city": form_data.get("city", "") or "—",
-        "phone": form_data.get("phone", "") or "—",
-        "email": form_data.get("email", "") or "notfilled@email.com",
+        "full_name": form_data.get("full_name", ""),
+        "highest_education": form_data.get("highest_education", ""),
+        "city": form_data.get("city", ""),
+        "phone": form_data.get("phone", ""),
+        "email": form_data.get("email", ""),
         "github": form_data.get("github", ""),
         "linkedin": form_data.get("linkedin", "")
     }
@@ -410,13 +620,13 @@ def parse_dynamic_form_data(form_data) -> dict:
         filled_fields = [field for field in ['qualification', 'stream', 'institute', 'year', 'cgpa'] 
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'qualification': entry.get('qualification', '').strip() or '—',
-                'stream': entry.get('stream', '').strip() or '—',
-                'institute': entry.get('institute', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—',
-                'cgpa': entry.get('cgpa', '').strip() or '—'
+                'qualification': entry.get('qualification', '').strip(),
+                'stream': entry.get('stream', '').strip(),
+                'institute': entry.get('institute', '').strip(),
+                'year': entry.get('year', '').strip(),
+                'cgpa': entry.get('cgpa', '').strip()
             }
             structured_data["education"].append(entry)
     
@@ -434,10 +644,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = achievement_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["achievements"].append(entry)
     
@@ -455,10 +665,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = certification_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["certifications"].append(entry)
     
@@ -476,10 +686,10 @@ def parse_dynamic_form_data(form_data) -> dict:
         # Only add if description is filled and not just default values
         entry = publication_data[i]
         if entry.get('description', '').strip() and entry.get('description', '').strip() not in ['', '—', 'notfilled@email.com']:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'description': entry.get('description', '').strip() or '—',
-                'year': entry.get('year', '').strip() or '—'
+                'description': entry.get('description', '').strip(),
+                'year': entry.get('year', '').strip()
             }
             structured_data["publications"].append(entry)
     
@@ -504,11 +714,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'company': entry.get('company', '').strip() or '—',
-                'role': entry.get('role', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'company': entry.get('company', '').strip(),
+                'role': entry.get('role', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': entry.get('points', [])
             }
             structured_data["internships"].append(entry)
@@ -537,9 +747,9 @@ def parse_dynamic_form_data(form_data) -> dict:
             valid_points = [point.strip() for point in entry.get("points", []) 
                           if point.strip() and point.strip() not in ['', '—']]
             entry = {
-                'company': entry.get('company', '').strip() or '—',
-                'position': entry.get('position', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'company': entry.get('company', '').strip(),
+                'position': entry.get('position', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': valid_points
             }
             structured_data["work_experience"].append(entry)
@@ -565,11 +775,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'title': entry.get('title', '').strip() or '—',
-                'type': entry.get('type', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'title': entry.get('title', '').strip(),
+                'type': entry.get('type', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'repo_link': entry.get('repo_link', ''),
                 'points': entry.get('points', [])
             }
@@ -595,11 +805,11 @@ def parse_dynamic_form_data(form_data) -> dict:
                         if entry.get(field, '').strip() and entry.get(field, '').strip() not in ['', '—', 'notfilled@email.com']]
         valid_points = [p for p in entry.get('points', []) if p.strip() and p.strip() not in ['', '—', 'notfilled@email.com']]
         if filled_fields or valid_points:
-            # Ensure all fields have values
+            # Keep actual values without forcing dashes for empty fields
             entry = {
-                'club': entry.get('club', '').strip() or '—',
-                'role': entry.get('role', '').strip() or '—',
-                'duration': entry.get('duration', '').strip() or '—',
+                'club': entry.get('club', '').strip(),
+                'role': entry.get('role', '').strip(),
+                'duration': entry.get('duration', '').strip(),
                 'points': entry.get('points', [])
             }
             structured_data["positions_of_responsibility"].append(entry)
@@ -730,7 +940,10 @@ async def get_cv_pdf(cv_id: str):
         cv_data_dict = cv_document.data.dict()
         logger.info(f"[DEBUG] PDF generation - cv_data_dict keys: {list(cv_data_dict.keys())}")
         logger.info(f"[DEBUG] PDF generation - font_settings: {cv_data_dict.get('font_settings', 'NOT FOUND')}")
-        html_content = render_template('cv_template_pdf.html', cv_data_dict)
+        html_content = render_template('cv_template_pdf.html', {
+            "cv_data": cv_document.data,
+            **cv_data_dict
+        })
         
         # Generate PDF using Playwright
         try:

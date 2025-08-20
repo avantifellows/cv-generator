@@ -132,6 +132,10 @@ Group=cvapp
 WorkingDirectory=/home/cvapp/app
 Environment=PATH=/home/cvapp/app/venv/bin
 Environment=PYTHONPATH=/home/cvapp/app
+Environment=RESUME_STORAGE_TYPE=s3
+Environment=S3_BUCKET_NAME=${app_s3_bucket_name}
+Environment=S3_PREFIX=${app_s3_prefix}
+Environment=AWS_REGION=${aws_region}
 ExecStart=/home/cvapp/app/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=always
 RestartSec=3

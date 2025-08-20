@@ -52,3 +52,14 @@ variable "domain" {
   type        = string
   default     = "cv-generator"
 } 
+
+variable "app_s3_bucket_name" {
+  description = "S3 bucket name for application resume storage"
+  type        = string
+}
+
+variable "app_s3_prefix" {
+  description = "Optional S3 key prefix (e.g., env/)"
+  type        = string
+  default     = ""
+}
