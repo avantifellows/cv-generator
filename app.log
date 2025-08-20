@@ -3382,3 +3382,121 @@ NameError: name 'async_playwright' is not defined
 2025-08-20 20:53:42,978 - main - INFO - Loaded .env file for local development
 2025-08-20 20:53:42,987 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
 2025-08-20 20:53:43,188 - app.services.resume_storage_service - ERROR - Error saving S3 metadata: An error occurred (NoSuchBucket) when calling the PutObject operation: The specified bucket does not exist
+2025-08-20 21:02:36,459 - main - INFO - Loaded .env file for local development
+2025-08-20 21:02:36,468 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-08-20 21:03:13,704 - app.services.resume_storage_service - INFO - [S3] Created new resume with ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:03:13,790 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:03:30,595 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:04:48,966 - main - INFO - [DEBUG] Font settings from form_data:
+2025-08-20 21:04:48,967 - main - INFO -   - title_font_size: 12px
+2025-08-20 21:04:48,968 - main - INFO -   - title_font_color: #4C5196
+2025-08-20 21:04:48,968 - main - INFO -   - body_font_size: 12px
+2025-08-20 21:04:48,968 - main - INFO -   - body_font_color: #000000
+2025-08-20 21:04:48,968 - main - INFO -   - line_height: 1.1
+2025-08-20 21:04:48,968 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-08-20 21:04:48,968 - main - INFO - {'achievements': [],
+ 'certifications': [],
+ 'education': [],
+ 'extracurricular': [],
+ 'font_settings': {'body_font_color': '#000000',
+                   'body_font_size': '12px',
+                   'line_height': '1.1',
+                   'title_font_color': '#4C5196',
+                   'title_font_size': '12px'},
+ 'internships': [],
+ 'personal_info': {'city': '',
+                   'email': '',
+                   'full_name': 'asd',
+                   'github': '',
+                   'highest_education': '',
+                   'linkedin': '',
+                   'phone': ''},
+ 'positions_of_responsibility': [],
+ 'projects': [],
+ 'publications': [],
+ 'summary': '',
+ 'technical_skills': {'database_management': [],
+                      'programming_languages': [],
+                      'tools_and_technologies': [],
+                      'web_technologies': []},
+ 'work_experience': []}
+2025-08-20 21:04:49,089 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:04:49,296 - app.services.resume_storage_service - INFO - [S3] Updated resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:04:56,614 - main - INFO - [DEBUG] Font settings from form_data:
+2025-08-20 21:04:56,614 - main - INFO -   - title_font_size: 12px
+2025-08-20 21:04:56,614 - main - INFO -   - title_font_color: #4C5196
+2025-08-20 21:04:56,614 - main - INFO -   - body_font_size: 12px
+2025-08-20 21:04:56,614 - main - INFO -   - body_font_color: #000000
+2025-08-20 21:04:56,614 - main - INFO -   - line_height: 1.1
+2025-08-20 21:04:56,614 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-08-20 21:04:56,615 - main - INFO - {'achievements': [],
+ 'certifications': [],
+ 'education': [],
+ 'extracurricular': [],
+ 'font_settings': {'body_font_color': '#000000',
+                   'body_font_size': '12px',
+                   'line_height': '1.1',
+                   'title_font_color': '#4C5196',
+                   'title_font_size': '12px'},
+ 'internships': [],
+ 'personal_info': {'city': 'asd',
+                   'email': 'asd',
+                   'full_name': 'asd',
+                   'github': 'asd',
+                   'highest_education': 'asd',
+                   'linkedin': 'asd',
+                   'phone': 'asd'},
+ 'positions_of_responsibility': [],
+ 'projects': [],
+ 'publications': [],
+ 'summary': '',
+ 'technical_skills': {'database_management': [],
+                      'programming_languages': [],
+                      'tools_and_technologies': [],
+                      'web_technologies': []},
+ 'work_experience': []}
+2025-08-20 21:04:56,855 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:04:57,188 - app.services.resume_storage_service - INFO - [S3] Updated resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:03,431 - main - INFO - [DEBUG] Font settings from form_data:
+2025-08-20 21:05:03,432 - main - INFO -   - title_font_size: 12px
+2025-08-20 21:05:03,432 - main - INFO -   - title_font_color: #4C5196
+2025-08-20 21:05:03,432 - main - INFO -   - body_font_size: 12px
+2025-08-20 21:05:03,432 - main - INFO -   - body_font_color: #000000
+2025-08-20 21:05:03,432 - main - INFO -   - line_height: 1.1
+2025-08-20 21:05:03,432 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-08-20 21:05:03,433 - main - INFO - {'achievements': [],
+ 'certifications': [],
+ 'education': [{'cgpa': 'asd',
+                'institute': 'asd',
+                'qualification': 'asd',
+                'stream': 'asd',
+                'year': 'asd'}],
+ 'extracurricular': [],
+ 'font_settings': {'body_font_color': '#000000',
+                   'body_font_size': '12px',
+                   'line_height': '1.1',
+                   'title_font_color': '#4C5196',
+                   'title_font_size': '12px'},
+ 'internships': [],
+ 'personal_info': {'city': 'asd',
+                   'email': 'asd',
+                   'full_name': 'asd',
+                   'github': 'asd',
+                   'highest_education': 'asd',
+                   'linkedin': 'asd',
+                   'phone': 'asd'},
+ 'positions_of_responsibility': [],
+ 'projects': [],
+ 'publications': [],
+ 'summary': 'asdasd',
+ 'technical_skills': {'database_management': [],
+                      'programming_languages': [],
+                      'tools_and_technologies': [],
+                      'web_technologies': []},
+ 'work_experience': []}
+2025-08-20 21:05:03,556 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:03,760 - app.services.resume_storage_service - INFO - [S3] Updated resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:05,574 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:12,146 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:22,627 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-20 21:05:29,319 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8

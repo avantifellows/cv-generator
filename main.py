@@ -235,6 +235,17 @@ async def view_resume(request: Request, resume_id: str):
         raise HTTPException(status_code=500, detail=f"Error viewing resume: {str(e)}")
 
 
+@app.get("/api/resume/{resume_id}/exists")
+async def check_resume_exists(resume_id: str):
+    """Check if a resume exists in storage"""
+    try:
+        exists = resume_storage_service.resume_exists(resume_id)
+        return {"exists": exists}
+    except Exception as e:
+        logger.error(f"Error checking resume existence: {str(e)}")
+        return {"exists": False}
+
+
 @app.post("/resume/{resume_id}/save")
 async def save_resume_draft(request: Request, resume_id: str):
     """Save resume draft data"""

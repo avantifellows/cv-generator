@@ -24,6 +24,7 @@ Internet
     ├── [Nginx] ─── HTTP→HTTPS redirect; Reverse Proxy (Port 443 → 8000)
     │
     └── [FastAPI App] ─── CV Generator Application (Port 8000)
+         └── [S3 Bucket] ─── Resume draft storage (JSON objects)
 ```
 
 ## **Provider Configuration**
@@ -83,6 +84,8 @@ terraform {
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
 | `repo_url` | string | "https://github.com/your-username/cv-generator.git" | Git repository URL to clone |
+| `app_s3_bucket_name` | string | (required) | S3 bucket for resume drafts |
+| `app_s3_prefix` | string | "" | Optional S3 key prefix (e.g., `prod/`) |
 
 ### **Cloudflare Variables**
 | Variable | Type | Default | Description |
@@ -168,8 +171,7 @@ resource "aws_iam_role" "ec2_role" {
 
 ### **Instance Profile**
 - **Purpose**: Allows EC2 instance to assume the IAM role
-- **Future Use**: Ready for AWS service integrations (S3, SES, etc.)
-- **Current Permissions**: Basic EC2 assume role only
+- **Current Permissions**: S3 access for resume storage + EC2 assume role
 
 ## **EC2 Instance Configuration**
 
@@ -192,6 +194,7 @@ resource "aws_iam_role" "ec2_role" {
 - **Logging**: Complete setup process logged to `/var/log/user-data.log`
 - **Idempotent**: Can run multiple times safely without completion markers
 - **SSL Automation**: Automatic Let's Encrypt certificate generation and renewal
+- **Environment Variables**: Injects `RESUME_STORAGE_TYPE=s3`, `S3_BUCKET_NAME`, `S3_PREFIX`, `AWS_REGION` into systemd service
 
 ## **Elastic IP Configuration**
 
@@ -339,6 +342,10 @@ Group=cvapp
 WorkingDirectory=/home/cvapp/app
 Environment=PATH=/home/cvapp/app/venv/bin
 Environment=PYTHONPATH=/home/cvapp/app
+Environment=RESUME_STORAGE_TYPE=s3
+Environment=S3_BUCKET_NAME=${app_s3_bucket_name}
+Environment=S3_PREFIX=${app_s3_prefix}
+Environment=AWS_REGION=${aws_region}
 ExecStart=/home/cvapp/app/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=always
 RestartSec=3
@@ -459,6 +466,8 @@ EOL
 | `application_url` | HTTPS IP access | `https://13.127.123.456` |
 | `custom_domain_url` | HTTPS custom domain | `https://cv-generator.avantifellows.org` |
 | `http_redirect_url` | HTTP URL that redirects to HTTPS | `http://cv-generator.avantifellows.org` |
+| `app_s3_bucket_name` | Application S3 bucket name | `avantifellows-cv-generator-storage` |
+| `app_s3_bucket_arn` | Application S3 bucket ARN | `arn:aws:s3:::avantifellows-cv-generator-storage` |
 
 ## **Deployment Process**
 
@@ -614,9 +623,10 @@ cat /etc/nginx/sites-available/cv-generator
 - ✅ **Security Headers**: HSTS, XSS protection, and content security
 - ✅ **HTTPS Enforcement**: Automatic HTTP to HTTPS redirects
 - ✅ **Idempotent Deployment**: Safe multi-run user data scripts
+- ✅ **S3-backed Resume Storage**: Private bucket with versioning, SSE, and IAM role access; systemd service configured with S3 env vars
 
 ### **Planned Infrastructure Improvements**
-- **S3 Integration**: Persistent storage for generated CVs
+- **S3 Integration**: Persistent storage for generated CVs (drafts done)
 - **Load Balancer**: Multiple instance support
 - **Auto Scaling**: Dynamic capacity management
 - **CDN**: CloudFront for static asset delivery

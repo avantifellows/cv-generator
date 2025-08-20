@@ -24,6 +24,11 @@ playwright>=1.40.0
 pydantic>=2.11.0
 ```
 
+Additional production dependency:
+```
+boto3>=1.34.0
+```
+
 ## **Project Structure**
 
 ```
@@ -72,7 +77,7 @@ cv-generator/
 ### **4. Data Management**
 - **Structured Storage**: JSON format with metadata
 - **UUID-based IDs**: Unique identifiers for each CV
-- **Resume Storage Service**: Drafts stored in `resume_data/` with `resume_metadata.json` tracking
+- **Resume Storage Service**: S3-backed drafts in production; local JSON files in `resume_data/` for development. Metadata tracked via `metadata/resume_metadata.json` object in S3 (best-effort cache)
 - **Client-side Persistence (localStorage)**: Stores the most recent `resume_id` to let users continue where they left off; cookies removed for simplicity
 - **Legacy Support**: Backward compatibility with old data formats
 - **Complete Workflow**: Form → Validation → Storage → Rendering → PDF
@@ -154,6 +159,7 @@ cv-generator/
 - ✅ **Security Headers**: HSTS, XSS protection, content security policies
 - ✅ **Save-status UI**: Added saved/unsaved banner with timestamp, checkmark, and spinner under “Live Preview”
 - ✅ **Removed Placeholder Dashes**: Eliminated auto-insertion of “—”/dummy email; models now default to empty strings and parsers preserve empties
+- ✅ **S3-backed Resume Storage**: Draft persistence moved to S3 in production with environment-based switching; Terraform-managed bucket, encryption, and IAM
 
 ## **Current Development Status**
 
@@ -165,7 +171,7 @@ cv-generator/
 - AWS deployment infrastructure
 - Comprehensive error handling and logging
 - UUID-based resume creation/editing and view-only sharing
-- Resume drafts persisted via `ResumeStorageService` in `resume_data/`
+- Resume drafts persisted via `ResumeStorageService` (S3 in production; local in development)
 
 ### **Planned Enhancements** (from TODOs)
 - AWS S3 integration for persistent storage of generated CVs and drafts
