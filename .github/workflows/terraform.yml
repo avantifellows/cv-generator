@@ -92,7 +92,9 @@ jobs:
       id: plan
       run: |
         terraform plan -input=false -lock-timeout=5m -detailed-exitcode
-        echo "plan_exit_code=$?" >> $GITHUB_OUTPUT
+        PLAN_EXIT_CODE=$?
+        echo "plan_exit_code=$PLAN_EXIT_CODE" >> $GITHUB_OUTPUT
+        exit $PLAN_EXIT_CODE
       env:
         TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
         TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
