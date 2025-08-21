@@ -86,6 +86,7 @@ terraform {
 | `repo_url` | string | "https://github.com/your-username/cv-generator.git" | Git repository URL to clone |
 | `app_s3_bucket_name` | string | (required) | S3 bucket for resume drafts |
 | `app_s3_prefix` | string | "" | Optional S3 key prefix (e.g., `prod/`) |
+| `share_token_key` | string | (required, sensitive) | Secret used to generate reversible, tokenized share URLs |
 
 ### **Cloudflare Variables**
 | Variable | Type | Default | Description |
@@ -194,7 +195,7 @@ resource "aws_iam_role" "ec2_role" {
 - **Logging**: Complete setup process logged to `/var/log/user-data.log`
 - **Idempotent**: Can run multiple times safely without completion markers
 - **SSL Automation**: Automatic Let's Encrypt certificate generation and renewal
-- **Environment Variables**: Injects `RESUME_STORAGE_TYPE=s3`, `S3_BUCKET_NAME`, `S3_PREFIX`, `AWS_REGION` into systemd service
+- **Environment Variables**: Injects `RESUME_STORAGE_TYPE=s3`, `S3_BUCKET_NAME`, `S3_PREFIX`, `AWS_REGION`, `SHARE_TOKEN_KEY` into systemd service
 
 ## **Elastic IP Configuration**
 

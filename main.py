@@ -31,6 +31,7 @@ from app.services.cv_service import CVService
 from app.services.resume_storage_service import create_resume_storage_service
 from app.core.exceptions import CVGenerationError, CVNotFoundError, TemplateError, PDFGenerationError
 from app.core.logging import setup_logging, get_logger
+from app.core.id_codec import encode_share_token, decode_share_token
 
 # Setup logging
 setup_logging(level="INFO")
@@ -165,29 +166,41 @@ async def resume_form(request: Request, resume_id: str):
             resume_data = resume_storage_service.get_resume_data(resume_id)
             if resume_data and resume_data.get("data"):
                 # Resume exists with data - show in edit mode
+                base_url = str(request.base_url).rstrip('/')
+                share_token = encode_share_token(resume_id)
+                share_url = f"{base_url}/v/{share_token}"
                 response = templates.TemplateResponse("form.html", {
                     "request": request, 
                     "form_data": resume_data["data"],
                     "resume_id": resume_id,
                     "is_edit_mode": True,
-                    "is_completed": resume_data.get("is_completed", False)
+                    "is_completed": resume_data.get("is_completed", False),
+                    "share_url": share_url
                 })
             else:
                 # Resume exists but no data - show empty form
+                base_url = str(request.base_url).rstrip('/')
+                share_token = encode_share_token(resume_id)
+                share_url = f"{base_url}/v/{share_token}"
                 response = templates.TemplateResponse("form.html", {
                     "request": request,
                     "resume_id": resume_id,
                     "is_edit_mode": False,
-                    "is_completed": False
+                    "is_completed": False,
+                    "share_url": share_url
                 })
         else:
             # Resume doesn't exist - create new shell and show empty form
             resume_storage_service.create_new_resume(resume_id=resume_id)
+            base_url = str(request.base_url).rstrip('/')
+            share_token = encode_share_token(resume_id)
+            share_url = f"{base_url}/v/{share_token}"
             response = templates.TemplateResponse("form.html", {
                 "request": request,
                 "resume_id": resume_id,
                 "is_edit_mode": False,
-                "is_completed": False
+                "is_completed": False,
+                "share_url": share_url
             })
 
         return response
@@ -220,12 +233,15 @@ async def view_resume(request: Request, resume_id: str):
         # Render the resume in view-only mode
         cv_data = CVData(**resume_data["data"])
         
+        # Get base URL for toast link
+        base_url = str(request.base_url).rstrip('/')
         return templates.TemplateResponse("cv_template.html", {
             "request": request,
             "cv_data": cv_data,
             **cv_data.dict(),
             "is_view_only": True,
-            "resume_id": resume_id
+            "resume_id": resume_id,
+            "base_url": base_url
         })
         
     except HTTPException:
@@ -233,6 +249,34 @@ async def view_resume(request: Request, resume_id: str):
     except Exception as e:
         logger.error(f"Error viewing resume {resume_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error viewing resume: {str(e)}")
+
+
+@app.get("/v/{token}", response_class=HTMLResponse)
+async def view_resume_token(request: Request, token: str):
+    try:
+        resume_id = decode_share_token(token)
+        if not resume_storage_service.resume_exists(resume_id):
+            raise HTTPException(status_code=404, detail="Resume not found")
+
+        resume_data = resume_storage_service.get_resume_data(resume_id)
+        if not resume_data or not resume_data.get("data"):
+            raise HTTPException(status_code=404, detail="Resume data not found")
+
+        cv_data = CVData(**resume_data["data"])
+        base_url = str(request.base_url).rstrip('/')
+        return templates.TemplateResponse("cv_template.html", {
+            "request": request,
+            "cv_data": cv_data,
+            **cv_data.dict(),
+            "is_view_only": True,
+            "resume_id": resume_id,
+            "base_url": base_url
+        })
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error viewing resume via token {token}: {str(e)}")
+        raise HTTPException(status_code=400, detail="Invalid or expired share link")
 
 
 @app.get("/api/v1/resume/{resume_id}/exists")
@@ -276,25 +320,14 @@ async def save_resume_draft(request: Request, resume_id: str):
 
 @app.get("/resume/{resume_id}/share")
 async def get_shareable_link(request: Request, resume_id: str):
-    """Get shareable link for completed resume"""
+    """Get shareable link for a resume as JSON (tokenized)."""
     try:
         if not resume_storage_service.resume_exists(resume_id):
             raise HTTPException(status_code=404, detail="Resume not found")
-        
-        resume_data = resume_storage_service.get_resume_data(resume_id)
-        if not resume_data:
-            raise HTTPException(status_code=400, detail="Resume not found")
-        
-        # Generate shareable link
         base_url = str(request.base_url).rstrip('/')
-        shareable_url = f"{base_url}/resume/{resume_id}/view"
-        
-        return {
-            "status": "success",
-            "shareable_url": shareable_url,
-            "resume_id": resume_id
-        }
-        
+        share_token = encode_share_token(resume_id)
+        shareable_url = f"{base_url}/v/{share_token}"
+        return {"status": "success", "shareable_url": shareable_url, "resume_id": resume_id}
     except HTTPException:
         raise
     except Exception as e:

@@ -2852,7 +2852,7 @@
         `;
         
         const currentUrl = window.location.href;
-        const shareUrl = currentUrl + '/view';
+        const shareUrl = '{{ share_url if share_url else ("" + window.location.href + "/view") }}';
         
         resumeInfo.innerHTML = `
             <div style="margin-bottom: 10px;">
@@ -2919,11 +2919,10 @@
         if (btn) { btn.disabled = true; btn.setAttribute('data-loading', 'true'); if (!btn.querySelector('.button-spinner')) { const sp=document.createElement('span'); sp.className='button-spinner'; btn.appendChild(sp);} }
         startGlobalProgress();
         
-        // First, save the current draft
+        // First, save the current draft, then copy tokenized share URL provided by server
         autoSaveDraft().then(() => {
-            // Then copy the share URL to clipboard
-            const shareUrl = window.location.href + '/view';
-            copyToClipboard(shareUrl);
+            const shareUrl = '{{ share_url if share_url else "" }}';
+            copyToClipboard(shareUrl || (window.location.href + '/view'));
         }).finally(() => {
             if (btn) { btn.disabled = false; btn.removeAttribute('data-loading'); const sp=btn.querySelector('.button-spinner'); if (sp) sp.remove(); }
             endGlobalProgress();

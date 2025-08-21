@@ -63,3 +63,9 @@ variable "app_s3_prefix" {
   type        = string
   default     = ""
 }
+
+variable "share_token_key" {
+  description = "Secret key for share token encryption (keep private and stable)"
+  type        = string
+  sensitive   = true
+}

@@ -149,6 +149,7 @@ Environment=RESUME_STORAGE_TYPE=s3
 Environment=S3_BUCKET_NAME=${app_s3_bucket_name}
 Environment=S3_PREFIX=${app_s3_prefix}
 Environment=AWS_REGION=${aws_region}
+Environment=SHARE_TOKEN_KEY=${share_token_key}
 ExecStart=/home/cvapp/app/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=always
 RestartSec=3

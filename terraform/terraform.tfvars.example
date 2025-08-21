@@ -16,3 +16,10 @@ cloudflare_email = "your-email@example.com"
 cloudflare_api_key = "your-cloudflare-api-key"
 cloudflare_zone_name = "avantifellows.org"
 domain = "cv-generator" 
+
+# S3 configuration for the app
+app_s3_bucket_name = "your-cv-generator-bucket"
+app_s3_prefix      = "prod/"
+
+# Share token encryption key (use a long random secret)
+share_token_key = "your-long-random-secret-key-for-share-url-encryption"

@@ -208,6 +208,7 @@ locals {
     app_s3_bucket_name = var.app_s3_bucket_name
     app_s3_prefix      = var.app_s3_prefix
     aws_region         = var.aws_region
+    share_token_key    = var.share_token_key
   }))
 }
 

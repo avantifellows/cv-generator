@@ -22,6 +22,7 @@ aiofiles==23.2.1
 python-dotenv==1.0.0
 playwright>=1.40.0
 pydantic>=2.11.0
+cryptography>=42.0.0
 ```
 
 Additional production dependency:
@@ -115,16 +116,17 @@ cv-generator/
 - `GET /resume/` - Redirects to `/` to avoid 404 when missing an ID
 - `GET /resume/{resume_id}` - Edit form for that resume (draft-aware)
 - `POST /resume/{resume_id}/save` - Save draft data
-- `GET /resume/{resume_id}/view` - View-only mode for sharing
-- `GET /resume/{resume_id}/share` - Returns shareable link JSON
+- `GET /v/{token}` - View-only mode via tokenized link (no raw UUID in URL)
+- `GET /resume/{resume_id}/view` - Legacy view URL (still supported)
+- `GET /resume/{resume_id}/share` - Returns shareable link JSON (points to `/v/{token}`)
 - `GET /test` - Pre-filled test form
 - `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
 - `GET /cv/{cv_id}` - View generated CV with download button
 - `GET /cv/{cv_id}/html` - Raw HTML CV
 - `GET /cv/{cv_id}/pdf` - On-demand PDF generation via Playwright
-  
+
   Notes:
-  - The UI “Copy Share URL” action copies the `/resume/{resume_id}/view` link directly. The `/share` JSON endpoint is provided for API integrations.
+  - The UI “Copy Share URL” action uses the server-provided tokenized link (`/v/{token}`). The `/share` JSON endpoint is provided for API integrations.
 
 ### **API Endpoints**
 - `GET /api/v1/cvs` - List all CVs
@@ -168,6 +170,7 @@ cv-generator/
 - ✅ **Removed Placeholder Dashes**: Eliminated auto-insertion of “—”/dummy email; models now default to empty strings and parsers preserve empties
 - ✅ **S3-backed Resume Storage**: Draft persistence moved to S3 in production with environment-based switching; Terraform-managed bucket, encryption, and IAM
 - ✅ **Subtle Loading UX**: Global top progress bar on form and landing pages; buttons show inline spinners and disable during autosave/copy/share/PDF generation; non-intrusive visuals
+- ✅ **Tokenized Share Links**: Share URLs use `/v/{token}` derived from a server-side secret; raw UUIDs are never exposed in shared links
 
 ## **Current Development Status**
 
@@ -217,6 +220,8 @@ The application uses structured JSON format:
 - **Professional Styling**: Academic resume format with proper typography
 - **Subtle Global Progress Bar**: 2px top-edge bar during async actions (enabled in `form.html` and `root_choice.html`)
 - **Action Button Feedback**: Buttons disable and show tiny spinners during operations (copy, share, PDF)
+ - **Tokenized Share URL**: Form receives a precomputed `share_url` from the server; frontend never handles keys or encryption
+ - **View-only Toast**: Minimal top-right toast on shared views linking back to the homepage; no resume ID is displayed
 
 ## **Service Layer Architecture**
 
@@ -255,6 +260,11 @@ The application uses structured JSON format:
   - Fields default to empty strings instead of placeholder symbols
   - Validators trim whitespace but do not force placeholder values
   - Rendering logic only displays fields with actual content
+
+### **ID Codec Utilities** (`app/core/id_codec.py`)
+- `encode_share_token(resume_id)` - Deterministically maps UUID → short token (AES-128 ECB over a single 16-byte block, base64url without padding)
+- `decode_share_token(token)` - Reverses token → UUID using server-side key
+- Key via `SHARE_TOKEN_KEY` environment variable; no DB mapping needed
 
 ## **Error Handling & Logging**
 
