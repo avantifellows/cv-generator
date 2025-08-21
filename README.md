@@ -104,7 +104,6 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 - `GET /resume/{resume_id}` - Edit form for that resume (draft-aware)
 - `POST /resume/{resume_id}/save` - Save draft data
 - `GET /resume/{resume_id}/view` - View-only mode for sharing
-- `GET /resume/{resume_id}/share` - Returns shareable link JSON
 - `GET /test` - Pre-filled test form
 - `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
 - `GET /cv/{cv_id}` - View generated CV with download button

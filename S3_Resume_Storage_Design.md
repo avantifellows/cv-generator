@@ -23,7 +23,6 @@ This document proposes migrating resume draft persistence from local JSON files 
   - `GET /resume/{resume_id}` (exists, load or create shell)
   - `POST /resume/{resume_id}/save` (update draft)
   - `GET /resume/{resume_id}/view` (view-only mode)
-  - `GET /resume/{resume_id}/share` (share link)
 - Factory function `create_resume_storage_service(base_path, storage_type)` exists; `"s3"` branch is unimplemented.
 
 ## Proposed Architecture

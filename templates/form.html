@@ -150,6 +150,7 @@
         
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
+            .home-button { top: 12px; left: 12px; padding: 6px 10px; font-size: 11px; }
             body {
                 padding: 10px;
             }
@@ -493,10 +494,37 @@
             transform: translateY(0);
         }
     }
+    
+    /* Home button (fixed top-left) */
+    .home-button {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        background-color: #6c757d;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        z-index: 2000;
+    }
+    .home-button:hover { background-color: #5a6268; }
     </style>
 </head>
 <body>
     <div id="global-progress-bar"></div>
+    <!-- Home Button -->
+    <a href="/" class="home-button" aria-label="Home">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        Home
+    </a>
     <div class="main-flex">
         <div class="form-section">
     <div class="container">
@@ -2918,12 +2946,13 @@
         const btn = document.getElementById('copy-share-btn');
         if (btn) { btn.disabled = true; btn.setAttribute('data-loading', 'true'); if (!btn.querySelector('.button-spinner')) { const sp=document.createElement('span'); sp.className='button-spinner'; btn.appendChild(sp);} }
         startGlobalProgress();
-        
-        // First, save the current draft, then copy tokenized share URL provided by server
-        autoSaveDraft().then(() => {
-            const shareUrl = '{{ share_url if share_url else "" }}';
-            copyToClipboard(shareUrl || (window.location.href + '/view'));
-        }).finally(() => {
+
+        // Copy the tokenized share URL immediately for snappy UX
+        const shareUrl = '{{ share_url if share_url else "" }}';
+        copyToClipboard(shareUrl || (window.location.href + '/view'));
+
+        // Then autosave in the background; do not block the user
+        autoSaveDraft().catch(() => {/* ignore */}).finally(() => {
             if (btn) { btn.disabled = false; btn.removeAttribute('data-loading'); const sp=btn.querySelector('.button-spinner'); if (sp) sp.remove(); }
             endGlobalProgress();
         });

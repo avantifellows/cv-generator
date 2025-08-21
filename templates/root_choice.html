@@ -63,7 +63,7 @@
             .then(function(json) {
               if (json && json.exists) {
                 continueBtn.disabled = false;
-                hint.textContent = 'Found a recent resume. You can continue or start a new one.';
+                hint.textContent = '';
               } else {
                 // Clear invalid localStorage and start new
                 try {

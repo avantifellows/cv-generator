@@ -118,7 +118,6 @@ cv-generator/
 - `POST /resume/{resume_id}/save` - Save draft data
 - `GET /v/{token}` - View-only mode via tokenized link (no raw UUID in URL)
 - `GET /resume/{resume_id}/view` - Legacy view URL (still supported)
-- `GET /resume/{resume_id}/share` - Returns shareable link JSON (points to `/v/{token}`)
 - `GET /test` - Pre-filled test form
 - `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
 - `GET /cv/{cv_id}` - View generated CV with download button

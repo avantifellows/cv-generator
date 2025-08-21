@@ -4,34 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - {{personal_info.full_name}}</title>
-    {% if is_view_only %}
-    <style>
-        .view-only-banner {
-            background-color: #e3f2fd;
-            border: 1px solid #2196f3;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .view-only-banner h2 {
-            margin: 0 0 10px 0;
-            color: #1976d2;
-        }
-        .view-only-banner p {
-            margin: 0 0 15px 0;
-            color: #424242;
-        }
-        .view-only-banner .resume-id {
-            background-color: #f5f5f5;
-            padding: 8px 12px;
-            border-radius: 3px;
-            font-family: monospace;
-            margin: 10px 0;
-        }
-    </style>
-    {% endif %}
+    {# No view-only banner in PDF; shared views should remain clean #}
     <style>
         body {
             font-family: 'Times New Roman', Times, serif, sans-serif;
@@ -241,18 +214,7 @@
     </style>
 </head>
 <body>
-    {% if is_view_only %}
-                    <div class="view-only-banner">
-                    <h2>📄 Resume Preview</h2>
-                    <p>This is a view-only version of the resume. The original creator can edit this resume using the edit URL.</p>
-                    <div class="resume-id">
-                        <strong>Resume ID:</strong> {{ resume_id }}
-                    </div>
-                    <p style="font-size: 14px; color: #666;">
-                        💡 <strong>Note:</strong> This is a shared resume. To create your own resume, visit the main CV Generator.
-                    </p>
-                </div>
-    {% endif %}
+    {# No view-only banner in PDF body #}
     
     <div class="pdf-fit-wrapper">
         <div class="header">

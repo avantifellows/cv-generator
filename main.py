@@ -318,21 +318,7 @@ async def save_resume_draft(request: Request, resume_id: str):
         raise HTTPException(status_code=500, detail=f"Error saving draft: {str(e)}")
 
 
-@app.get("/resume/{resume_id}/share")
-async def get_shareable_link(request: Request, resume_id: str):
-    """Get shareable link for a resume as JSON (tokenized)."""
-    try:
-        if not resume_storage_service.resume_exists(resume_id):
-            raise HTTPException(status_code=404, detail="Resume not found")
-        base_url = str(request.base_url).rstrip('/')
-        share_token = encode_share_token(resume_id)
-        shareable_url = f"{base_url}/v/{share_token}"
-        return {"status": "success", "shareable_url": shareable_url, "resume_id": resume_id}
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error generating shareable link for resume {resume_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating shareable link: {str(e)}")
+## Removed: /resume/{resume_id}/share endpoint (unused)
 
 
 
