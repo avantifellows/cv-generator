@@ -66,6 +66,10 @@ cv-generator/
   - Hidden until the user makes their first change
 - **Data Validation**: Client and server-side validation
 - **Test Data Integration**: Pre-filled form for testing
+- **Subtle Loading UX**: 
+  - Thin top-edge progress bar during async actions (autosave, copy/share, PDF download, homepage resume validation)
+  - Buttons show tiny inline spinners and disable state to prevent spamming during operations
+  - Minimal, non-blocking visuals that do not interrupt editing
 
 ### **3. Professional CV Output**
 - **Dual Formats**: HTML for web viewing + PDF for download
@@ -118,6 +122,9 @@ cv-generator/
 - `GET /cv/{cv_id}` - View generated CV with download button
 - `GET /cv/{cv_id}/html` - Raw HTML CV
 - `GET /cv/{cv_id}/pdf` - On-demand PDF generation via Playwright
+  
+  Notes:
+  - The UI “Copy Share URL” action copies the `/resume/{resume_id}/view` link directly. The `/share` JSON endpoint is provided for API integrations.
 
 ### **API Endpoints**
 - `GET /api/v1/cvs` - List all CVs
@@ -160,6 +167,7 @@ cv-generator/
 - ✅ **Save-status UI**: Added saved/unsaved banner with timestamp, checkmark, and spinner under “Live Preview”
 - ✅ **Removed Placeholder Dashes**: Eliminated auto-insertion of “—”/dummy email; models now default to empty strings and parsers preserve empties
 - ✅ **S3-backed Resume Storage**: Draft persistence moved to S3 in production with environment-based switching; Terraform-managed bucket, encryption, and IAM
+- ✅ **Subtle Loading UX**: Global top progress bar on form and landing pages; buttons show inline spinners and disable during autosave/copy/share/PDF generation; non-intrusive visuals
 
 ## **Current Development Status**
 
@@ -207,6 +215,8 @@ The application uses structured JSON format:
 - **Jinja2 Filters**: Smart filtering of empty entries
 - **Responsive Design**: Works on desktop and mobile
 - **Professional Styling**: Academic resume format with proper typography
+- **Subtle Global Progress Bar**: 2px top-edge bar during async actions (enabled in `form.html` and `root_choice.html`)
+- **Action Button Feedback**: Buttons disable and show tiny spinners during operations (copy, share, PDF)
 
 ## **Service Layer Architecture**
 
@@ -363,6 +373,7 @@ sudo systemctl restart cv-generator
 - UUID-based routing and draft save via `/resume/{resume_id}/save`
 - Supports both legacy flat format and new structured format
 - Comprehensive client-side validation
+- Subtle loading indicators (top progress bar + button spinners/disable) to avoid spamming actions and provide feedback
 
 ### **Security Considerations**
 - ✅ **Input validation**: Pydantic models with comprehensive validation

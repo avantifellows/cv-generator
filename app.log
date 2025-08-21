@@ -3500,3 +3500,92 @@ NameError: name 'async_playwright' is not defined
 2025-08-20 21:05:12,146 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
 2025-08-20 21:05:22,627 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
 2025-08-20 21:05:29,319 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 3d216a61-d55f-4812-8b02-08289a7f22d8
+2025-08-21 03:35:03,775 - main - INFO - Loaded .env file for local development
+2025-08-21 03:35:03,787 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-08-21 03:35:12,888 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 1697a819-7d00-4e81-97d4-b361954c4eb1
+2025-08-21 03:36:13,975 - app.services.resume_storage_service - INFO - [S3] Created new resume with ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 03:36:14,072 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:05,407 - main - INFO - Loaded .env file for local development
+2025-08-21 13:55:05,417 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-08-21 13:55:23,372 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:25,574 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:30,086 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:33,657 - main - INFO - [DEBUG] Font settings from form_data:
+2025-08-21 13:55:33,657 - main - INFO -   - title_font_size: 12px
+2025-08-21 13:55:33,657 - main - INFO -   - title_font_color: #4C5196
+2025-08-21 13:55:33,657 - main - INFO -   - body_font_size: 12px
+2025-08-21 13:55:33,658 - main - INFO -   - body_font_color: #000000
+2025-08-21 13:55:33,658 - main - INFO -   - line_height: 1.1
+2025-08-21 13:55:33,658 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-08-21 13:55:33,658 - main - INFO - {'achievements': [],
+ 'certifications': [],
+ 'education': [],
+ 'extracurricular': [],
+ 'font_settings': {'body_font_color': '#000000',
+                   'body_font_size': '12px',
+                   'line_height': '1.1',
+                   'title_font_color': '#4C5196',
+                   'title_font_size': '12px'},
+ 'internships': [],
+ 'personal_info': {'city': '',
+                   'email': '',
+                   'full_name': '',
+                   'github': '',
+                   'highest_education': '',
+                   'linkedin': '',
+                   'phone': ''},
+ 'positions_of_responsibility': [],
+ 'projects': [],
+ 'publications': [],
+ 'summary': '',
+ 'technical_skills': {'database_management': [],
+                      'programming_languages': [],
+                      'tools_and_technologies': [],
+                      'web_technologies': []},
+ 'work_experience': []}
+2025-08-21 13:55:33,700 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:33,926 - app.services.resume_storage_service - INFO - [S3] Updated resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:55:56,069 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:56:03,335 - main - INFO - [DEBUG] Font settings from form_data:
+2025-08-21 13:56:03,335 - main - INFO -   - title_font_size: 12px
+2025-08-21 13:56:03,335 - main - INFO -   - title_font_color: #4C5196
+2025-08-21 13:56:03,335 - main - INFO -   - body_font_size: 12px
+2025-08-21 13:56:03,335 - main - INFO -   - body_font_color: #000000
+2025-08-21 13:56:03,335 - main - INFO -   - line_height: 1.1
+2025-08-21 13:56:03,335 - main - INFO - [DEBUG] Structured data after parsing dynamic form:
+2025-08-21 13:56:03,335 - main - INFO - {'achievements': [],
+ 'certifications': [],
+ 'education': [],
+ 'extracurricular': [],
+ 'font_settings': {'body_font_color': '#000000',
+                   'body_font_size': '12px',
+                   'line_height': '1.1',
+                   'title_font_color': '#4C5196',
+                   'title_font_size': '12px'},
+ 'internships': [],
+ 'personal_info': {'city': '',
+                   'email': '',
+                   'full_name': '',
+                   'github': '',
+                   'highest_education': '',
+                   'linkedin': '',
+                   'phone': ''},
+ 'positions_of_responsibility': [],
+ 'projects': [],
+ 'publications': [],
+ 'summary': '',
+ 'technical_skills': {'database_management': [],
+                      'programming_languages': [],
+                      'tools_and_technologies': [],
+                      'web_technologies': []},
+ 'work_experience': []}
+2025-08-21 13:56:03,491 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 13:56:03,716 - app.services.resume_storage_service - INFO - [S3] Updated resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:05:41,690 - main - INFO - Loaded .env file for local development
+2025-08-21 14:05:41,701 - botocore.credentials - INFO - Found credentials in shared credentials file: ~/.aws/credentials
+2025-08-21 14:05:45,297 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:06:05,907 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:06:18,951 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:06:21,107 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:06:22,439 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5
+2025-08-21 14:06:25,924 - app.services.resume_storage_service - INFO - [S3] Retrieved resume data for ID: 6292c27b-328a-4879-86f7-a5333bb173c5

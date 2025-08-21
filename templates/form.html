@@ -439,6 +439,39 @@
         animation: spin 1s linear infinite;
         margin-right: 6px;
     }
+    /* Button loading state */
+    button[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+    button[data-loading="true"] {
+        opacity: 0.8;
+    }
+    .button-spinner {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(255,255,255,0.35);
+        border-top-color: #ffffff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-left: 8px;
+        vertical-align: -2px;
+    }
+
+    /* Global top loading bar */
+    #global-progress-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, #4C5196, #6f74c9);
+        box-shadow: 0 0 8px rgba(76,81,150,0.3);
+        z-index: 99998;
+        transition: width 0.2s ease-out, opacity 0.3s ease;
+        opacity: 0;
+    }
     
     @keyframes spin {
         0% { transform: rotate(0deg); }
@@ -463,6 +496,7 @@
     </style>
 </head>
 <body>
+    <div id="global-progress-bar"></div>
     <div class="main-flex">
         <div class="form-section">
     <div class="container">
@@ -958,11 +992,11 @@
             <!-- Form Action Buttons -->
             <div style="display: flex; gap: 15px; margin-top: 30px;">
                 {% if resume_id %}
-                <button type="button" onclick="copyEditUrl()" style="flex: 1; background-color: #2196f3; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                <button type="button" id="copy-edit-btn" onclick="copyEditUrl()" style="flex: 1; background-color: #2196f3; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
                     📋 Copy Edit URL
                 </button>
                 {% endif %}
-                <button type="button" onclick="shareResume()" style="flex: 1; background-color: #4caf50; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
+                <button type="button" id="copy-share-btn" onclick="shareResume()" style="flex: 1; background-color: #4caf50; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
                     📋 Copy Share URL
                 </button>
             </div>
@@ -2395,6 +2429,12 @@
     
     // Download PDF functionality
     function downloadPDF() {
+        const btns = [
+            document.getElementById('download-pdf-btn'),
+            document.getElementById('download-pdf-bottom-btn')
+        ].filter(Boolean);
+        btns.forEach(b => { b.disabled = true; b.setAttribute('data-loading', 'true'); if (!b.querySelector('.button-spinner')) { const sp=document.createElement('span'); sp.className='button-spinner'; b.appendChild(sp);} });
+        startGlobalProgress();
         // Check if form has data
         const formData = new FormData(document.getElementById('cvForm'));
         let hasData = false;
@@ -2407,6 +2447,8 @@
         
         if (!hasData) {
             alert('Please fill in at least your name before downloading the PDF.');
+            btns.forEach(b => { b.disabled = false; b.removeAttribute('data-loading'); const sp=b.querySelector('.button-spinner'); if (sp) sp.remove(); });
+            failGlobalProgress();
             return;
         }
         
@@ -2429,10 +2471,14 @@
         // Submit the form
         form.submit();
         
-        // Restore original form attributes
-        form.action = originalAction;
-        form.target = originalTarget;
-        form.removeChild(pdfInput);
+        // Restore original form attributes and button states shortly after submit
+        setTimeout(() => {
+            form.action = originalAction;
+            form.target = originalTarget;
+            form.removeChild(pdfInput);
+            btns.forEach(b => { b.disabled = false; b.removeAttribute('data-loading'); const sp=b.querySelector('.button-spinner'); if (sp) sp.remove(); });
+            endGlobalProgress();
+        }, 800);
     }
 
     // Helper functions for getting form data
@@ -2742,6 +2788,7 @@
         if (!currentResumeId) return Promise.resolve();
         
         try {
+            startGlobalProgress();
             const form = document.getElementById('cvForm');
             const formData = new FormData(form);
             
@@ -2753,13 +2800,16 @@
             if (response.ok) {
                 console.log('Draft saved successfully');
                 showSaveStatus('saved');
+                endGlobalProgress();
                 return Promise.resolve();
             } else {
                 console.error('Failed to save draft');
+                failGlobalProgress();
                 return Promise.reject('Failed to save draft');
             }
         } catch (error) {
             console.error('Error saving draft:', error);
+            failGlobalProgress();
             return Promise.reject(error);
         }
     }
@@ -2854,19 +2904,29 @@
     
     // Copy edit URL function
     function copyEditUrl() {
+        const btn = document.getElementById('copy-edit-btn');
+        if (btn) { btn.disabled = true; btn.setAttribute('data-loading', 'true'); if (!btn.querySelector('.button-spinner')) { const sp=document.createElement('span'); sp.className='button-spinner'; btn.appendChild(sp);} }
         const currentUrl = window.location.href;
+        startGlobalProgress();
         copyToClipboard(currentUrl);
+        setTimeout(() => { if (btn) { btn.disabled = false; btn.removeAttribute('data-loading'); const sp=btn.querySelector('.button-spinner'); if (sp) sp.remove(); } endGlobalProgress(); }, 600);
     }
     
     // Share resume function
     function shareResume() {
         if (!currentResumeId) return;
+        const btn = document.getElementById('copy-share-btn');
+        if (btn) { btn.disabled = true; btn.setAttribute('data-loading', 'true'); if (!btn.querySelector('.button-spinner')) { const sp=document.createElement('span'); sp.className='button-spinner'; btn.appendChild(sp);} }
+        startGlobalProgress();
         
         // First, save the current draft
         autoSaveDraft().then(() => {
             // Then copy the share URL to clipboard
             const shareUrl = window.location.href + '/view';
             copyToClipboard(shareUrl);
+        }).finally(() => {
+            if (btn) { btn.disabled = false; btn.removeAttribute('data-loading'); const sp=btn.querySelector('.button-spinner'); if (sp) sp.remove(); }
+            endGlobalProgress();
         });
     }
     
@@ -2889,6 +2949,47 @@
             localStorage.removeItem('lastResumeTimestamp');
         } catch (e) { /* ignore */ }
         window.location.href = '/?new=1';
+    }
+
+    // Global progress bar controller
+    let globalProgressTimer = null;
+    function startGlobalProgress() {
+        const bar = document.getElementById('global-progress-bar');
+        if (!bar) return;
+        clearTimeout(globalProgressTimer);
+        bar.style.opacity = '1';
+        bar.style.width = '0%';
+        // Simulate progressive loading: jump quickly to 70%, then slow
+        requestAnimationFrame(() => {
+            bar.style.width = '30%';
+            globalProgressTimer = setTimeout(() => {
+                bar.style.width = '70%';
+            }, 200);
+        });
+    }
+    function endGlobalProgress() {
+        const bar = document.getElementById('global-progress-bar');
+        if (!bar) return;
+        clearTimeout(globalProgressTimer);
+        bar.style.width = '100%';
+        globalProgressTimer = setTimeout(() => {
+            bar.style.opacity = '0';
+            // Reset after fade to allow next cycle
+            setTimeout(() => { bar.style.width = '0%'; }, 300);
+        }, 150);
+    }
+    function failGlobalProgress() {
+        const bar = document.getElementById('global-progress-bar');
+        if (!bar) return;
+        clearTimeout(globalProgressTimer);
+        // Flash red briefly to indicate failure, then hide
+        const original = bar.style.background;
+        bar.style.background = 'linear-gradient(90deg, #e11d48, #fb7185)';
+        bar.style.width = '100%';
+        setTimeout(() => {
+            bar.style.opacity = '0';
+            setTimeout(() => { bar.style.width = '0%'; bar.style.background = original || 'linear-gradient(90deg, #4C5196, #6f74c9)'; }, 300);
+        }, 200);
     }
     </script>
 </body>

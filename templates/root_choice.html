@@ -13,13 +13,17 @@
     .btn.secondary { background: #6c757d; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-    .hint { font-size: 12px; color: #666; margin-top: 14px; }
+    .hint { font-size: 12px; color: #666; margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; }
+    .small-spinner { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.15); border-top-color: #4C5196; animation: spin 1s linear infinite; }
+    #global-progress-bar { position: fixed; top: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg, #4C5196, #6f74c9); box-shadow: 0 0 8px rgba(76,81,150,0.3); z-index: 99998; transition: width 0.2s ease-out, opacity 0.3s ease; opacity: 0; }
+    @keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
   </style>
   <noscript>
     <meta http-equiv="refresh" content="0; url=/?new=1" />
   </noscript>
 </head>
 <body>
+  <div id="global-progress-bar"></div>
   <div class="card">
     <h1>Welcome to CV Generator</h1>
     <p>Pick an option to get started.</p>
@@ -52,6 +56,8 @@
       if (lastId) {
         // Validate with server before enabling continue button
         try {
+          hint.innerHTML = '<span class="small-spinner"></span> Checking your last resume...';
+          startGlobalProgress();
           fetch('/api/v1/resume/' + encodeURIComponent(lastId) + '/exists', { cache: 'no-store' })
             .then(function(resp) { return resp.json(); })
             .then(function(json) {
@@ -66,12 +72,15 @@
                 } catch (e) { /* ignore */ }
                 window.location.replace('/?new=1');
               }
+              endGlobalProgress();
             })
             .catch(function() {
               // On network error, fallback to new to avoid a broken continue flow
+              failGlobalProgress();
               window.location.replace('/?new=1');
             });
         } catch (e) {
+          failGlobalProgress();
           window.location.replace('/?new=1');
         }
       } else {
@@ -87,6 +96,20 @@
       newBtn.addEventListener('click', function () {
         window.location.href = '/?new=1';
       });
+
+      function startGlobalProgress() {
+        var bar = document.getElementById('global-progress-bar');
+        if (!bar) return; bar.style.opacity = '1'; bar.style.width = '0%';
+        requestAnimationFrame(function(){ bar.style.width = '30%'; setTimeout(function(){ bar.style.width = '70%'; }, 200); });
+      }
+      function endGlobalProgress() {
+        var bar = document.getElementById('global-progress-bar');
+        if (!bar) return; bar.style.width = '100%'; setTimeout(function(){ bar.style.opacity = '0'; setTimeout(function(){ bar.style.width = '0%'; }, 300); }, 150);
+      }
+      function failGlobalProgress() {
+        var bar = document.getElementById('global-progress-bar');
+        if (!bar) return; var original = bar.style.background; bar.style.background = 'linear-gradient(90deg, #e11d48, #fb7185)'; bar.style.width = '100%'; setTimeout(function(){ bar.style.opacity = '0'; setTimeout(function(){ bar.style.width = '0%'; bar.style.background = original || 'linear-gradient(90deg, #4C5196, #6f74c9)'; }, 300); }, 200);
+      }
     })();
   </script>
 </body>
