@@ -281,6 +281,18 @@ curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 apt-get install -y nodejs
 ```
 
+#### **2.5. AWS CLI Installation**
+```bash
+# AWS CLI v2 for S3-backed draft storage and future operations (idempotent)
+if ! command -v aws &> /dev/null; then
+  cd /tmp
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip -q awscliv2.zip
+  ./aws/install
+  rm -rf awscliv2.zip aws/
+fi
+```
+
 #### **3. Application User Setup**
 ```bash
 # Create dedicated application user
@@ -347,6 +359,7 @@ Environment=RESUME_STORAGE_TYPE=s3
 Environment=S3_BUCKET_NAME=${app_s3_bucket_name}
 Environment=S3_PREFIX=${app_s3_prefix}
 Environment=AWS_REGION=${aws_region}
+Environment=SHARE_TOKEN_KEY=${share_token_key}
 ExecStart=/home/cvapp/app/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=always
 RestartSec=3
@@ -357,6 +370,7 @@ EOL
 ```
 
 #### **8. Nginx Configuration**
+ - Conditional setup: If no SSL certificate exists on first boot, Nginx starts in HTTP-only mode. After Certbot obtains a certificate, the configuration is updated to HTTPS with HTTP→HTTPS redirection.
 ```bash
 # HTTP→HTTPS redirect and HTTPS reverse proxy configuration
 cat > /etc/nginx/sites-available/cv-generator << 'EOL'

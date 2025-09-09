@@ -23,6 +23,7 @@ python-dotenv==1.0.0
 playwright>=1.40.0
 pydantic>=2.11.0
 cryptography>=42.0.0
+boto3>=1.34.0
 ```
 
 Additional production dependency:
@@ -116,6 +117,7 @@ cv-generator/
 - `GET /resume/` - Redirects to `/` to avoid 404 when missing an ID
 - `GET /resume/{resume_id}` - Edit form for that resume (draft-aware)
 - `POST /resume/{resume_id}/save` - Save draft data
+- `GET /api/v1/resume/{resume_id}/exists` - Validate draft existence (used by homepage and form to resume safely)
 - `GET /v/{token}` - View-only mode via tokenized link (no raw UUID in URL)
 - `GET /resume/{resume_id}/view` - Legacy view URL (still supported)
 - `GET /test` - Pre-filled test form
@@ -125,7 +127,8 @@ cv-generator/
 - `GET /cv/{cv_id}/pdf` - On-demand PDF generation via Playwright
 
   Notes:
-  - The UI “Copy Share URL” action uses the server-provided tokenized link (`/v/{token}`). The `/share` JSON endpoint is provided for API integrations.
+  - The UI “Copy Share URL” action uses the server-provided tokenized link (`/v/{token}`).
+  - The legacy `/resume/{resume_id}/share` endpoint has been removed; the server injects a `share_url` directly into `form.html`.
 
 ### **API Endpoints**
 - `GET /api/v1/cvs` - List all CVs
@@ -151,6 +154,7 @@ cv-generator/
 - **User Data Script**: Idempotent application setup on instance launch
 - **SSL Certificate**: Automated Let's Encrypt certificate management
 - **Security Headers**: HSTS, X-Frame-Options, XSS protection
+ - **Conditional Nginx**: Starts in HTTP-only mode if no cert exists; Certbot then provisions a cert and updates Nginx to HTTPS with HTTP→HTTPS redirect
 
 ## **Recent Technical Improvements**
 
@@ -211,6 +215,7 @@ The application uses structured JSON format:
 - `cv_template.html` - Web display with embedded CSS; supports view-only mode and font settings
 - `cv_template_pdf.html` - PDF-optimized with specific styling for print and font settings
 - `form.html` - Dynamic, UUID-aware form with JavaScript for adding/removing sections and draft-saving
+  - Note: `cv_template.html` currently omits an explicit "Work Experience" section to keep the web view succinct, while `cv_template_pdf.html` includes it for the printable version.
 
 ### **Template Features**
 - **Conditional Rendering**: Only shows sections with actual content
@@ -380,6 +385,7 @@ sudo systemctl restart cv-generator
 - Real-time preview with live updates
 - Auto-save with visual status (saved/unsaved) and last-saved timestamp
 - UUID-based routing and draft save via `/resume/{resume_id}/save`
+- Resume existence pre-check via `GET /api/v1/resume/{resume_id}/exists` when continuing from localStorage
 - Supports both legacy flat format and new structured format
 - Comprehensive client-side validation
 - Subtle loading indicators (top progress bar + button spinners/disable) to avoid spamming actions and provide feedback

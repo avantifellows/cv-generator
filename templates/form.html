@@ -1017,17 +1017,7 @@
                 </div>
             </div>
 
-            <!-- Form Action Buttons -->
-            <div style="display: flex; gap: 15px; margin-top: 30px;">
-                {% if resume_id %}
-                <button type="button" id="copy-edit-btn" onclick="copyEditUrl()" style="flex: 1; background-color: #2196f3; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
-                    📋 Copy Edit URL
-                </button>
-                {% endif %}
-                <button type="button" id="copy-share-btn" onclick="shareResume()" style="flex: 1; background-color: #4caf50; padding: 15px 30px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer;">
-                    📋 Copy Share URL
-                </button>
-            </div>
+            
         </form>
         
         <!-- Hidden form for CV generation -->
@@ -1038,12 +1028,7 @@
         </form>
         {% endif %}
         
-        <!-- Bottom Download PDF Button -->
-        <div style="text-align: center; margin-top: 30px;">
-            <button type="button" id="download-pdf-bottom-btn" class="btn-primary" onclick="downloadPDF()" style="padding: 15px 30px; font-size: 16px; width: 100%;">
-                📄 Download PDF
-            </button>
-        </div>
+        
     </div>
     </div>
     <div class="preview-section">
@@ -1055,6 +1040,14 @@
                 </button>
                 <button type="button" id="download-pdf-btn" class="btn-transparent" onclick="downloadPDF()" style="padding: 8px 16px; font-size: 14px;">
                     📄 Download PDF
+                </button>
+                {% if resume_id %}
+                <button type="button" id="copy-edit-btn" class="btn-transparent" onclick="copyEditUrl()" style="padding: 8px 16px; font-size: 14px;">
+                    📋 Copy Edit URL
+                </button>
+                {% endif %}
+                <button type="button" id="copy-share-btn" class="btn-transparent" onclick="shareResume()" style="padding: 8px 16px; font-size: 14px;">
+                    📋 Copy Share URL
                 </button>
             </div>
         </div>
