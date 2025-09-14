@@ -70,6 +70,14 @@ terraform {
 }
 ```
 
+#### Backend bootstrap workflow
+- Run `terraform apply` in `terraform/` with `backend.tf` present to provision the state bucket and lock table (it uses a random suffix for uniqueness).
+- Copy the outputs into `terraform/backend-config.txt` (already included) or pass them via CLI flags.
+- Initialize Terraform with the remote backend using one of:
+  - `terraform init -backend-config=backend-config.txt`
+  - or `terraform init -backend-config="bucket=<bucket>" -backend-config="region=<region>" -backend-config="dynamodb_table=<table>"`
+- The repo currently includes an explicit `backend` block in `main.tf` pointing to the existing bucket.
+
 ## **Variables Configuration**
 
 ### **AWS Configuration Variables**
@@ -174,6 +182,28 @@ resource "aws_iam_role" "ec2_role" {
 - **Purpose**: Allows EC2 instance to assume the IAM role
 - **Current Permissions**: S3 access for resume storage + EC2 assume role
 
+### **Application S3 Access Policy**
+The instance role is granted restricted access to the application bucket:
+```hcl
+data "aws_iam_policy_document" "app_s3_access" {
+  statement {
+    actions   = ["s3:ListBucket"]
+    resources = [aws_s3_bucket.app_bucket.arn]
+  }
+
+  statement {
+    actions = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
+    resources = [
+      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}/resumes/*",
+      "${aws_s3_bucket.app_bucket.arn}/${var.app_s3_prefix}/metadata/*"
+    ]
+  }
+}
+```
+Notes:
+- Bucket versioning and AES-256 server-side encryption are enabled.
+- Public access is fully blocked on the application bucket.
+
 ## **EC2 Instance Configuration**
 
 ### **Instance Specifications**
@@ -229,6 +259,7 @@ resource "cloudflare_record" "cv_generator_dns" {
 - **Record Type**: A record (IPv4 address)
 - **TTL**: 300 seconds (5 minutes) for quick updates
 - **Dynamic**: Automatically points to Elastic IP
+- **Proxying**: Record is DNS-only by default (not proxied). Enable Cloudflare proxying if desired for additional features.
 - **Result**: `cv-generator.avantifellows.org` → Elastic IP
 
 ## **SSL Certificate Configuration**
@@ -419,6 +450,9 @@ server {
 }
 EOL
 ```
+Additional details:
+- Static assets are served from `/home/cvapp/app/static/` with long-lived caching headers.
+- `client_max_body_size 50M` allows larger form submissions if needed.
 
 #### **9. Service Management**
 ```bash
@@ -446,6 +480,7 @@ echo "Nginx status:" && systemctl is-active nginx
 echo "CV Generator status:" && systemctl is-active cv-generator
 echo "Port 8000 check:" && curl -s http://localhost:8000/health
 echo "Port 80 check:" && curl -s http://localhost/health
+echo "HTTPS check:" && curl -s https://localhost/health || echo "HTTPS check may require domain SNI; test https://<your-domain>/health"
 EOL
 ```
 
@@ -603,6 +638,12 @@ cat /etc/nginx/sites-available/cv-generator
 - 🔒 **Updates**: Regular system and dependency updates
 - 🔒 **Monitoring**: Implement log monitoring and alerting
 - 🔒 **Certificate Monitoring**: Monitor SSL certificate expiration (auto-renewal enabled)
+
+## **Application Storage Topology**
+
+- Resume drafts (in-progress data) are stored in the S3 application bucket under `${S3_PREFIX}resumes/` with metadata at `${S3_PREFIX}metadata/resume_metadata.json`.
+- Generated CVs (`generated/{cv_id}.html`, `generated/{cv_id}_display.html`, `generated/{cv_id}_data.json`) are stored on the instance filesystem; PDFs are rendered on demand and not persisted.
+- Environment variables for the service are injected via systemd: `RESUME_STORAGE_TYPE`, `S3_BUCKET_NAME`, `S3_PREFIX`, `AWS_REGION`, `SHARE_TOKEN_KEY`.
 
 ## **Cost Optimization**
 
