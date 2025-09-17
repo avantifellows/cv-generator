@@ -13,6 +13,13 @@ env:
   AWS_REGION: "ap-south-1"
   TF_IN_AUTOMATION: "true"
   TF_INPUT: "false"
+  # Terraform Variables - Define once, use everywhere
+  TF_VAR_repo_url: "https://github.com/avantifellows/cv-generator.git"
+  TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
+  TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+  TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
+  TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
+  TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
 jobs:
   terraform:
@@ -52,12 +59,6 @@ jobs:
           -backend-config="bucket=${{ secrets.S3_BACKEND_BUCKET }}" \
           -backend-config="dynamodb_table=${{ secrets.DYNAMODB_LOCK_TABLE }}" \
           -backend-config="region=${{ env.AWS_REGION }}"
-      env:
-        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
-        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
-        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
-        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Validate Terraform configuration
     - name: Terraform Validate
@@ -80,24 +81,12 @@ jobs:
           exit 1
         fi
         echo "✅ State lock check passed"
-      env:
-        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
-        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
-        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
-        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Generate Terraform plan 
     - name: Terraform Plan
       run: |
         terraform plan -input=false -lock-timeout=5m
         echo "📋 Terraform plan completed"
-      env:
-        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
-        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
-        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
-        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Apply Terraform changes and detect if changes were made
     - name: Terraform Apply
@@ -127,12 +116,6 @@ jobs:
         
         # Clean up
         rm -f apply_output.txt
-      env:
-        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
-        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
-        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
-        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Get EC2 instance ID for post-deployment verification
     - name: Get EC2 Instance ID
@@ -169,12 +152,6 @@ jobs:
         # Clean output for GitHub Actions
         echo "instance_id=${INSTANCE_ID}" >> "$GITHUB_OUTPUT"
         echo "Found EC2 instance: $INSTANCE_ID"
-      env:
-        TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-        TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
-        TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
-        TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
-        TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}
 
     # Reboot EC2 instance (only if terraform didn't make changes)
     - name: Reboot EC2 Instance
