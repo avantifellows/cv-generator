@@ -158,8 +158,37 @@ async def home(request: Request):
 
 @app.get("/resume/{resume_id}", response_class=HTMLResponse)
 async def resume_form(request: Request, resume_id: str):
-    """Serve the CV form with existing data or create new if not exists"""
+    """Serve the CV form with existing data or create new if not exists
+    
+    Special case: if resume_id is 'test', load data from test_data_structured.json
+    """
     try:
+        # Special handling for test data
+        if resume_id.lower() in ("test", "test-minimal"):
+            try:
+                # Load structured test data
+                test_file = "test_data_structured.json" if resume_id.lower() == "test" else "test_data_minimal.json"
+                with open(test_file, "r") as f:
+                    test_data = json.load(f)
+                
+                base_url = str(request.base_url).rstrip('/')
+                # For test, use a simple share URL (no tokenization needed)
+                simple_id = "test" if resume_id.lower() == "test" else "test-minimal"
+                share_url = f"{base_url}/resume/{simple_id}/view"
+                
+                logger.info("Loaded test data for /resume/test endpoint")
+                return templates.TemplateResponse("form.html", {
+                    "request": request,
+                    "form_data": test_data,
+                    "resume_id": resume_id,
+                    "is_edit_mode": True,  # Allow editing
+                    "is_completed": False,
+                    "share_url": share_url
+                })
+            except Exception as e:
+                logger.error(f"Error loading test data: {str(e)}")
+                raise HTTPException(status_code=500, detail=f"Error loading test data: {str(e)}")
+        
         # Check if resume exists
         if resume_storage_service.resume_exists(resume_id):
             # Load existing resume data
@@ -205,6 +234,8 @@ async def resume_form(request: Request, resume_id: str):
 
         return response
             
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error serving resume form for ID {resume_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error serving resume form: {str(e)}")
@@ -218,8 +249,33 @@ async def resume_form_trailing_slash():
 
 @app.get("/resume/{resume_id}/view", response_class=HTMLResponse)
 async def view_resume(request: Request, resume_id: str):
-    """View-only mode for shared resumes"""
+    """View-only mode for shared resumes
+    
+    Special case: if resume_id is 'test', load data from test_data_structured.json
+    """
     try:
+        # Special handling for test data
+        if resume_id.lower() in ("test", "test-minimal"):
+            try:
+                # Load structured test data
+                test_file = "test_data_structured.json" if resume_id.lower() == "test" else "test_data_minimal.json"
+                with open(test_file, "r") as f:
+                    test_data = json.load(f)
+                
+                cv_data = CVData(**test_data)
+                base_url = str(request.base_url).rstrip('/')
+                return templates.TemplateResponse("cv_template.html", {
+                    "request": request,
+                    "cv_data": cv_data,
+                    **cv_data.dict(),
+                    "is_view_only": True,
+                    "resume_id": resume_id,
+                    "base_url": base_url
+                })
+            except Exception as e:
+                logger.error(f"Error loading test data for view: {str(e)}")
+                raise HTTPException(status_code=500, detail=f"Error loading test data: {str(e)}")
+        
         if not resume_storage_service.resume_exists(resume_id):
             raise HTTPException(status_code=404, detail="Resume not found")
         
@@ -281,8 +337,15 @@ async def view_resume_token(request: Request, token: str):
 
 @app.get("/api/v1/resume/{resume_id}/exists")
 async def resume_exists_api(resume_id: str):
-    """Lightweight existence check for a resume UUID (used by homepage to validate localStorage)."""
+    """Lightweight existence check for a resume UUID (used by homepage to validate localStorage).
+    
+    Special case: 'test' always returns True
+    """
     try:
+        # Special handling for test data - always exists
+        if resume_id.lower() in ("test", "test-minimal"):
+            return {"resume_id": resume_id, "exists": True}
+        
         exists = resume_storage_service.resume_exists(resume_id)
         return {"resume_id": resume_id, "exists": bool(exists)}
     except Exception as e:
@@ -293,8 +356,16 @@ async def resume_exists_api(resume_id: str):
 
 @app.post("/resume/{resume_id}/save")
 async def save_resume_draft(request: Request, resume_id: str):
-    """Save resume draft data"""
+    """Save resume draft data
+    
+    Special case: if resume_id is 'test', skip saving (test data is read-only)
+    """
     try:
+        # Special handling for test data - don't save
+        if resume_id.lower() == "test":
+            logger.info("Skipping save for test resume (read-only)")
+            return {"status": "success", "message": "Test data is read-only (not saved)"}
+        
         # Get form data
         form_data = await request.form()
         
@@ -324,19 +395,9 @@ async def save_resume_draft(request: Request, resume_id: str):
 
 
 @app.get("/test", response_class=HTMLResponse)
-async def test_form(request: Request):
-    """Serve the CV form pre-filled with test data"""
-    try:
-        # Load structured test data directly (form now supports this format)
-        with open("test_data_structured.json", "r") as f:
-            structured_data = json.load(f)
-        
-        return templates.TemplateResponse("form.html", {"request": request, "form_data": structured_data})
-        
-    except Exception as e:
-        logger.error(f"Error loading test data: {str(e)}")
-        # Fall back to empty form
-        return templates.TemplateResponse("form.html", {"request": request})
+async def test_form_redirect():
+    """Redirect to /resume/test for unified test data handling"""
+    return RedirectResponse(url="/resume/test", status_code=302)
 
 
 @app.get("/test/pdf")
@@ -383,6 +444,56 @@ async def download_test_cv_pdf():
         logger.error(f"Error generating test PDF: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to generate test PDF: {str(e)}")
 
+
+@app.get("/test/minimal", response_class=HTMLResponse)
+async def test_minimal_form_redirect():
+    """Redirect to /resume/test-minimal for minimal test data handling"""
+    return RedirectResponse(url="/resume/test-minimal", status_code=302)
+
+
+@app.get("/test/minimal/pdf")
+async def download_test_minimal_cv_pdf():
+    """Generate and download PDF of the minimal test CV data"""
+    try:
+        # Load minimal structured test data
+        with open("test_data_minimal.json", "r") as f:
+            structured_data = json.load(f)
+        
+        # Create CV data object
+        cv_data = CVData(**structured_data)
+        
+        # Render PDF-specific HTML template
+        html_content = render_template('cv_template_pdf.html', {
+            "cv_data": cv_data,
+            **cv_data.dict()
+        })
+        
+        # Generate PDF using Playwright
+        try:
+            logger.info("Starting PDF generation with Playwright (minimal test)")
+            pdf_bytes = await generate_pdf_with_playwright(html_content)
+            logger.info(f"PDF generated successfully, size: {len(pdf_bytes)} bytes")
+        except Exception as e:
+            logger.error(f"Exception during PDF generation (minimal): {str(e)}")
+            logger.error(f"Exception type: {type(e).__name__}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise
+        
+        # Create filename from user's name
+        pdf_filename = f"{create_filename(cv_data.personal_info.full_name)}_test_minimal.pdf"
+        
+        logger.info(f"Minimal Test PDF generated successfully: {pdf_filename}")
+        
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f"attachment; filename={pdf_filename}"}
+        )
+        
+    except Exception as e:
+        logger.error(f"Error generating minimal test PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate minimal test PDF: {str(e)}")
 
 
 
@@ -483,7 +594,7 @@ async def generate_cv(request: Request):
         is_pdf_download = form_data.get('download_pdf') == 'true'
         
         # Check if this is dynamic form data (has array fields)
-        is_dynamic = any(key.startswith(('education[', 'work_experience[', 'achievements[', 'internships[', 'projects[', 'positions[')) 
+        is_dynamic = any(key.startswith(('education[', 'work_experience[', 'achievements[', 'internships[', 'projects[', 'positions[', 'extracurricular[]', 'languages[]')) 
                         for key in form_data.keys())
         logger.info(f"[DEBUG] is_dynamic: {is_dynamic}")
         if is_dynamic:
@@ -606,6 +717,7 @@ def parse_dynamic_form_data(form_data) -> dict:
         "projects": [],
         "positions_of_responsibility": [],
         "extracurricular": [],
+        "languages": [],
         "technical_skills": []
     }
     # Parse personal info
@@ -838,6 +950,11 @@ def parse_dynamic_form_data(form_data) -> dict:
     structured_data["extracurricular"] = [activity.strip() for activity in extracurricular 
                                          if activity.strip() and activity.strip() not in ['', '—', 'notfilled@email.com']]
     
+    # Parse languages
+    languages = form_data.getlist("languages[]")
+    structured_data["languages"] = [lang.strip() for lang in languages 
+                                   if lang.strip() and lang.strip() not in ['', '—', 'notfilled@email.com']]
+    
     # Parse technical skills
     technical_skills = form_data.getlist("technical_skills[]")
     structured_data["technical_skills"] = [skill.strip() for skill in technical_skills 
@@ -899,13 +1016,15 @@ def parse_dynamic_form_data(form_data) -> dict:
     logger.info(f"  - body_font_size: {form_data.get('body_font_size', 'NOT FOUND')}")
     logger.info(f"  - body_font_color: {form_data.get('body_font_color', 'NOT FOUND')}")
     logger.info(f"  - line_height: {form_data.get('line_height', 'NOT FOUND')}")
+    logger.info(f"  - section_spacing_multiplier: {form_data.get('section_spacing_multiplier', 'NOT FOUND')}")
     
     structured_data["font_settings"] = {
         "title_font_size": form_data.get("title_font_size", "12px"),
         "title_font_color": form_data.get("title_font_color", "#4C5196"),
         "body_font_size": form_data.get("body_font_size", "12px"),
         "body_font_color": form_data.get("body_font_color", "#000000"),
-        "line_height": form_data.get("line_height", "1.1")
+        "line_height": form_data.get("line_height", "1.1"),
+        "section_spacing_multiplier": form_data.get("section_spacing_multiplier", "1.0")
     }
     
     # After parsing all data

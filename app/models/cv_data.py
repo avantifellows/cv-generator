@@ -170,6 +170,8 @@ class FontSettings(BaseModel):
     body_font_size: str = Field(default="12px")
     body_font_color: str = Field(default="#000000")
     line_height: str = Field(default="1.1")
+    # Multiplier applied to default section spacing in templates (web/pdf have different bases)
+    section_spacing_multiplier: str = Field(default="1.0")
 
 
 class CVData(BaseModel):
@@ -185,6 +187,7 @@ class CVData(BaseModel):
     projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
     positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
+    languages: List[str] = Field(default_factory=list, max_items=10)
     technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
     font_settings: FontSettings = Field(default_factory=FontSettings)
 
@@ -192,6 +195,11 @@ class CVData(BaseModel):
     def validate_extracurricular(cls, v):
         # Filter out empty activities
         return [activity.strip() for activity in v if activity and activity.strip()]
+    
+    @validator('languages')
+    def validate_languages(cls, v):
+        # Filter out empty languages
+        return [lang.strip() for lang in v if lang and lang.strip()]
 
     # Legacy support for backward compatibility
     @classmethod
@@ -276,6 +284,9 @@ class CVGenerateRequest(BaseModel):
     # Extracurricular Activities (optional, up to 5)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
     
+    # Languages (optional, up to 10)
+    languages: List[str] = Field(default_factory=list, max_items=10)
+    
     # Technical Skills (categorized)
     technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
 
@@ -298,6 +309,7 @@ class CVGenerateRequest(BaseModel):
             projects=self.projects,
             positions_of_responsibility=self.positions_of_responsibility,
             extracurricular=self.extracurricular,
+            languages=self.languages,
             technical_skills=self.technical_skills
         )
 

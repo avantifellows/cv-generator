@@ -1,0 +1,101 @@
+{
+  "personal_info": {
+    "full_name": "Alex Doe",
+    "highest_education": "B.Tech",
+    "city": "New Delhi",
+    "phone": "",
+    "email": "",
+    "github": "",
+    "linkedin": ""
+  },
+  "summary": "Aspiring engineer seeking opportunities; quick learner with strong fundamentals.",
+  "education": [
+    {
+      "qualification": "B.Tech",
+      "stream": "",
+      "institute": "Local College",
+      "year": "",
+      "cgpa": ""
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "Acme Corp",
+      "position": "Intern",
+      "duration": "2024",
+      "points": [
+        "Assisted in building a small internal tool"
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "description": "Won first place at college hackathon",
+      "year": "2023"
+    }
+  ],
+  "certifications": [
+    {
+      "description": "AWS Cloud Practitioner (Foundational)",
+      "year": "2024"
+    }
+  ],
+  "publications": [
+    {
+      "description": "Blog: \"Intro to REST APIs\"",
+      "year": "2023"
+    }
+  ],
+  "internships": [
+    {
+      "company": "Startup X",
+      "role": "Software Intern",
+      "duration": "Summer 2023",
+      "points": [
+        "Built a simple CLI tool to automate routine tasks"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Todo App",
+      "type": "Personal Project",
+      "duration": "2024",
+      "repo_link": "github.com/alexdoe/todo-app",
+      "points": [
+        "Single-page app to track daily tasks"
+      ]
+    }
+  ],
+  "positions_of_responsibility": [
+    {
+      "club": "Student Council",
+      "role": "Member",
+      "duration": "2023",
+      "points": [
+        "Assisted in organizing a tech seminar"
+      ]
+    }
+  ],
+  "extracurricular": [
+    "Volunteered at a local community center"
+  ],
+  "languages": [
+    "English"
+  ],
+  "technical_skills": {
+    "programming_languages": ["Python"],
+    "web_technologies": ["HTML", "CSS"],
+    "database_management": ["SQLite"],
+    "tools_and_technologies": ["Git"]
+  },
+  "font_settings": {
+    "title_font_size": "12px",
+    "title_font_color": "#4C5196",
+    "body_font_size": "11px",
+    "body_font_color": "#000000",
+    "line_height": "1.15",
+    "section_spacing_multiplier": "1.6"
+  }
+}
+

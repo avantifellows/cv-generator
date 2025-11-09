@@ -1,10 +1,12 @@
 {
   "personal_info": {
     "full_name": "Jane Smith",
-    "highest_education": "M.Tech",
+    "highest_education": "M.Tech in Computer Science",
     "city": "San Francisco",
     "phone": "+1-555-0123",
-    "email": "jane.smith@example.com"
+    "email": "jane.smith@example.com",
+    "github": "github.com/janesmith",
+    "linkedin": "linkedin.com/in/janesmith"
   },
   "summary": "Innovative software engineer with 3+ years of experience in full-stack development and machine learning. Proven track record of delivering scalable solutions at Fortune 500 companies including Google and Microsoft. Passionate about leveraging cutting-edge technologies to solve complex problems and drive digital transformation. Strong leadership background with experience mentoring teams and organizing technical initiatives.",
   "education": [
@@ -21,6 +23,35 @@
       "institute": "UC Berkeley",
       "year": "2021",
       "cgpa": "8.8"
+    },
+    {
+      "qualification": "Higher Secondary (XII)",
+      "stream": "Science (PCM)",
+      "institute": "Delhi Public School",
+      "year": "2017",
+      "cgpa": "95.2%"
+    }
+  ],
+  "work_experience": [
+    {
+      "company": "Tech Innovations Inc.",
+      "position": "Senior Software Engineer",
+      "duration": "Jan 2023 - Present",
+      "points": [
+        "Led development of microservices architecture serving 10M+ daily active users",
+        "Reduced system latency by 40% through optimization and caching strategies",
+        "Mentored team of 5 junior engineers in best practices and code quality"
+      ]
+    },
+    {
+      "company": "DataFlow Solutions",
+      "position": "Full Stack Developer",
+      "duration": "Jun 2021 - Dec 2022",
+      "points": [
+        "Built real-time data visualization dashboard using React and D3.js",
+        "Implemented CI/CD pipeline reducing deployment time from 2 hours to 15 minutes",
+        "Collaborated with product team to define technical requirements and roadmap"
+      ]
     }
   ],
   "achievements": [
@@ -29,7 +60,47 @@
       "year": "2023"
     },
     {
-      "description": "Winner, International Coding Competition - Secured 1st place among 500+ participants",
+      "description": "Winner, International Coding Competition - Secured 1st place among 500+ participants worldwide",
+      "year": "2022"
+    },
+    {
+      "description": "Best Innovation Award - Recognized for creating novel ML model at company hackathon",
+      "year": "2022"
+    },
+    {
+      "description": "Google Code-in Grand Prize Winner - Selected among 1000+ students globally",
+      "year": "2020"
+    }
+  ],
+  "certifications": [
+    {
+      "description": "AWS Certified Solutions Architect - Associate",
+      "year": "2023"
+    },
+    {
+      "description": "Google Cloud Professional Data Engineer",
+      "year": "2022"
+    },
+    {
+      "description": "Certified Kubernetes Administrator (CKA)",
+      "year": "2022"
+    },
+    {
+      "description": "Deep Learning Specialization by Andrew Ng (Coursera)",
+      "year": "2021"
+    }
+  ],
+  "publications": [
+    {
+      "description": "Smith, J., et al. 'Optimizing Neural Networks for Edge Devices' - Proceedings of ICML 2023",
+      "year": "2023"
+    },
+    {
+      "description": "Smith, J., Brown, A. 'Distributed Systems at Scale' - IEEE Transactions on Cloud Computing",
+      "year": "2022"
+    },
+    {
+      "description": "Smith, J. 'Machine Learning for Code Review' - arXiv preprint arXiv:2203.12345",
       "year": "2022"
     }
   ],
@@ -40,7 +111,8 @@
       "duration": "Summer 2022",
       "points": [
         "Developed a machine learning pipeline that improved search result relevance by 15%",
-        "Collaborated with cross-functional teams to design and implement new API endpoints"
+        "Collaborated with cross-functional teams to design and implement new API endpoints",
+        "Optimized data processing pipeline reducing compute costs by $50K annually"
       ]
     },
     {
@@ -49,7 +121,18 @@
       "duration": "Summer 2021",
       "points": [
         "Built a distributed system for real-time data processing using Azure services",
-        "Published research paper on optimization algorithms in top-tier conference"
+        "Published research paper on optimization algorithms in top-tier conference",
+        "Created prototype that was integrated into Microsoft Azure ML platform"
+      ]
+    },
+    {
+      "company": "Meta (Facebook)",
+      "role": "Machine Learning Intern",
+      "duration": "Winter 2020",
+      "points": [
+        "Developed recommendation system improving user engagement by 12%",
+        "Implemented A/B testing framework to measure feature performance",
+        "Collaborated with data scientists to improve model accuracy by 8%"
       ]
     }
   ],
@@ -57,19 +140,33 @@
     {
       "title": "AI-Powered Code Review Tool",
       "type": "Open Source Project",
-      "duration": "6 months",
+      "duration": "Jan 2023 - Jun 2023",
+      "repo_link": "github.com/janesmith/ai-code-reviewer",
       "points": [
-        "Created an intelligent code review system using natural language processing",
-        "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities"
+        "Created an intelligent code review system using natural language processing and GPT-4",
+        "Achieved 85% accuracy in detecting code quality issues and security vulnerabilities",
+        "Gained 2000+ GitHub stars and contributions from 50+ developers worldwide"
       ]
     },
     {
       "title": "Blockchain-based Voting System",
       "type": "Academic Project",
-      "duration": "4 months",
+      "duration": "Sep 2022 - Dec 2022",
+      "repo_link": "github.com/janesmith/blockchain-voting",
       "points": [
-        "Designed and implemented a secure, transparent voting platform using Ethereum",
-        "Ensured voter privacy while maintaining election integrity through cryptographic techniques"
+        "Designed and implemented a secure, transparent voting platform using Ethereum and Solidity",
+        "Ensured voter privacy while maintaining election integrity through cryptographic techniques",
+        "Achieved 99.9% uptime and processed 10,000+ test votes with zero discrepancies"
+      ]
+    },
+    {
+      "title": "Real-time Traffic Monitoring System",
+      "type": "Research Project",
+      "duration": "Mar 2021 - Aug 2021",
+      "points": [
+        "Built computer vision system using YOLO v5 for vehicle detection and tracking",
+        "Deployed on edge devices with 30 FPS processing speed and 92% detection accuracy",
+        "Integrated with city traffic management dashboard for real-time insights"
       ]
     }
   ],
@@ -77,54 +174,107 @@
     {
       "club": "Computer Science Society",
       "role": "Technical Lead",
-      "duration": "2022-2023",
+      "duration": "Aug 2022 - May 2023",
       "points": [
         "Led a team of 20+ members in organizing technical workshops and hackathons",
-        "Mentored junior students in competitive programming and open source contributions"
+        "Mentored junior students in competitive programming and open source contributions",
+        "Organized annual tech fest with 1000+ participants from 50+ universities"
       ]
     },
     {
       "club": "Women in Tech",
       "role": "Vice President",
-      "duration": "2021-2022",
+      "duration": "Aug 2021 - May 2022",
       "points": [
         "Organized diversity and inclusion initiatives that increased female participation by 40%",
-        "Established partnerships with 10+ tech companies for internship and job opportunities"
+        "Established partnerships with 10+ tech companies for internship and job opportunities",
+        "Conducted monthly workshops on emerging technologies reaching 200+ students"
+      ]
+    },
+    {
+      "club": "Google Developer Student Club",
+      "role": "Core Team Member",
+      "duration": "Jan 2020 - Dec 2020",
+      "points": [
+        "Organized coding bootcamps and study jams for Google Cloud certifications",
+        "Led weekly code review sessions helping 50+ students improve coding skills"
       ]
     }
   ],
   "extracurricular": [
-    "Marathon running - Completed 3 full marathons with personal best of 3:45",
-    "Photography - Featured in university magazine and local art exhibitions",
-    "Volunteer teaching - Taught programming to underprivileged children on weekends",
-    "Chess - Ranked in top 100 players in state-level tournaments"
+    "Marathon running - Completed 3 full marathons with personal best of 3:45 hours",
+    "Photography - Featured in university magazine and local art exhibitions; 10K+ Instagram followers",
+    "Volunteer teaching - Taught programming to 100+ underprivileged children on weekends through NGO partnership",
+    "Chess - Ranked in top 100 players in state-level tournaments; FIDE rating 1850",
+    "Technical blogging - Published 25+ articles on Medium with 50K+ total views on ML and web development"
+  ],
+  "languages": [
+    "English",
+    "Spanish",
+    "French",
+    "Mandarin Chinese"
   ],
   "technical_skills": {
     "programming_languages": [
       "Python",
       "Java",
-      "JavaScript"
+      "JavaScript",
+      "TypeScript",
+      "C++",
+      "Go",
+      "SQL"
     ],
     "web_technologies": [
       "HTML",
       "CSS",
+      "React.js",
+      "Node.js",
+      "Express.js",
       "Flask",
-      "ReactJS",
-      "NodeJS",
-      "Spring Boot"
+      "Django",
+      "FastAPI",
+      "Next.js",
+      "Spring Boot",
+      "GraphQL",
+      "RESTful APIs"
     ],
     "database_management": [
+      "PostgreSQL",
       "MongoDB",
       "MySQL",
-      "PostgreSQL"
+      "Redis",
+      "Elasticsearch",
+      "DynamoDB",
+      "Cassandra"
     ],
     "tools_and_technologies": [
-      "Linux",
-      "NLTK",
-      "Pandas",
       "Git",
       "GitHub",
-      "Beautiful Soup"
+      "Docker",
+      "Kubernetes",
+      "AWS",
+      "Google Cloud Platform",
+      "Terraform",
+      "Jenkins",
+      "CircleCI",
+      "Linux",
+      "Nginx",
+      "Apache Kafka",
+      "RabbitMQ",
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "Beautiful Soup",
+      "Selenium"
     ]
+  },
+  "font_settings": {
+    "title_font_size": "12px",
+    "title_font_color": "#4C5196",
+    "body_font_size": "11px",
+    "body_font_color": "#000000",
+    "line_height": "1.15"
   }
 }

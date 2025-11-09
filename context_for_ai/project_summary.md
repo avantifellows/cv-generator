@@ -116,6 +116,7 @@ Storage separation:
    - Projects
    - Positions of Responsibility
    - Extracurricular Activities
+   - Languages (simple list)
    - Technical Skills (categorized)
 
 2. **Data Processing** → Pydantic validation and structured storage
@@ -134,8 +135,12 @@ Storage separation:
 - `GET /api/v1/resume/{resume_id}/exists` - Validate draft existence (used by homepage and form to resume safely)
 - `GET /v/{token}` - View-only mode via tokenized link (no raw UUID in URL)
 - `GET /resume/{resume_id}/view` - Legacy view URL (still supported)
-- `GET /test` - Pre-filled test form
+- `GET /resume/test` - Loads the form with bundled `test_data_structured.json` (read-only save; behaves like S3-loaded data for UI)
+- `GET /resume/test-minimal` - Loads the form with bundled `test_data_minimal.json` (read-only; minimal dataset to test sparse CV layout and section spacing)
+- `GET /test` - Redirects to `/resume/test` (for backward compatibility)
+- `GET /test/minimal` - Redirects to `/resume/test-minimal`
 - `GET /test/pdf` - Generate a PDF for the bundled test data (direct download)
+- `GET /test/minimal/pdf` - Generate a PDF for the bundled minimal test data (direct download)
 - `POST /generate` - Generate CV from form data (supports legacy and dynamic formats; can direct-download PDF)
 - `GET /cv/{cv_id}` - View generated CV with download button
 - `GET /cv/{cv_id}/html` - Raw HTML CV
@@ -152,6 +157,7 @@ Storage separation:
 - `GET /api/v1/cvs` - List all CVs
 - `GET /api/v1/cv/{cv_id}` - Get CV data
 - `DELETE /api/v1/cv/{cv_id}` - Delete CV
+- `GET /api/v1/resume/{resume_id}/exists` - Returns `{"exists": true}` for `'test'` and `'test-minimal'` to enable seamless demo/QA flows
 - `GET /health` - Health check
 
 ## **Deployment Infrastructure**
@@ -184,11 +190,21 @@ Provisioning highlights (user data):
 - Configures Nginx with strict security headers and static asset caching
 - Obtains and renews TLS certificates via Certbot
 
+### **CI/CD (GitHub Actions)**
+
+- Workflow path: `.github/workflows/terraform.yml`
+- Triggers on pushes to `new-feature-branch` and manual runs (`workflow_dispatch`)
+- Executes: checkout → setup Terraform (v1.10.5) → configure AWS → `terraform init` with S3 + DynamoDB backend from secrets → validate → fmt check → plan → apply
+- If no infra changes are applied, the job reboots the EC2 instance to refresh the app; otherwise it waits for the instance to be healthy
+- Required secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BACKEND_BUCKET`, `DYNAMODB_LOCK_TABLE`, `CLOUDFLARE_EMAIL`, `CLOUDFLARE_API_KEY`, `APP_S3_BUCKET_NAME`, `APP_S3_PREFIX`, `SHARE_TOKEN_KEY`
+- Environment overrides: `TF_VAR_repo_url` (repo to deploy), `AWS_REGION` (defaults to `ap-south-1`)
+
 ## **Recent Technical Improvements**
 
 - ✅ **UUID-based Resume Flow**: Create/edit/view via `/resume/{resume_id}` with shareable view-only link
 - ✅ **Resume Storage Service**: Draft persistence in `resume_data/` with metadata tracking
 - ✅ **PDF Library Migration**: Playwright for better quality (from xhtml2pdf)
+- ✅ **Unified Test Data Flow**: Added `/resume/test` to load bundled structured data; `/test` now redirects; save is read-only; exists API returns true for `'test'`
 - ✅ **Professional Summary**: Added optional summary section
 - ✅ **Template Optimization**: Improved formatting and spacing
 - ✅ **Dynamic Content**: Smart conditional rendering
@@ -202,6 +218,11 @@ Provisioning highlights (user data):
 - ✅ **S3-backed Resume Storage**: Draft persistence moved to S3 in production with environment-based switching; Terraform-managed bucket, encryption, and IAM
 - ✅ **Subtle Loading UX**: Global top progress bar on form and landing pages; buttons show inline spinners and disable during autosave/copy/share/PDF generation; non-intrusive visuals
 - ✅ **Tokenized Share Links**: Share URLs use `/v/{token}` derived from a server-side secret; raw UUIDs are never exposed in shared links
+- ✅ **External Link Normalization**: Fixed GitHub/LinkedIn/project repo links to always open correctly (auto-prepend `https://`) across templates and live preview
+- ✅ **Work Experience in Web View**: Restored the Work Experience section in `cv_template.html` so it appears in both web and PDF views
+- ✅ **Test-mode Prepopulation**: `/resume/test` now pre-populates the form's Professional Summary and Work Experience sections in addition to other sections
+- ✅ **Languages Section**: Added simple languages list section; users can add multiple languages they know without proficiency levels (displayed as bullet points)
+ - ✅ **Section Spacing Control**: Added `section_spacing_multiplier` with UI in `form.html`, live preview support, and dynamic spacing in both web and PDF templates; added minimal dataset and routes to demo sparse CVs.
 
 ## **Current Development Status**
 
@@ -211,6 +232,7 @@ Provisioning highlights (user data):
 - Dynamic form with real-time preview
 - High-quality PDF generation with Playwright
 - Professional template design
+- Languages section (simple list)
 - AWS deployment infrastructure
 - Comprehensive error handling and logging
 - UUID-based resume creation/editing and view-only sharing
@@ -235,7 +257,8 @@ The application uses structured JSON format:
   },
   "education": [{"qualification": "M.Tech", "institute": "Stanford"}],
   "achievements": [{"description": "Dean's List", "year": "2023"}],
-  "internships": [{"company": "Google", "role": "SWE Intern"}]
+  "internships": [{"company": "Google", "role": "SWE Intern"}],
+  "languages": ["English", "Spanish"]
 }
 ```
 
@@ -247,7 +270,7 @@ The application uses structured JSON format:
 - `cv_template.html` - Web display with embedded CSS; supports view-only mode and font settings
 - `cv_template_pdf.html` - PDF-optimized with specific styling for print and font settings
 - `form.html` - Dynamic, UUID-aware form with JavaScript for adding/removing sections and draft-saving
-  - Note: `cv_template.html` currently omits an explicit "Work Experience" section to keep the web view succinct, while `cv_template_pdf.html` includes it for the printable version.
+  - Work Experience is shown in both `cv_template.html` and `cv_template_pdf.html`.
   - `root_redirect.html` - Simple JS-based redirect helper (retained for fallback; not used by current routes)
 
 ### **Template Features**
@@ -258,8 +281,10 @@ The application uses structured JSON format:
 - **Professional Styling**: Academic resume format with proper typography
 - **Subtle Global Progress Bar**: 2px top-edge bar during async actions (enabled in `form.html` and `root_choice.html`)
 - **Action Button Feedback**: Buttons disable and show tiny spinners during operations (copy, share, PDF)
-- **Tokenized Share URL**: Form receives a precomputed `share_url` from the server; frontend never handles keys or encryption
+- **Tokenized Share URL**: Form receives a precomputed `share_url` from the server; frontend never handles keys or encryption. Graceful fallback in the client uses the current URL when `share_url` is absent.
 - **View-only Toast**: Minimal top-right toast on shared views linking back to the homepage; no resume ID is displayed
+- **External Link Normalization**: GitHub, LinkedIn, and project repo links are automatically converted to absolute URLs with `https://` when missing, in both web/PDF templates and the live preview.
+ - **Section Spacing Control**: “Section Spacing” setting (in the “Edit Font and Spacing” panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 0.7, 0.8, 0.9, 1.0 (Normal), 1.1, 1.2, 1.25, 1.35, 1.5, 1.75, 2.0, 2.5.
   
 
 ## **Service Layer Architecture**
@@ -312,7 +337,7 @@ S3 backend specifics:
   - Fields default to empty strings instead of placeholder symbols
   - Validators trim whitespace but do not force placeholder values
   - Rendering logic only displays fields with actual content
-  - Section caps: Education ≤5, Work Experience ≤3, Internships ≤3, Projects ≤3, Achievements/Certifications/Publications ≤5, Extracurricular ≤5, skills per category are bounded.
+  - Section caps: Education ≤5, Work Experience ≤3, Internships ≤3, Projects ≤3, Achievements/Certifications/Publications ≤5, Extracurricular ≤5, Languages ≤10, skills per category are bounded.
 
 ### **ID Codec Utilities** (`app/core/id_codec.py`)
 
@@ -368,8 +393,9 @@ python main.py
 ### **Testing**
 
 ```bash
-# Test with pre-filled form
-# Access http://localhost:8000/test
+# Test with pre-filled form (unified test route)
+# Access http://localhost:8000/resume/test
+# Note: Saving on /resume/test is read-only and will be acknowledged but not persisted
 
 # Generate test PDF
 # Access http://localhost:8000/test/pdf
@@ -486,3 +512,10 @@ sudo systemctl restart cv-generator
 - `aws-lambda-rie`, `cv-generator-lambda.zip`, `source.zip`: Artifacts from prior Lambda experimentation; not part of the current EC2 deployment path.
 
 This is a **well-architected, production-ready application** that demonstrates modern Python web development practices with clean code, proper separation of concerns, comprehensive deployment automation, and enterprise-grade security. The project successfully generates professional academic resumes with a focus on user experience, code quality, and security best practices. 
+
+## **Update Log**
+
+- 2025-11-09 00:00 UTC: Synced with repo; added CI/CD section; verified Terraform, user data, endpoints, and dependencies.
+- 2025-11-09: Updated docs to reflect fixes — external link normalization across templates and live preview; Work Experience now included in `cv_template.html`; `/resume/test` pre-populates Summary and Work Experience.
+- 2025-11-09: Added Languages section as a simple list (like extracurricular activities); users can enter multiple languages they know; displayed as bullet points between Extracurricular Activities and Technical Skills sections.
+ - 2025-11-09: Introduced Section Spacing control (multiplier) and added minimal test dataset with routes: `/resume/test-minimal`, `/test/minimal`, `/test/minimal/pdf`. `exists` API recognizes `'test-minimal'`.

@@ -560,6 +560,23 @@ curl http://localhost:8000/health
 curl http://localhost/health
 ```
 
+## **CI/CD (GitHub Actions)**
+
+- Workflow path: `.github/workflows/terraform.yml`
+- Triggers: push to `new-feature-branch` and manual `workflow_dispatch`
+- Tooling: Terraform `1.10.5`, region `ap-south-1`, non-interactive automation
+- Steps: checkout → setup Terraform → configure AWS → `terraform init` (S3+DynamoDB backend via secrets) → validate → fmt check → plan → apply
+- Post-apply: if no infra changes, the workflow reboots the EC2 instance; otherwise it waits for instance health
+- Required secrets:
+  - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+  - `S3_BACKEND_BUCKET`, `DYNAMODB_LOCK_TABLE`
+  - `CLOUDFLARE_EMAIL`, `CLOUDFLARE_API_KEY`
+  - `APP_S3_BUCKET_NAME`, `APP_S3_PREFIX`
+  - `SHARE_TOKEN_KEY`
+- Common environment overrides:
+  - `TF_VAR_repo_url` (overrides `variables.tf` default)
+  - `AWS_REGION` (defaults to `ap-south-1`)
+
 ## **Monitoring and Troubleshooting**
 
 ### **Log Locations**
@@ -695,3 +712,7 @@ cat /etc/nginx/sites-available/cv-generator
 - **Secrets Manager**: Secure credential storage
 
 This infrastructure provides a robust, scalable foundation for the CV Generator application with automated deployment, monitoring capabilities, and room for future enhancements. 
+
+## **Update Log**
+
+- 2025-11-09 00:00 UTC: Synced with repo; added CI/CD section; verified Terraform, user data, endpoints, and dependencies.
