@@ -179,13 +179,13 @@ class CVData(BaseModel):
     personal_info: PersonalInfo
     summary: Optional[str] = Field(default="", max_length=1000)
     education: List[EducationEntry] = Field(default_factory=list, max_items=5)
-    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=3)
+    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=5)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
     certifications: List[CertificationEntry] = Field(default_factory=list, max_items=5)
     publications: List[PublicationEntry] = Field(default_factory=list, max_items=5)
-    internships: List[InternshipEntry] = Field(default_factory=list, max_items=3)
-    projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
-    positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
+    internships: List[InternshipEntry] = Field(default_factory=list, max_items=5)
+    projects: List[ProjectEntry] = Field(default_factory=list, max_items=5)
+    positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=5)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)
     languages: List[str] = Field(default_factory=list, max_items=10)
     technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
@@ -260,8 +260,8 @@ class CVGenerateRequest(BaseModel):
     # Education (support up to 5 entries)
     education_entries: List[EducationEntry] = Field(default_factory=list, max_items=5)
     
-    # Work Experience (optional, up to 3)
-    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=3)
+    # Work Experience (optional, up to 5)
+    work_experience: List[WorkExperienceEntry] = Field(default_factory=list, max_items=5)
     
     # Achievements (optional, up to 5 entries)
     achievements: List[AchievementEntry] = Field(default_factory=list, max_items=5)
@@ -272,14 +272,14 @@ class CVGenerateRequest(BaseModel):
     # Publications (optional, up to 5 entries)
     publications: List[PublicationEntry] = Field(default_factory=list, max_items=5)
     
-    # Internships (optional, up to 3)
-    internships: List[InternshipEntry] = Field(default_factory=list, max_items=3)
+    # Internships (optional, up to 5)
+    internships: List[InternshipEntry] = Field(default_factory=list, max_items=5)
     
-    # Projects (optional, up to 3)
-    projects: List[ProjectEntry] = Field(default_factory=list, max_items=3)
+    # Projects (optional, up to 5)
+    projects: List[ProjectEntry] = Field(default_factory=list, max_items=5)
     
-    # Positions of Responsibility (optional, up to 3)
-    positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=3)
+    # Positions of Responsibility (optional, up to 5)
+    positions_of_responsibility: List[PositionEntry] = Field(default_factory=list, max_items=5)
     
     # Extracurricular Activities (optional, up to 5)
     extracurricular: List[str] = Field(default_factory=list, max_items=5)

@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV Generator</title>
+    <!-- Toastify for toast notifications -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -530,6 +533,7 @@
         z-index: 2000;
     }
     .home-button:hover { background-color: #5a6268; }
+    
     </style>
 </head>
 <body>
@@ -1153,9 +1157,34 @@
         let projectCount = 1;
         let positionCount = 1;
 
+        // Section entry limit
+        const MAX_SECTION_ENTRIES = 5;
+
+        // Show limit error toast using Toastify
+        function showLimitError() {
+            Toastify({
+                text: "Cannot add more than 5 entries in a section",
+                duration: 4000,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "linear-gradient(to right, #e53e3e, #c53030)",
+                    borderRadius: "8px",
+                    fontWeight: "500",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+                },
+                stopOnFocus: true
+            }).showToast();
+        }
+
         // Education functions
         function addEducationEntry() {
             const container = document.getElementById('education-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1195,6 +1224,11 @@
         // Achievement functions
         function addAchievementEntry() {
             const container = document.getElementById('achievements-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1218,6 +1252,11 @@
         // Certification functions
         function addCertificationEntry() {
             const container = document.getElementById('certifications-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1241,6 +1280,11 @@
         // Publication functions
         function addPublicationEntry() {
             const container = document.getElementById('publications-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1264,6 +1308,11 @@
         // Internship functions
         function addInternshipEntry() {
             const container = document.getElementById('internships-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1314,6 +1363,11 @@
         // Work Experience functions
         function addWorkExperienceEntry() {
             const container = document.getElementById('work-experience-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1364,6 +1418,11 @@
         // Project functions
         function addProjectEntry() {
             const container = document.getElementById('projects-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1418,6 +1477,11 @@
         // Position functions
         function addPositionEntry() {
             const container = document.getElementById('positions-container');
+            const existingEntries = container.querySelectorAll('.dynamic-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'dynamic-entry';
             newEntry.innerHTML = `
@@ -1468,6 +1532,11 @@
         // Activity functions
         function addActivityEntry() {
             const container = document.getElementById('activities-container');
+            const existingEntries = container.querySelectorAll('.activity-entry').length;
+            if (existingEntries >= MAX_SECTION_ENTRIES) {
+                showLimitError();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'activity-entry';
             newEntry.innerHTML = `
@@ -1482,8 +1551,26 @@
         }
 
         // Language functions
+        const MAX_LANGUAGE_ENTRIES = 10;
         function addLanguageEntry() {
             const container = document.getElementById('languages-container');
+            const existingEntries = container.querySelectorAll('.language-entry').length;
+            if (existingEntries >= MAX_LANGUAGE_ENTRIES) {
+                Toastify({
+                    text: "Cannot add more than 10 languages",
+                    duration: 4000,
+                    gravity: "top",
+                    position: "center",
+                    style: {
+                        background: "linear-gradient(to right, #e53e3e, #c53030)",
+                        borderRadius: "8px",
+                        fontWeight: "500",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+                    },
+                    stopOnFocus: true
+                }).showToast();
+                return;
+            }
             const newEntry = document.createElement('div');
             newEntry.className = 'language-entry';
             newEntry.innerHTML = `

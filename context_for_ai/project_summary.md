@@ -31,6 +31,10 @@ boto3>=1.34.0
 Notes:
 - Playwright requires a Chromium browser installation. For local dev run `playwright install chromium`; on servers, the provisioning script installs both browser and OS deps.
 
+### **Frontend Libraries (CDN)**
+
+- **Toastify.js** - Lightweight toast notifications for client-side validation feedback
+
 ## **Project Structure**
 
 ```text
@@ -223,6 +227,7 @@ Provisioning highlights (user data):
 - ✅ **Test-mode Prepopulation**: `/resume/test` now pre-populates the form's Professional Summary and Work Experience sections in addition to other sections
 - ✅ **Languages Section**: Added simple languages list section; users can add multiple languages they know without proficiency levels (displayed as bullet points)
  - ✅ **Section Spacing Control**: Added `section_spacing_multiplier` with UI in `form.html`, live preview support, and dynamic spacing in both web and PDF templates; added minimal dataset and routes to demo sparse CVs.
+- ✅ **Section Entry Limits**: Increased max entries from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation using Toastify.js to show friendly toast notifications when users try to exceed section limits (5 entries for most sections, 10 for Languages).
 
 ## **Current Development Status**
 
@@ -284,7 +289,8 @@ The application uses structured JSON format:
 - **Tokenized Share URL**: Form receives a precomputed `share_url` from the server; frontend never handles keys or encryption. Graceful fallback in the client uses the current URL when `share_url` is absent.
 - **View-only Toast**: Minimal top-right toast on shared views linking back to the homepage; no resume ID is displayed
 - **External Link Normalization**: GitHub, LinkedIn, and project repo links are automatically converted to absolute URLs with `https://` when missing, in both web/PDF templates and the live preview.
- - **Section Spacing Control**: “Section Spacing” setting (in the “Edit Font and Spacing” panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 0.7, 0.8, 0.9, 1.0 (Normal), 1.1, 1.2, 1.25, 1.35, 1.5, 1.75, 2.0, 2.5.
+- **Section Spacing Control**: "Section Spacing" setting (in the "Edit Font and Spacing" panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 0.7, 0.8, 0.9, 1.0 (Normal), 1.1, 1.2, 1.25, 1.35, 1.5, 1.75, 2.0, 2.5.
+- **Section Limit Toasts**: Toastify.js-powered toast notifications appear when users try to add more entries than allowed (5 for most sections, 10 for Languages).
   
 
 ## **Service Layer Architecture**
@@ -337,7 +343,8 @@ S3 backend specifics:
   - Fields default to empty strings instead of placeholder symbols
   - Validators trim whitespace but do not force placeholder values
   - Rendering logic only displays fields with actual content
-  - Section caps: Education ≤5, Work Experience ≤3, Internships ≤3, Projects ≤3, Achievements/Certifications/Publications ≤5, Extracurricular ≤5, Languages ≤10, skills per category are bounded.
+  - Section caps: Education ≤5, Work Experience ≤5, Internships ≤5, Projects ≤5, Positions of Responsibility ≤5, Achievements/Certifications/Publications ≤5, Extracurricular ≤5, Languages ≤10, skills per category are bounded.
+  - Client-side validation enforces these limits with Toastify.js toast notifications when users try to exceed them.
 
 ### **ID Codec Utilities** (`app/core/id_codec.py`)
 
@@ -491,6 +498,7 @@ sudo systemctl restart cv-generator
 - Resume existence pre-check via `GET /api/v1/resume/{resume_id}/exists` when continuing from localStorage
 - Supports both legacy flat format and new structured format
 - Comprehensive client-side validation
+- Section entry limits enforced client-side with Toastify.js toast notifications (max 5 entries for most sections, 10 for Languages)
 - Subtle loading indicators (top progress bar + button spinners/disable) to avoid spamming actions and provide feedback
   - Share button copies the tokenized URL immediately for snappy UX, then autosaves in the background
   - Resume continuation flow: localStorage TTL ~7 days, server existence pre-check before enabling "Continue"
@@ -518,4 +526,5 @@ This is a **well-architected, production-ready application** that demonstrates m
 - 2025-11-09 00:00 UTC: Synced with repo; added CI/CD section; verified Terraform, user data, endpoints, and dependencies.
 - 2025-11-09: Updated docs to reflect fixes — external link normalization across templates and live preview; Work Experience now included in `cv_template.html`; `/resume/test` pre-populates Summary and Work Experience.
 - 2025-11-09: Added Languages section as a simple list (like extracurricular activities); users can enter multiple languages they know; displayed as bullet points between Extracurricular Activities and Technical Skills sections.
- - 2025-11-09: Introduced Section Spacing control (multiplier) and added minimal test dataset with routes: `/resume/test-minimal`, `/test/minimal`, `/test/minimal/pdf`. `exists` API recognizes `'test-minimal'`.
+- 2025-11-09: Introduced Section Spacing control (multiplier) and added minimal test dataset with routes: `/resume/test-minimal`, `/test/minimal`, `/test/minimal/pdf`. `exists` API recognizes `'test-minimal'`.
+- 2025-11-28: Increased section entry limits from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation with Toastify.js toast notifications to all sections (Education, Work Experience, Internships, Projects, Positions, Achievements, Certifications, Publications, Extracurricular Activities, Languages) to prevent exceeding limits with user-friendly error messages.
