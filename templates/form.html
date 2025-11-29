@@ -1159,11 +1159,30 @@
 
         // Section entry limit
         const MAX_SECTION_ENTRIES = 5;
+        // Points per entry limit
+        const MAX_POINTS_PER_ENTRY = 5;
 
         // Show limit error toast using Toastify
         function showLimitError() {
             Toastify({
                 text: "Cannot add more than 5 entries in a section",
+                duration: 4000,
+                gravity: "top",
+                position: "center",
+                style: {
+                    background: "linear-gradient(to right, #e53e3e, #c53030)",
+                    borderRadius: "8px",
+                    fontWeight: "500",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)"
+                },
+                stopOnFocus: true
+            }).showToast();
+        }
+
+        // Show points limit error toast using Toastify
+        function showPointsLimitError() {
+            Toastify({
+                text: "Cannot add more than 5 points per entry",
                 duration: 4000,
                 gravity: "top",
                 position: "center",
@@ -1351,6 +1370,11 @@
 
         function addInternshipPoint(index) {
             const container = document.querySelector(`.internship-points[data-index="${index}"]`);
+            const existingPoints = container.querySelectorAll('.point-entry').length;
+            if (existingPoints >= MAX_POINTS_PER_ENTRY) {
+                showPointsLimitError();
+                return;
+            }
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
@@ -1406,6 +1430,11 @@
 
         function addWorkExperiencePoint(index) {
             const container = document.querySelector(`.work-experience-points[data-index="${index}"]`);
+            const existingPoints = container.querySelectorAll('.point-entry').length;
+            if (existingPoints >= MAX_POINTS_PER_ENTRY) {
+                showPointsLimitError();
+                return;
+            }
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
@@ -1465,6 +1494,11 @@
 
         function addProjectPoint(index) {
             const container = document.querySelector(`.project-points[data-index="${index}"]`);
+            const existingPoints = container.querySelectorAll('.point-entry').length;
+            if (existingPoints >= MAX_POINTS_PER_ENTRY) {
+                showPointsLimitError();
+                return;
+            }
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `
@@ -1520,6 +1554,11 @@
 
         function addPositionPoint(index) {
             const container = document.querySelector(`.position-points[data-index="${index}"]`);
+            const existingPoints = container.querySelectorAll('.point-entry').length;
+            if (existingPoints >= MAX_POINTS_PER_ENTRY) {
+                showPointsLimitError();
+                return;
+            }
             const newPoint = document.createElement('div');
             newPoint.className = 'point-entry';
             newPoint.innerHTML = `

@@ -228,6 +228,7 @@ Provisioning highlights (user data):
 - ✅ **Languages Section**: Added simple languages list section; users can add multiple languages they know without proficiency levels (displayed as bullet points)
  - ✅ **Section Spacing Control**: Added `section_spacing_multiplier` with UI in `form.html`, live preview support, and dynamic spacing in both web and PDF templates; added minimal dataset and routes to demo sparse CVs.
 - ✅ **Section Entry Limits**: Increased max entries from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation using Toastify.js to show friendly toast notifications when users try to exceed section limits (5 entries for most sections, 10 for Languages).
+- ✅ **Points Per Entry Limits**: Added validation to limit key points/responsibilities to 5 per entry in Work Experience, Internships, Projects, and Positions of Responsibility sections. Uses Toastify.js toast notifications.
 
 ## **Current Development Status**
 
@@ -344,6 +345,7 @@ S3 backend specifics:
   - Validators trim whitespace but do not force placeholder values
   - Rendering logic only displays fields with actual content
   - Section caps: Education ≤5, Work Experience ≤5, Internships ≤5, Projects ≤5, Positions of Responsibility ≤5, Achievements/Certifications/Publications ≤5, Extracurricular ≤5, Languages ≤10, skills per category are bounded.
+  - Points per entry caps: Key points/responsibilities limited to ≤5 per entry in Work Experience, Internships, Projects, and Positions of Responsibility.
   - Client-side validation enforces these limits with Toastify.js toast notifications when users try to exceed them.
 
 ### **ID Codec Utilities** (`app/core/id_codec.py`)
@@ -528,3 +530,4 @@ This is a **well-architected, production-ready application** that demonstrates m
 - 2025-11-09: Added Languages section as a simple list (like extracurricular activities); users can enter multiple languages they know; displayed as bullet points between Extracurricular Activities and Technical Skills sections.
 - 2025-11-09: Introduced Section Spacing control (multiplier) and added minimal test dataset with routes: `/resume/test-minimal`, `/test/minimal`, `/test/minimal/pdf`. `exists` API recognizes `'test-minimal'`.
 - 2025-11-28: Increased section entry limits from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation with Toastify.js toast notifications to all sections (Education, Work Experience, Internships, Projects, Positions, Achievements, Certifications, Publications, Extracurricular Activities, Languages) to prevent exceeding limits with user-friendly error messages.
+- 2025-11-29: Added points-per-entry validation (max 5 key points/responsibilities) in Work Experience, Internships, Projects, and Positions of Responsibility sections with Toastify.js toast notifications.
