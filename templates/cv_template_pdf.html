@@ -15,30 +15,26 @@
             color: {{font_settings.body_font_color}};
             font-size: {{font_settings.body_font_size}};
         }
-        
-        /* .education-separator {
-            margin: 0 2px;
-        } */
-        
+
         .summary-content {
             line-height: 1.5;
             text-align: justify;
             margin-bottom: 10px;
         }
-        
+
         .header {
             text-align: center;
             padding-bottom: 3px;
             margin-bottom: 6px;
         }
-        
+
         .name {
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 4px;
             color: {{font_settings.title_font_color}};
         }
-        
+
         .contact-info {
             font-size: 1.1em;
             margin-bottom: 3px;
@@ -62,11 +58,11 @@
             align-items: center;
             min-width: 0;
         }
-        
+
         .section {
             margin-bottom: calc(8px * {{font_settings.section_spacing_multiplier}});
         }
-        
+
         .section-title {
             display: flex;
             align-items: center;
@@ -76,7 +72,6 @@
             margin-bottom: 8px;
             padding: 2px 2px;
             border-bottom: none;
-            /* background-color: #E8F4FD; */
             border-radius: 3px;
         }
         .section-title-text {
@@ -90,43 +85,43 @@
             border-radius: 1px;
             opacity: 0.5;
         }
-        
+
         .education-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 8px;
         }
-        
+
         .education-table th,
         .education-table td {
             border: 1px solid #ddd;
             padding: 2px 4px;
             text-align: left;
         }
-        
+
         .education-table th {
             background-color: #f2f2f2;
             font-weight: bold;
         }
-        
+
         .skills-categorized {
             margin-top: 6px;
         }
-        
+
         .skill-category {
             margin-bottom: 4px;
             line-height: 1.2;
         }
-        
+
         .skill-category strong {
             color: #000000;
             font-weight: bold;
         }
-        
+
         .experience-item {
             margin-bottom: 12px;
         }
-        
+
         .experience-header {
             margin-bottom: 5px;
             display: block;
@@ -165,7 +160,7 @@
         .achievement-desc ul li {
             margin-bottom: 2px;
         }
-        
+
         .achievement-year {
             float: right !important;
             font-weight: normal;
@@ -210,33 +205,380 @@
             overflow: hidden;
             box-sizing: border-box;
         }
-        
+
+        /* Custom section table styles */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+        .custom-table th,
+        .custom-table td {
+            border: 1px solid #ddd;
+            padding: 2px 4px;
+            text-align: left;
+        }
+        .custom-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     {# No view-only banner in PDF body #}
-    
+
+{# ============== SECTION MACROS ============== #}
+
+{% macro render_summary() %}
+{% if summary and summary.strip() %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Professional Summary</span><span class="section-title-line"></span></div>
+    <div class="summary-content">{{summary}}</div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_education() %}
+{% set valid_education = education|selectattr('qualification')|list %}
+{% if valid_education %}
+<div class="section">
+    <div class="section-title-line"></div>
+    <table class="education-table">
+        <thead>
+            <tr>
+                <th>Qualification</th>
+                <th>Stream</th>
+                <th>Institute</th>
+                <th>Year</th>
+                <th>CGPA/%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for edu in education %}
+            {% if edu.qualification %}
+            <tr>
+                <td>{{edu.qualification}}</td>
+                <td>{{edu.stream}}</td>
+                <td>{{edu.institute}}</td>
+                <td>{{edu.year}}</td>
+                <td>{{edu.cgpa}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_work_experience() %}
+{% set valid_work_experience = work_experience|selectattr('company')|list %}
+{% if valid_work_experience %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Work Experience</span><span class="section-title-line"></span></div>
+    {% for work in valid_work_experience %}
+    <div class="experience-item">
+        <div class="experience-header">
+            <span class="main-entity">{{work.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{work.position}}</span><span class="experience-duration">({{work.duration}})</span>
+        </div>
+        <div class="clear"></div>
+        {% set valid_points = work.points|select|list %}
+        {% if valid_points %}
+        <ul class="experience-points">
+            {% for point in valid_points %}
+            <li>{{point}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_internships() %}
+{% set valid_internships = internships|selectattr('company')|list %}
+{% if valid_internships %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Internships</span><span class="section-title-line"></span></div>
+    {% for intern in valid_internships %}
+    <div class="experience-item">
+        <div class="experience-header">
+            <span class="main-entity">{{intern.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{intern.role}}</span><span class="experience-duration">({{intern.duration}})</span>
+        </div>
+        <div class="clear"></div>
+        {% set valid_points = intern.points|select|list %}
+        {% if valid_points %}
+        <ul class="experience-points">
+            {% for point in valid_points %}
+            <li>{{point}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_achievements() %}
+{% set valid_achievements = achievements|selectattr('description')|list %}
+{% if valid_achievements %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Scholastic Achievements</span><span class="section-title-line"></span></div>
+    <ul>
+        {% for ach in valid_achievements %}
+        <li>
+            <div class="achievement-header">
+                <span class="achievement-desc">{{ach.description}}</span>
+                <span class="achievement-year">({{ach.year}})</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_certifications() %}
+{% set valid_certifications = certifications|selectattr('description')|list %}
+{% if valid_certifications %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Certifications</span><span class="section-title-line"></span></div>
+    <ul>
+        {% for cert in valid_certifications %}
+        <li>
+            <div class="achievement-header">
+                <span class="achievement-desc">{{cert.description}}</span>
+                <span class="achievement-year">({{cert.year}})</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_publications() %}
+{% set valid_publications = publications|selectattr('description')|list %}
+{% if valid_publications %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Publications</span><span class="section-title-line"></span></div>
+    <ul>
+        {% for pub in valid_publications %}
+        <li>
+            <div class="achievement-header">
+                <span class="achievement-desc">{{pub.description}}</span>
+                <span class="achievement-year">({{pub.year}})</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_projects() %}
+{% set valid_projects = projects|selectattr('title')|list %}
+{% if valid_projects %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Key Projects</span><span class="section-title-line"></span></div>
+    {% for proj in valid_projects %}
+    <div class="experience-item">
+        <div class="experience-header">
+            <span class="main-entity">
+                {% if proj.repo_link %}
+                    <a href="{% if proj.repo_link.startswith('http://') or proj.repo_link.startswith('https://') %}{{proj.repo_link}}{% else %}https://{{proj.repo_link}}{% endif %}" target="_blank">{{proj.title}}</a>
+                {% else %}
+                    {{proj.title}}
+                {% endif %}
+            </span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{proj.type}}</span><span class="experience-duration">({{proj.duration}})</span>
+        </div>
+        <div class="clear"></div>
+        {% set valid_points = proj.points|select|list %}
+        {% if valid_points %}
+        <ul class="experience-points">
+            {% for point in valid_points %}
+            <li>{{point}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_positions() %}
+{% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
+{% if valid_positions %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Positions of Responsibility</span><span class="section-title-line"></span></div>
+    {% for pos in valid_positions %}
+    <div class="experience-item">
+        <div class="experience-header">
+            <span class="main-entity">{{pos.club}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{pos.role}}</span><span class="experience-duration">({{pos.duration}})</span>
+        </div>
+        <div class="clear"></div>
+        {% set valid_points = pos.points|select|list %}
+        {% if valid_points %}
+        <ul class="experience-points">
+            {% for point in valid_points %}
+            <li>{{point}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_extracurricular() %}
+{% set valid_extracurricular = extracurricular|select|list %}
+{% if valid_extracurricular %}
+<div class="section extracurricular-section">
+    <div class="section-title"><span class="section-title-text">Extra Curricular Activities</span><span class="section-title-line"></span></div>
+    <ul class="extracurricular-section">
+        {% for activity in valid_extracurricular %}
+        <li>{{activity}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_languages() %}
+{% set valid_languages = languages|select|list %}
+{% if valid_languages %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Languages</span><span class="section-title-line"></span></div>
+    <ul>
+        {% for language in valid_languages %}
+        <li>{{language}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_skills() %}
+{% if technical_skills %}
+<div class="section">
+    <div class="section-title"><span class="section-title-text">Technical Skills</span><span class="section-title-line"></span></div>
+    <div class="skills-categorized">
+        {% if technical_skills.programming_languages %}
+        <div class="skill-category">
+            <strong>Programming Languages:</strong>
+            {% for skill in technical_skills.programming_languages %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        {% if technical_skills.web_technologies %}
+        <div class="skill-category">
+            <strong>Web Technologies / Frameworks:</strong>
+            {% for skill in technical_skills.web_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        {% if technical_skills.database_management %}
+        <div class="skill-category">
+            <strong>Database Management:</strong>
+            {% for skill in technical_skills.database_management %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+
+        {% if technical_skills.tools_and_technologies %}
+        <div class="skill-category">
+            <strong>Tools and Technologies:</strong>
+            {% for skill in technical_skills.tools_and_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endmacro %}
+
+{% macro render_custom_section(custom) %}
+{% if custom.type == 'default' %}
+    {% set valid_entries = custom.entries|selectattr('title')|list %}
+    {% if valid_entries %}
+    <div class="section">
+        <div class="section-title"><span class="section-title-text">{{custom.name}}</span><span class="section-title-line"></span></div>
+        {% for entry in valid_entries %}
+        <div class="experience-item">
+            <div class="experience-header">
+                <span class="main-entity">{{entry.title}}</span>
+                {% if entry.subtitle %}<span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{entry.subtitle}}</span>{% endif %}
+                {% if entry.duration %}<span class="experience-duration">({{entry.duration}})</span>{% endif %}
+            </div>
+            <div class="clear"></div>
+            {% if entry.points %}
+            <ul class="experience-points">
+                {% for point in entry.points %}
+                {% if point %}<li>{{point}}</li>{% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% elif custom.type == 'tabular' %}
+    {% if custom.rows and custom.columns %}
+    <div class="section">
+        <div class="section-title"><span class="section-title-text">{{custom.name}}</span><span class="section-title-line"></span></div>
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    {% for col in custom.columns %}
+                    <th>{{col}}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in custom.rows %}
+                <tr>
+                    {% for cell in row %}
+                    <td>{{cell}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endif %}
+{% endmacro %}
+
+{# ============== MAIN BODY ============== #}
+
     <div class="pdf-fit-wrapper">
         <div class="header">
             <div class="name">{{personal_info.full_name}}</div>
-                    <div class="contact-info">
+            <div class="education">
             {{personal_info.highest_education}}{% if education and education|length > 0 %}, {{education[0].institute}}{% endif %}
-        </div>
+            </div>
             <div class="contact-info">
-                {{personal_info.city}}
-                | <span style="vertical-align:middle;">
-                    <!-- Phone SVG, no link -->
+                {% if personal_info.city %}<span>{{personal_info.city}}</span><span style="color:#888;">|</span>{% endif %}
+                {% if personal_info.phone %}
+                <span style="display:inline-flex;align-items:center;gap:2px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.07 21 3 13.93 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.2 2.2z" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span> {{personal_info.phone}}
-                | <span style="vertical-align:middle;">
-                    <!-- Email SVG with mailto link for both icon and text -->
+                    {{personal_info.phone}}
+                </span>
+                <span style="color:#888;">|</span>
+                {% endif %}
+                {% if personal_info.email %}
+                <span style="display:inline-flex;align-items:center;gap:2px;">
                     <a href="mailto:{{personal_info.email}}" style="vertical-align:middle; text-decoration:none;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4V4zm0 0l8 8 8-8" stroke="#222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        {{personal_info.email}}
                     </a>
+                    <a href="mailto:{{personal_info.email}}">{{personal_info.email}}</a>
                 </span>
+                <span style="color:#888;">|</span>
+                {% endif %}
                 {% if personal_info.github %}
-                | <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <span style="display:inline-flex;align-items:center;gap:2px;">
                     <a href="{% if personal_info.github.startswith('http://') or personal_info.github.startswith('https://') %}{{ personal_info.github }}{% else %}https://{{ personal_info.github }}{% endif %}" target="_blank" style="vertical-align:middle; text-decoration:none;">
                         <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
                     </a>
@@ -244,9 +586,10 @@
                         {{ personal_info.github.rstrip('/').split('/')[-1] }}
                     </a>
                 </span>
+                <span style="color:#888;">|</span>
                 {% endif %}
                 {% if personal_info.linkedin %}
-                | <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <span style="display:inline-flex;align-items:center;gap:2px;">
                     <a href="{% if personal_info.linkedin.startswith('http://') or personal_info.linkedin.startswith('https://') %}{{ personal_info.linkedin }}{% else %}https://{{ personal_info.linkedin }}{% endif %}" target="_blank" style="vertical-align:middle; text-decoration:none;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#0A66C2" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M20.447 20.452h-3.554v-5.569c0-1.327-.025-3.037-1.849-3.037-1.851 0-2.132 1.445-2.132 2.939v5.667h-3.554V9h3.414v1.561h.049c.476-.899 1.637-1.849 3.369-1.849 3.602 0 4.267 2.369 4.267 5.455v6.285zM5.337 7.433c-1.144 0-2.069-.926-2.069-2.068 0-1.143.925-2.069 2.069-2.069 1.143 0 2.068.926 2.068 2.069 0 1.142-.925 2.068-2.068 2.068zm1.777 13.019H3.56V9h3.554v11.452zM22.225 0H1.771C.792 0 0 .771 0 1.723v20.549C0 23.229.792 24 1.771 24h20.451C23.2 24 24 23.229 24 22.271V1.723C24 .771 23.2 0 22.222 0z"/></svg>
                     </a>
@@ -258,248 +601,54 @@
             </div>
         </div>
 
-        {% if summary and summary.strip() %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Professional Summary</span><span class="section-title-line"></span></div>
-            <div class="summary-content">{{summary}}</div>
-        </div>
-        {% endif %}
+        {# Render sections in order specified by section_order, or default order if not provided #}
+        {% set default_order = ['summary-section', 'education-section', 'work-experience-section', 'internships-section', 'achievements-section', 'certifications-section', 'publications-section', 'projects-section', 'positions-section', 'extracurricular-section', 'languages-section', 'skills-section'] %}
+        {% set order = section_order if section_order else default_order %}
 
-        <div class="section">
-            <div class="section-title-line"></div>
-            <table class="education-table">
-                <thead>
-                    <tr>
-                        <th>Qualification</th>
-                        <th>Stream</th>
-                        <th>Institute</th>
-                        <th>Year</th>
-                        <th>CGPA/%</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for edu in education %}
-                    {% if edu.qualification %}
-                    <tr>
-                        <td>{{edu.qualification}}</td>
-                        <td>{{edu.stream}}</td>
-                        <td>{{edu.institute}}</td>
-                        <td>{{edu.year}}</td>
-                        <td>{{edu.cgpa}}</td>
-                    </tr>
+        {% for section_id in order %}
+            {% if section_id == 'summary-section' %}
+                {{ render_summary() }}
+            {% elif section_id == 'education-section' %}
+                {{ render_education() }}
+            {% elif section_id == 'work-experience-section' %}
+                {{ render_work_experience() }}
+            {% elif section_id == 'internships-section' %}
+                {{ render_internships() }}
+            {% elif section_id == 'achievements-section' %}
+                {{ render_achievements() }}
+            {% elif section_id == 'certifications-section' %}
+                {{ render_certifications() }}
+            {% elif section_id == 'publications-section' %}
+                {{ render_publications() }}
+            {% elif section_id == 'projects-section' %}
+                {{ render_projects() }}
+            {% elif section_id == 'positions-section' %}
+                {{ render_positions() }}
+            {% elif section_id == 'extracurricular-section' %}
+                {{ render_extracurricular() }}
+            {% elif section_id == 'languages-section' %}
+                {{ render_languages() }}
+            {% elif section_id == 'skills-section' %}
+                {{ render_skills() }}
+            {% elif section_id.startswith('custom-section-') %}
+                {# Render custom section by finding it in custom_sections list #}
+                {% for custom in custom_sections %}
+                    {% if custom.id == section_id %}
+                        {{ render_custom_section(custom) }}
                     {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
 
-        {% set valid_work_experience = work_experience|selectattr('company')|list %}
-        {% if valid_work_experience %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Work Experience</span><span class="section-title-line"></span></div>
-            {% for work in valid_work_experience %}
-            <div class="experience-item">
-                <div class="experience-header">
-                    <span class="main-entity">{{work.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{work.position}}</span><span class="experience-duration">({{work.duration}})</span>
-                </div>
-                <div class="clear"></div>
-                {% set valid_points = work.points|select|list %}
-                {% if valid_points %}
-                <ul class="experience-points">
-                    {% for point in valid_points %}
-                    <li>{{point}}</li>
-                    {% endfor %}
-                </ul>
+        {# Render any custom sections not in the order list #}
+        {% if custom_sections %}
+            {% for custom in custom_sections %}
+                {% if custom.id not in order %}
+                    {{ render_custom_section(custom) }}
                 {% endif %}
-            </div>
             {% endfor %}
-        </div>
         {% endif %}
 
-        {% set valid_internships = internships|selectattr('company')|list %}
-        {% if valid_internships %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Internships</span><span class="section-title-line"></span></div>
-            {% for intern in valid_internships %}
-            <div class="experience-item">
-                <div class="experience-header">
-                    <span class="main-entity">{{intern.company}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{intern.role}}</span><span class="experience-duration">({{intern.duration}})</span>
-                </div>
-                <div class="clear"></div>
-                {% set valid_points = intern.points|select|list %}
-                {% if valid_points %}
-                <ul class="experience-points">
-                    {% for point in valid_points %}
-                    <li>{{point}}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% set valid_achievements = achievements|selectattr('description')|list %}
-        {% if valid_achievements %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Scholastic Achievements</span><span class="section-title-line"></span></div>
-            <ul>
-                {% for ach in valid_achievements %}
-                <li>
-                    <div class="achievement-header">
-                        <span class="achievement-desc">{{ach.description}}</span>
-                        <span class="achievement-year">({{ach.year}})</span>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% set valid_certifications = certifications|selectattr('description')|list %}
-        {% if valid_certifications %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Certifications</span><span class="section-title-line"></span></div>
-            <ul>
-                {% for cert in valid_certifications %}
-                <li>
-                    <div class="achievement-header">
-                        <span class="achievement-desc">{{cert.description}}</span>
-                        <span class="achievement-year">({{cert.year}})</span>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% set valid_publications = publications|selectattr('description')|list %}
-        {% if valid_publications %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Publications</span><span class="section-title-line"></span></div>
-            <ul>
-                {% for pub in valid_publications %}
-                <li>
-                    <div class="achievement-header">
-                        <span class="achievement-desc">{{pub.description}}</span>
-                        <span class="achievement-year">({{pub.year}})</span>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% set valid_projects = projects|selectattr('title')|list %}
-        {% if valid_projects %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Key Projects</span><span class="section-title-line"></span></div>
-            {% for proj in valid_projects %}
-            <div class="experience-item">
-                <div class="experience-header">
-                    <span class="main-entity">
-                        {% if proj.repo_link %}
-                            <a href="{% if proj.repo_link.startswith('http://') or proj.repo_link.startswith('https://') %}{{proj.repo_link}}{% else %}https://{{proj.repo_link}}{% endif %}" target="_blank">{{proj.title}}</a>
-                        {% else %}
-                            {{proj.title}}
-                        {% endif %}
-                    </span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{proj.type}}</span><span class="experience-duration">({{proj.duration}})</span>
-                </div>
-                <div class="clear"></div>
-                {% set valid_points = proj.points|select|list %}
-                {% if valid_points %}
-                <ul class="experience-points">
-                    {% for point in valid_points %}
-                    <li>{{point}}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% set valid_positions = positions_of_responsibility|selectattr('club')|list %}
-        {% if valid_positions %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Positions of Responsibility</span><span class="section-title-line"></span></div>
-            {% for pos in valid_positions %}
-            <div class="experience-item">
-                <div class="experience-header">
-                    <span class="main-entity">{{pos.club}}</span><span class="separator">&nbsp;|&nbsp;</span><span class="secondary-entity">{{pos.role}}</span><span class="experience-duration">({{pos.duration}})</span>
-                </div>
-                <div class="clear"></div>
-                {% set valid_points = pos.points|select|list %}
-                {% if valid_points %}
-                <ul class="experience-points">
-                    {% for point in valid_points %}
-                    <li>{{point}}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-
-        {% set valid_extracurricular = extracurricular|select|list %}
-        {% if valid_extracurricular %}
-        <div class="section extracurricular-section">
-            <div class="section-title"><span class="section-title-text">Extra Curricular Activities</span><span class="section-title-line"></span></div>
-            <ul class = "extracurricular-section">
-                {% for activity in valid_extracurricular %}
-                <li>{{activity}}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% set valid_languages = languages|select|list %}
-        {% if valid_languages %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Languages</span><span class="section-title-line"></span></div>
-            <ul>
-                {% for language in valid_languages %}
-                <li>{{language}}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-
-        {% if technical_skills %}
-        <div class="section">
-            <div class="section-title"><span class="section-title-text">Technical Skills</span><span class="section-title-line"></span></div>
-            <div class="skills-categorized">
-                {% if technical_skills.programming_languages %}
-                <div class="skill-category">
-                    <strong>Programming Languages:</strong> 
-                    {% for skill in technical_skills.programming_languages %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
-                </div>
-                {% endif %}
-                
-                {% if technical_skills.web_technologies %}
-                <div class="skill-category">
-                    <strong>Web Technologies / Frameworks:</strong> 
-                    {% for skill in technical_skills.web_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
-                </div>
-                {% endif %}
-                
-                {% if technical_skills.database_management %}
-                <div class="skill-category">
-                    <strong>Database Management:</strong> 
-                    {% for skill in technical_skills.database_management %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
-                </div>
-                {% endif %}
-                
-                {% if technical_skills.tools_and_technologies %}
-                <div class="skill-category">
-                    <strong>Tools and Technologies:</strong> 
-                    {% for skill in technical_skills.tools_and_technologies %}{{skill}}{% if not loop.last %}, {% endif %}{% endfor %}
-                </div>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
     </div>
 </body>
 </html>

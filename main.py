@@ -1027,6 +1027,30 @@ def parse_dynamic_form_data(form_data) -> dict:
         "section_spacing_multiplier": form_data.get("section_spacing_multiplier", "1.0")
     }
     
+    # Parse section_order (JSON string from hidden field)
+    section_order_str = form_data.get("section_order", "")
+    if section_order_str and section_order_str.strip():
+        try:
+            structured_data["section_order"] = json.loads(section_order_str)
+            logger.info(f"[DEBUG] Parsed section_order: {structured_data['section_order']}")
+        except json.JSONDecodeError as e:
+            logger.warning(f"Failed to parse section_order JSON: {e}")
+            structured_data["section_order"] = []
+    else:
+        structured_data["section_order"] = []
+
+    # Parse custom_sections (JSON string from hidden field)
+    custom_sections_str = form_data.get("custom_sections_json", "")
+    if custom_sections_str and custom_sections_str.strip():
+        try:
+            structured_data["custom_sections"] = json.loads(custom_sections_str)
+            logger.info(f"[DEBUG] Parsed custom_sections: {structured_data['custom_sections']}")
+        except json.JSONDecodeError as e:
+            logger.warning(f"Failed to parse custom_sections JSON: {e}")
+            structured_data["custom_sections"] = []
+    else:
+        structured_data["custom_sections"] = []
+
     # After parsing all data
     logger.info("[DEBUG] Structured data after parsing dynamic form:")
     logger.info(pprint.pformat(structured_data))

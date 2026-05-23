@@ -533,7 +533,223 @@
         z-index: 2000;
     }
     .home-button:hover { background-color: #5a6268; }
-    
+
+    /* Section Reorder Styles */
+    .section-reorder-container {
+        background-color: #f0f4f8;
+        border: 1px solid #d1d9e6;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .section-reorder-container h3 {
+        margin: 0 0 12px 0;
+        color: #4a5568;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .section-reorder-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .section-reorder-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        background-color: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        margin-bottom: 6px;
+        cursor: grab;
+        transition: all 0.2s;
+    }
+    .section-reorder-item:hover {
+        background-color: #f7fafc;
+        border-color: #4299e1;
+    }
+    .section-reorder-item.dragging {
+        opacity: 0.5;
+        cursor: grabbing;
+    }
+    .section-reorder-item .drag-handle {
+        color: #a0aec0;
+        cursor: grab;
+    }
+    .section-reorder-item .section-name {
+        flex: 1;
+        font-size: 13px;
+        color: #2d3748;
+    }
+    .section-reorder-item .section-toggle {
+        font-size: 11px;
+        color: #718096;
+    }
+
+    /* Custom Section Modal Styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+    }
+    .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 450px;
+        width: 90%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .modal-header h3 {
+        margin: 0;
+        color: #2d3748;
+        font-size: 18px;
+    }
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #a0aec0;
+        padding: 0;
+        width: auto;
+        min-width: auto;
+    }
+    .modal-close:hover {
+        color: #4a5568;
+    }
+    .section-type-option {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .section-type-option:hover {
+        border-color: #4299e1;
+        background-color: #f7fafc;
+    }
+    .section-type-option.selected {
+        border-color: #4299e1;
+        background-color: #ebf8ff;
+    }
+    .section-type-option h4 {
+        margin: 0 0 4px 0;
+        color: #2d3748;
+        font-size: 15px;
+    }
+    .section-type-option p {
+        margin: 0;
+        color: #718096;
+        font-size: 12px;
+    }
+
+    /* Page Break Indicator Styles */
+    .page-break-indicator {
+        border-top: 2px dashed #e53e3e;
+        margin: 10px 0;
+        position: relative;
+    }
+    .page-break-indicator::after {
+        content: 'Page Break';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        padding: 0 8px;
+        color: #e53e3e;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    /* Add Custom Section Button */
+    .add-custom-section-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: #f0f4f8;
+        border: 2px dashed #4299e1;
+        border-radius: 8px;
+        color: #4299e1;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .add-custom-section-btn:hover {
+        background-color: #ebf8ff;
+        border-color: #3182ce;
+        color: #3182ce;
+    }
+
+    /* Custom section styles */
+    .custom-section {
+        position: relative;
+    }
+    .custom-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+    .custom-section-title-input {
+        flex: 1;
+        font-size: 18px;
+        font-weight: bold;
+        color: #4a5568;
+        border: none;
+        background: transparent;
+        padding: 0;
+    }
+    .custom-section-title-input:focus {
+        outline: none;
+        border-bottom: 2px solid #4299e1;
+    }
+
+    /* Tabular custom section styles */
+    .tabular-headers {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .tabular-headers input {
+        flex: 1;
+        font-weight: bold;
+        background-color: #f7fafc;
+    }
+    .tabular-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+        align-items: center;
+    }
+    .tabular-row input {
+        flex: 1;
+    }
+    .tabular-row .btn-danger {
+        flex-shrink: 0;
+    }
+
     </style>
 </head>
 <body>
@@ -652,7 +868,67 @@
             {% if resume_id %}
             <input type="hidden" name="resume_id" value="{{ resume_id }}">
             {% endif %}
-            
+
+            <!-- Hidden field for section order -->
+            <input type="hidden" id="section_order" name="section_order" value="">
+            <!-- Hidden field for custom sections JSON -->
+            <input type="hidden" id="custom_sections_json" name="custom_sections_json" value="[]">
+
+            <!-- Section Reorder UI -->
+            <div class="section-reorder-container">
+                <h3>📋 Reorder Sections (Drag to reorder)</h3>
+                <ul class="section-reorder-list" id="section-reorder-list">
+                    <li class="section-reorder-item" data-section="summary-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Professional Summary</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="education-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Educational Qualifications</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="work-experience-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Work Experience</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="internships-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Internships</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="achievements-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Scholastic Achievements</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="certifications-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Certifications</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="publications-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Publications</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="projects-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Key Projects</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="positions-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Positions of Responsibility</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="extracurricular-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Extra Curricular Activities</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="languages-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Languages</span>
+                    </li>
+                    <li class="section-reorder-item" data-section="skills-section">
+                        <span class="drag-handle">☰</span>
+                        <span class="section-name">Technical Skills</span>
+                    </li>
+                </ul>
+            </div>
+
             <!-- Personal Information -->
             <div class="section">
                 <h2>Personal Information</h2>
@@ -1072,9 +1348,61 @@
                 </div>
             </div>
 
-            
+            <!-- Custom Sections Container -->
+            <div id="custom-sections-container">
+                <!-- Custom sections will be added here dynamically -->
+            </div>
+
+            <!-- Add Custom Section Button -->
+            <button type="button" class="add-custom-section-btn" onclick="openCustomSectionModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                Add Custom Section
+            </button>
+
+
         </form>
-        
+
+        <!-- Custom Section Modal -->
+        <div id="customSectionModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Custom Section</h3>
+                    <button type="button" class="modal-close" onclick="closeCustomSectionModal()">×</button>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Section Name</label>
+                    <input type="text" id="customSectionName" placeholder="e.g. Hobbies, Awards, References" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Section Type</label>
+
+                    <div class="section-type-option" id="typeDefault" onclick="selectSectionType('default')">
+                        <h4>📝 Default</h4>
+                        <p>Like Work Experience or Projects - with entries containing title, description, and bullet points</p>
+                    </div>
+
+                    <div class="section-type-option" id="typeTabular" onclick="selectSectionType('tabular')">
+                        <h4>📊 Tabular</h4>
+                        <p>Like Education - a table format ideal for Languages, Soft Skills, or simple lists</p>
+                    </div>
+                </div>
+
+                <!-- Tabular column headers (shown only when tabular is selected) -->
+                <div id="tabularColumnsSetup" style="display: none; margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Column Headers (comma-separated)</label>
+                    <input type="text" id="tabularColumns" placeholder="e.g. Language, Proficiency Level" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <button type="button" class="btn-primary" onclick="addCustomSection()" style="width: 100%;">
+                    Add Section
+                </button>
+            </div>
+        </div>
+
         <!-- Hidden form for CV generation -->
         {% if resume_id %}
         <form id="cvGenerateForm" method="post" action="/generate" style="display: none;">
@@ -2134,6 +2462,7 @@
                     }
                 }
             }
+
         }
 {% endif %}
 
@@ -2157,6 +2486,412 @@
     function getValues(name) {
         return Array.from(document.querySelectorAll(`#cvForm [name^="${name}"]`)).map(e => e.value.trim()).filter(Boolean);
     }
+
+    // ============================================
+    // SECTION RENDER HELPER FUNCTIONS
+    // ============================================
+
+    function renderSummarySection(summary, fontSettings, sectionGap) {
+        if (!summary || !summary.trim()) return '';
+        return `<div style="margin-bottom:${sectionGap}px;">
+            <div style="display:flex;align-items:center;margin-bottom:10px;">
+                <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                    Professional Summary
+                </div>
+                <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+            </div>
+            <div style="font-size:${fontSettings.bodyFontSize};line-height:1.4;text-align:justify;color:#000000;">${summary}</div>
+        </div>`;
+    }
+
+    function renderEducationSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.qualification || e.stream || e.institute);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
+        html += `<thead><tr style="background:#f5f5f5;">`;
+        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th>`;
+        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th>`;
+        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th>`;
+        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th>`;
+        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th>`;
+        html += `</tr></thead><tbody>`;
+
+        validEntries.forEach(entry => {
+            html += `<tr>`;
+            html += `<td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td>`;
+            html += `<td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td>`;
+            html += `<td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td>`;
+            html += `<td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td>`;
+            html += `<td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td>`;
+            html += `</tr>`;
+        });
+        html += `</tbody></table></div>`;
+        return html;
+    }
+
+    function renderWorkExperienceSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.company || e.position);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Work Experience
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+
+        validEntries.forEach(entry => {
+            html += `<div style="margin-bottom:15px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+            html += `<div><strong>${entry.company || ''}</strong>`;
+            if (entry.position) html += ` | ${entry.position}`;
+            html += `</div>`;
+            if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+            html += `</div>`;
+            if (entry.points && entry.points.length > 0) {
+                html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                entry.points.forEach(point => {
+                    if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
+                });
+                html += `</ul>`;
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+
+    function renderInternshipsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.company || e.role);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Internships
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+
+        validEntries.forEach(entry => {
+            html += `<div style="margin-bottom:15px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+            html += `<div><strong>${entry.company || ''}</strong>`;
+            if (entry.role) html += ` | ${entry.role}`;
+            html += `</div>`;
+            if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+            html += `</div>`;
+            if (entry.points && entry.points.length > 0) {
+                html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                entry.points.forEach(point => {
+                    if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
+                });
+                html += `</ul>`;
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+
+    function renderAchievementsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.description);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Scholastic Achievements
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+        validEntries.forEach(entry => {
+            html += `<li style="margin-bottom:8px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+            html += `<span>${entry.description}</span>`;
+            if (entry.year) html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+            html += `</div></li>`;
+        });
+        html += `</ul></div>`;
+        return html;
+    }
+
+    function renderCertificationsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.description);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Certifications
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+        validEntries.forEach(entry => {
+            html += `<li style="margin-bottom:8px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+            html += `<span>${entry.description}</span>`;
+            if (entry.year) html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+            html += `</div></li>`;
+        });
+        html += `</ul></div>`;
+        return html;
+    }
+
+    function renderPublicationsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.description);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Publications
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+        validEntries.forEach(entry => {
+            html += `<li style="margin-bottom:8px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
+            html += `<span>${entry.description}</span>`;
+            if (entry.year) html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
+            html += `</div></li>`;
+        });
+        html += `</ul></div>`;
+        return html;
+    }
+
+    function renderProjectsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.title || e.type);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Key Projects
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+
+        validEntries.forEach(entry => {
+            html += `<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;">`;
+            html += `<div><span style="font-weight:bold;">`;
+            if (entry.repo_link) {
+                let repoUrl = entry.repo_link.startsWith('http://') || entry.repo_link.startsWith('https://') ? entry.repo_link : `https://${entry.repo_link}`;
+                html += `<a href="${repoUrl}" target="_blank">${entry.title}</a>`;
+            } else {
+                html += `${entry.title}`;
+            }
+            html += `</span>${entry.type ? ` | ${entry.type}` : ''}</div>`;
+            if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+            html += `</div>`;
+            if (entry.points && entry.points.length > 0) {
+                html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                entry.points.forEach(point => {
+                    if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
+                });
+                html += `</ul>`;
+            }
+        });
+        html += `</div>`;
+        return html;
+    }
+
+    function renderPositionsSection(entries, fontSettings, sectionGap) {
+        const validEntries = entries.filter(e => e.club || e.role);
+        if (validEntries.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Positions of Responsibility
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+
+        validEntries.forEach(entry => {
+            html += `<div style="margin-bottom:15px;">`;
+            html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+            html += `<div><strong>${entry.club || ''}</strong>`;
+            if (entry.role) html += ` | ${entry.role}`;
+            html += `</div>`;
+            if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+            html += `</div>`;
+            if (entry.points && entry.points.length > 0) {
+                html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                entry.points.forEach(point => {
+                    if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
+                });
+                html += `</ul>`;
+            }
+            html += `</div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+
+    function renderExtracurricularSection(activities, fontSettings, sectionGap) {
+        const validActivities = activities.filter(a => a.trim());
+        if (validActivities.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Extra Curricular Activities
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+        validActivities.forEach(activity => {
+            html += `<li style="margin-bottom:5px;">${activity}</li>`;
+        });
+        html += `</ul></div>`;
+        return html;
+    }
+
+    function renderLanguagesSection(fontSettings, sectionGap) {
+        const languages = [];
+        document.querySelectorAll('.language-entry input[name="languages[]"]').forEach(input => {
+            if (input.value.trim()) languages.push(input.value.trim());
+        });
+        if (languages.length === 0) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Languages
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+        languages.forEach(lang => {
+            html += `<li style="margin-bottom:5px;">${lang}</li>`;
+        });
+        html += `</ul></div>`;
+        return html;
+    }
+
+    function renderSkillsSection(fontSettings, sectionGap) {
+        const progInput = document.querySelector('input[name="tech_prog_1"]');
+        const webInput = document.querySelector('input[name="tech_web_1"]');
+        const dbInput = document.querySelector('input[name="tech_db_1"]');
+        const toolInput = document.querySelector('input[name="tech_tools_1"]');
+
+        const progSkills = progInput && progInput.value.trim() ? progInput.value.trim() : '';
+        const webSkills = webInput && webInput.value.trim() ? webInput.value.trim() : '';
+        const dbSkills = dbInput && dbInput.value.trim() ? dbInput.value.trim() : '';
+        const toolSkills = toolInput && toolInput.value.trim() ? toolInput.value.trim() : '';
+
+        if (!progSkills && !webSkills && !dbSkills && !toolSkills) return '';
+
+        let html = `<div style="margin-bottom:${sectionGap}px;">`;
+        html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                Technical Skills
+            </div>
+            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+        </div>`;
+        html += `<div style="line-height:1.6;">`;
+        if (progSkills) html += `<div style="margin-bottom:8px;"><strong>Programming Languages:</strong> ${progSkills}</div>`;
+        if (webSkills) html += `<div style="margin-bottom:8px;"><strong>Web Technologies / Frameworks:</strong> ${webSkills}</div>`;
+        if (dbSkills) html += `<div style="margin-bottom:8px;"><strong>Database Management:</strong> ${dbSkills}</div>`;
+        if (toolSkills) html += `<div style="margin-bottom:8px;"><strong>Tools and Technologies:</strong> ${toolSkills}</div>`;
+        html += `</div></div>`;
+        return html;
+    }
+
+    function renderCustomSectionsHtml(fontSettings, sectionGap) {
+        let html = '';
+        const customSections = document.querySelectorAll('.custom-section');
+        customSections.forEach(section => {
+            const sectionName = section.dataset.sectionName || 'Custom Section';
+            const sectionType = section.dataset.sectionType;
+            const sectionId = section.id;
+
+            if (sectionType === 'default') {
+                const entries = [];
+                section.querySelectorAll('.dynamic-entry').forEach(entry => {
+                    const title = entry.querySelector('input[name*="[title]"]')?.value || '';
+                    const subtitle = entry.querySelector('input[name*="[subtitle]"]')?.value || '';
+                    const duration = entry.querySelector('input[name*="[duration]"]')?.value || '';
+                    const points = [];
+                    entry.querySelectorAll('textarea[name*="[points]"]').forEach(p => {
+                        if (p.value.trim()) points.push(p.value.trim());
+                    });
+                    if (title || subtitle || points.length > 0) {
+                        entries.push({ title, subtitle, duration, points });
+                    }
+                });
+
+                if (entries.length > 0) {
+                    html += `<div style="margin-bottom:${sectionGap}px;" data-custom-section="${sectionId}">`;
+                    html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                        <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                            ${sectionName}
+                        </div>
+                        <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                    </div>`;
+                    entries.forEach(entry => {
+                        html += `<div style="margin-bottom:15px;">`;
+                        html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                        html += `<div><strong>${entry.title || ''}</strong>`;
+                        if (entry.subtitle) html += ` | ${entry.subtitle}`;
+                        html += `</div>`;
+                        if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                        html += `</div>`;
+                        if (entry.points.length > 0) {
+                            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                            entry.points.forEach(point => {
+                                html += `<li style="margin-bottom:5px;">${point}</li>`;
+                            });
+                            html += `</ul>`;
+                        }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+            } else if (sectionType === 'tabular') {
+                const columnInputs = section.querySelectorAll('.tabular-headers input');
+                const columns = Array.from(columnInputs).map(input => input.value.trim());
+                const rows = [];
+                section.querySelectorAll('.tabular-row').forEach(row => {
+                    const rowData = Array.from(row.querySelectorAll('input')).map(input => input.value.trim());
+                    if (rowData.some(val => val)) rows.push(rowData);
+                });
+
+                if (columns.length > 0 && rows.length > 0) {
+                    html += `<div style="margin-bottom:${sectionGap}px;" data-custom-section="${sectionId}">`;
+                    html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                        <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                            ${sectionName}
+                        </div>
+                        <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                    </div>`;
+                    html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
+                    html += `<thead><tr style="background:#f5f5f5;">`;
+                    columns.forEach(col => {
+                        html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">${col}</th>`;
+                    });
+                    html += `</tr></thead><tbody>`;
+                    rows.forEach(row => {
+                        html += `<tr>`;
+                        row.forEach(cell => {
+                            html += `<td style="border:1px solid #ddd;padding:8px;">${cell}</td>`;
+                        });
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table></div>`;
+                }
+            }
+        });
+        return html;
+    }
+
     function renderPreview() {
         const preview = document.getElementById('cv-preview-container');
         
@@ -2266,411 +3001,142 @@
         if (hasPersonalInfo) {
             html += `<div style="border-bottom: 2px solid #333; margin-bottom: 20px;"></div>`;
         }
-        
-        // Professional Summary - only show if there's actual content
-        if (hasSummary) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">
-                <div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Professional Summary
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div>
-                <div style="font-size:${fontSettings.bodyFontSize};line-height:1.4;text-align:justify;color:#000000;">${summary}</div>
-            </div>`;
-        }
 
-        // Education - only show if there are actual education entries with content (no title)
-        if (hasEducation) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            
+        // Get section order from reorder list
+        const sectionOrder = getSectionOrder();
 
-            html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
-            html += `<thead><tr style="background:#f5f5f5;">`;
-            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Qualification</th>`;
-            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Stream</th>`;
-            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Institute</th>`;
-            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">Year</th>`;
-            html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">CGPA/%</th>`;
-            html += `</tr></thead><tbody>`;
-            
-            educationEntries.forEach(entry => {
-                if (entry.qualification || entry.stream || entry.institute) {
-                    html += `<tr>`;
-                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.qualification || ''}</td>`;
-                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.stream || ''}</td>`;
-                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.institute || ''}</td>`;
-                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.year || ''}</td>`;
-                    html += `<td style="border:1px solid #ddd;padding:8px;">${entry.cgpa || ''}</td>`;
-                    html += `</tr>`;
-                }
-            });
+        // Create section renderers map
+        const sectionRenderers = {
+            'summary-section': () => renderSummarySection(summary, fontSettings, sectionGap20),
+            'education-section': () => renderEducationSection(educationEntries, fontSettings, sectionGap20),
+            'work-experience-section': () => renderWorkExperienceSection(workExperienceEntries, fontSettings, sectionGap20),
+            'internships-section': () => renderInternshipsSection(internshipEntries, fontSettings, sectionGap20),
+            'achievements-section': () => renderAchievementsSection(achievementEntries, fontSettings, sectionGap20),
+            'certifications-section': () => renderCertificationsSection(certificationEntries, fontSettings, sectionGap20),
+            'publications-section': () => renderPublicationsSection(publicationEntries, fontSettings, sectionGap20),
+            'projects-section': () => renderProjectsSection(projectEntries, fontSettings, sectionGap20),
+            'positions-section': () => renderPositionsSection(positionEntries, fontSettings, sectionGap20),
+            'extracurricular-section': () => renderExtracurricularSection(activities, fontSettings, sectionGap20),
+            'languages-section': () => renderLanguagesSection(fontSettings, sectionGap20),
+            'skills-section': () => renderSkillsSection(fontSettings, sectionGap20)
+        };
 
-            html += `</tbody></table></div>`;
-        }
-
-        // Work Experience - only show if there are actual work experiences with content
-        if (hasWorkExperience) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Work Experience
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-            
-            workExperienceEntries.forEach(entry => {
-                if (entry.company || entry.position) {
-                    html += `<div style="margin-bottom:15px;">`;
-
-                    // Company and position in flex box
-                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
-                    html += `<div><strong>${entry.company || ''}</strong>`;
-                    if (entry.position) html += ` | ${entry.position}`;
-                    html += `</div>`;
-                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
-                    html += `</div>`;
-
-                    // Bullet points with proper list styling
-                    if (entry.points && entry.points.length > 0) {
-                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-                        entry.points.forEach(point => {
-                            if (point.trim()) {
-                                html += `<li style="margin-bottom:5px;">${point}</li>`;
-                            }
-                        });
-                        html += `</ul>`;
-                    }
-
-                    html += `</div>`;
-                }
-            });
-            html += `</div>`;
-        }
-
-        // Internships - only show if there are actual internships with content
-        if (hasInternships) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Internships
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-            
-
-            internshipEntries.forEach(entry => {
-                if (entry.company || entry.role) {
-                    html += `<div style="margin-bottom:15px;">`;
-
-                    // Company and role in flex box
-                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
-                    html += `<div><strong>${entry.company || ''}</strong>`;
-                    if (entry.role) html += ` | ${entry.role}`;
-                    html += `</div>`;
-                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
-                    html += `</div>`;
-
-                    // Bullet points with proper list styling
-                    if (entry.points && entry.points.length > 0) {
-                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-                        entry.points.forEach(point => {
-                            if (point.trim()) {
-                                html += `<li style="margin-bottom:5px;">${point}</li>`;
-                            }
-                        });
-                        html += `</ul>`;
-                    }
-
-                    html += `</div>`;
-                }
-            });
-            html += `</div>`;
-        }
-
-        // Scholastic Achievements - only show if there are actual achievements with content
-        if (hasAchievements) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Scholastic Achievements
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-           
-
-            
-            // Increase margin-left for more bullet indentation
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-
-            achievementEntries.forEach(entry => {
-                if (entry.description) {
-                    html += `<li style="margin-bottom:8px;">`;
-
-                    // Inner div flex inside li, not span
-                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-                    html += `<span>${entry.description}</span>`;
-                    if (entry.year) {
-                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
-                    }
-                    html += `</div></li>`;
-                }
-            });
-
-            html += `</ul></div>`;
-        }
-
-        // Certifications - only show if there are actual certifications with content
-        if (hasCertifications) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Certifications
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-           
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-
-            certificationEntries.forEach(entry => {
-                if (entry.description) {
-                    html += `<li style="margin-bottom:8px;">`;
-                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-                    html += `<span>${entry.description}</span>`;
-                    if (entry.year) {
-                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
-                    }
-                    html += `</div></li>`;
-                }
-            });
-
-            html += `</ul></div>`;
-        }
-
-        // Publications - only show if there are actual publications with content
-        if (hasPublications) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Publications
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-           
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-
-            publicationEntries.forEach(entry => {
-                if (entry.description) {
-                    html += `<li style="margin-bottom:8px;">`;
-                    html += `<div style="display:flex;justify-content:space-between;align-items:center;">`;
-                    html += `<span>${entry.description}</span>`;
-                    if (entry.year) {
-                        html += `<span style="font-style:italic;margin-left:10px;">(${entry.year})</span>`;
-                    }
-                    html += `</div></li>`;
-                }
-            });
-
-            html += `</ul></div>`;
-        }
-
-        // Key Projects - only show if there are actual projects with content
-        if (hasProjects) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Key Projects
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-            
-            
-            
-            projectEntries.forEach(entry => {
-                if (entry.title || entry.type) {
-                    html += `<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;">`;
-                    
-                    html += `<div><span style="font-weight:bold;">`;
-                    if (entry.repo_link) {
-                        let repoUrl = entry.repo_link.startsWith('http://') || entry.repo_link.startsWith('https://') ? entry.repo_link : `https://${entry.repo_link}`;
-                        html += `<a href="${repoUrl}" target="_blank">${entry.title}</a>`;
-                    } else {
-                        html += `${entry.title}`;
-                    }
-                    html += `</span>${entry.type ? ` | ${entry.type}` : ''}</div>`;
-                    
-                    if (entry.duration) {
-                        html += `<div style="font-style:italic;">(${entry.duration})</div>`;
-                    }
-
-                    html += `</div>`;
-
-                    // Bullet points
-                    if (entry.points && entry.points.length > 0) {
-                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-                        entry.points.forEach(point => {
-                            if (point.trim()) {
-                                html += `<li style="margin-bottom:5px;">${point}</li>`;
-                            }
-                        });
-                        html += `</ul>`;
+        // Render sections in order
+        sectionOrder.forEach(sectionId => {
+            // Check if section is visible (not removed)
+            const formSection = document.getElementById(sectionId);
+            if (formSection && formSection.style.display !== 'none') {
+                if (sectionRenderers[sectionId]) {
+                    html += sectionRenderers[sectionId]();
+                } else if (sectionId.startsWith('custom-section-')) {
+                    // Render individual custom section
+                    const customSection = document.getElementById(sectionId);
+                    if (customSection) {
+                        html += renderSingleCustomSection(customSection, fontSettings, sectionGap20);
                     }
                 }
-            });
-
-            html += `</div>`;
-        }
-
-        // Positions of Responsibility - only show if there are actual positions with content
-        if (hasPositions) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-            <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                Positions of Responsibility
-            </div>
-            <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-           </div>`; 
-            
-            positionEntries.forEach(entry => {
-                if (entry.club || entry.role) {
-                    html += `<div style="margin-bottom:15px;">`;
-                    
-                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
-                    html += `<div><strong>${entry.club || ''}</strong>`;
-                    if (entry.role) html += ` | ${entry.role}`;
-                    html += `</div>`;
-                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
-                    html += `</div>`;
-
-                    if (entry.points && entry.points.length > 0) {
-                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-                        entry.points.forEach(point => {
-                            if (point.trim()) html += `<li style="margin-bottom:5px;">${point}</li>`;
-                        });
-                        html += `</ul>`;
-                    }
-
-                    html += `</div>`;
-                }
-            });
-
-            html += `</div>`;
-        }
-
-        // Extra Curricular Activities - only show if there are actual activities with content
-        if (hasActivities) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-
-            // Updated heading style with horizontal line
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Extra Curricular Activities
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-            
-
-            // Bullet points list
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-            activities.forEach(activity => {
-                if (activity.trim()) {
-                    html += `<li style="margin-bottom:5px;">${activity}</li>`;
-                }
-            });
-            html += `</ul></div>`;
-        }
-
-
-
-        // Languages - only show if there are actual languages with content
-        const languages = [];
-        document.querySelectorAll('.language-entry input[name="languages[]"]').forEach((input) => {
-            const lang = input.value || '';
-            if (lang.trim()) {
-                languages.push(lang.trim());
             }
         });
 
-        if (languages.length > 0) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                        Languages
-                    </div>
-                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-                </div> `;
-            
-            // Display as bullet points
-            html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
-            languages.forEach(lang => {
-                html += `<li style="margin-bottom:5px;">${lang}</li>`;
-            });
-            html += `</ul></div>`;
-        }
-
-        // Technical Skills (at bottom) - only show if there are actual skills with content
-        if (hasSkills) {
-            html += `<div style="margin-bottom:${sectionGap20}px;">`;
-            html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
-                <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
-                    Technical Skills
-                </div>
-                <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
-            </div> `;
-       
-            // Get categorized skills (only one field per category)
-            const progSkills = [];
-            const webSkills = [];
-            const dbSkills = [];
-            const toolSkills = [];
-            
-            // Get values from single input fields
-            const progInput = document.querySelector(`input[name="tech_prog_1"]`);
-            const webInput = document.querySelector(`input[name="tech_web_1"]`);
-            const dbInput = document.querySelector(`input[name="tech_db_1"]`);
-            const toolInput = document.querySelector(`input[name="tech_tools_1"]`);
-            
-            if (progInput && progInput.value.trim()) progSkills.push(progInput.value.trim());
-            if (webInput && webInput.value.trim()) webSkills.push(webInput.value.trim());
-            if (dbInput && dbInput.value.trim()) dbSkills.push(dbInput.value.trim());
-            if (toolInput && toolInput.value.trim()) toolSkills.push(toolInput.value.trim());
-            
-            // Check if we have categorized skills
-            if (progSkills.length > 0 || webSkills.length > 0 || dbSkills.length > 0 || toolSkills.length > 0) {
-                // New categorized format
-                html += `<div style="line-height:1.6;">`;
-                
-                if (progSkills.length > 0) {
-                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Programming Languages:</strong> ${progSkills.filter(s => s.trim()).join(', ')}</div>`;
+        // Render any custom sections not in the order list (newly added)
+        document.querySelectorAll('.custom-section').forEach(section => {
+            if (!sectionOrder.includes(section.id)) {
+                const formSection = document.getElementById(section.id);
+                if (formSection && formSection.style.display !== 'none') {
+                    html += renderSingleCustomSection(section, fontSettings, sectionGap20);
                 }
-                
-                if (webSkills.length > 0) {
-                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Web Technologies / Frameworks:</strong> ${webSkills.filter(s => s.trim()).join(', ')}</div>`;
-                }
-                
-                if (dbSkills.length > 0) {
-                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Database Management:</strong> ${dbSkills.filter(s => s.trim()).join(', ')}</div>`;
-                }
-                
-                if (toolSkills.length > 0) {
-                    html += `<div style="margin-bottom:8px;"><strong style="color:${fontSettings.bodyFontColor};">Tools and Technologies:</strong> ${toolSkills.filter(s => s.trim()).join(', ')}</div>`;
-                }
-                
-                html += `</div>`;
-            } else {
-                // Legacy format
-                html += `<div style="line-height:1.6;">${skills.filter(s => s.trim()).join(', ')}</div>`;
             }
-            
-            html += `</div>`;
-        }
+        });
 
         html += '</div>';
         preview.innerHTML = html;
     }
+
+    function renderSingleCustomSection(section, fontSettings, sectionGap) {
+        let html = '';
+        const sectionName = section.dataset.sectionName || 'Custom Section';
+        const sectionType = section.dataset.sectionType;
+
+        if (sectionType === 'default') {
+            const entries = [];
+            section.querySelectorAll('.dynamic-entry').forEach(entry => {
+                const title = entry.querySelector('input[name*="[title]"]')?.value || '';
+                const subtitle = entry.querySelector('input[name*="[subtitle]"]')?.value || '';
+                const duration = entry.querySelector('input[name*="[duration]"]')?.value || '';
+                const points = [];
+                entry.querySelectorAll('textarea[name*="[points]"]').forEach(p => {
+                    if (p.value.trim()) points.push(p.value.trim());
+                });
+                if (title || subtitle || points.length > 0) {
+                    entries.push({ title, subtitle, duration, points });
+                }
+            });
+
+            if (entries.length > 0) {
+                html += `<div style="margin-bottom:${sectionGap}px;">`;
+                html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                        ${sectionName}
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                </div>`;
+                entries.forEach(entry => {
+                    html += `<div style="margin-bottom:15px;">`;
+                    html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">`;
+                    html += `<div><strong>${entry.title || ''}</strong>`;
+                    if (entry.subtitle) html += ` | ${entry.subtitle}`;
+                    html += `</div>`;
+                    if (entry.duration) html += `<div style="font-style:italic;">(${entry.duration})</div>`;
+                    html += `</div>`;
+                    if (entry.points.length > 0) {
+                        html += `<ul style="margin:0 0 0 20px;list-style-type:disc;">`;
+                        entry.points.forEach(point => {
+                            html += `<li style="margin-bottom:5px;">${point}</li>`;
+                        });
+                        html += `</ul>`;
+                    }
+                    html += `</div>`;
+                });
+                html += `</div>`;
+            }
+        } else if (sectionType === 'tabular') {
+            const columnInputs = section.querySelectorAll('.tabular-headers input');
+            const columns = Array.from(columnInputs).map(input => input.value.trim());
+            const rows = [];
+            section.querySelectorAll('.tabular-row').forEach(row => {
+                const rowData = Array.from(row.querySelectorAll('input')).map(input => input.value.trim());
+                if (rowData.some(val => val)) rows.push(rowData);
+            });
+
+            if (columns.length > 0 && rows.length > 0) {
+                html += `<div style="margin-bottom:${sectionGap}px;">`;
+                html += `<div style="display:flex;align-items:center;margin-bottom:10px;">
+                    <div style="font-weight:bold;color:${fontSettings.titleFontColor};font-size:${fontSettings.titleFontSize};margin-right:10px;white-space:nowrap;">
+                        ${sectionName}
+                    </div>
+                    <div style="flex-grow:1;height:1px;background-color:${fontSettings.titleFontColor};"></div>
+                </div>`;
+                html += `<table style="width:100%;border-collapse:collapse;font-size:0.9em;margin-bottom:10px;">`;
+                html += `<thead><tr style="background:#f5f5f5;">`;
+                columns.forEach(col => {
+                    html += `<th style="border:1px solid #ddd;padding:8px;text-align:left;">${col}</th>`;
+                });
+                html += `</tr></thead><tbody>`;
+                rows.forEach(row => {
+                    html += `<tr>`;
+                    row.forEach(cell => {
+                        html += `<td style="border:1px solid #ddd;padding:8px;">${cell}</td>`;
+                    });
+                    html += `</tr>`;
+                });
+                html += `</tbody></table></div>`;
+            }
+        }
+        return html;
+    }
+
     document.getElementById('cvForm').addEventListener('input', renderPreview);
-    window.addEventListener('DOMContentLoaded', renderPreview);
-    
+
     // Full-screen preview functionality
     let isPreviewExpanded = false;
     
@@ -2774,14 +3240,18 @@
         // Temporarily modify form to download PDF directly
         form.action = '/generate';
         form.target = '_blank';
-        
+
+        // Collect custom sections data and update section order before submission
+        collectCustomSectionsData();
+        updateSectionOrder();
+
         // Create hidden input to indicate PDF download request
         const pdfInput = document.createElement('input');
         pdfInput.type = 'hidden';
         pdfInput.name = 'download_pdf';
         pdfInput.value = 'true';
         form.appendChild(pdfInput);
-        
+
         // Submit the form
         form.submit();
         
@@ -3095,12 +3565,18 @@
             showSaveStatus('unsaved');
             clearTimeout(autoSaveTimer);
             autoSaveTimer = setTimeout(function() {
+                // Collect custom sections and section order before saving
+                collectCustomSectionsData();
+                updateSectionOrder();
                 autoSaveDraft();
             }, 2000); // Save after 2 seconds of inactivity
         });
         
         // Auto-save on form submission
         form.addEventListener('submit', function() {
+            // Collect custom sections data and update section order before submission
+            collectCustomSectionsData();
+            updateSectionOrder();
             clearTimeout(autoSaveTimer);
             autoSaveDraft();
         });
@@ -3246,6 +3722,10 @@
         const shareUrl = '{{ share_url if share_url else "" }}';
         copyToClipboard(shareUrl || (window.location.href + '/view'));
 
+        // Collect custom sections and section order before saving
+        collectCustomSectionsData();
+        updateSectionOrder();
+
         // Then autosave in the background; do not block the user
         autoSaveDraft().catch(() => {/* ignore */}).finally(() => {
             if (btn) { btn.disabled = false; btn.removeAttribute('data-loading'); const sp=btn.querySelector('.button-spinner'); if (sp) sp.remove(); }
@@ -3314,6 +3794,661 @@
             setTimeout(() => { bar.style.width = '0%'; bar.style.background = original || 'linear-gradient(90deg, #4C5196, #6f74c9)'; }, 300);
         }, 200);
     }
+
+    // ============================================
+    // CUSTOM SECTIONS FUNCTIONALITY
+    // ============================================
+    let customSectionCount = 0;
+    let selectedSectionType = null;
+
+    function openCustomSectionModal() {
+        document.getElementById('customSectionModal').style.display = 'flex';
+        document.getElementById('customSectionName').value = '';
+        selectedSectionType = null;
+        document.getElementById('typeDefault').classList.remove('selected');
+        document.getElementById('typeTabular').classList.remove('selected');
+        document.getElementById('tabularColumnsSetup').style.display = 'none';
+        document.getElementById('tabularColumns').value = '';
+    }
+
+    function closeCustomSectionModal() {
+        document.getElementById('customSectionModal').style.display = 'none';
+    }
+
+    function selectSectionType(type) {
+        selectedSectionType = type;
+        document.getElementById('typeDefault').classList.remove('selected');
+        document.getElementById('typeTabular').classList.remove('selected');
+        document.getElementById('type' + type.charAt(0).toUpperCase() + type.slice(1)).classList.add('selected');
+
+        if (type === 'tabular') {
+            document.getElementById('tabularColumnsSetup').style.display = 'block';
+        } else {
+            document.getElementById('tabularColumnsSetup').style.display = 'none';
+        }
+    }
+
+    function addCustomSection() {
+        const sectionName = document.getElementById('customSectionName').value.trim();
+        if (!sectionName) {
+            Toastify({ text: "Please enter a section name", duration: 3000, gravity: "top", position: "center", style: { background: "linear-gradient(to right, #e53e3e, #c53030)" } }).showToast();
+            return;
+        }
+        if (!selectedSectionType) {
+            Toastify({ text: "Please select a section type", duration: 3000, gravity: "top", position: "center", style: { background: "linear-gradient(to right, #e53e3e, #c53030)" } }).showToast();
+            return;
+        }
+
+        customSectionCount++;
+        const sectionId = 'custom-section-' + customSectionCount;
+        const container = document.getElementById('custom-sections-container');
+
+        if (selectedSectionType === 'default') {
+            addDefaultCustomSection(container, sectionId, sectionName);
+        } else if (selectedSectionType === 'tabular') {
+            const columns = document.getElementById('tabularColumns').value.trim();
+            if (!columns) {
+                Toastify({ text: "Please enter column headers for tabular section", duration: 3000, gravity: "top", position: "center", style: { background: "linear-gradient(to right, #e53e3e, #c53030)" } }).showToast();
+                return;
+            }
+            addTabularCustomSection(container, sectionId, sectionName, columns.split(',').map(c => c.trim()));
+        }
+
+        // Add to section reorder list
+        addToSectionReorderList(sectionId, sectionName);
+
+        closeCustomSectionModal();
+        renderPreview();
+    }
+
+    function addDefaultCustomSection(container, sectionId, sectionName) {
+        const section = document.createElement('div');
+        section.className = 'section custom-section';
+        section.id = sectionId;
+        section.dataset.sectionType = 'default';
+        section.dataset.sectionName = sectionName;
+        section.innerHTML = `
+            <div class="custom-section-header">
+                <input type="text" class="custom-section-title-input" value="${sectionName}"
+                    name="custom_sections[${customSectionCount}][name]"
+                    onchange="updateCustomSectionName('${sectionId}', this.value)">
+                <button type="button" class="btn-danger" onclick="removeCustomSection('${sectionId}')">Remove Section</button>
+            </div>
+            <input type="hidden" name="custom_sections[${customSectionCount}][type]" value="default">
+            <div id="${sectionId}-entries">
+                <div class="dynamic-entry">
+                    <div class="entry-header">
+                        <div class="entry-title">Entry 1</div>
+                        <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label>Title</label>
+                            <input type="text" name="custom_sections[${customSectionCount}][entries][0][title]" placeholder="Entry title">
+                        </div>
+                        <div class="col">
+                            <label>Subtitle</label>
+                            <input type="text" name="custom_sections[${customSectionCount}][entries][0][subtitle]" placeholder="Optional subtitle">
+                        </div>
+                        <div class="col">
+                            <label>Date/Duration</label>
+                            <input type="text" name="custom_sections[${customSectionCount}][entries][0][duration]" placeholder="e.g. 2023">
+                        </div>
+                    </div>
+                    <div class="points-container">
+                        <label>Details</label>
+                        <div class="custom-section-points" data-section="${customSectionCount}" data-index="0">
+                            <div class="point-entry">
+                                <textarea name="custom_sections[${customSectionCount}][entries][0][points][]" placeholder="Detail point"></textarea>
+                                <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="addCustomSectionPoint(${customSectionCount}, 0)">+ Add Point</button>
+                    </div>
+                </div>
+            </div>
+            <div class="add-button-container">
+                <button type="button" class="btn-secondary" onclick="addCustomSectionEntry(${customSectionCount}, '${sectionId}')">+ Add Another Entry</button>
+            </div>
+        `;
+        container.appendChild(section);
+    }
+
+    function addTabularCustomSection(container, sectionId, sectionName, columns) {
+        const section = document.createElement('div');
+        section.className = 'section custom-section';
+        section.id = sectionId;
+        section.dataset.sectionType = 'tabular';
+        section.dataset.sectionName = sectionName;
+        section.dataset.columns = JSON.stringify(columns);
+
+        const colHeadersHtml = columns.map((col, i) =>
+            `<input type="text" name="custom_sections[${customSectionCount}][columns][${i}]" value="${col}" placeholder="Column ${i+1}" style="flex: 1; font-weight: bold; background-color: #f7fafc;">`
+        ).join('');
+
+        const colInputsHtml = columns.map((col, i) =>
+            `<input type="text" name="custom_sections[${customSectionCount}][rows][0][${i}]" placeholder="${col}">`
+        ).join('');
+
+        section.innerHTML = `
+            <div class="custom-section-header">
+                <input type="text" class="custom-section-title-input" value="${sectionName}"
+                    name="custom_sections[${customSectionCount}][name]"
+                    onchange="updateCustomSectionName('${sectionId}', this.value)">
+                <button type="button" class="btn-danger" onclick="removeCustomSection('${sectionId}')">Remove Section</button>
+            </div>
+            <input type="hidden" name="custom_sections[${customSectionCount}][type]" value="tabular">
+            <div class="tabular-headers" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                ${colHeadersHtml}
+            </div>
+            <div id="${sectionId}-rows">
+                <div class="tabular-row">
+                    ${colInputsHtml}
+                    <button type="button" class="btn-danger" onclick="removeTabularRow(this)">Remove</button>
+                </div>
+            </div>
+            <div class="add-button-container">
+                <button type="button" class="btn-secondary" onclick="addTabularRow(${customSectionCount}, '${sectionId}', ${columns.length})">+ Add Row</button>
+            </div>
+        `;
+        container.appendChild(section);
+    }
+
+    let customSectionEntryCounters = {};
+
+    function addCustomSectionEntry(sectionNum, sectionId) {
+        if (!customSectionEntryCounters[sectionNum]) customSectionEntryCounters[sectionNum] = 1;
+        customSectionEntryCounters[sectionNum]++;
+        const entryIndex = customSectionEntryCounters[sectionNum] - 1;
+
+        const container = document.getElementById(sectionId + '-entries');
+        const entry = document.createElement('div');
+        entry.className = 'dynamic-entry';
+        entry.innerHTML = `
+            <div class="entry-header">
+                <div class="entry-title">Entry ${customSectionEntryCounters[sectionNum]}</div>
+                <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label>Title</label>
+                    <input type="text" name="custom_sections[${sectionNum}][entries][${entryIndex}][title]" placeholder="Entry title">
+                </div>
+                <div class="col">
+                    <label>Subtitle</label>
+                    <input type="text" name="custom_sections[${sectionNum}][entries][${entryIndex}][subtitle]" placeholder="Optional subtitle">
+                </div>
+                <div class="col">
+                    <label>Date/Duration</label>
+                    <input type="text" name="custom_sections[${sectionNum}][entries][${entryIndex}][duration]" placeholder="e.g. 2023">
+                </div>
+            </div>
+            <div class="points-container">
+                <label>Details</label>
+                <div class="custom-section-points" data-section="${sectionNum}" data-index="${entryIndex}">
+                    <div class="point-entry">
+                        <textarea name="custom_sections[${sectionNum}][entries][${entryIndex}][points][]" placeholder="Detail point"></textarea>
+                        <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-secondary" onclick="addCustomSectionPoint(${sectionNum}, ${entryIndex})">+ Add Point</button>
+            </div>
+        `;
+        container.appendChild(entry);
+        renderPreview();
+    }
+
+    function addCustomSectionPoint(sectionNum, entryIndex) {
+        const container = document.querySelector(`.custom-section-points[data-section="${sectionNum}"][data-index="${entryIndex}"]`);
+        const point = document.createElement('div');
+        point.className = 'point-entry';
+        point.innerHTML = `
+            <textarea name="custom_sections[${sectionNum}][entries][${entryIndex}][points][]" placeholder="Detail point"></textarea>
+            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+        `;
+        container.appendChild(point);
+        renderPreview();
+    }
+
+    let tabularRowCounters = {};
+
+    function addTabularRow(sectionNum, sectionId, numColumns) {
+        if (!tabularRowCounters[sectionNum]) tabularRowCounters[sectionNum] = 1;
+        tabularRowCounters[sectionNum]++;
+        const rowIndex = tabularRowCounters[sectionNum] - 1;
+
+        const container = document.getElementById(sectionId + '-rows');
+        const row = document.createElement('div');
+        row.className = 'tabular-row';
+
+        let inputsHtml = '';
+        for (let i = 0; i < numColumns; i++) {
+            inputsHtml += `<input type="text" name="custom_sections[${sectionNum}][rows][${rowIndex}][${i}]" placeholder="Value">`;
+        }
+
+        row.innerHTML = inputsHtml + `<button type="button" class="btn-danger" onclick="removeTabularRow(this)">Remove</button>`;
+        container.appendChild(row);
+        renderPreview();
+    }
+
+    function removeTabularRow(button) {
+        button.parentElement.remove();
+        renderPreview();
+    }
+
+    function removeCustomSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.remove();
+            // Remove from reorder list
+            const reorderItem = document.querySelector(`.section-reorder-item[data-section="${sectionId}"]`);
+            if (reorderItem) reorderItem.remove();
+            renderPreview();
+        }
+    }
+
+    function updateCustomSectionName(sectionId, newName) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.dataset.sectionName = newName;
+        }
+        // Update in reorder list
+        const reorderItem = document.querySelector(`.section-reorder-item[data-section="${sectionId}"] .section-name`);
+        if (reorderItem) reorderItem.textContent = newName;
+        renderPreview();
+    }
+
+    // Collect all custom sections data and set the hidden JSON field
+    function collectCustomSectionsData() {
+        const customSections = [];
+        const sections = document.querySelectorAll('.custom-section');
+
+        sections.forEach(section => {
+            const sectionId = section.id;
+            const sectionType = section.dataset.sectionType;
+            const sectionName = section.querySelector('.custom-section-title-input')?.value || section.dataset.sectionName || '';
+
+            if (sectionType === 'default') {
+                const entries = [];
+                const entryElements = section.querySelectorAll('.dynamic-entry');
+
+                entryElements.forEach(entry => {
+                    const titleInput = entry.querySelector('input[name*="[title]"]');
+                    const subtitleInput = entry.querySelector('input[name*="[subtitle]"]');
+                    const durationInput = entry.querySelector('input[name*="[duration]"]');
+                    const pointsTextareas = entry.querySelectorAll('textarea[name*="[points]"]');
+
+                    const points = [];
+                    pointsTextareas.forEach(ta => {
+                        if (ta.value.trim()) points.push(ta.value.trim());
+                    });
+
+                    entries.push({
+                        title: titleInput?.value || '',
+                        subtitle: subtitleInput?.value || '',
+                        duration: durationInput?.value || '',
+                        points: points
+                    });
+                });
+
+                customSections.push({
+                    id: sectionId,
+                    name: sectionName,
+                    type: 'default',
+                    entries: entries,
+                    columns: [],
+                    rows: []
+                });
+            } else if (sectionType === 'tabular') {
+                const columns = [];
+                const columnInputs = section.querySelectorAll('.tabular-headers input');
+                columnInputs.forEach(input => columns.push(input.value));
+
+                const rows = [];
+                const rowElements = section.querySelectorAll('.tabular-row');
+                rowElements.forEach(row => {
+                    const rowData = [];
+                    const cellInputs = row.querySelectorAll('input[type="text"]');
+                    cellInputs.forEach(input => rowData.push(input.value));
+                    if (rowData.length > 0) rows.push(rowData);
+                });
+
+                customSections.push({
+                    id: sectionId,
+                    name: sectionName,
+                    type: 'tabular',
+                    entries: [],
+                    columns: columns,
+                    rows: rows
+                });
+            }
+        });
+
+        document.getElementById('custom_sections_json').value = JSON.stringify(customSections);
+        return customSections;
+    }
+
+    function addToSectionReorderList(sectionId, sectionName) {
+        const list = document.getElementById('section-reorder-list');
+        const item = document.createElement('li');
+        item.className = 'section-reorder-item';
+        item.dataset.section = sectionId;
+        item.draggable = true;
+        item.innerHTML = `
+            <span class="drag-handle">☰</span>
+            <span class="section-name">${sectionName}</span>
+        `;
+        // Add drag event listeners
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd);
+        item.addEventListener('dragover', handleDragOver);
+        item.addEventListener('drop', handleDrop);
+        list.appendChild(item);
+    }
+
+    // ============================================
+    // SECTION REORDERING FUNCTIONALITY
+    // ============================================
+    let draggedItem = null;
+
+    function initSectionReorder() {
+        const items = document.querySelectorAll('.section-reorder-item');
+        items.forEach(item => {
+            item.draggable = true;
+            item.addEventListener('dragstart', handleDragStart);
+            item.addEventListener('dragend', handleDragEnd);
+            item.addEventListener('dragover', handleDragOver);
+            item.addEventListener('drop', handleDrop);
+        });
+    }
+
+    function handleDragStart(e) {
+        draggedItem = this;
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleDragEnd(e) {
+        this.classList.remove('dragging');
+        draggedItem = null;
+        updateSectionOrder();
+        renderPreview();
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+
+        const list = document.getElementById('section-reorder-list');
+        const afterElement = getDragAfterElement(list, e.clientY);
+
+        if (draggedItem && afterElement) {
+            list.insertBefore(draggedItem, afterElement);
+        } else if (draggedItem) {
+            list.appendChild(draggedItem);
+        }
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+    }
+
+    function getDragAfterElement(container, y) {
+        const draggableElements = [...container.querySelectorAll('.section-reorder-item:not(.dragging)')];
+
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function updateSectionOrder() {
+        const items = document.querySelectorAll('.section-reorder-item');
+        const order = Array.from(items).map(item => item.dataset.section);
+        document.getElementById('section_order').value = JSON.stringify(order);
+    }
+
+    function getSectionOrder() {
+        const items = document.querySelectorAll('.section-reorder-item');
+        return Array.from(items).map(item => item.dataset.section);
+    }
+
+    // ============================================
+    // PAGE BREAK INDICATOR FUNCTIONALITY
+    // ============================================
+    // Empirically calibrated to match where PDF page breaks occur
+    const USABLE_PAGE_HEIGHT = 1300;
+
+    function addPageBreakIndicators() {
+        const previewContainer = document.getElementById('cv-preview-container');
+        if (!previewContainer) return;
+
+        // Remove existing page break indicators
+        const existingBreaks = previewContainer.querySelectorAll('.page-break-indicator');
+        existingBreaks.forEach(br => br.remove());
+
+        const cvPreview = previewContainer.querySelector('.cv-preview');
+        if (!cvPreview) return;
+
+        // Ensure the preview has position relative for absolute positioning of indicators
+        cvPreview.style.position = 'relative';
+
+        // Use requestAnimationFrame to ensure DOM is fully rendered
+        requestAnimationFrame(() => {
+            const totalHeight = cvPreview.scrollHeight;
+            const pageCount = Math.ceil(totalHeight / USABLE_PAGE_HEIGHT);
+
+            if (pageCount <= 1) return;
+
+            // Add page break indicators
+            for (let i = 1; i < pageCount; i++) {
+                const breakPosition = i * USABLE_PAGE_HEIGHT;
+                const indicator = document.createElement('div');
+                indicator.className = 'page-break-indicator';
+                indicator.style.position = 'absolute';
+                indicator.style.left = '0';
+                indicator.style.right = '0';
+                indicator.style.top = breakPosition + 'px';
+                indicator.style.zIndex = '100';
+                cvPreview.appendChild(indicator);
+            }
+        });
+    }
+
+    // Store original renderPreview reference
+    const _baseRenderPreview = renderPreview;
+
+    // Override renderPreview to add page breaks after rendering
+    renderPreview = function() {
+        _baseRenderPreview();
+        // Use setTimeout to ensure DOM is updated before adding indicators
+        setTimeout(addPageBreakIndicators, 50);
+    };
+
+    // Restore section order and custom sections from saved data
+    function restoreSectionOrderAndCustomSections() {
+{% if form_data %}
+        const formData = {{ form_data | tojson }};
+
+        // Restore custom sections first (so they exist when we reorder)
+        if (formData.custom_sections && formData.custom_sections.length > 0) {
+            const container = document.getElementById('custom-sections-container');
+
+            formData.custom_sections.forEach((custom, idx) => {
+                customSectionCount++;
+                const sectionId = custom.id || ('custom-section-' + customSectionCount);
+
+                if (custom.type === 'default') {
+                    // Create default custom section
+                    const section = document.createElement('div');
+                    section.className = 'section custom-section';
+                    section.id = sectionId;
+                    section.dataset.sectionType = 'default';
+                    section.dataset.sectionName = custom.name;
+
+                    let entriesHtml = '';
+                    if (custom.entries && custom.entries.length > 0) {
+                        custom.entries.forEach((entry, entryIdx) => {
+                            let pointsHtml = '';
+                            if (entry.points && entry.points.length > 0) {
+                                entry.points.forEach(point => {
+                                    pointsHtml += `
+                                        <div class="point-entry">
+                                            <textarea name="custom_sections[${customSectionCount}][entries][${entryIdx}][points][]" placeholder="Detail point">${point}</textarea>
+                                            <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                        </div>`;
+                                });
+                            } else {
+                                pointsHtml = `
+                                    <div class="point-entry">
+                                        <textarea name="custom_sections[${customSectionCount}][entries][${entryIdx}][points][]" placeholder="Detail point"></textarea>
+                                        <button type="button" class="btn-danger" onclick="removePoint(this)">Remove</button>
+                                    </div>`;
+                            }
+
+                            entriesHtml += `
+                                <div class="dynamic-entry">
+                                    <div class="entry-header">
+                                        <div class="entry-title">Entry ${entryIdx + 1}</div>
+                                        <button type="button" class="btn-danger" onclick="removeEntry(this)">Remove</button>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <label>Title</label>
+                                            <input type="text" name="custom_sections[${customSectionCount}][entries][${entryIdx}][title]" placeholder="Entry title" value="${entry.title || ''}">
+                                        </div>
+                                        <div class="col">
+                                            <label>Subtitle</label>
+                                            <input type="text" name="custom_sections[${customSectionCount}][entries][${entryIdx}][subtitle]" placeholder="Optional subtitle" value="${entry.subtitle || ''}">
+                                        </div>
+                                        <div class="col">
+                                            <label>Date/Duration</label>
+                                            <input type="text" name="custom_sections[${customSectionCount}][entries][${entryIdx}][duration]" placeholder="e.g. 2023" value="${entry.duration || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="points-container">
+                                        <label>Details</label>
+                                        <div class="custom-section-points" data-section="${customSectionCount}" data-index="${entryIdx}">
+                                            ${pointsHtml}
+                                        </div>
+                                        <button type="button" class="btn-secondary" onclick="addCustomSectionPoint(${customSectionCount}, ${entryIdx})">+ Add Point</button>
+                                    </div>
+                                </div>`;
+                        });
+                    }
+
+                    section.innerHTML = `
+                        <div class="custom-section-header">
+                            <input type="text" class="custom-section-title-input" value="${custom.name}"
+                                name="custom_sections[${customSectionCount}][name]"
+                                onchange="updateCustomSectionName('${sectionId}', this.value)">
+                            <button type="button" class="btn-danger" onclick="removeCustomSection('${sectionId}')">Remove Section</button>
+                        </div>
+                        <input type="hidden" name="custom_sections[${customSectionCount}][type]" value="default">
+                        <div id="${sectionId}-entries">
+                            ${entriesHtml}
+                        </div>
+                        <div class="add-button-container">
+                            <button type="button" class="btn-secondary" onclick="addCustomSectionEntry(${customSectionCount}, '${sectionId}')">+ Add Another Entry</button>
+                        </div>
+                    `;
+                    container.appendChild(section);
+
+                    // Initialize entry counter
+                    customSectionEntryCounters[customSectionCount] = custom.entries ? custom.entries.length : 1;
+
+                } else if (custom.type === 'tabular') {
+                    // Create tabular custom section
+                    const section = document.createElement('div');
+                    section.className = 'section custom-section';
+                    section.id = sectionId;
+                    section.dataset.sectionType = 'tabular';
+                    section.dataset.sectionName = custom.name;
+                    section.dataset.columns = JSON.stringify(custom.columns || []);
+
+                    const columns = custom.columns || [];
+                    const rows = custom.rows || [];
+
+                    const colHeadersHtml = columns.map((col, i) =>
+                        `<input type="text" name="custom_sections[${customSectionCount}][columns][${i}]" value="${col}" placeholder="Column ${i+1}" style="flex: 1; font-weight: bold; background-color: #f7fafc;">`
+                    ).join('');
+
+                    let rowsHtml = '';
+                    rows.forEach((row, rowIdx) => {
+                        const cellsHtml = row.map((cell, i) =>
+                            `<input type="text" name="custom_sections[${customSectionCount}][rows][${rowIdx}][${i}]" value="${cell}" placeholder="Value">`
+                        ).join('');
+                        rowsHtml += `
+                            <div class="tabular-row">
+                                ${cellsHtml}
+                                <button type="button" class="btn-danger" onclick="removeTabularRow(this)">Remove</button>
+                            </div>`;
+                    });
+
+                    section.innerHTML = `
+                        <div class="custom-section-header">
+                            <input type="text" class="custom-section-title-input" value="${custom.name}"
+                                name="custom_sections[${customSectionCount}][name]"
+                                onchange="updateCustomSectionName('${sectionId}', this.value)">
+                            <button type="button" class="btn-danger" onclick="removeCustomSection('${sectionId}')">Remove Section</button>
+                        </div>
+                        <input type="hidden" name="custom_sections[${customSectionCount}][type]" value="tabular">
+                        <div class="tabular-headers" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            ${colHeadersHtml}
+                        </div>
+                        <div id="${sectionId}-rows">
+                            ${rowsHtml}
+                        </div>
+                        <div class="add-button-container">
+                            <button type="button" class="btn-secondary" onclick="addTabularRow(${customSectionCount}, '${sectionId}', ${columns.length})">+ Add Row</button>
+                        </div>
+                    `;
+                    container.appendChild(section);
+
+                    // Initialize row counter
+                    tabularRowCounters[customSectionCount] = rows.length;
+                }
+
+                // Add to section reorder list
+                addToSectionReorderList(sectionId, custom.name);
+            });
+
+            // Update custom sections JSON hidden field
+            document.getElementById('custom_sections_json').value = JSON.stringify(formData.custom_sections);
+        }
+
+        // Restore section order
+        if (formData.section_order && formData.section_order.length > 0) {
+            const list = document.getElementById('section-reorder-list');
+            const order = formData.section_order;
+
+            // Reorder existing items based on saved order
+            order.forEach(sectionId => {
+                const item = list.querySelector(`.section-reorder-item[data-section="${sectionId}"]`);
+                if (item) {
+                    list.appendChild(item); // Move to end (in order)
+                }
+            });
+
+            // Update hidden field
+            document.getElementById('section_order').value = JSON.stringify(order);
+        }
+{% endif %}
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        initSectionReorder();
+        restoreSectionOrderAndCustomSections();
+        updateSectionOrder();
+        // Initial render with page breaks
+        renderPreview();
+    });
     </script>
 </body>
 </html>

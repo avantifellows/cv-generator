@@ -174,6 +174,36 @@ class FontSettings(BaseModel):
     section_spacing_multiplier: str = Field(default="1.0")
 
 
+class CustomSectionDefaultEntry(BaseModel):
+    """Single entry in a default-type custom section"""
+    title: str = Field(default="", max_length=200)
+    subtitle: str = Field(default="", max_length=200)
+    duration: str = Field(default="", max_length=100)
+    points: List[str] = Field(default_factory=list, max_items=10)
+
+    @validator('title', 'subtitle', 'duration')
+    def validate_not_empty(cls, v):
+        if not v or not v.strip():
+            return ""
+        return v.strip()
+
+    @validator('points')
+    def validate_points(cls, v):
+        return [point.strip() for point in v if point and point.strip()]
+
+
+class CustomSection(BaseModel):
+    """Custom section that can be either default or tabular type"""
+    id: str = Field(default="")
+    name: str = Field(default="", max_length=100)
+    type: str = Field(default="default")  # "default" or "tabular"
+    # For default type
+    entries: List[CustomSectionDefaultEntry] = Field(default_factory=list)
+    # For tabular type
+    columns: List[str] = Field(default_factory=list)
+    rows: List[List[str]] = Field(default_factory=list)
+
+
 class CVData(BaseModel):
     """Complete CV data structure"""
     personal_info: PersonalInfo
@@ -190,6 +220,8 @@ class CVData(BaseModel):
     languages: List[str] = Field(default_factory=list, max_items=10)
     technical_skills: TechnicalSkillsCategory = Field(default_factory=TechnicalSkillsCategory)
     font_settings: FontSettings = Field(default_factory=FontSettings)
+    section_order: List[str] = Field(default_factory=list)
+    custom_sections: List[CustomSection] = Field(default_factory=list)
 
     @validator('extracurricular')
     def validate_extracurricular(cls, v):

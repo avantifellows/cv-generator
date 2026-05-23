@@ -51,3 +51,6 @@ terraform/terraform.tfstate.backup
 terraform/terraform.tfvars
 terraform/terraform.tfvars.json
 terraform/backend-config.txt
+
+# Local todo files
+context_for_ai/local_todo.md

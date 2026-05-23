@@ -229,6 +229,16 @@ Provisioning highlights (user data):
  - ✅ **Section Spacing Control**: Added `section_spacing_multiplier` with UI in `form.html`, live preview support, and dynamic spacing in both web and PDF templates; added minimal dataset and routes to demo sparse CVs.
 - ✅ **Section Entry Limits**: Increased max entries from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation using Toastify.js to show friendly toast notifications when users try to exceed section limits (5 entries for most sections, 10 for Languages).
 - ✅ **Points Per Entry Limits**: Added validation to limit key points/responsibilities to 5 per entry in Work Experience, Internships, Projects, and Positions of Responsibility sections. Uses Toastify.js toast notifications.
+- ✅ **Custom Sections**: Users can add custom sections via "Add Custom Section" button with two types:
+  - **Default**: Like Work Experience/Projects - entries with title, subtitle, duration, and bullet points
+  - **Tabular**: Like Education - a table format with user-defined column headers, ideal for Languages, Soft Skills, or simple lists
+  - Custom sections are persisted and restored on page reload
+  - Rendered in both live preview and PDF output using Jinja2 macros
+- ✅ **Page Break Indicators**: Live preview now shows dotted red lines indicating where page breaks will occur in the PDF, empirically calibrated to 1300px usable height per page
+- ✅ **Section Reordering**: Drag-and-drop UI above Personal Information allows users to reorder sections in the CV
+  - Includes all built-in sections plus any custom sections added by the user
+  - Section order is persisted and restored on page reload
+  - PDF template uses Jinja2 macros to render sections in the user-specified order
 
 ## **Current Development Status**
 
@@ -292,7 +302,9 @@ The application uses structured JSON format:
 - **External Link Normalization**: GitHub, LinkedIn, and project repo links are automatically converted to absolute URLs with `https://` when missing, in both web/PDF templates and the live preview.
 - **Section Spacing Control**: "Section Spacing" setting (in the "Edit Font and Spacing" panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 0.7, 0.8, 0.9, 1.0 (Normal), 1.1, 1.2, 1.25, 1.35, 1.5, 1.75, 2.0, 2.5.
 - **Section Limit Toasts**: Toastify.js-powered toast notifications appear when users try to add more entries than allowed (5 for most sections, 10 for Languages).
-  
+- **Custom Sections**: "Add Custom Section" button allows creating new sections of type Default (with title/subtitle/duration/points) or Tabular (with user-defined column headers). Both types render in live preview and PDF, with full persistence and restoration on page reload.
+- **Page Break Indicators**: Live preview displays dashed red lines showing approximate page break positions, calibrated to 1300px usable height per page.
+- **Section Reordering UI**: Drag-and-drop interface above Personal Information enables reordering all CV sections (built-in and custom). Order is persisted and reflected in both live preview and PDF output.
 
 ## **Service Layer Architecture**
 
@@ -337,7 +349,9 @@ S3 backend specifics:
 - `PositionEntry` - Club, role, duration, points
 - `TechnicalSkillsCategory` - Categorized skills (languages, web, DB, tools)
 - `FontSettings` - Title/body sizes, colors, line-height
-- `CVData` - Complete CV structure with validation
+- `CustomSectionDefaultEntry` - Entry data for default-type custom sections (title, subtitle, duration, points)
+- `CustomSection` - Custom section supporting both "default" and "tabular" types
+- `CVData` - Complete CV structure with validation, including `section_order` and `custom_sections` fields
 - `CVDocument` - CV data with metadata
 
   Model defaults and validation:
@@ -531,3 +545,11 @@ This is a **well-architected, production-ready application** that demonstrates m
 - 2025-11-09: Introduced Section Spacing control (multiplier) and added minimal test dataset with routes: `/resume/test-minimal`, `/test/minimal`, `/test/minimal/pdf`. `exists` API recognizes `'test-minimal'`.
 - 2025-11-28: Increased section entry limits from 3 to 5 for Work Experience, Internships, Projects, and Positions of Responsibility. Added client-side validation with Toastify.js toast notifications to all sections (Education, Work Experience, Internships, Projects, Positions, Achievements, Certifications, Publications, Extracurricular Activities, Languages) to prevent exceeding limits with user-friendly error messages.
 - 2025-11-29: Added points-per-entry validation (max 5 key points/responsibilities) in Work Experience, Internships, Projects, and Positions of Responsibility sections with Toastify.js toast notifications.
+- 2025-05-23: Implemented full Custom Sections and Section Reordering support:
+  - Custom sections (Default and Tabular types) now persist and restore on page reload
+  - Section order persists and restores on page reload
+  - PDF template uses Jinja2 macros to render sections in user-specified order
+  - Added `CustomSectionDefaultEntry` and `CustomSection` Pydantic models
+  - Added `section_order` and `custom_sections` fields to CVData model
+  - Updated form parsing to handle `section_order` and `custom_sections_json` fields
+  - Page break indicators calibrated to 1300px usable height per page
