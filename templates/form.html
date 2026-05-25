@@ -4585,12 +4585,29 @@
             document.getElementById('custom_sections_json').value = JSON.stringify(formData.custom_sections);
         }
 
-        // Restore section order
+        // Restore section order and unhide sections
         if (formData.section_order && formData.section_order.length > 0) {
             const list = document.getElementById('section-reorder-list');
             const order = formData.section_order;
 
-            // Reorder existing items based on saved order
+            // First, unhide all sections in the saved order and add to reorder list if needed
+            order.forEach(sectionId => {
+                // Skip custom sections (they're handled separately above)
+                if (sectionId.startsWith('custom-section-')) return;
+
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    // Unhide the section
+                    section.classList.remove('hidden-section');
+                    // Add to reorder list if not already there
+                    addToReorderListIfNeeded(sectionId);
+                }
+            });
+
+            // Update section picker status to mark added sections
+            updateSectionPickerStatus();
+
+            // Reorder items based on saved order
             order.forEach(sectionId => {
                 const item = list.querySelector(`.section-reorder-item[data-section="${sectionId}"]`);
                 if (item) {
