@@ -678,30 +678,6 @@
         font-weight: bold;
     }
 
-    /* Add Custom Section Button */
-    .add-custom-section-btn {
-        width: 100%;
-        padding: 15px;
-        background-color: #f0f4f8;
-        border: 2px dashed #4299e1;
-        border-radius: 8px;
-        color: #4299e1;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s;
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
-    .add-custom-section-btn:hover {
-        background-color: #ebf8ff;
-        border-color: #3182ce;
-        color: #3182ce;
-    }
-
     /* Custom section styles */
     .custom-section {
         position: relative;
@@ -1392,14 +1368,6 @@
                 <!-- Custom sections will be added here dynamically -->
             </div>
 
-            <!-- Add Custom Section Button -->
-            <button type="button" class="add-custom-section-btn" onclick="openCustomSectionModal()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                </svg>
-                Add Custom Section
-            </button>
-
 
         </form>
 
@@ -1411,6 +1379,22 @@
                     <button type="button" class="modal-close" onclick="closeSectionPicker()">×</button>
                 </div>
                 <ul class="section-picker-list">
+                    <li class="section-picker-item" data-section="summary-section" onclick="addSectionFromPicker('summary-section')">
+                        <span class="section-icon">📝</span>
+                        <div class="section-info">
+                            <h4>Professional Summary</h4>
+                            <p>Brief overview of your profile</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="education-section" onclick="addSectionFromPicker('education-section')">
+                        <span class="section-icon">🎓</span>
+                        <div class="section-info">
+                            <h4>Education</h4>
+                            <p>Academic qualifications</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
                     <li class="section-picker-item" onclick="addSectionFromPicker('custom')">
                         <span class="section-icon">✨</span>
                         <div class="section-info">
@@ -1427,7 +1411,7 @@
                         <span class="section-status"></span>
                     </li>
                     <li class="section-picker-item" data-section="internships-section" onclick="addSectionFromPicker('internships-section')">
-                        <span class="section-icon">🎓</span>
+                        <span class="section-icon">📋</span>
                         <div class="section-info">
                             <h4>Internships</h4>
                             <p>Internship experiences</p>

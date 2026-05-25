@@ -67,7 +67,7 @@ cv-generator/
 
 ### **2. Dynamic Form System**
 
-- **Interactive Web Form**: Streamlined interface showing Personal Info, Summary, and Education initially; additional sections added via "Add Section" button with section picker modal
+- **Interactive Web Form**: Streamlined interface showing only Personal Info initially; all sections (including Professional Summary, Education, and Custom) added via unified "Add Section" button with section picker modal
 - **Real-time Preview**: Live CV preview as you type
 - **Auto-save Status Indicator**: Small banner under "Live Preview" that toggles between saved and unsaved states:
   - Saved: “Changes saved last at HH:MM:SS” with a green checkmark
@@ -554,9 +554,9 @@ This is a **well-architected, production-ready application** that demonstrates m
   - Updated form parsing to handle `section_order` and `custom_sections_json` fields
   - Page break indicators calibrated to 1300px usable height per page
 - 2026-05-23: Form interface and UX improvements:
-  - Streamlined form interface: Only Personal Information, Professional Summary, and Education sections shown initially
-  - Added "Add Section" button with section picker modal for adding additional sections on demand
-  - Section picker includes: Custom, Work Experience, Internships, Key Projects, Positions of Responsibility, Extracurricular Activities, Certifications, Publications
+  - Streamlined form interface: Only Personal Information section shown initially
+  - Unified section management: Removed separate "Add Custom Section" button; all sections (including custom) are now added via single "Add Section" button
+  - Section picker modal includes (in order): Professional Summary, Education, Custom Section, Work Experience, Internships, Key Projects, Positions of Responsibility, Extracurricular Activities, Achievements, Certifications, Publications, Languages, Technical Skills
   - Section reorder list now only shows visible/active sections
   - Updated defaults: Font size 14px (title and body), line height 1.5, section spacing 2.0x
   - Section spacing options now range from 1.0x to 3.0x at 0.25x intervals without descriptive text
