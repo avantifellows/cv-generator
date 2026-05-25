@@ -750,6 +750,82 @@
         flex-shrink: 0;
     }
 
+    /* Section Picker Styles */
+    .section-picker-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: #f0f4f8;
+        border: 2px dashed #48bb78;
+        border-radius: 8px;
+        color: #48bb78;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .section-picker-btn:hover {
+        background-color: #f0fff4;
+        border-color: #38a169;
+        color: #38a169;
+    }
+    .section-picker-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .section-picker-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .section-picker-item:hover {
+        background-color: #f7fafc;
+        border-color: #4299e1;
+    }
+    .section-picker-item.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f0f0f0;
+    }
+    .section-picker-item .section-icon {
+        font-size: 18px;
+    }
+    .section-picker-item .section-info {
+        flex: 1;
+    }
+    .section-picker-item .section-info h4 {
+        margin: 0 0 2px 0;
+        font-size: 14px;
+        color: #2d3748;
+    }
+    .section-picker-item .section-info p {
+        margin: 0;
+        font-size: 12px;
+        color: #718096;
+    }
+    .section-picker-item .section-status {
+        font-size: 11px;
+        color: #48bb78;
+        font-weight: 600;
+    }
+    .hidden-section {
+        display: none !important;
+    }
+
     </style>
 </head>
 <body>
@@ -790,8 +866,8 @@
                             <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Font Size:</label>
                             <select id="titleFontSize" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
                                 <option value="10px">10px</option>
-                                <option value="12px" selected>12px</option>
-                                <option value="14px">14px</option>
+                                <option value="12px">12px</option>
+                                <option value="14px" selected>14px</option>
                             </select>
                         </div>
                         
@@ -814,8 +890,8 @@
                             <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Font Size:</label>
                             <select id="bodyFontSize" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
                                 <option value="10px">10px</option>
-                                <option value="12px" selected>12px</option>
-                                <option value="14px">14px</option>
+                                <option value="12px">12px</option>
+                                <option value="14px" selected>14px</option>
                             </select>
                         </div>
                         
@@ -823,27 +899,24 @@
                             <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Line Height:</label>
                             <select id="lineHeight" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
                                 <option value="1.0">1.0</option>
-                                <option value="1.1" selected>1.1</option>
+                                <option value="1.1">1.1</option>
                                 <option value="1.3">1.3</option>
-                                <option value="1.5">1.5</option>
+                                <option value="1.5" selected>1.5</option>
                             </select>
                         </div>
                         
                         <div style="margin-bottom: 15px;">
                             <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Section Spacing:</label>
                             <select id="sectionSpacing" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
-                                <option value="0.7">Ultra Tight (0.7x)</option>
-                                <option value="0.8">Tight (0.8x)</option>
-                                <option value="0.9">Slightly Tight (0.9x)</option>
-                                <option value="1.0" selected>Normal (1.0x)</option>
-                                <option value="1.1">Slightly Relaxed (1.1x)</option>
-                                <option value="1.2">Lightly Relaxed (1.2x)</option>
-                                <option value="1.25">Relaxed (1.25x)</option>
-                                <option value="1.35">Comfy (1.35x)</option>
-                                <option value="1.5">Spacious (1.5x)</option>
-                                <option value="1.75">Very Spacious (1.75x)</option>
-                                <option value="2.0">Extra Spacious (2.0x)</option>
-                                <option value="2.5">Max (2.5x)</option>
+                                <option value="1.0">1.0x</option>
+                                <option value="1.25">1.25x</option>
+                                <option value="1.5">1.5x</option>
+                                <option value="1.75">1.75x</option>
+                                <option value="2.0" selected>2.0x</option>
+                                <option value="2.25">2.25x</option>
+                                <option value="2.5">2.5x</option>
+                                <option value="2.75">2.75x</option>
+                                <option value="3.0">3.0x</option>
                             </select>
                         </div>
 
@@ -878,6 +951,7 @@
             <div class="section-reorder-container">
                 <h3>📋 Reorder Sections (Drag to reorder)</h3>
                 <ul class="section-reorder-list" id="section-reorder-list">
+                    <!-- Only visible sections are shown here initially -->
                     <li class="section-reorder-item" data-section="summary-section">
                         <span class="drag-handle">☰</span>
                         <span class="section-name">Professional Summary</span>
@@ -885,46 +959,6 @@
                     <li class="section-reorder-item" data-section="education-section">
                         <span class="drag-handle">☰</span>
                         <span class="section-name">Educational Qualifications</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="work-experience-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Work Experience</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="internships-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Internships</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="achievements-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Scholastic Achievements</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="certifications-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Certifications</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="publications-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Publications</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="projects-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Key Projects</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="positions-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Positions of Responsibility</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="extracurricular-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Extra Curricular Activities</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="languages-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Languages</span>
-                    </li>
-                    <li class="section-reorder-item" data-section="skills-section">
-                        <span class="drag-handle">☰</span>
-                        <span class="section-name">Technical Skills</span>
                     </li>
                 </ul>
             </div>
@@ -1022,8 +1056,13 @@
                 </div>
             </div>
 
+            <!-- Add Section Button -->
+            <button type="button" class="section-picker-btn" onclick="openSectionPicker()">
+                ➕ Add Section
+            </button>
+
             <!-- Work Experience -->
-            <div class="section" id="work-experience-section">
+            <div class="section hidden-section" id="work-experience-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Work Experience</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('work-experience-section')">Remove Section</button>
@@ -1065,7 +1104,7 @@
             </div>
 
             <!-- Internships -->
-            <div class="section" id="internships-section">
+            <div class="section hidden-section" id="internships-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Internships</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('internships-section')">Remove Section</button>
@@ -1107,7 +1146,7 @@
             </div>
 
             <!-- Achievements -->
-            <div class="section" id="achievements-section">
+            <div class="section hidden-section" id="achievements-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Scholastic Achievements</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('achievements-section')">Remove Section</button>
@@ -1133,7 +1172,7 @@
             </div>
 
             <!-- Certifications -->
-            <div class="section" id="certifications-section">
+            <div class="section hidden-section" id="certifications-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Certifications</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('certifications-section')">Remove Section</button>
@@ -1159,7 +1198,7 @@
             </div>
 
             <!-- Publications -->
-            <div class="section" id="publications-section">
+            <div class="section hidden-section" id="publications-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Publications</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('publications-section')">Remove Section</button>
@@ -1185,7 +1224,7 @@
             </div>
 
             <!-- Projects -->
-            <div class="section" id="projects-section">
+            <div class="section hidden-section" id="projects-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Key Projects</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('projects-section')">Remove Section</button>
@@ -1233,7 +1272,7 @@
             </div>
 
             <!-- Positions of Responsibility -->
-            <div class="section" id="positions-section">
+            <div class="section hidden-section" id="positions-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Positions of Responsibility</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('positions-section')">Remove Section</button>
@@ -1275,7 +1314,7 @@
             </div>
 
             <!-- Extra Curricular Activities -->
-            <div class="section" id="extracurricular-section">
+            <div class="section hidden-section" id="extracurricular-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Extra Curricular Activities</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('extracurricular-section')">Remove Section</button>
@@ -1292,7 +1331,7 @@
             </div>
 
             <!-- Languages -->
-            <div class="section" id="languages-section">
+            <div class="section hidden-section" id="languages-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Languages</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('languages-section')">Remove Section</button>
@@ -1309,7 +1348,7 @@
             </div>
 
             <!-- Technical Skills -->
-            <div class="section" id="skills-section">
+            <div class="section hidden-section" id="skills-section">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h2>Technical Skills</h2>
                     <button type="button" class="btn-danger" onclick="removeSection('skills-section')">Remove Section</button>
@@ -1363,6 +1402,105 @@
 
 
         </form>
+
+        <!-- Section Picker Modal -->
+        <div id="sectionPickerModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Section</h3>
+                    <button type="button" class="modal-close" onclick="closeSectionPicker()">×</button>
+                </div>
+                <ul class="section-picker-list">
+                    <li class="section-picker-item" onclick="addSectionFromPicker('custom')">
+                        <span class="section-icon">✨</span>
+                        <div class="section-info">
+                            <h4>Custom Section</h4>
+                            <p>Create your own section with custom fields</p>
+                        </div>
+                    </li>
+                    <li class="section-picker-item" data-section="work-experience-section" onclick="addSectionFromPicker('work-experience-section')">
+                        <span class="section-icon">💼</span>
+                        <div class="section-info">
+                            <h4>Work Experience</h4>
+                            <p>Jobs and professional experience</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="internships-section" onclick="addSectionFromPicker('internships-section')">
+                        <span class="section-icon">🎓</span>
+                        <div class="section-info">
+                            <h4>Internships</h4>
+                            <p>Internship experiences</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="projects-section" onclick="addSectionFromPicker('projects-section')">
+                        <span class="section-icon">🚀</span>
+                        <div class="section-info">
+                            <h4>Key Projects</h4>
+                            <p>Notable projects and work</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="positions-section" onclick="addSectionFromPicker('positions-section')">
+                        <span class="section-icon">👥</span>
+                        <div class="section-info">
+                            <h4>Positions of Responsibility</h4>
+                            <p>Leadership and organizational roles</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="extracurricular-section" onclick="addSectionFromPicker('extracurricular-section')">
+                        <span class="section-icon">🎯</span>
+                        <div class="section-info">
+                            <h4>Extra Curricular Activities</h4>
+                            <p>Activities outside academics</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="achievements-section" onclick="addSectionFromPicker('achievements-section')">
+                        <span class="section-icon">🏆</span>
+                        <div class="section-info">
+                            <h4>Scholastic Achievements</h4>
+                            <p>Awards and recognitions</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="certifications-section" onclick="addSectionFromPicker('certifications-section')">
+                        <span class="section-icon">📜</span>
+                        <div class="section-info">
+                            <h4>Certifications</h4>
+                            <p>Professional certifications</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="publications-section" onclick="addSectionFromPicker('publications-section')">
+                        <span class="section-icon">📚</span>
+                        <div class="section-info">
+                            <h4>Publications</h4>
+                            <p>Research papers and publications</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="languages-section" onclick="addSectionFromPicker('languages-section')">
+                        <span class="section-icon">🌐</span>
+                        <div class="section-info">
+                            <h4>Languages</h4>
+                            <p>Languages you speak</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                    <li class="section-picker-item" data-section="skills-section" onclick="addSectionFromPicker('skills-section')">
+                        <span class="section-icon">🛠️</span>
+                        <div class="section-info">
+                            <h4>Technical Skills</h4>
+                            <p>Programming, tools, technologies</p>
+                        </div>
+                        <span class="section-status"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <!-- Custom Section Modal -->
         <div id="customSectionModal" class="modal-overlay" style="display: none;">
@@ -1915,6 +2053,7 @@
 
         function removeActivity(button) {
             button.parentElement.remove();
+            renderPreview();
         }
 
         // Language functions
@@ -1949,6 +2088,7 @@
 
         function removeLanguage(button) {
             button.parentElement.remove();
+            renderPreview();
         }
 
         // Skill functions
@@ -1968,75 +2108,21 @@
 
         function removeSkill(button) {
             button.parentElement.remove();
+            renderPreview();
         }
 
         // Generic remove functions
         function removeEntry(button) {
             button.closest('.dynamic-entry').remove();
+            renderPreview();
         }
 
         function removePoint(button) {
             button.parentElement.remove();
+            renderPreview();
         }
 
-        function removeSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                // Hide the section instead of removing it
-                section.style.display = 'none';
-                
-                // Create and show "Add Section" button
-                const sectionName = getSectionDisplayName(sectionId);
-                const addButton = createAddSectionButton(sectionId, sectionName);
-                
-                // Insert the add button after the hidden section
-                section.parentNode.insertBefore(addButton, section.nextSibling);
-            }
-        }
-
-        function createAddSectionButton(sectionId, sectionName) {
-            const button = document.createElement('div');
-            button.className = 'section add-section-button';
-            button.id = sectionId + '-add-button';
-            button.innerHTML = `
-                <div style="text-align: center; padding: 20px; border: 2px dashed #ccc; border-radius: 5px; background-color: #f9f9f9;">
-                    <button type="button" class="btn-primary" onclick="restoreSection('${sectionId}')" style="background-color: #4299e1; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">
-                        + Add ${sectionName} Section
-                    </button>
-                </div>
-            `;
-            return button;
-        }
-
-        function restoreSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            const addButton = document.getElementById(sectionId + '-add-button');
-            
-            if (section) {
-                // Show the section again
-                section.style.display = 'block';
-                
-                // Remove the add button
-                if (addButton) {
-                    addButton.remove();
-                }
-            }
-        }
-
-        function getSectionDisplayName(sectionId) {
-            const sectionNames = {
-                'summary-section': 'Professional Summary',
-                'education-section': 'Educational Qualifications',
-                'achievements-section': 'Scholastic Achievements',
-                'internships-section': 'Internships',
-                'work-experience-section': 'Work Experience',
-                'projects-section': 'Key Projects',
-                'positions-section': 'Positions of Responsibility',
-                'extracurricular-section': 'Extra Curricular Activities',
-                'skills-section': 'Technical Skills'
-            };
-            return sectionNames[sectionId] || 'Section';
-        }
+        // removeSection is defined in the SECTION PICKER FUNCTIONALITY section below
 
         // Pre-populate form with test data if available
 {% if form_data %}
@@ -3317,12 +3403,12 @@
     
     // Font customization functionality
     let currentFontSettings = {
-        titleFontSize: '12px',
+        titleFontSize: '14px',
         titleFontColor: '#4C5196',
-        bodyFontSize: '12px',
+        bodyFontSize: '14px',
         bodyFontColor: '#000000',
-        lineHeight: '1.1',
-        sectionSpacingMultiplier: '1.0'
+        lineHeight: '1.5',
+        sectionSpacingMultiplier: '2.0'
     };
     
     // Function to apply font settings
@@ -3793,6 +3879,99 @@
             bar.style.opacity = '0';
             setTimeout(() => { bar.style.width = '0%'; bar.style.background = original || 'linear-gradient(90deg, #4C5196, #6f74c9)'; }, 300);
         }, 200);
+    }
+
+    // ============================================
+    // SECTION PICKER FUNCTIONALITY
+    // ============================================
+    function openSectionPicker() {
+        updateSectionPickerStatus();
+        document.getElementById('sectionPickerModal').style.display = 'flex';
+    }
+
+    function closeSectionPicker() {
+        document.getElementById('sectionPickerModal').style.display = 'none';
+    }
+
+    function updateSectionPickerStatus() {
+        const items = document.querySelectorAll('.section-picker-item[data-section]');
+        items.forEach(item => {
+            const sectionId = item.dataset.section;
+            const section = document.getElementById(sectionId);
+            const statusSpan = item.querySelector('.section-status');
+            if (section && !section.classList.contains('hidden-section')) {
+                item.classList.add('disabled');
+                statusSpan.textContent = '✓ Added';
+            } else {
+                item.classList.remove('disabled');
+                statusSpan.textContent = '';
+            }
+        });
+    }
+
+    function addSectionFromPicker(sectionId) {
+        if (sectionId === 'custom') {
+            closeSectionPicker();
+            openCustomSectionModal();
+            return;
+        }
+
+        const item = document.querySelector(`.section-picker-item[data-section="${sectionId}"]`);
+        if (item && item.classList.contains('disabled')) {
+            return; // Already added
+        }
+
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.classList.remove('hidden-section');
+            // Add to reorder list if not already there
+            addToReorderListIfNeeded(sectionId);
+            updateSectionOrder();
+            renderPreview();
+        }
+        closeSectionPicker();
+    }
+
+    function addToReorderListIfNeeded(sectionId) {
+        const list = document.getElementById('section-reorder-list');
+        const existing = list.querySelector(`.section-reorder-item[data-section="${sectionId}"]`);
+        if (!existing) {
+            const sectionNames = {
+                'summary-section': 'Professional Summary',
+                'education-section': 'Educational Qualifications',
+                'work-experience-section': 'Work Experience',
+                'internships-section': 'Internships',
+                'achievements-section': 'Scholastic Achievements',
+                'certifications-section': 'Certifications',
+                'publications-section': 'Publications',
+                'projects-section': 'Key Projects',
+                'positions-section': 'Positions of Responsibility',
+                'extracurricular-section': 'Extra Curricular Activities',
+                'languages-section': 'Languages',
+                'skills-section': 'Technical Skills'
+            };
+            const name = sectionNames[sectionId] || sectionId;
+            addToSectionReorderList(sectionId, name);
+        }
+    }
+
+    function removeSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            // Clear all input values in the section
+            section.querySelectorAll('input, textarea, select').forEach(el => {
+                el.value = '';
+            });
+            // Hide the section
+            section.classList.add('hidden-section');
+            // Remove from reorder list
+            const reorderItem = document.querySelector(`.section-reorder-item[data-section="${sectionId}"]`);
+            if (reorderItem) {
+                reorderItem.remove();
+            }
+            updateSectionOrder();
+            renderPreview();
+        }
     }
 
     // ============================================

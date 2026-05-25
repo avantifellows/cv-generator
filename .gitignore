@@ -54,3 +54,6 @@ terraform/backend-config.txt
 
 # Local todo files
 context_for_ai/local_todo.md
+
+# Local resume data (dev only)
+resume_data/

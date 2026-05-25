@@ -165,13 +165,13 @@ class TechnicalSkillsCategory(BaseModel):
 
 class FontSettings(BaseModel):
     """Font customization settings"""
-    title_font_size: str = Field(default="12px")
+    title_font_size: str = Field(default="14px")
     title_font_color: str = Field(default="#4C5196")
-    body_font_size: str = Field(default="12px")
+    body_font_size: str = Field(default="14px")
     body_font_color: str = Field(default="#000000")
-    line_height: str = Field(default="1.1")
+    line_height: str = Field(default="1.5")
     # Multiplier applied to default section spacing in templates (web/pdf have different bases)
-    section_spacing_multiplier: str = Field(default="1.0")
+    section_spacing_multiplier: str = Field(default="2.0")
 
 
 class CustomSectionDefaultEntry(BaseModel):

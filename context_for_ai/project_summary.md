@@ -67,7 +67,7 @@ cv-generator/
 
 ### **2. Dynamic Form System**
 
-- **Interactive Web Form**: Add/remove sections dynamically
+- **Interactive Web Form**: Streamlined interface showing Personal Info, Summary, and Education initially; additional sections added via "Add Section" button with section picker modal
 - **Real-time Preview**: Live CV preview as you type
 - **Auto-save Status Indicator**: Small banner under "Live Preview" that toggles between saved and unsaved states:
   - Saved: “Changes saved last at HH:MM:SS” with a green checkmark
@@ -300,7 +300,7 @@ The application uses structured JSON format:
 - **Tokenized Share URL**: Form receives a precomputed `share_url` from the server; frontend never handles keys or encryption. Graceful fallback in the client uses the current URL when `share_url` is absent.
 - **View-only Toast**: Minimal top-right toast on shared views linking back to the homepage; no resume ID is displayed
 - **External Link Normalization**: GitHub, LinkedIn, and project repo links are automatically converted to absolute URLs with `https://` when missing, in both web/PDF templates and the live preview.
-- **Section Spacing Control**: "Section Spacing" setting (in the "Edit Font and Spacing" panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 0.7, 0.8, 0.9, 1.0 (Normal), 1.1, 1.2, 1.25, 1.35, 1.5, 1.75, 2.0, 2.5.
+- **Section Spacing Control**: "Section Spacing" setting (in the "Edit Font and Spacing" panel) applies a multiplier to the base spacing (web: 30px, PDF: 8px) to make shorter CVs look fuller. Options: 1.0x to 3.0x at 0.25x intervals (default: 2.0x).
 - **Section Limit Toasts**: Toastify.js-powered toast notifications appear when users try to add more entries than allowed (5 for most sections, 10 for Languages).
 - **Custom Sections**: "Add Custom Section" button allows creating new sections of type Default (with title/subtitle/duration/points) or Tabular (with user-defined column headers). Both types render in live preview and PDF, with full persistence and restoration on page reload.
 - **Page Break Indicators**: Live preview displays dashed red lines showing approximate page break positions, calibrated to 1300px usable height per page.
@@ -553,3 +553,11 @@ This is a **well-architected, production-ready application** that demonstrates m
   - Added `section_order` and `custom_sections` fields to CVData model
   - Updated form parsing to handle `section_order` and `custom_sections_json` fields
   - Page break indicators calibrated to 1300px usable height per page
+- 2026-05-23: Form interface and UX improvements:
+  - Streamlined form interface: Only Personal Information, Professional Summary, and Education sections shown initially
+  - Added "Add Section" button with section picker modal for adding additional sections on demand
+  - Section picker includes: Custom, Work Experience, Internships, Key Projects, Positions of Responsibility, Extracurricular Activities, Certifications, Publications
+  - Section reorder list now only shows visible/active sections
+  - Updated defaults: Font size 14px (title and body), line height 1.5, section spacing 2.0x
+  - Section spacing options now range from 1.0x to 3.0x at 0.25x intervals without descriptive text
+  - Fixed Remove button: All remove functions (removeEntry, removePoint, removeActivity, removeLanguage, removeSkill, removeSection) now properly clear data and refresh the live preview
