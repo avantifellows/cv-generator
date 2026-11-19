@@ -238,6 +238,9 @@ resource "aws_instance" "cv_generator" {
   # keeps the server and only reboots it (the boot script pulls the latest
   # code). To move to a newer image on purpose, run:
   #   terraform apply -replace=aws_instance.cv_generator
+  # Run it with the same variable values the deploy workflow uses (repo_url,
+  # share_token_key, S3 settings). With other values the new server will not
+  # come up correctly.
   lifecycle {
     ignore_changes = [ami]
   }
