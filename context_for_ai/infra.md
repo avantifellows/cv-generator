@@ -118,6 +118,7 @@ data "aws_ami" "ubuntu" {
 }
 ```
 - **Purpose**: Automatically selects the latest Ubuntu 22.04 LTS AMI
+- **Used only when the instance is created**: `aws_instance.cv_generator` ignores later AMI changes (`ignore_changes = [ami]`), so a newer image does not replace the server on deploy. To move to a newer image on purpose: `terraform apply -replace=aws_instance.cv_generator`
 - **Owner**: Canonical (official Ubuntu images)
 - **Type**: HVM virtualization for modern EC2 instances
 
@@ -206,7 +207,7 @@ Notes:
 ## **EC2 Instance Configuration**
 
 ### **Instance Specifications**
-- **AMI**: Latest Ubuntu 22.04 LTS (dynamic selection)
+- **AMI**: Latest Ubuntu 22.04 LTS at the time the instance is created (later image releases are ignored)
 - **Instance Type**: t3.small (2 vCPU, 2 GB RAM)
 - **Key Pair**: Existing key pair for SSH access
 - **Security Group**: Custom security group with defined rules
