@@ -15,7 +15,7 @@ This terraform configuration deploys the CV Generator FastAPI application on a s
 
 1. **AWS CLI configured** with your credentials
 2. **AWS Key Pair**: Existing key pair "AvantiFellows" in your AWS account
-3. **Cloudflare API Key**: For DNS management
+3. **Cloudflare API Token**: For DNS management. Create one with the "Edit zone DNS" template, limited to this zone
 4. **Git Repository**: Your CV generator code should be accessible via git clone
 
 ## Setup Instructions
@@ -43,8 +43,7 @@ key_pair_name = "AvantiFellows"
 repo_url = "https://github.com/your-username/cv-generator.git"
 
 # Cloudflare Configuration
-cloudflare_email = "your-email@domain.com"
-cloudflare_api_key = "your-cloudflare-api-key"
+cloudflare_api_token = "your-cloudflare-api-token"
 cloudflare_zone_name = "avantifellows.org"
 domain = "cv-generator"
 ```

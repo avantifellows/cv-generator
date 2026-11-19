@@ -200,7 +200,7 @@ Provisioning highlights (user data):
 - Triggers on pushes to `new-feature-branch` and manual runs (`workflow_dispatch`)
 - Executes: checkout → setup Terraform (v1.10.5) → configure AWS → `terraform init` with S3 + DynamoDB backend from secrets → validate → fmt check → plan → apply
 - If no infra changes are applied, the job reboots the EC2 instance to refresh the app; otherwise it waits for the instance to be healthy
-- Required secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BACKEND_BUCKET`, `DYNAMODB_LOCK_TABLE`, `CLOUDFLARE_EMAIL`, `CLOUDFLARE_API_KEY`, `APP_S3_BUCKET_NAME`, `APP_S3_PREFIX`, `SHARE_TOKEN_KEY`
+- Required secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `S3_BACKEND_BUCKET`, `DYNAMODB_LOCK_TABLE`, `CLOUDFLARE_API_TOKEN`, `APP_S3_BUCKET_NAME`, `APP_S3_PREFIX`, `SHARE_TOKEN_KEY`
 - Environment overrides: `TF_VAR_repo_url` (repo to deploy), `AWS_REGION` (defaults to `ap-south-1`)
 
 ## **Recent Technical Improvements**
