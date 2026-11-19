@@ -12,8 +12,8 @@ key_pair_name = "AvantiFellows"
 repo_url = "https://github.com/your-username/cv-generator.git"
 
 # Cloudflare Configuration
-cloudflare_email = "your-email@example.com"
-cloudflare_api_key = "your-cloudflare-api-key"
+# API token with "Edit zone DNS" on this zone only (not the Global API key)
+cloudflare_api_token = "your-cloudflare-api-token"
 cloudflare_zone_name = "avantifellows.org"
 domain = "cv-generator" 
 

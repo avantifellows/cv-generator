@@ -15,8 +15,7 @@ env:
   TF_INPUT: "false"
   # Terraform Variables - Define once, use everywhere
   TF_VAR_repo_url: "https://github.com/avantifellows/cv-generator.git"
-  TF_VAR_cloudflare_email: ${{ secrets.CLOUDFLARE_EMAIL }}
-  TF_VAR_cloudflare_api_key: ${{ secrets.CLOUDFLARE_API_KEY }}
+  TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
   TF_VAR_app_s3_bucket_name: ${{ secrets.APP_S3_BUCKET_NAME }}
   TF_VAR_app_s3_prefix: ${{ secrets.APP_S3_PREFIX }}
   TF_VAR_share_token_key: ${{ secrets.SHARE_TOKEN_KEY }}

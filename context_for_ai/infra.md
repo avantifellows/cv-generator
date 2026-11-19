@@ -52,7 +52,7 @@ terraform {
 
 ### **Provider Setup**
 - **AWS Provider**: Configured with region variable (default: ap-south-1)
-- **Cloudflare Provider**: Configured with email and API key for DNS management
+- **Cloudflare Provider**: Configured with a scoped API token (DNS edit on the zone only) for DNS management
 
 ### **Remote Backend (Terraform State)**
 - **S3 Backend**: Remote state stored in an S3 bucket with server-side encryption
@@ -99,8 +99,7 @@ terraform {
 ### **Cloudflare Variables**
 | Variable | Type | Default | Description |
 |----------|------|---------|-------------|
-| `cloudflare_email` | string | (required) | Cloudflare account email |
-| `cloudflare_api_key` | string | (required, sensitive) | Cloudflare API key |
+| `cloudflare_api_token` | string | (required, sensitive) | Cloudflare API token, DNS edit on the zone only |
 | `cloudflare_zone_name` | string | "avantifellows.org" | Domain zone name |
 | `domain` | string | "cv-generator" | Subdomain for the application |
 
@@ -570,7 +569,7 @@ curl http://localhost/health
 - Required secrets:
   - `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
   - `S3_BACKEND_BUCKET`, `DYNAMODB_LOCK_TABLE`
-  - `CLOUDFLARE_EMAIL`, `CLOUDFLARE_API_KEY`
+  - `CLOUDFLARE_API_TOKEN`
   - `APP_S3_BUCKET_NAME`, `APP_S3_PREFIX`
   - `SHARE_TOKEN_KEY`
 - Common environment overrides:

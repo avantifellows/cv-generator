@@ -28,17 +28,11 @@ variable "repo_url" {
   default     = "https://github.com/your-username/cv-generator.git"
 }
 
-variable "cloudflare_email" {
-  description = "Cloudflare account email"
-  type        = string
-  # Set via environment variable CLOUDFLARE_EMAIL or terraform.tfvars
-}
-
-variable "cloudflare_api_key" {
-  description = "Cloudflare API key"
+variable "cloudflare_api_token" {
+  description = "Cloudflare API token that can edit DNS of the zone only"
   type        = string
   sensitive   = true
-  # Set via environment variable CLOUDFLARE_API_KEY or terraform.tfvars
+  # No default on purpose: set via TF_VAR_cloudflare_api_token or terraform.tfvars
 }
 
 variable "cloudflare_zone_name" {
