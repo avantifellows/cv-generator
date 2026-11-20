@@ -130,10 +130,13 @@ sudo -u cvapp mkdir -p /home/cvapp/app/static
 # Set proper permissions
 chown -R cvapp:cvapp /home/cvapp/app
 
-# Create systemd service for FastAPI (check if exists)
-if [ ! -f /etc/systemd/system/cv-generator.service ]; then
-    echo "Creating systemd service..."
-    cat > /etc/systemd/system/cv-generator.service << 'EOL'
+# Write the systemd service for FastAPI on every boot, not only the first one.
+# The app's settings (S3 bucket, prefix, region, share-link key) live in this
+# file. The server is kept across deploys, so writing it only once would leave
+# the app on old settings after they change in Terraform. The daemon-reload
+# and restart further down pick up the new file.
+echo "Writing systemd service..."
+cat > /etc/systemd/system/cv-generator.service << 'EOL'
 [Unit]
 Description=CV Generator FastAPI application
 After=network.target
@@ -157,9 +160,6 @@ RestartSec=3
 [Install]
 WantedBy=multi-user.target
 EOL
-else
-    echo "systemd service already exists"
-fi
 
 # Check if SSL certificates exist to determine nginx config
 ssl_cert_exists=false

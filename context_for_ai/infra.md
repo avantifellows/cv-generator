@@ -226,6 +226,7 @@ Notes:
 - **Idempotent**: Can run multiple times safely without completion markers
 - **SSL Automation**: Automatic Let's Encrypt certificate generation and renewal
 - **Environment Variables**: Injects `RESUME_STORAGE_TYPE=s3`, `S3_BUCKET_NAME`, `S3_PREFIX`, `AWS_REGION`, `SHARE_TOKEN_KEY` into systemd service
+- **Settings changes**: the systemd service file is rewritten on every boot, so a change to these values in Terraform reaches the app. Terraform applies such a change by stopping and starting the same server (it is not replaced).
 
 ## **Elastic IP Configuration**
 
