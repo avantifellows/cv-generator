@@ -231,6 +231,19 @@ resource "aws_instance" "cv_generator" {
   tags = {
     Name = "${var.project_name}-instance"
   }
+
+  # The AMI lookup above returns the newest Ubuntu image, and that changes
+  # every few weeks. Without this, the next deploy after a new image comes
+  # out destroys the server and builds a new one. Ignore it, so a deploy
+  # keeps the server and only reboots it (the boot script pulls the latest
+  # code). To move to a newer image on purpose, run:
+  #   terraform apply -replace=aws_instance.cv_generator
+  # Run it with the same variable values the deploy workflow uses (repo_url,
+  # share_token_key, S3 settings). With other values the new server will not
+  # come up correctly.
+  lifecycle {
+    ignore_changes = [ami]
+  }
 }
 
 # Create Elastic IP
